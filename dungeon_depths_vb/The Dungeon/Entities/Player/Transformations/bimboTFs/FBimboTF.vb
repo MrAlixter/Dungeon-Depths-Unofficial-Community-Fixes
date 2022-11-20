@@ -37,7 +37,7 @@
     End Sub
 
     Public Overrides Sub setWaitTime(stage As Integer)
-        turns_until_next_step = 10 + (Int(Rnd() * 5) + 1)
+        turns_until_next_step = (Int(Rnd() * 5) + 1)
         turns_until_next_step += generatWILResistance()
     End Sub
 End Class

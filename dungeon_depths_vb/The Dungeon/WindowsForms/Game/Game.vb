@@ -2527,12 +2527,21 @@ Public Class Game
     Private Sub btnUse_Click(sender As Object, e As EventArgs) Handles btnUse.Click
         closeLblEvent()
         doLblEventOnClose()
-        If Not combat_engaged And Not shop_npc_engaged Then player1.canMoveFlag = True
-        If player1.prt.checkNDefMalInd(pInd.mouth, 6) Or player1.prt.checkNDefFemInd(pInd.mouth, 12) Then
-            TextEvent.push("You can't use items now!")
+
+        If selectedItem Is Nothing Then Exit Sub
+
+        If player1.perks(perk.astatue) > -1 And Not selectedItem.getAName.Equals(SthenoSalve.ITEM_NAME) Then
+            TextEvent.push("You can't move to use any items now..." & If(player1.inv.getCountAt(SthenoSalve.ITEM_NAME) > 0, DDUtils.RNRN & "...well, other than " & SthenoSalve.ITEM_NAME.Replace("_", " ") & "...", ""))
+            TextEvent.pushLog("You can't use items now!")
+            Exit Sub
+        ElseIf player1.equippedAcce.getAName.Equals(CursedBridle.ITEM_NAME) And Not selectedItem.getAName.Equals(AntiCurseTag.ITEM_NAME) Then
+            TextEvent.push("The fae curse prevents you from using items now..." & If(player1.inv.getCountAt(AntiCurseTag.ITEM_NAME) > 0, DDUtils.RNRN & "...hmm, but your " & AntiCurseTag.ITEM_NAME.Replace("_", " ") & " might just let you unequip her bridle...", ""))
+            TextEvent.pushLog("You can't use items now!")
             Exit Sub
         End If
-        If selectedItem Is Nothing Then Exit Sub
+
+        If Not combat_engaged And Not shop_npc_engaged Then player1.canMoveFlag = True
+
         Dim tmpInd As Integer = lstInventory.TopIndex
         Dim tind = lstInventory.SelectedIndex
         selectedItem.use(player1)

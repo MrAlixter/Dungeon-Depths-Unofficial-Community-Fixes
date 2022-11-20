@@ -31,7 +31,8 @@
             p.revertToPState()
             p.canMoveFlag = True
 
-            TextEvent.push("You rock yourself over, deftly landing on the vial of salve and nothing else.  It shatters, and as its contents spill on the floor beneath you, the stoney curse is broken and you are once again animate!")
+            TextEvent.push("You rock yourself over, deftly landing on the vial of salve and nothing else.  It shatters, and the contents within liquify into a glowing puddle that surrounds your inanimate form.  Some feeling returns to your body, and the golden aura dims as you spring to your feet." & DDUtils.RNRN &
+                           "You can move once again!")
         Else
             TextEvent.push("You crack open the vial, and pour its content all over yourself.  Somewhat disappointingly, nothing happens...")
         End If

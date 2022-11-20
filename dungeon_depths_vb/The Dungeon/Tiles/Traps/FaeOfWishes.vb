@@ -160,7 +160,7 @@
     Shared Sub friendship()
         Dim p As Player = Game.player1
 
-        p.inv.add(LanceOfSFury.ITEM_NAME, 50)
+        p.inv.add(LanceOfSFury.ITEM_NAME, 1)
 
         p.UIupdate()
 

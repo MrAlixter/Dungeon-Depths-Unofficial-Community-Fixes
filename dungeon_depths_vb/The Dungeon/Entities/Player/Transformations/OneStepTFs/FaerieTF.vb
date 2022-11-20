@@ -31,9 +31,14 @@
         If p.buttSize < 0 Then p.buttSize = 0
 
         '| - STAT TRANSFORMATION - |
-        Dim mratio As Double = p.mana / p.getMaxMana
-        p.changeForm("Faerie")
-        p.mana = mratio * p.getMaxMana
+
+        If p.getMaxMana > 0 Then
+            Dim mratio As Double = p.mana / p.getMaxMana
+            p.changeForm("Faerie")
+            p.mana = mratio * p.getMaxMana
+        Else
+            p.changeForm("Faerie")
+        End If
     End Sub
 
     Public Shared Sub step1alt(ByRef p As Player)

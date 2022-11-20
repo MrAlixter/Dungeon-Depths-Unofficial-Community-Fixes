@@ -11,6 +11,7 @@
 
         '|Item Flags|
         usable = False
+        rando_inv_allowed = False
         under_t_clothes = True
 
         '|Stats|
