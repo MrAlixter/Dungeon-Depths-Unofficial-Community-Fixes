@@ -118,6 +118,7 @@ Friend Class DarkPactStep3
         dptf.step1()
 
         Game.player1.addXP(2000)
+        Game.compDP = True
 
         MyBase.complete()
     End Sub

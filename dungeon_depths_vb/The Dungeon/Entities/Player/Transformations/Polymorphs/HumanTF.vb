@@ -37,12 +37,14 @@
         p.prt.setIAInd(pInd.ears, 0, p.sex.Equals("Female"), False)
 
         'hair tf
-        Randomize()
-        r = Int(Rnd() * 7)
-        p.prt.setIAInd(pInd.rearhair, r, p.sex.Equals("Female"), False)
-        p.prt.setIAInd(pInd.midhair, r, p.sex.Equals("Female"), False)
-        r = Int(Rnd() * 8) + 1
-        p.prt.setIAInd(pInd.fronthair, r, p.sex.Equals("Female"), False)
+        If p.prt.iArrInd(pInd.rearhair).Item3 Or p.prt.iArrInd(pInd.midhair).Item3 Or p.prt.iArrInd(pInd.fronthair).Item3 Then
+            Randomize()
+            r = Int(Rnd() * 7)
+            p.prt.setIAInd(pInd.rearhair, r, p.sex.Equals("Female"), False)
+            p.prt.setIAInd(pInd.midhair, r, p.sex.Equals("Female"), False)
+            r = Int(Rnd() * 8) + 1
+            p.prt.setIAInd(pInd.fronthair, r, p.sex.Equals("Female"), False)
+        End If
 
         'body tf
         If p.breastSize > 3 Then p.breastSize = 3

@@ -18,6 +18,8 @@ Public Class CynnsMark
         droppable = False
 
         '|Stats|
+        a_boost = 5
+        w_boost = 10
         count = 0
         value = 0
 
@@ -27,13 +29,12 @@ Public Class CynnsMark
 
         '|Description|
         setDesc("A glowing red tattoo that displays one's status as under the effect a particular demoness's magic." & DDUtils.RNRN &
-                "Transformation triggered by raising lust or by killing opponents." & DDUtils.RNRN &
-                getStatInformation())
+               "During the ""Dark Pact"" quest, a transformation is triggered by raising lust or by killing opponents." & DDUtils.RNRN &
+               getStatInformation())
     End Sub
 
     Public Overrides Sub discard()
-        TextEvent.push("You can't discard this!")
-        TextEvent.pushLog("You can't discard this!")
+        TextEvent.pushAndLog("You can't discard this item!")
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

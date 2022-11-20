@@ -478,17 +478,20 @@ Public Class Player
             inv.add(84, 1)
             equippedArmor = inv.item(83)
             equippedWeapon = inv.item(84)
+
         ElseIf s = "Rogue" Then
             inv.add(164, 1)
             inv.add(165, 1)
             equippedAcce = inv.item(164)
             equippedWeapon = inv.item(165)
+
         ElseIf s = "Mage" Then
             knownSpells.Add("Fireball")
             inv.add(2, 3)
             inv.add(4, 1)
             inv.add(21, 1)
             equippedWeapon = inv.item(21)
+
         ElseIf s = "Cleric" Then
             knownSpells.Add("Heal")
             inv.add(2, 1)
@@ -497,6 +500,7 @@ Public Class Player
             inv.add(284, 1)
             equippedAcce = inv.item(283)
             equippedWeapon = inv.item(284)
+
         ElseIf s = "Witch" Then
             knownSpells.Add("Turn to Frog")
             If breastSize = -1 Then breastSize = 0
@@ -508,6 +512,7 @@ Public Class Player
             equippedArmor = inv.item(166)
             equippedArmor.onEquip(Me)
             equippedWeapon = inv.item(167)
+
         ElseIf s = "Magical Girl" Then
             pClass = classes("Classless")
             maxHealth = 80
@@ -518,6 +523,7 @@ Public Class Player
             inv.add(4, 1)
             inv.add(11, 1)
             TextEvent.pushLog("You find a wand lodged in the entrance...  Maybe you should equip it?")
+
         ElseIf s = "Valkyrie" Then
             pClass = classes("Classless")
             maxHealth = 80
@@ -528,6 +534,7 @@ Public Class Player
             inv.add(88, 1)
             inv.add("Valkyrie_Sword", 1)
             TextEvent.pushLog("You find a sword piercing the floor...  Maybe you should equip it?")
+
         ElseIf s = "Time Cop" Then
             pClass = classes("Time Cop")
             inv.add("Phase_Pistol", 1)
@@ -542,6 +549,20 @@ Public Class Player
             Game.lblEvent.Visible = False
 
             gold = 0
+
+        ElseIf s = "Cynn's Ally" Then
+            pClass = classes("Rogue")
+
+            DarkPactTF.step1ally(Me)
+            quests(qInd.darkPact).completeEntireQuest()
+
+            inv.add(BronzeSpear.ITEM_NAME, 1)
+            inv.add(CynnsMark.ITEM_NAME, 1)
+
+            equippedAcce = inv.item(CynnsMark.ITEM_NAME)
+            equippedAcce.onEquip(Me)
+            equippedWeapon = inv.item(BronzeSpear.ITEM_NAME)
+
         ElseIf s = "Evil Mage" Then
             pClass = classes("Mage")
 
@@ -626,6 +647,7 @@ Public Class Player
         classes.Add("Shrunken", New Shrunken())
         classes.Add("Maiden", New Maiden())
         classes.Add("Rogue", New Rogue())
+        classes.Add("Cynn's Ally", New Rogue())
         classes.Add("Witch", New Witch())
         classes.Add("Time Cop", New TimeCop())
         classes.Add("Cleric", New Cleric())

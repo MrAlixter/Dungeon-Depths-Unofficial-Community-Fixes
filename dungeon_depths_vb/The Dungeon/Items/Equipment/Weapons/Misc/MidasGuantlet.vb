@@ -27,10 +27,10 @@
         If dmg <= 5 Then
             Return -1
         End If
-        If Int(Rnd() * 3) = 0 Or Not (m.GetType() Is GetType(NPC) Or m.GetType.IsSubclassOf(GetType(NPC))) Then
+        If Int(Rnd() * 3) = 0 Then
             Game.player1.toStatue(Color.Goldenrod, "midas")
-        Else
-            CType(m, NPC).toGold()
+        ElseIf Not m.getNPC Is Nothing Then
+            m.getNPC.toGold()
         End If
 
         Return 0

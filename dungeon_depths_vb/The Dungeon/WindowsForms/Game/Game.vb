@@ -58,6 +58,7 @@ Public Class Game
     '| -- Game Settings -- |
     Public screenSize As String
     Public compOOT As Boolean
+    Public compDP As Boolean
     Public stealEverything As Boolean  'not added yet
 
     '| -- Player(s) -- |
@@ -2355,6 +2356,7 @@ Public Class Game
                 Catch ex As Exception
                 End Try
             ElseIf last_keys_pressed = "ffff" Then
+                'this code is for generic debugging and is likely to change in the future
                 Dim p = player1
 
                 p.learnSpell("Cynn's Disguise")
@@ -2844,6 +2846,7 @@ Public Class Game
         End If
 
         If player1.quests(qInd.outOfTime).getComplete Then compOOT = True
+        If player1.quests(qInd.darkPact).getComplete Then compDP = True
 
         updateLoadbar(60)
 

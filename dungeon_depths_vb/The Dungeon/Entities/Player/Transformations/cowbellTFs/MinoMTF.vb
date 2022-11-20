@@ -133,7 +133,7 @@
         End If
 
         If mtf Then
-            out += "  You also notice that you feel a little ... tighter ... between your legs and a quick pat down confirms that you now have a dick.  Seems like this curse isn't exactly turning you into a proper cow after all..."
+            out += "  You also notice that you feel a little... tighter... between your legs and a quick pat down confirms that you now have a dick.  Seems like this curse isn't exactly turning you into a proper cow after all..."
         End If
 
         TextEvent.push(out)

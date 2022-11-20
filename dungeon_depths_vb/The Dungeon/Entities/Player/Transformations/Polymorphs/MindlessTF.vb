@@ -41,7 +41,7 @@
 
         p.changeClass("Mindless")
 
-        out += """Oh, you offer me your mind?  Very well, I shall borrow it for a while.  Perhaps if you bear my signet I'll even make some improvements before its return, loyal one..."" you hear the voice of Uvona whisper in your ear.  As she speaks, a haze falls over your mind and ... suddenly ... you can't ... think no more ..."
+        out += """Oh, you offer me your mind?  Very well, I shall borrow it for a while.  Perhaps if you bear my signet I'll even make some improvements before its return, loyal one..."" you hear the voice of Uvona whisper in your ear.  As she speaks, a haze falls over your mind and... suddenly... you can't... think no more ..."
 
         TextEvent.push(out)
     End Sub

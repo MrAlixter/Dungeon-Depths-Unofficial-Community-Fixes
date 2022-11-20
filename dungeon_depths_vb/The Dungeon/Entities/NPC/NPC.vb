@@ -141,7 +141,9 @@ Public Class NPC
         Game.fromCombat()
         Me.nextCombatAction = Nothing
 
-        TextEvent.push(title & name & "'s chest slowly turns to solid gold where you poked " & r_pronoun & ". The gilded surface spreads out over " & p_pronoun & " body, and as more of " & p_pronoun & " body turns to the precious metal " & p_pronoun & " struggling becomes less and less intense. As the last of the life drains out of " & p_pronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless gold statue, which you then topple over, shattering it into tiny pieces.   " & vbCrLf & "+" & gd & " gold.", AddressOf endMonster)
+        TextEvent.push(DDUtils.capitalizeFirst(getNameWithTitle()) & "'s chest slowly turns to solid gold where you poked " & r_pronoun & ".  The gilded texture ripples out over " & p_pronoun & " entire body, and as more and more turns into the precious metal " & p_pronoun & " struggling becomes less and less intense." & DDUtils.RNRN &
+                       "As the last of the life drains out of " & p_pronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless gold statue, which you then topple over, shattering it into tiny pieces." & DDUtils.RNRN &
+                       "+" & gd & " Gold", AddressOf endMonster)
     End Sub
     Public Overridable Sub toBlade()
         endMonster()

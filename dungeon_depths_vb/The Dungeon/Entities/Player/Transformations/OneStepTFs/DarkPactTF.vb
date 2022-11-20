@@ -63,4 +63,18 @@
         Dim dptf As DarkPactTF = New DarkPactTF
         dptf.step1()
     End Sub
+
+    Public Shared Sub step1ally(ByRef p As Player)
+        createDisguise(p)
+
+        'succubus transformation
+        p.prt.setIAInd(pInd.hat, 0, True, False)
+        p.prt.setIAInd(pInd.wings, 2, True, False)
+        p.prt.setIAInd(pInd.horns, 3, True, False)
+        p.prt.haircolor = Color.FromArgb(255, 155, 0, 0)
+        p.prt.skincolor = Color.FromArgb(255, 255, 105, 180)
+        p.changeForm("Succubus")
+
+        p.learnSpell("Cynn's Disguise")
+    End Sub
 End Class

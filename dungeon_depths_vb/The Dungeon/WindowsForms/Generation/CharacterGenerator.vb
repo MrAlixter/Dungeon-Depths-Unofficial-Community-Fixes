@@ -752,6 +752,7 @@
         'add the classes unlocked by special events
         If DDDateTime.isHallow Then cbox.Items.Add("Witch")
         If Game.compOOT Then cbox.Items.Add("Time Cop")
+        If Game.compDP Then cbox.Items.Add("Cynn's Ally")
 
         'select a class at random
         cbox.Text = cbox.Items(Int(Rnd() * cbox.Items.Count))

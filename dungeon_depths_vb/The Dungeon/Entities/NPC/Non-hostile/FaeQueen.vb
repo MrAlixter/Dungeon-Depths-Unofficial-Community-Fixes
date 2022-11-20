@@ -592,6 +592,31 @@
         Game.lblEvent.Visible = True
     End Sub
 
+    Public Overrides Sub toStatue()
+        MyBase.toStatue()
+
+        Dim path = Game.currFloor.route(Game.fqueen.pos, Game.currFloor.stairs)
+
+        For i = 0 To UBound(path) Step 4
+            Game.currFloor.mBoard(path(i).Y, path(i).X).Tag = 2
+            If Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "" Then Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "x"
+        Next
+
+        Game.drawBoard()
+
+        TextEvent.pushLog("The path out of the fae woods becomes clear...")
+    End Sub
+
+    Public Overrides Sub toGold()
+        Me.nextCombatAction = Nothing
+
+        TextEvent.push(DDUtils.capitalizeFirst(getNameWithTitle()) & "'s chest slowly turns to solid gold where you poked " & r_pronoun & ".  The gilded texture ripples out over " & p_pronoun & " entire body, and as more and more turns into the precious metal " & p_pronoun & " struggling becomes less and less intense." & DDUtils.RNRN &
+                       "As the last of the life drains out of " & p_pronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless gold statue..." & DDUtils.RNRN &
+                       "...for a few seconds, at least." & DDUtils.RNRN &
+                       "With a flash of light, " & DDUtils.capitalizeFirst(getNameWithTitle()) & " dispels your golden touch." & DDUtils.RNRN &
+                       """Is that truly your best?""")
+    End Sub
+
     '| - MISC - |
     Public Overrides Sub buildShopArea(ByRef floor As mFloor)
     End Sub
