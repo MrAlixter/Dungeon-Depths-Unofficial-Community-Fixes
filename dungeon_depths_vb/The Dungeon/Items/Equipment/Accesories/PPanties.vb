@@ -11,9 +11,8 @@
 
         '|Item Flags|
         usable = False
-        cursed = False
+        rando_inv_allowed = False
         under_b_clothes = True
-        rando_inv_allowed = True
         hide_dick = True
 
         '|Stats|
@@ -31,7 +30,7 @@
         mInd = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
 
         '|Description|
-        setDesc("A pink pair of panties that aren't a part of anything in the non-debug menu game.  Well, at least not yet..." & DDUtils.RNRN &
+        setDesc("A silky piece of underwear." & DDUtils.RNRN &
                 getStatInformation())
     End Sub
 
