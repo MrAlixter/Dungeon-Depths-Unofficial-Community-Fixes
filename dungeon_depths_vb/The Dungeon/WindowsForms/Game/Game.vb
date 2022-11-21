@@ -3378,7 +3378,7 @@ Public Class Game
 
         '|-NPC Buttons-|
         showNPCButtons()
-        If Not m.isShop Then btnShop.Enabled = False
+        If Not m.isShop Then btnShop.Enabled = False Else btnShop.Enabled = True
 
         Dim validSpells() As String = {"Turn to Frog", "Polymorph Enemy", "Petrify", "Petrify II"}
         player1.magicRoute()

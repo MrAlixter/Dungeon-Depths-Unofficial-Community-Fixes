@@ -28,6 +28,7 @@
         '|Description|
         setDesc("A glistening lime gemstone that seems to phase through your bare skin.  A slit of endless black running across its surface stares back at you with icy distain." & DDUtils.RNRN &
                 "While it isn't usually a good idea to stick weird magic rocks into your face, something tells you this may be an exception." & DDUtils.RNRN &
+                "[Medusa's gaze will not affect shopkeepers or bosses.]" & DDUtils.RNRN &
                 getStatInformation())
     End Sub
 

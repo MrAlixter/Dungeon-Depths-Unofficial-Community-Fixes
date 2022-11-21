@@ -28,6 +28,10 @@
             Return -1
         End If
         If Int(Rnd() * 3) = 0 Then
+            Game.fromCombat()
+            TextEvent.push("Your hand slips off of your target, landing on your own thigh instead." & DDUtils.RNRN &
+                           "Without time to react, you end up turned into an embarassed looking golden statue!" & DDUtils.RNRN &
+                           "GAME OVER...")
             Game.player1.toStatue(Color.Goldenrod, "midas")
         ElseIf Not m.getNPC Is Nothing Then
             m.getNPC.toGold()

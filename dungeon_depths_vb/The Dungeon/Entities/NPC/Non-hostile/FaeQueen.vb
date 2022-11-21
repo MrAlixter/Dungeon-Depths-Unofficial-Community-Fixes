@@ -595,6 +595,8 @@
     Public Overrides Sub toStatue()
         MyBase.toStatue()
 
+        spawnStairs(Game.currFloor)
+
         Dim path = Game.currFloor.route(Game.fqueen.pos, Game.currFloor.stairs)
 
         For i = 0 To UBound(path) Step 4

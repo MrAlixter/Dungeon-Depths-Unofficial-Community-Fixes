@@ -14,16 +14,7 @@
 
         TextEvent.pushAndLog(CStr("Your magic strikes " & target.getNameWithTitle() & " in the chest, turning " & MyBase.getTarget.r_pronoun & " to stone."))
 
-        If MyBase.getTarget.speed / 10 > 0 Then
-            TextEvent.pushAndLog(CStr(Math.Ceiling(MyBase.getTarget.speed / 10) & " more until they become a statue!"))
-        End If
-
-        If MyBase.getTarget.speed > 0 Then
-            MyBase.getTarget.speed -= 10
-        Else
-            MyBase.getTarget.toStatue()
-            TextEvent.pushLog(CStr("You see a statue here."))
-        End If
+        Petrify.petrifyEffect(10, MyBase.getTarget)
     End Sub
     Public Overrides Sub backfire()
         Dim p = Game.player1
