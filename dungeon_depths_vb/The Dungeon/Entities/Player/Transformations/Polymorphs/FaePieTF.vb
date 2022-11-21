@@ -38,4 +38,17 @@
 
         p.changeClass("Classless")
     End Sub
+
+    Public Shared Sub applyForXTurns(ByRef p As Player, ByVal x As Integer)
+        EquipmentDialogBackend.equipArmor(p, "Naked", True)
+        p.changeHairColor(BimboTF.bimboyellow2)
+
+        If p.breastSize > 3 Then p.breastSize = 3
+        If p.buttSize > 3 Then p.buttSize = 3
+
+        p.savePState()
+
+        p.perks(perk.polymorphed) = If(Game.combat_engaged, 4, x)
+        p.changeForm("Faerie (B)")
+    End Sub
 End Class

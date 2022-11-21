@@ -9,6 +9,6 @@
     End Sub
 
     Public Overrides Function getEffectDesc()
-        Return "Ass Expansion effect"
+        Return "Ass Shrinking effect"
     End Function
 End Class

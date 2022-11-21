@@ -11,7 +11,6 @@
 
         '|Item Flags|
         usable = True
-        rando_inv_allowed = False
         droppable = False
 
         '|Stats|

@@ -23,6 +23,7 @@
         Dim out = ""
 
         'unequips
+        If Not p.inv.getCountAt(GoddessGown.ITEM_NAME) > 0 Then p.inv.add(GoddessGown.ITEM_NAME, 1)
         EquipmentDialogBackend.armorChange(p, "Goddess_Gown")
          EquipmentDialogBackend.weaponChange(p, "Fists")
 

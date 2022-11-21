@@ -11,6 +11,7 @@
 
         '|Item Flags|
         usable = False
+        rando_inv_allowed = False
 
         '|Stats|
         a_boost = 1

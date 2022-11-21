@@ -34,9 +34,9 @@ Partial Class Settings
         Me.chkEoverSS = New System.Windows.Forms.CheckBox()
         Me.chkTextColor = New System.Windows.Forms.CheckBox()
         Me.btnAdv = New System.Windows.Forms.Button()
-        Me.chkBimboNames = New System.Windows.Forms.CheckBox()
         Me.tabAdvSettings = New System.Windows.Forms.TabControl()
         Me.tabSpawnRates = New System.Windows.Forms.TabPage()
+        Me.chkBimboNames = New System.Windows.Forms.CheckBox()
         Me.tabAdvSettings.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -45,7 +45,7 @@ Partial Class Settings
         Me.btnSettingsOK.BackgroundImage = CType(resources.GetObject("btnSettingsOK.BackgroundImage"), System.Drawing.Image)
         Me.btnSettingsOK.Font = New System.Drawing.Font("Consolas", 8.150944!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSettingsOK.ForeColor = System.Drawing.Color.White
-        Me.btnSettingsOK.Location = New System.Drawing.Point(185, 468)
+        Me.btnSettingsOK.Location = New System.Drawing.Point(185, 475)
         Me.btnSettingsOK.Name = "btnSettingsOK"
         Me.btnSettingsOK.Size = New System.Drawing.Size(75, 30)
         Me.btnSettingsOK.TabIndex = 0
@@ -195,30 +195,12 @@ Partial Class Settings
         Me.btnAdv.BackgroundImage = CType(resources.GetObject("btnAdv.BackgroundImage"), System.Drawing.Image)
         Me.btnAdv.Font = New System.Drawing.Font("Consolas", 8.150944!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAdv.ForeColor = System.Drawing.Color.White
-        Me.btnAdv.Location = New System.Drawing.Point(66, 468)
+        Me.btnAdv.Location = New System.Drawing.Point(66, 475)
         Me.btnAdv.Name = "btnAdv"
         Me.btnAdv.Size = New System.Drawing.Size(113, 30)
         Me.btnAdv.TabIndex = 29
         Me.btnAdv.Text = "Adv. Settings"
         Me.btnAdv.UseVisualStyleBackColor = True
-        '
-        'chkBimboNames
-        '
-        Me.chkBimboNames.AutoSize = True
-        Me.chkBimboNames.Checked = True
-        Me.chkBimboNames.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkBimboNames.FlatAppearance.BorderColor = System.Drawing.Color.Black
-        Me.chkBimboNames.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black
-        Me.chkBimboNames.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black
-        Me.chkBimboNames.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black
-        Me.chkBimboNames.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.chkBimboNames.ForeColor = System.Drawing.Color.White
-        Me.chkBimboNames.Location = New System.Drawing.Point(16, 437)
-        Me.chkBimboNames.Name = "chkBimboNames"
-        Me.chkBimboNames.Size = New System.Drawing.Size(251, 21)
-        Me.chkBimboNames.TabIndex = 30
-        Me.chkBimboNames.Text = "Avoid beta name change logic" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
-        Me.chkBimboNames.UseVisualStyleBackColor = True
         '
         'tabAdvSettings
         '
@@ -243,14 +225,31 @@ Partial Class Settings
         Me.tabSpawnRates.TabIndex = 0
         Me.tabSpawnRates.Text = "Monster Spawn Rates"
         '
+        'chkBimboNames
+        '
+        Me.chkBimboNames.Checked = True
+        Me.chkBimboNames.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkBimboNames.FlatAppearance.BorderColor = System.Drawing.Color.Black
+        Me.chkBimboNames.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black
+        Me.chkBimboNames.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black
+        Me.chkBimboNames.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black
+        Me.chkBimboNames.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkBimboNames.ForeColor = System.Drawing.Color.White
+        Me.chkBimboNames.Location = New System.Drawing.Point(16, 430)
+        Me.chkBimboNames.Name = "chkBimboNames"
+        Me.chkBimboNames.Size = New System.Drawing.Size(251, 39)
+        Me.chkBimboNames.TabIndex = 32
+        Me.chkBimboNames.Text = "No experimental name changes"
+        Me.chkBimboNames.UseVisualStyleBackColor = True
+        '
         'Settings
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(272, 512)
         Me.ControlBox = False
-        Me.Controls.Add(Me.tabAdvSettings)
         Me.Controls.Add(Me.chkBimboNames)
+        Me.Controls.Add(Me.tabAdvSettings)
         Me.Controls.Add(Me.btnAdv)
         Me.Controls.Add(Me.chkTextColor)
         Me.Controls.Add(Me.chkEoverSS)
@@ -281,7 +280,7 @@ Partial Class Settings
     Friend WithEvents chkEoverSS As System.Windows.Forms.CheckBox
     Friend WithEvents chkTextColor As System.Windows.Forms.CheckBox
     Friend WithEvents btnAdv As System.Windows.Forms.Button
-    Friend WithEvents chkBimboNames As System.Windows.Forms.CheckBox
     Friend WithEvents tabAdvSettings As System.Windows.Forms.TabControl
     Friend WithEvents tabSpawnRates As System.Windows.Forms.TabPage
+    Friend WithEvents chkBimboNames As System.Windows.Forms.CheckBox
 End Class

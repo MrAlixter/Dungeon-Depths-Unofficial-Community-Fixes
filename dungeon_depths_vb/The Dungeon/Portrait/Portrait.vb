@@ -292,8 +292,8 @@ Public Class Portrait
             Return Game.picBlobM.BackgroundImage
         ElseIf pForm.Equals("Blob") And sexBool() Then
             Return Game.picBlobF.BackgroundImage
-        ElseIf pForm.Equals("Fae") Then
-            Return Nothing  'Game.picPFae.BackgroundImage
+        ElseIf pForm.Equals("Faerie (B)") Then
+            Return Game.picPFae.BackgroundImage
         ElseIf pForm.Equals("Cow") Then
             Return Game.picCow.BackgroundImage
         ElseIf pForm.Equals("Blow-Up Cynn") Then

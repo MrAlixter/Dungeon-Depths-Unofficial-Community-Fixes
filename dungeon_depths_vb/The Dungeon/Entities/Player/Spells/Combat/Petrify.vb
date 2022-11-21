@@ -23,7 +23,7 @@
         End If
 
         If target.speed > 0 Then
-            target.speed -= 5
+            target.speed -= amt
         Else
             target.toStatue()
             TextEvent.pushLog("You see a statue here.")

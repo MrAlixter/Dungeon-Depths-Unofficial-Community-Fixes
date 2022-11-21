@@ -19,4 +19,25 @@
 
     Public Overrides Sub step1()
     End Sub
+
+    Public Overrides Sub stopTF()
+        MyBase.stopTF()
+
+        Game.player1.hBuff = 0
+        Game.player1.mBuff = 0
+        Game.player1.aBuff = 0
+        Game.player1.dBuff = 0
+        Game.player1.sBuff = 0
+        Game.player1.wBuff = 0
+    End Sub
+    Public Overrides Sub removeFromTFList()
+        Game.player1.hBuff = 0
+        Game.player1.mBuff = 0
+        Game.player1.aBuff = 0
+        Game.player1.dBuff = 0
+        Game.player1.sBuff = 0
+        Game.player1.wBuff = 0
+
+        Game.player1.perks(perk.polymorphed) = -1
+    End Sub
 End Class

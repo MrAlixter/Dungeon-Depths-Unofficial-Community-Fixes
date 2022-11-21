@@ -148,6 +148,7 @@
     <Compile Include="Entities\Player\Classes\WSmithThong1.vb" />
     <Compile Include="Entities\Player\Forms\needsPassages\BeeGirl.vb" />
     <Compile Include="Entities\Player\Forms\needsPassages\BlowUpCynn.vb" />
+    <Compile Include="Entities\Player\Forms\needsPassages\FaeBimbo.vb" />
     <Compile Include="Entities\Player\Forms\needsPassages\Unicorn.vb" />
     <Compile Include="Entities\Player\Forms\needsPassages\Orc.vb" />
     <Compile Include="Entities\Player\Forms\needsPassages\Cow.vb" />

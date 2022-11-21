@@ -1,6 +1,7 @@
 ﻿Public Enum TypeOfFusion
     CRYSTAL_FUSION
     SPOT_FUSION
+    SUCCESSFUL
 End Enum
 
 Public Class FusionDialogBackend
@@ -40,13 +41,13 @@ Public Class FusionDialogBackend
 
             fuPlay.drawPort()
 
+            fType = TypeOfFusion.SUCCESSFUL
         ElseIf fType = TypeOfFusion.SPOT_FUSION Then
-            Polymorph.transform(Game.player1, "Fusion")
-            TextEvent.push(Game.player1.name & " and " & p2.name & " fuse together to form " & FusionCrystal.nameFusion(Game.player1.name, p2.name) & _
-                      ", a superior explorer!")
+            p.perks(perk.isspotfused) = 115
+            Polymorph.transform(p, "Fusion")
+            TextEvent.push(p.name & " and " & p2.name & " fuse together to form " & FusionCrystal.nameFusion(p.name, p2.name) & ", a superior explorer!")
 
             p = SpotFusion.Fusion(p, p2)
-            p.currState.save(p)
             p.inv.invNeedsUDate = True
             p.UIupdate()
 
@@ -55,6 +56,8 @@ Public Class FusionDialogBackend
             Equipment.accChange(p, Game.cboxFusionAccessory.Text)
 
             p.drawPort()
+
+            fType = TypeOfFusion.SUCCESSFUL
         End If
 
         fromPNL(p)

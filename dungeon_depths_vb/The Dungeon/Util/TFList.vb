@@ -54,8 +54,8 @@
     End Function
     Sub resetPolymorphs()
         For i = internalList.Count - 1 To 0 Step -1
-            tf = internalList.Values(i)
-            If tf.GetType().IsSubclassOf(GetType(PolymorphTF)) Then internalList.Remove(tf.getTFName)
+            Dim tf As Transformation = internalList.Values(i)
+            If tf.GetType().IsSubclassOf(GetType(PolymorphTF)) Then tf.removeFromTFList() : internalList.Remove(tf.getTFName)
         Next
     End Sub
 

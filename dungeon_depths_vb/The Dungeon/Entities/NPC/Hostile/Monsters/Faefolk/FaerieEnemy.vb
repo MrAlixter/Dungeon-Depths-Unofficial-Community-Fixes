@@ -72,6 +72,12 @@
             p.drawPort()
 
             Return """Ooh, it looks like you're already someone's flower bed...  Do you think they'd mind if I did some gardening myself?"""
+        ElseIf p.equippedAcce.getAName.Equals(FaerieBlossom.ITEM_NAME) Then
+            FaePieTF.applyForXTurns(p, 18)
+
+            p.drawPort()
+
+            Return """Ooh, it looks like you're already someone's flower bed...  Mmm, and so lush already...  Aww, did you just want to be a cute fairy yourself?"""
         End If
 
         EquipmentDialogBackend.equipAcce(p, FaerieBlossom.ITEM_NAME, False)

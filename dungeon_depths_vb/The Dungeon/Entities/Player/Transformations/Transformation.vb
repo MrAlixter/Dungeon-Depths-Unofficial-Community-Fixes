@@ -448,6 +448,8 @@ Public MustInherit Class Transformation
             turns_until_next_step -= 1
         End If
     End Sub
+    Overridable Sub removeFromTFList()
+    End Sub
 
     'sequential tf methods
     Sub setCurrStep(i As Integer)

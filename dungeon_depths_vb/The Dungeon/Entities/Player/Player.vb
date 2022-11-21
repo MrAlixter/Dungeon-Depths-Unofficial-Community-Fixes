@@ -713,6 +713,7 @@ Public Class Player
         forms.Add("Orc", New Orc())
         forms.Add("Bee Girl", New BeeGirl())
         forms.Add("Blow-Up Cynn", New BlowUpCynn())
+        forms.Add("Faerie (B)", New FaeBimbo())
     End Sub
     Private Sub initPolymorphs()
         'compile list of polymorphs
@@ -1257,6 +1258,8 @@ Public Class Player
     End Sub
     Public Sub petrify(ByVal c As Color, ByVal dur As Integer)
         If pForm.name.Equals("Dragon") Or pForm.name.Equals("Broodmother") Then revertToPState()
+        savePState()
+
         perks(perk.astatue) = dur
         changeHairColor(c, True)
 

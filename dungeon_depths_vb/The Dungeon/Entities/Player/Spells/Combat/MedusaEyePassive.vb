@@ -7,14 +7,14 @@
         MyBase.setcost(0)
     End Sub
     Public Overrides Sub effect()
-        If MyBase.getTarget.GetType().IsSubclassOf(GetType(MiniBoss)) Or MyBase.getTarget.GetType().IsSubclassOf(GetType(Boss)) Or MyBase.getTarget.GetType().IsSubclassOf(GetType(ShopNPC)) Then
+        If getTarget.name.Contains("Medusa") Then 'MyBase.getTarget.GetType().IsSubclassOf(GetType(MiniBoss)) Or MyBase.getTarget.GetType().IsSubclassOf(GetType(Boss)) Or MyBase.getTarget.GetType().IsSubclassOf(GetType(ShopNPC)) Then
             TextEvent.push("Your gaze doesn't seem to have done anything...")
             Exit Sub
         End If
 
         TextEvent.pushAndLog(CStr("Your gaze washes over " & target.getNameWithTitle() & ", turning " & MyBase.getTarget.r_pronoun & " to stone."))
 
-        Petrify.petrifyEffect(MyBase.getTarget.sSpeed / 5, MyBase.getTarget)
+        Petrify.petrifyEffect(Math.Min(150, MyBase.getTarget.sSpeed / 5), MyBase.getTarget)
     End Sub
 
     Public Overrides Function getcost() As Integer
