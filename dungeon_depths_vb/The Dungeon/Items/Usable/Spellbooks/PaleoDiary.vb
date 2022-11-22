@@ -1,7 +1,7 @@
 ﻿Public Class PaleoDiary
-    Inherits Item
+    Inherits Spellbook
 
-    Public Const ITEM_NAME As String = "Paleomancer's_Diary"
+    Public Shadows Const ITEM_NAME As String = "Paleomancer's_Diary"
 
     Sub New()
         '|ID Info|
@@ -21,23 +21,13 @@
         setDesc("A simple, leather-bound journal written by a wizard studying the past that likely contains something cool and magic.")
     End Sub
 
-    Overrides Sub use(ByRef p As Player)
-        
-        Dim sName = "Polymorph Enemy"
-        Dim out = "You learn how to polymorph somthing into a Trilobite!"
-
-        If Not p.knownSpells.Contains(sName) Then
-            p.knownSpells.Add(sName)
-            TextEvent.pushLog("You learn ""Polymorph Enemy""")
-        End If
-
-        If Not p.enemPolyForms.Contains("Trilobite") Then
-            p.enemPolyForms.Add("Trilobite")
-            TextEvent.pushLog(out)
-        Else
-            TextEvent.pushAndLog("The book doesn't contain any new information...")
-        End If
-
-        count -= 1
-    End Sub
+    Public Overrides Function spells() As String()
+        Return {"Polymorph Enemy"}
+    End Function
+    Public Overrides Function selfPolyForms() As String()
+        Return {}
+    End Function
+    Public Overrides Function enemPolyForms() As String()
+        Return {"Trilobite"}
+    End Function
 End Class

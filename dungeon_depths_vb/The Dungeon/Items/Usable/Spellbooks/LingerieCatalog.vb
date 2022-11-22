@@ -1,7 +1,7 @@
 ﻿Public Class LingerieCatalog
-    Inherits Item
+    Inherits Spellbook
 
-    Public Const ITEM_NAME As String = "Lingerie_Catalog"
+    Public Shadows Const ITEM_NAME As String = "Lingerie_Catalog"
 
     Sub New()
         '|ID Info|
@@ -22,9 +22,13 @@
         setDesc("A small paper pamphlet containing pictures of models in skimpy underwear.  On its back, a simple incantation is scrawled in golden ink.")
     End Sub
 
-    Overrides Sub use(ByRef p As Player)
-        p.learnSpell("Turn to Panties")
-
-        count -= 1
-    End Sub
+    Public Overrides Function spells() As String()
+        Return {"Turn to Panties"}
+    End Function
+    Public Overrides Function selfPolyForms() As String()
+        Return {}
+    End Function
+    Public Overrides Function enemPolyForms() As String()
+        Return {}
+    End Function
 End Class

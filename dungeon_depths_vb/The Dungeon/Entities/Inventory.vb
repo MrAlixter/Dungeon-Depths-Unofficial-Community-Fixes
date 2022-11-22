@@ -409,6 +409,8 @@
         internal_inventory.Add(ManaPotionHB.ITEM_NAME, New ManaPotionHB)             '383
         internal_inventory.Add(CommonClothes9.ITEM_NAME, New CommonClothes9)         '384
         internal_inventory.Add(Orange.ITEM_NAME, New Orange)                         '385
+        'v12.1.0
+
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),

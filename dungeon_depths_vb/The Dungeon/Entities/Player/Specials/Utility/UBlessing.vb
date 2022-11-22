@@ -17,7 +17,7 @@
 
 
         If coin = 0 Then
-            Dim omniSpells() As String = ASpellbook.spells.Union(Spellbook.spells).ToArray
+            Dim omniSpells() As String = ASpellbook.getSpells.Union(Spellbook.getSpells).ToArray
             If omniSpells.Count = p.knownSpells.Count Then
                 errorout()
                 Exit Sub

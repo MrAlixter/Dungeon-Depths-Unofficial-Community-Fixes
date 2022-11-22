@@ -1,7 +1,7 @@
 ﻿Public Class AAAAAASpecs
-    Inherits Item
+    Inherits Spellbook
 
-    Public Const ITEM_NAME As String = "AAAAAA_Specification"
+    Public Shadows Const ITEM_NAME As String = "AAAAAA_Specification"
 
     Sub New()
         '|ID Info|
@@ -21,9 +21,13 @@
         setDesc("A small paper pamphlet containing a diagam of a sextuple-A battery.  On its back, a simple incantation is scrawled in ink.")
     End Sub
 
-    Overrides Sub use(ByRef p As Player)
-        p.learnSpell("Summon Battery")
-
-        count -= 1
-    End Sub
+    Public Overrides Function spells() As String()
+        Return {"Summon Battery"}
+    End Function
+    Public Overrides Function selfPolyForms() As String()
+        Return {}
+    End Function
+    Public Overrides Function enemPolyForms() As String()
+        Return {}
+    End Function
 End Class

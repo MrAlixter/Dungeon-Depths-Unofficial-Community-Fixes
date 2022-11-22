@@ -3,8 +3,6 @@
 
     Public Const ITEM_NAME As String = "Spellbook"
 
-    Public Shared spells() As String = {"Super Fireball", "Icicle Spear", "Self Polymorph", "Turn to Frog", "Polymorph Enemy",
-                                        "Petrify", "Heal", "Illuminate", "Fireball", "Warp", "Arcane Compass", "Hydrodart"}
     Sub New()
         '|ID Info|
         setName(ITEM_NAME)
@@ -19,94 +17,108 @@
         value = 500
 
         '|Description|
-        setDesc("A simple, leather-bound book that likely contains something cool and magic.")
+        setDesc("A simple, leather-bound book that likely contains some cool magic knowledge.")
     End Sub
+
+    Public Shared Function getSpells() As String()
+        Return New Spellbook().spells
+    End Function
+    Public Overridable Function spells() As String()
+        Return {"Super Fireball", "Icicle Spear", "Self Polymorph", "Turn to Frog", "Polymorph Enemy", "Petrify", "Heal", "Illuminate", "Fireball", "Warp", "Arcane Compass", "Hydrodart"}
+    End Function
+    Public Overridable Function selfPolyForms() As String()
+        Return {"Dragon", "Succubus", "Slime", "Tigress", "Human"}
+    End Function
+    Public Overridable Function enemPolyForms() As String()
+        Return {"Sheep", "Princess", "Bunny"}
+    End Function
 
     Overrides Sub use(ByRef p As Player)
-        If Int(Rnd() * 10) = -1 Then
-            'bimbo tf
-        Else
-            Randomize()
-            If Me.getUsable() = False Then Exit Sub
-            Dim sName As String = "ERROR"
-            Dim ct As Integer = 0
-            Dim out As String = ""
-            While ct < 1 Or Game.player1.knownSpells.Contains(sName)
-                ct += 1
-                Dim spell As Integer = CInt(Int(Rnd() * (spells.Length)))
-                Select Case spell
-                    Case 2
-                        sName = "Self Polymorph"
-                        Dim form As String = "Err"
-                        Dim c As Integer = 0
-                        While c < 1 Or p.selfPolyForms.Contains(form)
-                            c += 1
-                            Dim learnForm As Integer = CInt(Int(Rnd() * 5))
-                            Select Case learnForm
-                                Case 0
-                                    form = "Dragon"
-                                Case 1
-                                    form = "Succubus"
-                                Case 2
-                                    form = "Slime"
-                                Case 3
-                                    form = "Tigress"
-                                Case 4
-                                    form = "Human"
-                            End Select
-                            If c > 40 Then
-                                out = "All self polymorph forms learned from spellbooks!"
-                                Exit Select
-                            End If
-                        End While
-                        If Not p.selfPolyForms.Contains(form) Then
-                            p.selfPolyForms.Add(form)
-                            out = "You learn how to turn yourself into a " & form & "!"
-                            Exit While
-                        End If
-                    Case 4
-                        sName = "Polymorph Enemy"
-                        Dim form As String = "Err"
-                        Dim c As Integer = 0
-                        While c < 1 Or p.enemPolyForms.Contains(form)
-                            c += 1
-                            Dim learnForm As Integer = CInt(Int(Rnd() * 3))
-                            Select Case learnForm
-                                Case 0
-                                    form = "Sheep"
-                                Case 1
-                                    form = "Princess"
-                                Case 2
-                                    form = "Bunny"
-                            End Select
-                            If c > 40 Then
-                                out = "All polymorph enemy forms learned from spellbooks!"
-                                Exit Select
-                            End If
-                        End While
-                        If Not p.enemPolyForms.Contains(form) Then
-                            p.enemPolyForms.Add(form)
-                            out = "You learn how to polymorph somthing into a " & form & "!"
-                            Exit While
-                        End If
-                    Case Else
-                        sName = spells(spell)
-                End Select
-                If ct > 60 Then
-                    TextEvent.pushLog("You know all the spells in spellbooks already!")
-                    Exit Sub
-                End If
-            End While
-            If Not Game.player1.knownSpells.Contains(sName) Then Game.player1.knownSpells.Add(sName)
-            TextEvent.pushLog("You read the " & getName() & ". " & sName & " learned!")
-            If Not out.Equals("") Then
-                TextEvent.pushLog(out)
-                TextEvent.push("You read the " & getName() & ". " & sName & " learned!" & DDUtils.RNRN & out)
-            Else
-                TextEvent.push("You read the " & getName() & ". " & sName & " learned!")
-            End If
+        If playerKnowsAllSpells(p) Then
+            TextEvent.pushLog("You read the " & getName().Replace("_", " ") & "... but you already know all the spells it contains.")
+            Exit Sub
         End If
-        count -= 1
 
+        learnSpell(p)
+
+        count -= 1
     End Sub
+
+    Protected Function playerKnowsAllSpells(ByRef p As Player) As Boolean
+        For Each s In spells()
+            If Not p.knownSpells.Contains(s) Then Return False
+        Next
+
+        For Each sp_form In selfPolyForms()
+            If Not p.selfPolyForms.Contains(sp_form) Then Return False
+        Next
+
+        For Each ep_form In enemPolyForms()
+            If Not p.enemPolyForms.Contains(ep_form) Then Return False
+        Next
+
+        Return True
+    End Function
+
+    Protected Sub learnSpell(ByRef p As Player)
+        Randomize()
+
+        Dim learnable_spells = New List(Of String)(spells)
+        Dim learned_spell As String = ""
+
+        While learnable_spells.Count > 0 And learned_spell = ""
+            Dim spell As String = learnable_spells(Int(Rnd() * learnable_spells.Count))
+
+            If Not Game.player1.knownSpells.Contains(spell) Or spell.Equals("Polymorph Enemy") Or spell.Equals("Self Polymorph") Then
+                learned_spell = spell
+
+                If spell = "Self Polymorph" AndAlso Not learnSelfPolymorph(p) Then learned_spell = ""
+                If spell = "Polymorph Enemy" AndAlso Not learnEnemyPolymorph(p) Then learned_spell = ""
+            End If
+
+            learnable_spells.Remove(spell)
+        End While
+
+        If Not p.knownSpells.Contains(learned_spell) Then p.knownSpells.Add(learned_spell)
+
+        TextEvent.pushLog("You read the " & getName().Replace("_", " ") & ".  " & learned_spell & " learned!")
+    End Sub
+
+    Protected Function learnSelfPolymorph(ByRef p As Player) As Boolean
+        Dim poly_forms = New List(Of String)(selfPolyForms)
+        Dim poly_form = ""
+
+        While poly_forms.Count > 0
+            Dim form As String = poly_forms(Int(Rnd() * poly_forms.Count))
+
+            If Not p.selfPolyForms.Contains(form) Then
+                TextEvent.pushLog("You learn how to polymorph yourself into a " & form & "!")
+                p.selfPolyForms.Add(form)
+                Return True
+            End If
+
+            poly_forms.Remove(form)
+        End While
+
+        Return False
+    End Function
+
+    Protected Function learnEnemyPolymorph(ByRef p As Player) As Boolean
+        Dim poly_forms = New List(Of String)(enemPolyForms)
+        Dim poly_form = ""
+
+        While poly_forms.Count > 0
+            Dim form As String = poly_forms(Int(Rnd() * poly_forms.Count))
+
+            If Not p.enemPolyForms.Contains(form) Then
+                TextEvent.pushLog("You learn how to polymorph an enemy into a " & form & "!")
+                p.enemPolyForms.Add(form)
+                Return True
+            End If
+
+            poly_forms.Remove(form)
+        End While
+
+        Return False
+    End Function
 End Class
