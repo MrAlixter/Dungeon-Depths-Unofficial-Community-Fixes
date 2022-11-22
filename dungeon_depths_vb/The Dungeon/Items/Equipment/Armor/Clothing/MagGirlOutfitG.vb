@@ -14,6 +14,7 @@
         compress_breast = True
         show_underboob = True
         rando_inv_allowed = False
+        hide_rearhair = True
 
         '|Stats|
         d_boost = 25

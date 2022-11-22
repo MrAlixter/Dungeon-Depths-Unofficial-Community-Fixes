@@ -4,7 +4,7 @@
     Sub New()
         MyBase.New("Cursed Contraband")
 
-        qInd = qInds.cContra
+        quest_index = qInd.cContra
 
         objectives.Add(New CursedContrabandS1)
     End Sub
@@ -18,7 +18,7 @@
     End Function
 End Class
 
-Public Class CursedContrabandS1
+Friend Class CursedContrabandS1
     Inherits Objective
 
     Sub New()

@@ -42,16 +42,27 @@
 
 
         Dim allKnownSpellsAndSpecials = p.knownSpecials.Union(p.knownSpells)
-        Dim r = Int(Rnd() * p.knownSpells.Count)
+        Dim r = Int(Rnd() * allKnownSpellsAndSpecials.Count)
         forgottenS = allKnownSpellsAndSpecials(r)
         If p.knownSpells.Contains(forgottenS) Then
-            p.knownSpells.RemoveAt(r)
+            p.forgetSpell(forgottenS)
         Else
-            p.knownSpecials.RemoveAt(r)
+            If Game.cboxSpec.SelectedItem = forgottenS Then
+                Game.cboxSpec.Items.Insert(0, "-- Select --")
+                Game.cboxSpec.SelectedIndex = 0
+            End If
+
+            Do While Game.player1.knownSpecials.Contains(forgottenS)
+                Game.player1.knownSpecials.Remove(forgottenS)
+            Loop
+
+            p.specialRoute()
         End If
 
         If coin = 0 Then
             p.knownSpells.Add(learnedS)
+            If learnedS.Equals("Self Polymorph") And p.selfPolyForms.Count = 0 Then p.selfPolyForms.Add("Succubus")
+            If learnedS.Equals("Polymorph Enemy") And p.enemPolyForms.Count = 0 Then p.enemPolyForms.Add("Cat-Girl")
         Else
             p.knownSpecials.Add(learnedS)
         End If

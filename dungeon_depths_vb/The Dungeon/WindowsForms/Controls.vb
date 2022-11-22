@@ -5,6 +5,7 @@ Public Class Controls
     Dim defKeys = "".ToCharArray
     Private Sub Controls_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DDUtils.resizeForm(Me)
+        Me.CenterToParent()
 
         Dim sr As StreamReader
         sr = IO.File.OpenText("configs.ave")

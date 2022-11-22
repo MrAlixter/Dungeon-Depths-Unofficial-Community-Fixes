@@ -18,7 +18,8 @@
         value = 9999
 
         '|Description|
-        setDesc("A ornate glove that allows you to turn a monster to gold.")
+        setDesc("An ornate, armored glove can turn a monster to gold with a single touch.  If you were to accidentally graze yourself, though, you too would meet the same fate..." & DDUtils.RNRN &
+                "On attack, 2 in 3 odds to turn the target to gold.  1 in 3 odds to turn the player to gold.")
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer
@@ -26,11 +27,16 @@
         If dmg <= 5 Then
             Return -1
         End If
-        If Int(Rnd() * 3) = 0 Or Not (m.GetType() Is GetType(NPC) Or m.GetType.IsSubclassOf(GetType(NPC))) Then
+        If Int(Rnd() * 3) = 0 Then
+            Game.fromCombat()
+            TextEvent.push("Your hand slips off of your target, landing on your own thigh instead." & DDUtils.RNRN &
+                           "Without time to react, you end up turned into an embarassed looking golden statue!" & DDUtils.RNRN &
+                           "GAME OVER...")
             Game.player1.toStatue(Color.Goldenrod, "midas")
-        Else
-            CType(m, NPC).toGold()
+        ElseIf Not m.getNPC Is Nothing Then
+            m.getNPC.toGold()
         End If
+
         Return 0
     End Function
 End Class

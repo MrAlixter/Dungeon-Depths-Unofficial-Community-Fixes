@@ -4,7 +4,7 @@
     Sub New()
         MyBase.New("Opposite Day")
 
-        qInd = qInds.oppositeDay
+        quest_index = qInd.oppositeDay
 
         objectives.Add(New OppositeDayS1)
     End Sub
@@ -20,7 +20,7 @@
     End Function
 End Class
 
-Public Class OppositeDayS1
+Friend Class OppositeDayS1
     Inherits Objective
 
     Sub New()

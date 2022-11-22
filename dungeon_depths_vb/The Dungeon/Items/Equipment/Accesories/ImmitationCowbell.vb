@@ -11,6 +11,7 @@
 
         '|Item Flags|
         usable = False
+        under_chin = True
         rando_inv_allowed = False
         cursed = True
 

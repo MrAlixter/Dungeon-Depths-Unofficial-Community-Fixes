@@ -65,6 +65,7 @@ Partial Class BrokenRemotePicker
         Me.cboxRemoteForms.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.cboxRemoteForms.Name = "cboxRemoteForms"
         Me.cboxRemoteForms.Size = New System.Drawing.Size(199, 21)
+        Me.cboxRemoteForms.Sorted = True
         Me.cboxRemoteForms.TabIndex = 16
         Me.cboxRemoteForms.Text = "-- Select --"
         '
@@ -80,7 +81,6 @@ Partial Class BrokenRemotePicker
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "BrokenRemotePicker"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Broken Remote"
         Me.ResumeLayout(False)
         Me.PerformLayout()

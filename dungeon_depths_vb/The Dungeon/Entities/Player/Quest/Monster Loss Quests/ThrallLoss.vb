@@ -4,7 +4,7 @@
     Sub New()
         MyBase.New("Enthralled")
 
-        qInd = qInds.enthralled
+        quest_index = qInd.enthralled
 
         objectives.Add(New FindCrystal)
     End Sub
@@ -49,7 +49,7 @@
     End Function
 End Class
 
-Public Class FindCrystal
+Friend Class FindCrystal
     Inherits Objective
 
     Sub New()
@@ -65,16 +65,16 @@ Public Class FindCrystal
                 out += "  In their attention to the crystal, they don't seem to notice you at all giving you a few minutes to yourself." & DDUtils.RNRN & "Wait... if they aren't paying attention to you..." & DDUtils.RNRN & "You fiddle around with your collar, and they still don't seem to notice your actions, so you leverage your thumb in the collars joint."
                 TextEvent.push(out, AddressOf ThrallTF.betraySorc, AddressOf ThrallTF.waitSorc, "Break off your collar?")
             Else
-                out += "  Despite your excitement, they don't seem to notice you, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and wait, are those horns sprouting out of their hair that seems to catch a non-existant wind?  With a flourish, they complete ... something ... and a blinding flash engulfs them.  Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & _
+                out += "  Despite your excitement, they don't seem to notice you, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and wait, are those horns sprouting out of their hair that seems to catch a non-existant wind?  With a flourish, they complete... something... and a blinding flash engulfs them.  Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & _
                     """Well... It looks like you succeeded.  For that, I will give you an ultimatium.  Join me as my general, or die in these dungeons as my slave."
                 TextEvent.push(out, AddressOf ThrallTF.acceptSorc, AddressOf ThrallTF.fightSorc, "Accept their offer?")
             End If
 
         Else
             TextEvent.push("You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & _
-                """No, that isn't it."" your overseer states disappointedly, ""Well, I guess you can go back to your buisness now.""")
+                """No, that isn't it."" your overseer states disappointedly, ""Well, I guess you can go back to your business now.""")
             Game.player1.ongoingTFs.add(New ThrallTF())
-            Game.player1.quests(qInds.enthralled).goToStep(1)
+            Game.player1.quests(qInd.enthralled).goToStep(1)
         End If
 
         MyBase.complete()

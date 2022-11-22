@@ -2,7 +2,8 @@
     Inherits pClass
     Sub New()
         MyBase.New(1, 1.75, 1.75, 0.5, 0.75, 0.75, "Necromancer")
-        MyBase.revertPassage = "Your mind feels slightly weaker, and your magical aptitude becomes far more average.  You also feel a cold chill down your spine..."
+        revertPassage = "The magical aura surrounding you fizzles and dims..."
+        transformPassage = "Your magical aptitude increases, and a few crackling arcs of mana surge around you."
     End Sub
     Public Overrides Sub onLVLUp(ByVal level As Integer, ByRef p As Player, Optional learnSkills As Boolean = True)
         If level Mod 2 = 0 Then

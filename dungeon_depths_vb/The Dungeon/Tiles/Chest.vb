@@ -1,12 +1,16 @@
-﻿Public Class Chest
+﻿Public Enum cTier
+    null
+    tier1
+    tier2
+    tier3
+    tier4
+    tier5
+End Enum
+Public Class Chest
     Public contents As Inventory
     Public pos As Point
-    Public tier1 = New List(Of Item)
-    Public tier2 = New List(Of Item)
-    Public tier3 = New List(Of Item)
-    Public tier4 = New List(Of Item)
-    Public tier5 = New List(Of Item)
-    Public tiers() As List(Of Item) = {Nothing, tier1, tier2, tier3, tier4}
+    Public tiers() As List(Of Item) = {Nothing, New List(Of Item), New List(Of Item), New List(Of Item), New List(Of Item)}
+
     '|CONSTRUCTORS|
     Sub New()
         contents = New Inventory(False)
@@ -63,18 +67,18 @@
         Dim numC As Integer = CInt(Int(Rnd() * Game.chestRichnessRange) + Game.chestRichnessBase)
         For i = 0 To numC
             Dim r As Integer = Int(Rnd() * 17)
-            Dim itemTier As Integer = 1
+            Dim itemTier As Integer = cTier.tier1
             Select Case r
                 Case 19
-                    itemTier = 5
+                    itemTier = cTier.tier5
                 Case 18, 17
-                    itemTier = 4
+                    itemTier = cTier.tier4
                 Case 16, 15
-                    itemTier = 3
+                    itemTier = cTier.tier3
                 Case 14, 13, 12, 11, 10, 9
-                    itemTier = 2
+                    itemTier = cTier.tier2
                 Case Else
-                    itemTier = 1
+                    itemTier = cTier.tier1
             End Select
             If itemTier < 1 Or itemTier > tiers.Length - 1 Then
                 Console.Out.WriteLine("Chest @ (" & CStr(x) & ", " & CStr(y) & ") tried making an item out of tier range.\nDefaulting to tier 1.")
@@ -96,11 +100,6 @@
     Function Clone() As Chest
         'creates a hard copy of a chest
         Dim toReturn = New Chest()
-        toReturn.tier1 = Me.tier1
-        toReturn.tier2 = Me.tier2
-        toReturn.tier3 = Me.tier3
-        toReturn.tier2 = Me.tier4
-        toReturn.tier3 = Me.tier5
         toReturn.tiers = Me.tiers
         toReturn.contents = New Inventory(False)
         Return toReturn
@@ -125,20 +124,31 @@
         pushLblEventChest()
         Game.player1.UIupdate()
         TextEvent.pushLog("You open a chest!")
-
     End Sub
     Public Sub pushLblEventChest()
         Dim c As String = "Chest Contents: " & vbCrLf
 
-        Game.player1.inv.merge(contents)
+
         For i = 0 To contents.upperBound
             Dim content As Item = contents.item(i)
-            If contents.getCountAt(i) > 0 Then
+
+            If content.only_drop_one Then
+                If Game.player1.inv.getCountAt(i) > 0 Then contents.item(i).count = 0
+                If content.getCount > 1 Then contents.item(i).count = 1
+            End If
+
+            If contents.getCountAt(i) > 0 And Not i = 43 Then
                 c += " " & vbCrLf & "+" & content.count & " " & Game.player1.inv.item(i).getName() & " "
             End If
         Next
-        c += " " & DDUtils.RNRN & "Press any non-movement key to continue."
+
+        Game.player1.inv.merge(contents)
+
+        If contents.getCountAt(43) > 0 Then c += " " & vbCrLf & "+" & contents.getCountAt(43) & " " & Game.player1.inv.item(43).getName() & " "
+
+        c += " " & DDUtils.PAKTC
         Game.lblEvent.Text = c
+        If Settings.active(setting.textcolors) Then Game.lblEvent.ForeColor = Game.player1.textColor
         Game.lblEvent.BringToFront()
         Game.lblEvent.Location = New Point((250 * Game.Size.Width / 688) - (Game.lblEvent.Size.Width / 2), 65 * Game.Size.Width / 688)
         Game.lblEvent.Visible = True

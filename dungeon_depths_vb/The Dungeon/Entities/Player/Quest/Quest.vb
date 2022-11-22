@@ -1,4 +1,4 @@
-﻿Public Enum qInds
+﻿Public Enum qInd
     helpWanted
     darkPact
     dfaUpgrade
@@ -10,14 +10,17 @@
     oppositeDay
     nineLives
     enthralled
-    faewoods1
+    faewoods1a
+    faewoods1b
+    faewoods2a
+    fanPhan
 End Enum
 
 Public MustInherit Class Quest
     Dim active As Boolean = False
     Dim completed As Boolean = False
     Dim name As String
-    Protected qInd As Integer
+    Protected quest_index As qInd
 
     Dim curr_step As Integer = 0
 
@@ -73,7 +76,7 @@ Public MustInherit Class Quest
         Return name
     End Function
     Public Function getQInd() As Integer
-        Return qInd
+        Return quest_index
     End Function
     Public Sub finishEarly()
         completed = True
@@ -83,7 +86,7 @@ Public MustInherit Class Quest
     Public Overridable Sub init()
         active = True
         curr_step = 0
-        Game.player1.ongoingQuests.add(Game.player1.quests(qInd))
+        Game.player1.ongoingQuests.add(Game.player1.quests(quest_index))
     End Sub
     Public Overridable Function canGet() As Boolean
         Return False
@@ -99,7 +102,7 @@ Public MustInherit Class Quest
         out += completed & "^"
         out += name & "^"
         out += curr_step & "^"
-        out += qInd & "^"
+        out += quest_index & "^"
 
         Return out
     End Function
@@ -110,7 +113,7 @@ Public MustInherit Class Quest
         completed = CBool(buffer(1))
         name = buffer(2)
         curr_step = CInt(buffer(3))
-        qInd = CInt(buffer(4))
+        quest_index = CInt(buffer(4))
     End Sub
 End Class
 

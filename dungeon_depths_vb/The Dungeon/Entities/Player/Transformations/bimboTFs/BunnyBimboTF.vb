@@ -64,4 +64,28 @@
         bTF.next_step()
         p.UIupdate()
     End Sub
+
+    Shared Sub fantomaTF(ByRef p As Player)
+        If p.sex = "Male" Then
+            p.MtF()
+        End If
+
+        p.changeClass("Bunny Girl")
+
+        p.breastSize = 2
+
+        'hair
+        p.prt.setIAInd(pInd.rearhair, 28, True, True)
+        p.prt.setIAInd(pInd.midhair, 9, True, False)
+        p.prt.setIAInd(pInd.fronthair, 33, True, True)
+        'face
+        p.prt.setIAInd(pInd.face, 0, True, False)
+        p.prt.setIAInd(pInd.eyes, 25, True, True)
+        p.prt.setIAInd(pInd.mouth, 27, True, True)
+
+        'other
+        p.prt.setIAInd(pInd.cloak, 0, True, False)
+
+        p.changeHairColor(DDUtils.cShift(p.prt.haircolor, BimboTF.bimboyellow2, 70))
+    End Sub
 End Class

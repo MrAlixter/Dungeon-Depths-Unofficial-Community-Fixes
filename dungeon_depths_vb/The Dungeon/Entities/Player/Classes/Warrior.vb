@@ -2,7 +2,8 @@
     Inherits pClass
     Sub New()
         MyBase.New(1, 1.5, 0.75, 1.5, 0.75, 1, "Warrior")
-        MyBase.revertPassage = "You feel your muscle mass decrease slightly, and your physical strength becomes far more average."
+        revertPassage = "Your muscle mass decreases slightly, and you unconsciously relax your stance..."
+        transformPassage = "Your muscle mass increases slightly, and you ready your weapon for a fight..."
     End Sub
 
     Public Overrides Sub onLVLUp(ByVal level As Integer, ByRef p As Player, Optional learnSkills As Boolean = True)

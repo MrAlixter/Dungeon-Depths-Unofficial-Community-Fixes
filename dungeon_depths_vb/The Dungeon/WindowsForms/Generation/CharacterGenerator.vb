@@ -19,6 +19,7 @@
     '| - EVENT HANDLERS -|
     Private Sub CharacterGenerator_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DDUtils.resizeForm(Me)
+        Me.CenterToParent()
 
         btnBody_Click(sender, e)
 
@@ -64,7 +65,7 @@
             If btnMale.Enabled Then btnMale_Click(sender, e)
         End If
 
-        ReDim portrait.iArrInd(UBound(preset.iArrInd))
+        ReDim portrait.iArrInd(portrait.NUM_IMG_LAYERS)
         For i = 0 To UBound(portrait.iArrInd)
             portrait.iArrInd(i) = (preset.iArrInd(i))
         Next
@@ -561,7 +562,7 @@
             Dim img As New PictureBox
             img.BackgroundImage = portrait.CreateBMP({picPort.Image, sexAttrList(i)}, False)
             img.Location = New Point(x, y)
-            img.Size = New Point(70 * Me.Size.Width / 581, 130 * Me.Size.Width / 581)
+            img.Size = New Point(70 * Me.Size.Width / 581, 120 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
             AddHandler img.Click, AddressOf PicOnClick
             pnlBody.Controls.Add(img)
@@ -613,7 +614,7 @@
             Dim img As New PictureBox
             img.BackgroundImage = portrait.CreateBMP({picPort.Image, sexAttrList(i)}, False)
             img.Location = New Point(x, y)
-            img.Size = New Point(70 * Me.Size.Width / 581, 130 * Me.Size.Width / 581)
+            img.Size = New Point(70 * Me.Size.Width / 581, 120 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
             AddHandler img.Click, AddressOf PicOnClick
             pnlBody.Controls.Add(img)
@@ -751,6 +752,7 @@
         'add the classes unlocked by special events
         If DDDateTime.isHallow Then cbox.Items.Add("Witch")
         If Game.compOOT Then cbox.Items.Add("Time Cop")
+        If Game.compDP Then cbox.Items.Add("Cynn's Ally")
 
         'select a class at random
         cbox.Text = cbox.Items(Int(Rnd() * cbox.Items.Count))

@@ -62,6 +62,12 @@
         End If
     End Sub
 
+    Function getBoardCharacter() As String
+        If name = "Fox" Then Return "d"
+
+        Return "`"
+    End Function
+
     Overrides Function toString() As String
         Return pos.X & "*" & pos.Y & "*" & name & "*" & desc & "*" & isRuby
     End Function

@@ -12,12 +12,12 @@
                 createDefaultImageLib()
             Case 1
                 createAllImageLib()
-                createMFEqInd()
+                mfEquivalentIndexes = MFRouting.createMFEqInd()
             Case 2
                 createNPCLib()
             Case Else
                 createAllImageLib()
-                createMFEqInd()
+                mfEquivalentIndexes = MFRouting.createMFEqInd()
         End Select
     End Sub
     Sub createDefaultImageLib()
@@ -461,87 +461,6 @@
 
         atrs(pInd.fronthair).setAt(New Tuple(Of Integer, Boolean, Boolean)(0, True, False), null)
         atrs(pInd.fronthair).setAt(New Tuple(Of Integer, Boolean, Boolean)(0, False, False), null)
-    End Sub
-    Sub createMFEqInd()
-        mfEquivalentIndexes = New Dictionary(Of pInd, MFRouting)
-        'bkg
-        mfEquivalentIndexes.Add(pInd.bkg, New MFRouting({},
-                                              {}))
-        'tail
-        mfEquivalentIndexes.Add(pInd.tail, New MFRouting({},
-                                              {}))
-        'wings
-        mfEquivalentIndexes.Add(pInd.wings, New MFRouting({},
-                                              {}))
-        'rearhair2
-        mfEquivalentIndexes.Add(pInd.rearhair, New MFRouting({5, 6},
-                                              {13, 21}))
-        'hairacc
-        mfEquivalentIndexes.Add(pInd.hairacc, New MFRouting({},
-                                              {}))
-        'genitalia
-        mfEquivalentIndexes.Add(pInd.genitalia, New MFRouting({0, 1, 2, 3, 4},
-                                              {-1, -1, -1, -1, -1}))
-        'shoulders
-        mfEquivalentIndexes.Add(pInd.shoulders, New MFRouting({},
-                                              {}))
-        'body
-        mfEquivalentIndexes.Add(pInd.body, New MFRouting({0},
-                                              {0}))
-        'chest
-        mfEquivalentIndexes.Add(pInd.chest, New MFRouting({},
-                                              {}))
-        'bodyoverlay
-        mfEquivalentIndexes.Add(pInd.bodyoverlay, New MFRouting({},
-                                              {}))
-        'clothesbtm
-        mfEquivalentIndexes.Add(pInd.clothesbtm, New MFRouting({},
-                                              {}))
-        'clothes
-        mfEquivalentIndexes.Add(pInd.clothes, New MFRouting({5},
-                                              {47}))
-        'face
-        mfEquivalentIndexes.Add(pInd.face, New MFRouting({},
-                                              {}))
-        'rearhair1
-        mfEquivalentIndexes.Add(pInd.midhair, New MFRouting({5, 6},
-                                              {15, 24}))
-        'horns
-        mfEquivalentIndexes.Add(pInd.horns, New MFRouting({},
-                                              {}))
-        'nose
-        mfEquivalentIndexes.Add(pInd.nose, New MFRouting({},
-                                              {}))
-        'ears
-        mfEquivalentIndexes.Add(pInd.ears, New MFRouting({5, 6, 8},
-                                              {5, 11, 14}))
-        'mouth
-        mfEquivalentIndexes.Add(pInd.mouth, New MFRouting({5, 6, 9},
-                                              {10, 16, 26}))
-        'eyes
-        mfEquivalentIndexes.Add(pInd.eyes, New MFRouting({5, 6, 7, 8, 9, 10, 11, 12, 15, 16},
-                                              {11, 14, 15, 19, 20, 33, 36, 38, 54, 55}))
-        'eyebrows
-        mfEquivalentIndexes.Add(pInd.eyebrows, New MFRouting({},
-                                              {}))
-        'facial mark
-        mfEquivalentIndexes.Add(pInd.facemark, New MFRouting({},
-                                              {}))
-        'glasses
-        mfEquivalentIndexes.Add(pInd.glasses, New MFRouting({},
-                                              {}))
-        'cloak
-        mfEquivalentIndexes.Add(pInd.cloak, New MFRouting({},
-                                              {}))
-        'accessories
-        mfEquivalentIndexes.Add(pInd.accessory, New MFRouting({},
-                                              {}))
-        'fronthair
-        mfEquivalentIndexes.Add(pInd.fronthair, New MFRouting({},
-                                              {}))
-        'hat
-        mfEquivalentIndexes.Add(pInd.hat, New MFRouting({},
-                                              {}))
     End Sub
     Public Function fAttributes() As List(Of Image)()
         Dim out As List(Of List(Of Image)) = New List(Of List(Of Image))

@@ -66,8 +66,8 @@
         End If
 
         p.changeHairColor(Color.FromArgb(255, 181, 148, 98))
-        p.prt.setIAInd(pInd.rearhair, 1, True, False)
-        p.prt.setIAInd(pInd.midhair, 13, True, True)
+        p.prt.setIAInd(pInd.rearhair, 39, True, True)
+        p.prt.setIAInd(pInd.midhair, 21, True, True)
         p.prt.setIAInd(pInd.mouth, 0, True, False)
         p.prt.setIAInd(pInd.eyes, p.pState.iArrInd(pInd.eyes).Item1, p.pState.iArrInd(pInd.eyes).Item2, p.pState.iArrInd(pInd.eyes).Item3)
         p.prt.setIAInd(pInd.fronthair, 10, True, True)
@@ -100,8 +100,8 @@
             p.MtF()
         End If
         p.changeHairColor(Color.FromArgb(255, 181, 148, 98))
-        p.prt.setIAInd(pInd.rearhair, 1, True, False)
-        p.prt.setIAInd(pInd.midhair, 13, True, True)
+        p.prt.setIAInd(pInd.rearhair, 39, True, True)
+        p.prt.setIAInd(pInd.midhair, 21, True, True)
         p.prt.setIAInd(pInd.mouth, 0, True, False)
         p.prt.setIAInd(pInd.eyes, p.pState.iArrInd(pInd.eyes).Item1, p.pState.iArrInd(pInd.eyes).Item2, p.pState.iArrInd(pInd.eyes).Item3)
         p.prt.setIAInd(pInd.fronthair, 10, True, True)
@@ -109,7 +109,7 @@
 
         'transformation description push
         out += "As you bite into the apple, your mind starts to get foggy.  You yawn, and lay down on the floor.  Nodding off, you realize that that apple probably was probably either enchanted or poisoned." & DDUtils.RNRN &
-               "Your last thought as you black out is that this seems like something out of an old fairy-tale..."
+               "Your last thought as you black out is that this seems like something out of an old fairy-tale..." & DDUtils.RNRN
 
         out += "As you come to several hours later, you groan and rub your forhead, only to knock a golden crown off of your head. This jolts you up, and you examine yourself further." & DDUtils.RNRN &
                "Long hair, poofy ballgown, gloves that go up past your elbows?!  Well, it seems like your ""fairy-tale"" hunch wasn't too far off after all.  Dusting youself off, you get ready to embark back on your journey to return to your kingdom." & DDUtils.RNRN &

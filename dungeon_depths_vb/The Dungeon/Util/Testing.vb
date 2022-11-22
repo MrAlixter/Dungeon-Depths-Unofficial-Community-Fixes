@@ -202,7 +202,7 @@ Public Class Testing
         If Not test1.Item1 Then Return test1
         Dim test2 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(4)", 3, testInventory1.item(4).count)
         If Not test2.Item1 Then Return test2
-        Dim test3 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(""Duster"")", 1, testInventory1.item("Duster").count)
+        Dim test3 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(""Feather_Duster"")", 1, testInventory1.item("Feather_Duster").count)
         If Not test3.Item1 Then Return test3
         Dim test4 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(""Living_Lingerie"")", 6, testInventory1.item("Living_Lingerie").count)
         If Not test4.Item1 Then Return test4
@@ -214,7 +214,7 @@ Public Class Testing
 
         testInventory1.add("Compass", 2)
         testInventory1.add("Spellbook", 3)
-        testInventory1.add("Duster", 1)
+        testInventory1.add("Feather_Duster", 1)
         testInventory1.add("Living_Lingerie", 6)
 
         Dim output1 = testInventory1.save

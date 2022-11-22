@@ -2,13 +2,14 @@
     Inherits ShopNPC
 
     Dim preHypnoID = 0
+
     Sub New()
         MyBase.New()
 
         '|ID Info|
         name = "Hypnotist Teacher"
         sName = name
-        npc_index = sNPCInd.hypnoteach
+        npc_index = ShopNPCInd.hypnoteach
 
         '|NPC Flags|
         pronoun = "she"
@@ -50,183 +51,81 @@
         sSpeed = speed
 
         '|Images|
-        picNormal = ShopNPC.npcLib.atrs(0).getAt(17)
-        picPrincess = ShopNPC.npcLib.atrs(0).getAt(19)
-        picBunny = ShopNPC.npcLib.atrs(0).getAt(18)
-        picArachne = ShopNPC.npcLib.atrs(0).getAt(70)
+        local_img = New Dictionary(Of ShopNPC.LocalImgInd, Image)()
 
-        picNPC = New List(Of Image)
-        picNPC.AddRange({picNormal,
-                         ShopNPC.npcLib.atrs(0).getAt(4),
-                         ShopNPC.npcLib.atrs(0).getAt(5),
-                         picPrincess,
-                         picBunny})
-
-        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(21),
-                         ShopNPC.npcLib.atrs(0).getAt(24),
-                         ShopNPC.npcLib.atrs(0).getAt(22),
-                         ShopNPC.npcLib.atrs(0).getAt(20),
-                         picArachne,
-                         ShopNPC.npcLib.atrs(0).getAt(74),
-                         ShopNPC.npcLib.atrs(0).getAt(91),
-                         ShopNPC.npcLib.atrs(0).getAt(96)})
+        local_img.Add(LocalImgInd.normal, ShopNPC.gbl_img.atrs(0).getAt(17))
+        local_img.Add(LocalImgInd.frog, ShopNPC.gbl_img.atrs(0).getAt(4))
+        local_img.Add(LocalImgInd.bunny, ShopNPC.gbl_img.atrs(0).getAt(18))
+        local_img.Add(LocalImgInd.princess, ShopNPC.gbl_img.atrs(0).getAt(19))
+        local_img.Add(LocalImgInd.sheep, ShopNPC.gbl_img.atrs(0).getAt(5))
+        local_img.Add(LocalImgInd.doll, ShopNPC.gbl_img.atrs(0).getAt(20))
+        local_img.Add(LocalImgInd.arachne, ShopNPC.gbl_img.atrs(0).getAt(70))
+        local_img.Add(LocalImgInd.catgirl, ShopNPC.gbl_img.atrs(0).getAt(91))
+        local_img.Add(LocalImgInd.trilobite, ShopNPC.gbl_img.atrs(0).getAt(96))
+        local_img.Add(LocalImgInd.beegirl, ShopNPC.gbl_img.atrs(0).getAt(148))
+        local_img.Add(LocalImgInd.alt1, ShopNPC.gbl_img.atrs(0).getAt(21))
+        local_img.Add(LocalImgInd.alt2, ShopNPC.gbl_img.atrs(0).getAt(22))
+        local_img.Add(LocalImgInd.alt3, ShopNPC.gbl_img.atrs(0).getAt(102))
+        local_img.Add(LocalImgInd.alt4, ShopNPC.gbl_img.atrs(0).getAt(24))
+        local_img.Add(LocalImgInd.alt5, ShopNPC.gbl_img.atrs(0).getAt(74))
     End Sub
 
     Public Overrides Sub encounter()
-        MyBase.encounter()
-
-        MyBase.discount = 0
-
         seventailsAdjustment()
 
-        If img_index = 0 Then
-            If Int(Rnd() * 20) = 0 And Game.currFloor.floorNumber <> 7 Then
-                MyBase.discount = 0.25
-                img_index = 6
-                TextEvent.pushNPCDialog("Like, hey!  I, like, totally just got back from negot...nagosh...trying to work out a deal with that wizard guy, and it like, didn't go too well..." & DDUtils.RNRN &
-                                   "But hey, now I feel soooo gooood, and I'm even doing a I'm-having-fun sale!  I ran into Food Guy, and don't tell him I said this but he's, like, toootally a cutie..." & DDUtils.RNRN &
-                                   "Anyway, like, he has that panana...penasi...special food thing that can get me back to my normal self!" & DDUtils.RNRN &
-                                   "But first, I'm like, totally gonna take a break from being all serious and see what else he has that I can eat! ~🖤")
-            ElseIf Int(Rnd() * 20) = 1 And Game.currFloor.floorNumber <> 7 Then
-                img_index = 7
-                TextEvent.pushNPCDialog("Hello, potential customer!  I do not suppose you have seen Mr. Vendor around anywhere, have you?" & DDUtils.RNRN &
-                                   "He appears to have mixed the cream in my usual morning coffee up with some other malarkey and now, as I am sure you can see, I have begun morphing into some sort of bovine.  Hopefully he has some Panacea on hand, because otherwise I would be in a bit of a prediciment.  Ugh, he is just so..." & DDUtils.RNRN &
-                                   "*sigh* Apologies, this is not appropriate buisness talk.  I have spellbooks and manuals for sale, and if you are looking for something specific, I have some recorded hypnotic lessons on tape.  Take a look around, in the meantime I am going to track down my idiot.")
-            Else
-                TextEvent.pushNPCDialog("Hello, kind stranger.  I have been researching a new technique combining traditional hypnosis with the arcane arts for more potent effects faster than either is capable of alone." & DDUtils.RNRN &
-                                   "While I will admit it is still slightly experimental, I have worked out most of the kinks thanks to some volunteering by the Food Vendor you may have seen around.  Together, we have achived impressive results in long term behavior modification." & DDUtils.RNRN &
-                                   "If you're feeling a bit... hesitant, I also have a curated selection of books and manuals for sale.")
-            End If
-        ElseIf img_index = 1 Then
-            TextEvent.pushNPCDialog("CROAK!")
-        ElseIf img_index = 2 Then
-            TextEvent.pushNPCDialog("BLEEEET!")
-        ElseIf img_index = 3 Then
-            TextEvent.pushNPCDialog("Well salutations there, " & Game.player1.className & ".  Please let me know if there's anything I can do to help you.")
-        ElseIf img_index = 4 Then
-            TextEvent.pushNPCDialog("HI!  I, like, don't know if it would be smart for me to try to hypno...hypotho...do my thing to you right now, but I totally have some tapes you can use!")
-        ElseIf img_index = 8 Or img_index = 12 Then
-            TextEvent.pushNPCDialog("...")
-        ElseIf img_index = 9 Then
-            If Game.player1.formName.Equals("Arachne") Then
-                TextEvent.pushNPCDialog("Oh, it's you.  I'm not sure which is worse, the fact that I'm part bug now, or the fact that your bait actually decieved me.")
-            Else
-                TextEvent.pushNPCDialog("You should try this venom.  Or don't.  Say, you don't happen to have a Panacea in your possession, do you?")
-            End If
-        ElseIf img_index = 11 Then
-            TextEvent.pushNPCDialog("I do not approve of plagerism, but...  lucky for you...  I am rather enjoying this form...  nya...")
-        End If
-
+        MyBase.encounter()
+    End Sub
+    Public Overrides Sub inventoryUpdate()
         If Game.mDun.numCurrFloor > 5 Then inv.setCount(113, 1) Else inv.setCount(113, 0)
         If Game.mDun.numCurrFloor < 5 Then inv.setCount(122, 1) Else inv.setCount(122, 0)
-        If img_index = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
-
-        Game.picNPC.BackgroundImage = picNPC(img_index)
     End Sub
 
-    Public Overrides Function toFight() As String
-        If img_index = 0 Then
-            Return "Seems like you need another type of lesson."
-        ElseIf img_index = 1 Then
-            Return "bbbbrrrROOOAAAK!"
-        ElseIf img_index = 2 Then
-            Return "baaaaaahhh."
-        ElseIf img_index = 3 Then
-            Return "You would dare to challenge me? If you wish to die, you could just say so."
-        ElseIf img_index = 4 Then
-            Return "Whaaaaaat?!?  No, like, don't do that!"
-        ElseIf img_index = 6 Then
-            Return "Cmon!  I'm, like, trying to help you out here!"
-        ElseIf img_index = 8 Or img_index = 12 Then
-            Return "..."
-        ElseIf img_index = 9 Then
-            Return "Outstanding!  I've been looking for the opportunity to burn off some arachnophobic stress..."
-        ElseIf img_index = 11 Then
-            Return "~Oooh~, you want to play?"
-        End If
-        Return "Bad move."
-    End Function
-    Public Overrides Function hitBySpell() As String
-        If Game.currFloor.floorNumber = 7 And Game.player1.perks(perk.seventailsstage) = 1 Then sevenTailsFight()
+    '| - COMBAT - |
+    Public Overrides Sub attackCMD(ByRef target As Entity)
+        attackSpell(target, "Split the Mind", MyBase.getWIL)
+    End Sub
 
-        If img_index = 0 Or img_index = 9 Then
-            Game.NPCtoCombat(Me)
-            Return "*sigh*...Well, I can always use another test subject."
-        ElseIf img_index = 1 Then
-            Game.NPCtoCombat(Me)
-            Return "Ribbit, RIBBIT!"
-        ElseIf img_index = 2 Then
-            Game.NPCtoCombat(Me)
-            Return "BAH!  BAH!"
-        ElseIf img_index = 3 Then
-            Game.NPCtoCombat(Me)
-            Return "Prepare yourself, I won't be manipulated easily."
-        ElseIf img_index = 4 Then
-            Return "WOAH!  That's a neat trick!"
-        ElseIf img_index = 6 Then
-            Return "Cmon!  I'm, like, trying to help you out here!"
-        ElseIf img_index = 8 Or img_index = 12 Then
-            Return "..."
-        ElseIf img_index = 11 Then
-            Return "~Oooh~, you want to play?"
-        End If
-        Return "Woah there!"
-    End Function
-
+    '| - HYPNOSIS - |
     Public Sub hypnotize(ByVal s As String)
         hypnotize(s, AddressOf back)
     End Sub
     Public Sub hypnotize(ByVal s As String, a As Action)
         preHypnoID = img_index
 
-        If form.Equals("Arachne") Then img_index = 10 Else img_index = 5
+        If form.Equals("Arachne") Then
+            img_index = LocalImgInd.alt5
+        Else
+            img_index = LocalImgInd.alt1
+        End If
 
         TextEvent.pushNPCDialog(s, a)
         Game.shopMenu.Close()
 
-        Game.picNPC.BackgroundImage = picNPC(img_index)
+        Game.picNPC.BackgroundImage = local_img(img_index)
     End Sub
     Public Sub back()
         img_index = preHypnoID
         TextEvent.pushNPCDialog("So, anything else?")
-        Game.picNPC.BackgroundImage = picNPC(img_index)
+        Game.picNPC.BackgroundImage = local_img(img_index)
         Game.showNPCButtons()
         Game.player1.canMoveFlag = False
     End Sub
-    Public Overrides Sub toDoll()
-        TextEvent.pushNPCDialog("...")
-        Game.picNPC.BackgroundImage = picNPC(8)
 
-        discount = 0.5
-    End Sub
-
-    Public Overrides Function getArachneImageInd() As Integer
-        Return 9
-    End Function
-    Public Overrides Function getCatgirlImageInd() As Integer
-        Return 11
-    End Function
-    Public Overrides Function getTrilobiteImageInd() As Integer
-        Return 12
-    End Function
-
-    Public Overrides Sub attackCMD(ByRef target As Entity)
-        attackSpell(target, "Split the Mind", MyBase.getWIL)
-    End Sub
-
+    '| - SEVEN TAILS - |
     Sub seventailsAdjustment()
         If Game.currFloor.floorNumber = 7 And Game.player1.perks(perk.seventailsstage) = 1 Then
-            img_index = 0
-            picNPC(0) = ShopNPC.npcLib.atrs(0).getAt(63)
-            picNPC(5) = ShopNPC.npcLib.atrs(0).getAt(64)
+            img_index = LocalImgInd.normal
+            local_img(LocalImgInd.normal) = ShopNPC.gbl_img.atrs(0).getAt(63)
+            local_img(LocalImgInd.alt1) = ShopNPC.gbl_img.atrs(0).getAt(64)
         Else
-            picNPC(0) = ShopNPC.npcLib.atrs(0).getAt(17)
-            picNPC(5) = ShopNPC.npcLib.atrs(0).getAt(21)
+            local_img(LocalImgInd.normal) = ShopNPC.gbl_img.atrs(0).getAt(17)
+            local_img(LocalImgInd.alt1) = ShopNPC.gbl_img.atrs(0).getAt(21)
         End If
     End Sub
     Public Shared Sub sevenTailsFight()
         If Game.combat_engaged Then Game.fromCombat()
         If Game.shop_npc_engaged Then Game.hideNPCButtons()
+        Game.npc_list.Clear()
         Game.picNPC.Visible = False
         Game.lblEvent.Visible = False
 
@@ -237,7 +136,7 @@
         Monster.targetRoute(m)
         Game.toCombat(m)
 
-        TextEvent.pushAndLog("With a poof of smoke, the hypnotist shifts into a familiar kitsune and " & m.getName() & " attacks!")
+        TextEvent.pushAndLog("With a poof of smoke, the ""hypnotist"" shifts into a familiar kitsune and " & m.getName() & " attacks!")
 
         Game.player1.perks(perk.seventailsstage) = 2
 
@@ -248,9 +147,137 @@
         Game.hteach.pos = New Point(-1, -1)
         Game.drawBoard()
     End Sub
-
     Public Overrides Sub die(ByRef cause As Entity)
         If Game.currFloor.floorNumber = 7 Then Exit Sub
         MyBase.die(cause)
+    End Sub
+
+    '| - DIALOG - |
+    Protected Overrides Function normalDialog(ByRef p As Player)
+        If Int(Rnd() * 20) = 0 And Game.currFloor.floorNumber <> 7 Then
+            discount = 0.25
+            img_index = LocalImgInd.alt4
+            Return "Like, hey!  I, like, totally just got back from negot...nagosh... um, trying to work out a deal with that wizard guy, and it like, didn't go too well..." & DDUtils.RNRN &
+                   "But hey, now I feel soooo gooood, and I'm even doing a I'm-having-fun sale!  I ran into Food Guy, and don't tell him I said this but he's, like, toootally a cutie..." & DDUtils.RNRN &
+                   "Anyway, like, he has that panana...penasi...special food thing that can get me back to my normal self!" & DDUtils.RNRN &
+                   "But for now, I'm, like, gonna take a lil' break from being all serious!  Maybe I'll see what else he has for me to put in my mouth... ~🖤"
+        ElseIf Int(Rnd() * 20) = 1 And Game.currFloor.floorNumber <> 7 Then
+            img_index = LocalImgInd.alt2
+            Return "Hello, valued customer!  Have you perchance seen the Food Vendor around anywhere?" & DDUtils.RNRN &
+                   "He appears to have mixed the cream in my usual morning coffee up with some other malarkey and now, as I am sure you can see, I have begun morphing into some sort of bovine." & DDUtils.RNRN &
+                   "Hopefully he has some Panacea on hand, because otherwise I would be in a bit of a prediciment.  Ugh, he is just so..." & DDUtils.RNRN &
+                   "*sigh* Apologies, this is not appropriate talk for business.  Please feel free to take a look around, I shall track down my idiot later."
+        Else
+            img_index = LocalImgInd.normal
+            Return "Hello, adventurer." & DDUtils.RNRN &
+                   "I have been researching a new technique of self-improvement that combines traditional hypnosis with the arcane arts to achive a more potent effect than either is capable of alone." & DDUtils.RNRN &
+                   "While admittedly it is still... slightly experimental, most of the kinks have been ironed out through repeated testing and a very helpful volunteer." & DDUtils.RNRN &
+                   "If you're feeling hesitant, I also have a curated selection of books and manuals for sale."
+        End If
+    End Function
+    Protected Overrides Function frogDialog(ByRef p As Player)
+        Return "CROAK!"
+    End Function
+    Protected Overrides Function bunnyDialog(ByRef p As Player)
+        Return "HI!" & DDUtils.RNRN &
+               "I, like, don't know if it would be smart for me to try to hypno...hypotho... um, do my thing to you right now... but I totally have some tapes you can use!"
+    End Function
+    Protected Overrides Function princessDialog(ByRef p As Player)
+        Return "Hark!" & DDUtils.RNRN &
+               "My salutations to thee, " & p.className & "." & DDUtils.RNRN &
+               "Please let me know if there is anything I can help you with."
+    End Function
+    Protected Overrides Function sheepDialog(ByRef p As Player)
+        Return "BLEET!"
+    End Function
+    Protected Overrides Function arachneDialog(ByRef p As Player)
+        If p.formName.Equals("Arachne") Then
+            Return "Oh, it's you.  I am not sure which is worse, the fact that I am part bug now or the fact that your bait actually decieved me."
+        Else
+            Return "You should try this venom.  Or don't.  Say, you would not happen to have a Panacea in your possession, do you?"
+        End If
+    End Function
+    Protected Overrides Function catgirlDialog(ByRef p As Player)
+        Return "I do not approve of plagerism, but...  fortunately for you I am rather enjoying this form." & DDUtils.RNRN &
+               "Nya..."
+    End Function
+    Protected Overrides Function beegirlDialog(ByRef p As Player)
+        Return "BZZZ!"
+    End Function
+
+    Public Overrides Function toFight() As String
+        If img_index = LocalImgInd.alt4 Then Return "Cmon!  I'm, like, trying to help you out here!"
+
+        Return MyBase.toFight()
+    End Function
+    Protected Overrides Function normalFightDialog(ByRef p As Player)
+        Return "Seems like you need another type of lesson..."
+    End Function
+    Protected Overrides Function frogFightDialog(ByRef p As Player)
+        Return "bbbbrrrROOOAAAK!"
+    End Function
+    Protected Overrides Function bunnyFightDialog(ByRef p As Player)
+        Return "Whaaaaaat?!?  No, like, don't do that!"
+    End Function
+    Protected Overrides Function princessFightDialog(ByRef p As Player)
+        Return "You would dare to challenge me?  If you wished become my servant, you could have just asked."
+    End Function
+    Protected Overrides Function sheepFightDialog(ByRef p As Player)
+        Return "baaaaaahhh."
+    End Function
+    Protected Overrides Function arachneFightDialog(ByRef p As Player)
+        Return "Outstanding!  I've been looking for the opportunity to burn off some arachnophobic stress..."
+    End Function
+    Protected Overrides Function catgirlFightDialog(ByRef p As Player)
+        Return "~Oooh~, you want to play?"
+    End Function
+
+    Public Overrides Function hitBySpell() As String
+        If img_index = LocalImgInd.alt4 Then Return "Cmon!  I'm, like, trying to help you out here!"
+
+        Return MyBase.hitBySpell()
+    End Function
+    Protected Overrides Function normalSpellDialog(ByRef p As Player)
+        Return "*sigh*" & DDUtils.RNRN &
+               "Well, I can always use another test subject."
+    End Function
+    Protected Overrides Function frogSpellDialog(ByRef p As Player)
+        Return "Ribbit, RIBBIT!"
+    End Function
+    Protected Overrides Function bunnySpellDialog(ByRef p As Player)
+        Return "WOAH!  That's a neat trick!"
+    End Function
+    Protected Overrides Function princessSpellDialog(ByRef p As Player)
+        Return "Prepare yourself, for I shan't be manipulated so easily..."
+    End Function
+    Protected Overrides Function sheepSpellDialog(ByRef p As Player)
+        Return "Bah, BAH!"
+    End Function
+    Protected Overrides Function arachneSpellDialog(ByRef p As Player)
+        Return normalSpellDialog(p)
+    End Function
+    Protected Overrides Function catgirlSpellDialog(ByRef p As Player)
+        Return "~Oooh~, you want to play?"
+    End Function
+
+    Public Overrides Function postPurchaseDialog(ByRef p As Player) As Object
+        Return "Would you like anything else?"
+    End Function
+
+    '| - MISC - |
+    Public Overrides Sub buildShopArea(ByRef floor As mFloor)
+        MyBase.buildShopArea(floor)
+
+        Dim lounge = {New Point(pos.X - 1, pos.Y)}
+
+        Dim tables = {New Point(pos.X + 1, pos.Y)}
+
+        For Each pt In lounge
+            If floor.ptInBounds(pt) Then floor.mBoard(pt.Y, pt.X).Text = "¦"
+        Next
+
+        For Each pt In tables
+            If floor.ptInBounds(pt) Then floor.mBoard(pt.Y, pt.X).Text = "§"
+        Next
     End Sub
 End Class

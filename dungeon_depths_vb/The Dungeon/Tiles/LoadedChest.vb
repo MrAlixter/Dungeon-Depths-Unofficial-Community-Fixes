@@ -47,13 +47,13 @@
     Sub floor4StartChest()
         Game.player1.inv.add(53, 1)
         Game.currFloor.beatBoss = False
-        Game.player1.preBSBody = New State()
+        Game.player1.formStates(stateInd.preBSBody) = New State()
         Game.mDun.floorboss(4) = "Ooze Empress"
-        Game.player1.preBSBody = New State(Game.player1)
+        Game.player1.formStates(stateInd.preBSBody) = New State(Game.player1)
         Game.player1.forcedPath = Game.currFloor.route(Game.player1.pos, Game.player1.pos)
         Game.player1.forcedPath = {Game.player1.forcedPath(0)}
         TextEvent.push("Upon opening the chest, you find a familiar key.  Well, that was easy.")
-        Game.player1.quests(qInds.floor4encounter).init()
+        Game.player1.quests(qInd.floor4encounter).init()
     End Sub
 
     Sub keyChest()
@@ -63,7 +63,7 @@
 
     Sub magSlutChest()
         Game.player1.inv.add(171, 1)
-        Game.player1.equippedWeapon.onunequip(Game.player1, Game.player1.equippedWeapon)
+        Game.player1.equippedWeapon.onUnequip(Game.player1, Game.player1.equippedWeapon)
         Game.player1.equippedWeapon = Game.player1.inv.item(171)
         TextEvent.push("As soon as you open the lid of the chest, a loud click gives you only seconds to react as a pink, heart-tipped wand is flung at you from within!  Miraculously, you are able to catch it mid-air before getting hit in the face.  As it begins glowing and reality around you begins fading away into a techicolor void, though, you wonder if it would have been better to just take the hit...",
                           AddressOf MagSlutChest2)

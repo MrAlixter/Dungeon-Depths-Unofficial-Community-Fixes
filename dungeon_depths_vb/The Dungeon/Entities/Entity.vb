@@ -91,20 +91,24 @@
 
     '|COMBAT|
     Public MustOverride Sub attackCMD(ByRef target As Entity)
-    Public Overridable Sub takeDMG(ByVal dmg As Integer, ByRef source As Entity)
+    Public Overridable Function takeDMG(ByRef dmg As Integer, ByRef source As Entity) As Boolean
         If dmg >= getIntHealth() Then
             die(source)
         Else
             health -= dmg / getMaxHealth()
         End If
-    End Sub
-    Public Overridable Sub takeCritDMG(ByVal dmg As Integer, ByRef source As Entity)
+
+        Return True
+    End Function
+    Public Overridable Function takeCritDMG(ByRef dmg As Integer, ByRef source As Entity) As Boolean
         If dmg >= getIntHealth() Then
             die(source)
         Else
             health -= dmg / getMaxHealth()
         End If
-    End Sub
+
+        Return True
+    End Function
     Public Shared Function calcDamage(atk As Integer, def As Integer) As Integer
         If atk <= 0 Then Return 1
         If def <= 0 Then Return atk
@@ -159,9 +163,8 @@
         Return If(Me.GetType Is GetType(Player), CType(Me, Player), Nothing)
     End Function
     Public Function getNPC() As NPC
-        Return If(Me.GetType Is GetType(NPC), CType(Me, NPC), Nothing)
+        Return If(Me.GetType.IsSubclassOf(GetType(NPC)), CType(Me, NPC), Nothing)
     End Function
-
 
     '|SETTERS|
     Public Overridable Sub setName(ByVal n As String)

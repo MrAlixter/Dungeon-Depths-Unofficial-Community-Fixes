@@ -27,7 +27,6 @@
 
         If m.getName.Contains("Frog") Then dmg += 20
         m.takeDMG(dmg + d31 + d32, p)
-        TextEvent.pushLog(CStr("You zap the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
-        TextEvent.pushCombat(CStr("You zap the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
+        TextEvent.pushAndLog(CStr("You zap the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
     End Sub
 End Class

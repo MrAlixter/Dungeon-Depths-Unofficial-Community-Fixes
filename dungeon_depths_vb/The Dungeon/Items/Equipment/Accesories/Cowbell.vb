@@ -11,6 +11,7 @@
 
         '|Item Flags|
         usable = False
+        under_chin = True
 
         '|Stats|
         h_boost = 20

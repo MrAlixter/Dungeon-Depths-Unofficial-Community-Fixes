@@ -17,16 +17,31 @@
         Dim out = ""
 
         'angel transformation
+        p.prt.setIAInd(pInd.wings, 1, True, False)
+
+        p.changeForm("Angel")
+
+        'transformation description push
+        Dim revertPassage = p.pForm.revertPassage
+        If Not revertPassage.Equals("") Then out += revertPassage & DDUtils.RNRN
+
+        out += "As you bite into the cake, you are lost in its sweet flavor.  So lost, in fact, that you miss the large white wings growing on you back." & DDUtils.RNRN &
+               "You are now an angel!"
+
+        TextEvent.push(out, AddressOf askAboutHair)
+    End Sub
+
+    Protected Sub askAboutHair()
+        TextEvent.pushYesNo("Rustle your hair?", AddressOf hairTF, Nothing)
+    End Sub
+    Protected Sub hairTF()
+        Dim p As Player = Game.player1
+
         p.changeHairColor(Color.FromArgb(255, 245, 231, 184))
         p.prt.setIAInd(pInd.rearhair, 5, True, True)
         p.prt.setIAInd(pInd.midhair, 14, True, True)
         p.prt.setIAInd(pInd.fronthair, 11, True, True)
-        p.prt.setIAInd(pInd.wings, 1, True, False)
 
-        'transformation description push
-        out += "As you bite into the cake, you are lost in its sweet flavor.  So lost, in fact, that you miss the large white wings growing on you back.  You are now an angel!"
-        Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
-        If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
-        TextEvent.push(out)
+        p.drawPort()
     End Sub
 End Class

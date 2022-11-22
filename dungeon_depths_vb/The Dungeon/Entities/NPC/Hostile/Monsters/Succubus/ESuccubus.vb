@@ -1,11 +1,20 @@
 ﻿Public Class ESuccubus
     Inherits Monster
 
+    Public Const BASE_NAME As String = "Succubus"
+
+    Public Shared explainedDrain As Boolean = False
+
     Protected levelDrainThres, lustRaiseThres As Integer
     Protected levelsToDrain, lustToIncrease As Integer
 
+    Protected drainedXP As Integer
+
     Sub New()
-        name = "Succubus"
+        '|ID Info|
+        name = BASE_NAME
+
+        '|Stats|
         maxHealth = 66
         attack = 33
         defense = 66
@@ -17,9 +26,13 @@
         levelsToDrain = 1
         lustToIncrease = Int(Rnd() * 6) + 6
 
+        '|Inventory|
         setInventory({74, 194, 217, 226, 227})
-        setupMonsterOnSpawn()
 
+        '|Dialog Variables|
+
+        '|Misc|
+        setupMonsterOnSpawn()
 
         If Int(Rnd() * 4) = -1 Then
             name = "Charming Succubus"
@@ -99,8 +112,8 @@
             TextEvent.push("The " & getName() & " used Charm!")
             TextEvent.pushLog("The " & getName() & " used Charm!")
         Else
-            TextEvent.push("The " & getName() & " used Charm...but it fails...")
-            TextEvent.pushLog("The " & getName() & " used Charm...but it fails...")
+            TextEvent.push("The " & getName() & " used Charm... but it fails...")
+            TextEvent.pushLog("The " & getName() & " used Charm... but it fails...")
         End If
     End Sub
 
@@ -111,9 +124,9 @@
                 TextEvent.pushLog("The " & getName() & " used Drain Charm!  1 charm removed!")
             End If
         Else
-            p.deLevel(levelsToDrain)
-            TextEvent.push("The " & getName() & " used Drain Soul!  1 level drained!")
-            TextEvent.pushLog("The " & getName() & " used Drain Soul!  1 level drained!")
+            drainedXP += p.deLevel(levelsToDrain)
+            TextEvent.pushAndLog("The " & getName() & " used Drain Soul!  1 level drained!")
+            If Not explainedDrain Then TextEvent.pushAndLog("Defeat " & getNameWithTitle() & " to regain your lost XP!") : explainedDrain = True
         End If
     End Sub
     Public Overridable Sub sapEntity(ByRef e As Entity)
@@ -125,6 +138,14 @@
         e.will *= 0.8
     End Sub
 
+    Public Overrides Sub die(ByRef cause As Entity)
+        If Not cause.getPlayer Is Nothing And drainedXP > 0 Then
+            cause.getPlayer.addXP(drainedXP)
+            TextEvent.pushLog("You regain " & drainedXP & " XP!")
+        End If
+
+        MyBase.die(cause)
+    End Sub
     Public Overrides Sub playerDeath(ByRef p As Player)
         despawn("p-death")
 

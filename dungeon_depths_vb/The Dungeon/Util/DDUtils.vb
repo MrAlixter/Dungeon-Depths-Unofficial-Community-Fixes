@@ -1,5 +1,8 @@
 ﻿Public Class DDUtils
     Public Const RNRN As String = vbCrLf & vbCrLf
+    Public Const PAKTC As String = DDUtils.RNRN & "Press any non-movement key to continue."
+    Public Const INTLMT As Integer = 2147483647
+    Public Const ALPHA As String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOQRSTUVWXYZ"
 
     '|ARRAY MANIPULATION|
     Public Shared Function saveList(ByVal list As List(Of Object)) As String
@@ -85,6 +88,20 @@
             Return append(max, l)
         End If
     End Function
+    Public Shared Function getClosest(ByVal i As Integer, ByVal arr() As Integer) As Integer
+        Dim dif As Integer = 9999
+        Dim closest As Integer = -1
+
+        For Each a In arr
+            Dim d = Math.Abs(i - a)
+            If d < dif Then
+                closest = a
+                dif = d
+            End If
+        Next
+
+        Return closest
+    End Function
 
     '|IARRIND|
     Public Shared Function cloneIArrInd(ByVal tup As Tuple(Of Integer, Boolean, Boolean)) As Tuple(Of Integer, Boolean, Boolean)
@@ -103,7 +120,7 @@
         ElseIf Game.screenSize = "Medium" Then
             newSize = New Size(sWidth * 0.9, sHeight * 0.9)
         ElseIf Game.screenSize = "XLarge" Or (form.Equals(Game) And Game.screenSize = "Maximized") Then
-            newSize = New Size(sWidth * 1.3, sHeight * 1.3)
+            newSize = New Size(sWidth * 1.32, sHeight * 1.32)
         ElseIf Game.screenSize = "Maximized" And form.Equals(Game) Then
             newSize = My.Computer.Screen.Bounds.Size
         End If
@@ -137,7 +154,7 @@
         ctrl.Font = fitFont(ctrl, newFont)
     End Sub
     Public Shared Function fitFont(ByRef ctrl As Control, ByVal newFont As Font, Optional ByVal font As String = "Consolas") As Font
-        While ctrl.Width < TextRenderer.MeasureText(ctrl.Text, newFont).Width Or (ctrl.Height < TextRenderer.MeasureText(ctrl.Text, newFont).Height And Not ctrl.GetType Is GetType(Label))
+        While (ctrl.Width < TextRenderer.MeasureText(ctrl.Text, newFont).Width And Not ctrl.GetType Is GetType(CheckBox)) Or (ctrl.Height < TextRenderer.MeasureText(ctrl.Text, newFont).Height And Not ctrl.GetType Is GetType(Label))
             newFont = New System.Drawing.Font(font, newFont.SizeInPoints * 0.9)
         End While
 
@@ -173,11 +190,11 @@
         MsgBox(out)
     End Sub
     Shared Function statBar(ByVal cval As Double, ByVal mval As Double, ByVal ctrl As Control, Optional ByVal delim As Char = "ᚋ")
-        Dim out As String = " " & cval & "/" & mval & " "
+        Dim out As String = " " & DDUtils.formatBigNumber(cval) & "/" & DDUtils.formatBigNumber(mval) & " "
 
         ctrl.Font = Game.lblHealthbarFont.Font
 
-        While ctrl.Width * (cval / mval) > TextRenderer.MeasureText(out, ctrl.Font).Width
+        While ctrl.Width * Math.Min((cval / mval), 1.0) > TextRenderer.MeasureText(out, ctrl.Font).Width
             out = delim & out & delim
         End While
 
@@ -195,6 +212,9 @@
         Else
             Return s
         End If
+    End Function
+    Public Shared Function containsIgnoreCase(ByRef s As String, ByRef token As String) As Boolean
+        Return s.ToUpper.Contains(token.ToUpper)
     End Function
 
     '|COLOR SHIFT FUNCTIONS|
@@ -265,6 +285,9 @@
     End Function
 
     '|STRING UTILS|
+    Shared Function capitalizeFirst(ByVal str As String) As String
+        Return str.Substring(0, 1).ToUpper() & str.Substring(1, str.Length - 1)
+    End Function
     Shared Function countToken(ByVal str As String, ByVal tok As String)
         Return str.Length - str.Replace(tok, "").Length
     End Function
@@ -277,6 +300,34 @@
 
         writer.Close()
     End Sub
+    Shared Function formatBigNumber(ByVal int As Integer) As String
+        If int > 999999999 Then
+            Return Math.Round(CDbl(int / 1000000000), 1).ToString & " B"
+        ElseIf int > 999999 Then
+            Return Math.Round(CDbl(int / 1000000), 1).ToString & " M"
+        ElseIf int > 9999 Then
+            Return Math.Round(CDbl(int / 1000), 1).ToString & " K"
+        Else
+            Return int.ToString()
+        End If
+    End Function
+    Shared Function rndAlpha() As String
+        Return ALPHA.Substring(Int(Rnd() * ALPHA.Length), 1)
+    End Function
+
+    '|FILE UTILS|
+    Shared Function fileExistsWC(ByVal basePath As String, ByVal wildcard As String) As Boolean
+        Dim paths() As String = IO.Directory.GetFiles(basePath, wildcard)
+
+        Return paths.Length > 0
+    End Function
+    Shared Function getPathUsingWC(ByVal basePath As String, ByVal wildcard As String) As String
+        If fileExistsWC(basePath, wildcard) Then Return IO.Directory.GetFiles(basePath, wildcard)(0) Else Return ""
+    End Function
+    Shared Function getSessionID(ByVal itemFilepath As String) As String
+        itemFilepath = itemFilepath.Replace("items\", "")
+        Return itemFilepath.Split("_")(0)
+    End Function
 End Class
 
 

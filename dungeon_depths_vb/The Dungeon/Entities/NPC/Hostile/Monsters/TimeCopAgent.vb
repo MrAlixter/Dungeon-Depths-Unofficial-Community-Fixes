@@ -1,15 +1,25 @@
 ﻿Public Class TimeCopAgent
     Inherits Monster
+
+    Public Const BASE_NAME As String = "Time Cop"
+
     Sub New()
-        name = "Time Cop"
+        '|ID Info|
+        name = BASE_NAME
+
+        '|Stats|
         maxHealth = 135
         attack = 35
         defense = 35
         speed = 35
         will = 35
 
+        '|Inventory|
         setInventory({128, 128, 274, 261})
 
+        '|Dialog Variables|
+
+        '|Misc|
         If Game.currFloor.floorNumber <> 10000 Then
             setupMonsterOnSpawn()
         Else
@@ -28,7 +38,7 @@
             sMaxHealth = maxHealth
             sMaxMana = maxMana
             sAttack = attack
-            sdefense = defense
+            sDefense = defense
             sWill = will
             sSpeed = speed
 
@@ -37,7 +47,6 @@
             If speed = Game.player1.getSPD Then speed -= 1
             pos = Game.player1.pos
         End If
-
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

@@ -78,13 +78,12 @@
         equippedArmor = New Naked
         equippedAcce = New noAcce
         equippedGlasses = New noGlasses
-        iArrInd = Nothing
+        ReDim iArrInd(Portrait.NUM_IMG_LAYERS)
         perks = New Dictionary(Of perk, Integer)()
         invNeedsUDate = False
         haircolor = Color.Black
         skincolor = Color.Black
         textColor = Color.Black
-        ReDim iArrInd(Portrait.NUM_IMG_LAYERS)
     End Sub
 
     Public Function clone(ByVal p As Player)
@@ -116,11 +115,10 @@
         p.breastSize = breastSize
         p.dickSize = dickSize
         p.buttSize = buttSize
-        p.equippedWeapon = equippedWeapon
-        EquipmentDialogBackend.armorChange(p, equippedArmor.getName)
-        p.equippedArmor = equippedArmor
-        p.equippedAcce = equippedAcce
-        p.equippedGlasses = equippedGlasses
+        If p.perks(perk.tfedbyweapon) < 0 And p.inv.getCountAt(equippedWeapon.getAName) > 0 Then p.equippedWeapon = equippedWeapon
+        If p.inv.getCountAt(equippedArmor.getAName) > 0 Then EquipmentDialogBackend.equipArmor(p, equippedArmor.getAName)
+        If p.inv.getCountAt(equippedAcce.getAName) > 0 Then EquipmentDialogBackend.equipAcce(p, equippedAcce.getAName)
+        If p.inv.getCountAt(equippedGlasses.getAName) > 0 Then EquipmentDialogBackend.equipGlasses(p, equippedGlasses.getAName)
         p.prt.iArrInd = iArrInd.Clone
         p.inv.invNeedsUDate = invNeedsUDate
         p.prt.haircolor = haircolor
@@ -186,7 +184,10 @@
             stamina = 0
             equippedWeapon = New BareFists
             equippedArmor = New Naked
-            iArrInd = {New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False)}
+            ReDim iArrInd(Portrait.NUM_IMG_LAYERS)
+            For i = 0 To Portrait.NUM_IMG_LAYERS
+                iArrInd(i) = New Tuple(Of Integer, Boolean, Boolean)(Portrait.STARTING_INDEX(i), True, False)
+            Next
             perks = New Dictionary(Of perk, Integer)()
             invNeedsUDate = False
             haircolor = Color.Black
@@ -281,7 +282,7 @@
     'write converts a state into a string to be put into a save file
     Public Function write() As String
         If initFlag Then
-            Dim output As String = CStr(name & "*" & pClass.name & "~" & pForm.name & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & dickSize & "*" & haircolor.A & "*" & skincolor.A & "*" & _
+            Dim output As String = CStr(name & "*" & pClass.name & "~" & pForm.name & "*" & Replace(description, vbCrLf, "") & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & dickSize & "*" & haircolor.A & "*" & skincolor.A & "*" & _
                attack & "*" & defense & "*" & will & "*" & speed & "*" & isPetrified & "*" & stamina & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
                sex & "*" & buttSize & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
                textColor.R & "*" & textColor.G & "*" & textColor.B & "*" & lust & "*")

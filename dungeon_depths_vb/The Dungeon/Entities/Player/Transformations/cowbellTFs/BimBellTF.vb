@@ -77,32 +77,36 @@
         MyBase.boobTF(p)
     End Sub
     Overrides Sub tfDialogStep678(ByVal bsize7 As Boolean, ByVal bsizeneg1 As Boolean, ByVal be As Boolean, ByVal mtf As Boolean)
-        Dim out = "Despite being out of the cloud of dust, another small sneeze rattles your bell slightly."
+        Dim out = "Despite being out of the cloud of dust, another small sneeze rattles your bell slightly..."
 
         If bsize7 Then
-            out += "  Nothing seems to have happened, and you go on your way."
+            out += DDUtils.RNRN & "... but nothing seems to have happened, and you go on your way."
         End If
 
         If bsizeneg1 Then
-            out += "  Your breasts jiggle a little, and ..." & DDUtils.RNRN & "Wait, BREASTS?!" & DDUtils.RNRN & "You strip off your top and examine your chest and sure enough, you have breasts now."
+            out += DDUtils.RNRN & "Your breasts jiggle a little, and- wait, BREASTS?!" & DDUtils.RNRN &
+                   "You strip off your top and examine your chest and sure enough, you have breasts now."
         End If
 
         If be Then
-            out += "  Your breasts jiggle quite a bit, and it seems that you've gone up a cup size or two."
+            out += DDUtils.RNRN & "Your breasts jiggle quite a bit, and it seems that you've gone up a cup size or two."
         End If
 
         If mtf Then
-            out += "  You also notice that you feel a little ... breathier ... between your legs and a quick pat down confirms that you are now female.  Seems like this bell is turning you into a proper cow after all..."
+            out += DDUtils.RNRN & "You also notice that you feel a little... breezier... between your legs, and a quick pat down confirms that you are now female." & DDUtils.RNRN &
+                   "Seems like this bell is turning you into a proper cow after all."
         End If
 
         TextEvent.push(out)
     End Sub
 
     Overrides Sub tfClothes(ByRef p As Player)
-        p.inv.add(196, 1)
-        EquipmentDialogBackend.armorChange(p, "Cow_Cosplay")
+        If p.inv.item(CowCosplay.ITEM_NAME).getCount > 0 Then p.inv.add(CowCosplay.ITEM_NAME, 1)
+        EquipmentDialogBackend.equipArmor(p, CowCosplay.ITEM_NAME, False)
     End Sub
     Overrides Sub tfDialogStep9()
-        TextEvent.push("Giggling, you take hold of the bell dangling from the collar on your neck.  With each ring so far you've gotten a little bit ditzier, but also a whole lot cuter.  Between your little horns and your gigantic tits, you almost look like some sort of cow...  Falling into another fit of giggles, you give the bell a hard shake, and the sound from its ring echos throughout the dungeon." & DDUtils.RNRN & "You are now a female minotaur!")
+        TextEvent.push("Giggling, you take hold of the bell dangling from the collar on your neck.  With each ring so far you've gotten a little bit ditzier, but also a whole lot cuter." & DDUtils.RNRN &
+                       "Between your little horns and your gigantic tits, you almost look like some sort of cow...  Falling into another fit of giggles, you give the bell a hard shake, and the sound from its ring echos throughout the dungeon." & DDUtils.RNRN &
+                       "You are now a female minotaur!")
     End Sub
 End Class

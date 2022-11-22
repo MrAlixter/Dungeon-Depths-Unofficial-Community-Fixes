@@ -3,7 +3,7 @@
 
     Public Const ITEM_NAME As String = "Broken_Remote"
 
-    Public Shared forms = {"Half-Gorgon", "Gynoid", "Amazon", "Mindless", "Rando", "Half-Broodmother", "Broodmother", "Minotaur Cow", "Dragon", "Succubus", "Slime", "Bimbo", "Cake", "Blob", "Horse", "Oni", "Alraune", "Minotaur Bull", "Targax", "Half-Dragon (R)", "Tigress", "Succubus (Q)", "Minotaur Cow (B)", "Inversion", "Bimbo (Gold)", "Bunny Girl", "Tigress"}
+    Public Shared forms = {"Half-Gorgon", "Gynoid", "Amazon", "Mindless", "Rando", "Half-Broodmother", "Broodmother", "Minotaur Cow", "Dragon", "Succubus", "Slime", "Bimbo", "Cake", "Blob", "Horse", "Oni", "Alraune", "Minotaur Bull", "Targax", "Half-Dragon (R)", "Tigress", "Succubus (Q)", "Minotaur Cow (B)", "Inversion", "Bimbo (Gold)", "Bunny Girl", "Tigress", "Apple", "Bee Girl"}
     Public Shared selectedForm = "Rando"
 
     Sub New()
@@ -15,7 +15,6 @@
         '|Item Flags|
         usable = true
         rando_inv_allowed = False
-        MyBase.droppable = False
 
         '|Stats|
         count = 0
@@ -39,7 +38,6 @@
         tfs.Add("Mindless", New MindlessTF)
         tfs.Add("Rando", New RandoTF)
         tfs.Add("Half-Broodmother", Nothing)
-        tfs.Add("Half-Dragon (R)", Nothing)
         tfs.Add("Minotaur Cow (B)", Nothing)
         tfs.Add("Broodmother", Nothing)
         tfs.Add("Blob", Nothing)
@@ -50,17 +48,20 @@
         tf2s.Add("Minotaur Cow", AddressOf New MinotaurCowTF().step1)
         tf2s.Add("Minotaur Bull", AddressOf New MinoMTF().fulltf)
         tf2s.Add("Dragon", AddressOf New DragonTF().step1)
+        tf2s.Add("Half-Dragon (R)", AddressOf DragonTF.halfDragonRTF)
         tf2s.Add("Succubus", AddressOf New SuccubusTF().step1)
         tf2s.Add("Slime", AddressOf New slimetf().step1)
         tf2s.Add("Bimbo", AddressOf New BimboTF(2, 0, 0.25, True).doubleTf)
         tf2s.Add("Cake", AddressOf New TTCCBF().step1)
-        tf2s.Add("Alraune", AddressOf New AlrauneTF().fullTF)
+        tf2s.Add("Alraune", AddressOf New AlrauneTF().fullRNDTF)
         tf2s.Add("Goth GF", AddressOf New GothGFTF().step1)
         tf2s.Add("Targax", AddressOf TargaxTF.instantTF)
         tf2s.Add("Succubus (Q)", AddressOf DarkPactTF.step1alt)
         tf2s.Add("Inversion", AddressOf InversionTF.snapTF)
         tf2s.Add("Bimbo (Gold)", AddressOf GBimboTF.snapTF)
         tf2s.Add("Bunny Girl", AddressOf DancerTF.step1)
+        tf2s.Add("Apple", AddressOf FaePApple.appleTF)
+        tf2s.Add("Bee Girl", AddressOf BeeHoneyTF.fullTF)
 
         If Not tfs.ContainsKey(form) And Not tf2s.ContainsKey(form) Then Exit Sub
 

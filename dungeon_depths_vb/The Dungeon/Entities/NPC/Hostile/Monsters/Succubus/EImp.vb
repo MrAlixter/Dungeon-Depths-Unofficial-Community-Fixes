@@ -1,8 +1,13 @@
 ﻿Public Class EImp
     Inherits ESuccubus
 
+    Public Shadows Const BASE_NAME As String = "Imp"
+
     Sub New()
-        name = "Imp"
+        '|ID Info|
+        name = BASE_NAME
+
+        '|Stats|
         maxHealth = 33
         attack = 16
         defense = 33
@@ -14,7 +19,12 @@
         levelsToDrain = Int(Rnd() * 2)
         lustToIncrease = Int(Rnd() * 20) + 6
 
+        '|Inventory|
         setInventory({74, 168, 182, 194, 227})
+
+        '|Dialog Variables|
+
+        '|Misc|
         setupMonsterOnSpawn()
     End Sub
 
@@ -31,7 +41,8 @@
     End Sub
 
     Public Overrides Sub sapPlayer(ByRef p As Player)
-        p.deLevel(levelsToDrain)
+        drainedXP += p.deLevel(levelsToDrain)
+        If Not explainedDrain Then TextEvent.pushAndLog("Defeat " & getNameWithTitle() & " to regain your lost XP!") : explainedDrain = True
     End Sub
     Public Overrides Sub sapEntity(ByRef e As Entity)
         e.maxHealth *= 0.8

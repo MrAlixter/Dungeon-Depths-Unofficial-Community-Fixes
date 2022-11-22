@@ -16,7 +16,7 @@
             MyBase.getTarget.takeDMG(dmg + d6, MyBase.getCaster)
 
             TextEvent.pushLog(CStr("A golden ray engulfs your foe!"))
-            TextEvent.pushCombat(CStr("A golden ray of light engulfs your foe, cackling with a rosy glow!  As they stumble back, you notice that they seem a little ... cuter ... than they did before..."))
+            TextEvent.pushCombat(CStr("A golden ray of light engulfs your foe, cackling with a rosy glow!  As they stumble back, you notice that they seem a little... cuter... than they did before..."))
         End If
     End Sub
     Public Overrides Sub backfire()

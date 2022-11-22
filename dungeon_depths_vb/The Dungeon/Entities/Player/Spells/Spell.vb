@@ -1,11 +1,11 @@
 ﻿Public Class Spell
-    Dim cost, tier As Integer
-    Dim name As String
-    Dim caster As Player
-    Dim target As NPC
+    Protected cost, tier As Integer
+    Protected name As String
+    Protected caster As Player
+    Protected target As NPC
 
     Public Shared spellList As Dictionary(Of String, Spell)
-    Dim useableOutOfCombat As Boolean = False
+    Protected useableOutOfCombat As Boolean = False
     Shared Sub init()
         spellList = New Dictionary(Of String, Spell)
 
@@ -19,6 +19,7 @@
         spellList.Add("Turn to Frog", New turnToFrog(Nothing, Nothing))
         spellList.Add("Petrify", New Petrify(Nothing, Nothing))
         spellList.Add("Turn to Blade", New turnToBlade(Nothing, Nothing))
+        spellList.Add("Turn to Panties", New turnToPanties(Nothing, Nothing))
         spellList.Add("Turn to Cupcake", New turnToCupcake(Nothing, Nothing))
         spellList.Add("Heal", New Heal(Nothing, Nothing))
         spellList.Add("Dowse", New Dowse(Nothing, Nothing))
@@ -56,13 +57,15 @@
         spellList.Add("Death Cutter", New DeathCutter(Nothing, Nothing))
         spellList.Add("Grog Blossom", New GrogBlossom(Nothing, Nothing))
         spellList.Add("First Sea's Scourge", New ScourgeFirstSea(Nothing, Nothing))
+        spellList.Add("Fotia's Piercing Gaze", New FotiaGaze(Nothing, Nothing))
+        spellList.Add("Slitherslice", New Slitherslice(Nothing, Nothing))
     End Sub
 
     Sub New(ByRef c As Player, ByRef t As NPC)
         caster = c
         target = t
     End Sub
-    Sub cast()
+    Overridable Sub cast()
         If caster.mana < getcost() Then
             TextEvent.pushAndLog("You don't have enough mana! (" & name & " costs " & getcost() & " mana)")
             Exit Sub
@@ -71,13 +74,19 @@
             TextEvent.pushAndLog("You don't have a target for that spell!")
             Exit Sub
         End If
-        If caster.perks(perk.gagged) > 0 Then
+        If caster.equippedAcce.gag Then
             TextEvent.pushAndLog("Your gag prevents you from casting spells!")
             Exit Sub
         End If
 
         Randomize()
         caster.mana -= getcost()
+
+        If caster.equippedAcce.getAName.Equals(FaeQueensCrown.ITEM_NAME) Then
+            TextEvent.pushAndLog("You cast " & name & "!")
+            effect()
+            Exit Sub
+        End If
 
         Select Case tier
             Case 2
@@ -127,7 +136,6 @@
                 TextEvent.pushAndLog("You cast " & name & "!")
                 effect()
         End Select
-
     End Sub
     Overridable Sub effect()
         TextEvent.push("No effects.")

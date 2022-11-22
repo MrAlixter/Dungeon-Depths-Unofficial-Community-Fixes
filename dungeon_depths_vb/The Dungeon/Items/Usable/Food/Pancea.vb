@@ -23,18 +23,20 @@
     End Sub
 
     Public Overrides Sub effect(ByRef p As Player)
+        '| - Targax Exception - |
         If p.className.Equals("Soul-Lord") Then
-            TextEvent.push("You spike the Panacea on the ground, kicking the mystic dish all over the dungeon floor.  As you go back to your buisness, you muse on how cowardly healing is." & DDUtils.RNRN & """Only someone who cares about their mortal vessel would bother to maintain it.""")
+            TextEvent.push("You spike the Panacea on the ground, kicking the mystic dish all over the dungeon floor.  As you go back to your business, you muse on how cowardly healing is." & DDUtils.RNRN & """Only someone who cares about their mortal vessel would bother to maintain it.""")
+            TextEvent.pushAndLog("You spike the Panacea on the ground!")
             p.UIupdate()
             Exit Sub
         End If
+
+        '| - Main Effect - |
         Dim av = New AntiVenomEffect
         av.apply(p)
-        p.perks(perk.slutcurse) = -1
-        p.perks(perk.polymorphed) = -1
-
+        p.resetPerks()
         Equipment.antiClothingCurse(p)
-        p.health = 1
+        p.health = 1.0
         p.revertToSState()
     End Sub
 End Class

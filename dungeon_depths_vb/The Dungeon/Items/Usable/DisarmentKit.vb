@@ -65,7 +65,7 @@
     End Sub
 
     Public Sub pushLblEventDisarm(ByRef s As String)
-        s += DDUtils.RNRN & "Press any non-movement key to continue."
+        s += DDUtils.PAKTC
         Game.lblEvent.Text = s
         Game.lblEvent.BringToFront()
         Game.lblEvent.Location = New Point((250 * Game.Size.Width / 688) - (Game.lblEvent.Size.Width / 2), 65 * Game.Size.Width / 688)

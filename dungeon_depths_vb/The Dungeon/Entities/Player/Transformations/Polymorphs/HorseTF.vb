@@ -20,8 +20,9 @@
     Public Overrides Sub step1()
         Game.player1.equippedArmor = New Naked
         Game.player1.equippedWeapon = New BareFists
-        Game.player1.equippedAcce = New noAcce
-        Game.player1.inv = New Inventory(True)
+        If Not Game.player1.equippedAcce.getAName = CursedBridle.ITEM_NAME Then Game.player1.equippedAcce = New noAcce
         Game.player1.changeClass("Classless")
+
+        If FaeWoodsQ2A.horseTFongoing Then FaeWoodsQ2AS2.init()
     End Sub
 End Class

@@ -14,6 +14,7 @@
         cursed = True
         hide_mouth = True
         droppable = False
+        gag = True
         rando_inv_allowed = False
 
         '|Stats|
@@ -29,13 +30,8 @@
                 "Requires 6 mana to remove" & DDUtils.RNRN &
                 getStatInformation())
     End Sub
-    Public Overrides Sub onEquip(ByRef p As Player)
-        MyBase.onEquip(p)
-        p.perks(perk.gagged) = 1
-    End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)
         MyBase.onUnequip(p)
-        p.perks(perk.gagged) = -1
         p.mana -= 6
 
         Game.progressTurn()

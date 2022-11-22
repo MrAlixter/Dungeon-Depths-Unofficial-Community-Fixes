@@ -30,10 +30,11 @@
             TextEvent.pushCombat("With a poof " & p.currTarget.getName & " becomes an inflated version of themselves!")
         ElseIf Game.shop_npc_engaged And Not Game.active_shop_npc Is Nothing Then
             Dim out = ""
-            If Game.active_shop_npc.getName.Contains("Shady") Then out = "The second they take hold of the coupon, the magical grifter's eyes widen and a powerful backlash of magic washes over them...   "
+            If Game.active_shop_npc.getName.Contains("Shady") Then out = "The second they take hold of the coupon, the magical grifter's eyes widen and a powerful backlash of magic washes over them..."
             TextEvent.push(out & "With a poof " & Game.active_shop_npc.getName & " becomes an inflated version of themselves!", AddressOf Game.active_shop_npc.toDoll)
+            Game.active_shop_npc.discount = 0.4
         Else
-            Game.player1.ongoingTFs.Add(New BUDollTF())
+            Game.player1.ongoingTFs.add(New BUDollTF())
             Game.player1.update()
         End If
         count -= 1

@@ -1,5 +1,66 @@
-﻿Public Class Monster
+﻿Public Enum mInd
+    mesm_thrall
+    slime
+    player_ghost
+    goo_girl
+    enth_sorc
+    mimic
+    spider
+    arach_hunt
+    enrage_sorc
+    enth_demon
+    hunger
+    marissa_as
+    alraune
+    i_witch
+    fox_fire_elem
+    fire
+    succubus
+    imp
+    succ_princess
+    web_caster_arach
+    bovinomancer
+    time_cop_agent
+    less_gorgon
+    many_squirrel
+    lepo_ooze
+    default_ghost
+    faerie
+    namestealer_faerie
+    faerie_hunter
+    archwitch_recluse
+End Enum
+
+Public Class Monster
     Inherits NPC
+
+    Public Shared Function getRNGMonsters() As List(Of Tuple(Of mInd, String))
+        Dim l As List(Of Tuple(Of mInd, String)) = New List(Of Tuple(Of mInd, String))
+
+        l.Add(New Tuple(Of mInd, String)(mInd.mesm_thrall, MesThrall.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.slime, SlimeMonster.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.player_ghost, PlayerGhost.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.goo_girl, GooGirlMonster.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.enth_sorc, EnthSorc.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.spider, SpiderMonster.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.arach_hunt, ArachHunt.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.alraune, Alraune.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.fox_fire_elem, FFElemental.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.succubus, ESuccubus.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.imp, EImp.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.succ_princess, ESuccPrincess.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.web_caster_arach, WebCasterArach.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.bovinomancer, Bovinomancer.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.less_gorgon, LesserGorgon.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.faerie, FaerieEnemy.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.namestealer_faerie, NamestealerFaerie.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.faerie_hunter, FaerieHunter.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.archwitch_recluse, ArchwitchRecluse.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.lepo_ooze, LeporineOoze.BASE_NAME))
+
+        Return l
+    End Function
+
     Sub New()
         name = "Explorer"
         setInventory({0})
@@ -24,8 +85,9 @@
         sName = name
         sMaxHealth = maxHealth
         sMaxMana = maxMana
+        mana = maxMana
         sAttack = attack
-        sdefense = defense
+        sDefense = defense
         sWill = will
         sSpeed = speed
 
@@ -37,144 +99,196 @@
 
     Shared Function monsterFactory(ByVal mIndex As Integer) As Monster
         Select Case mIndex
-            Case 0
+            Case mInd.mesm_thrall
                 Return New MesThrall
-            Case 1
+            Case mInd.slime
                 Return New SlimeMonster
-            Case 2
+            Case mInd.player_ghost
                 Try
                     Return New PlayerGhost
                 Catch ex As Exception
-                    Select Case Int(Rnd() * 3)
-                        Case 0
-                            Return New MesThrall
-                        Case 1
-                            Return New SlimeMonster
-                        Case 2
-                            Return New SpiderMonster
-                    End Select
+                    Return New DefaultGhost
                 End Try
-            Case 3
+            Case mInd.goo_girl
                 Return New GooGirlMonster
-            Case 4
+            Case mInd.enth_sorc
                 Return New EnthSorc
-            Case 5
+            Case mInd.mimic
                 Return New Mimic
-            Case 6
+            Case mInd.spider
                 Return New SpiderMonster
-            Case 7
+            Case mInd.arach_hunt
                 Return New ArachHunt
-            Case 8
+            Case mInd.enrage_sorc
                 Return New EnrSorc
-            Case 9
+            Case mInd.enth_demon
                 Return New EnthDem
-            Case 10
+            Case mInd.hunger
                 Dim m = New Monster
                 m.name = "Hunger"
                 Return m
-            Case 11
+            Case mInd.marissa_as
                 Return New MarissaAS
-            Case 12
+            Case mInd.alraune
                 Return New Alraune
-            Case 13
-                Return New IWitch
-            Case 14
+            Case mInd.archwitch_recluse
+                Return New ArchwitchRecluse
+            Case mInd.fox_fire_elem
                 Return New FFElemental
-            Case 15
+            Case mInd.fire
                 Dim m = New Monster
                 m.name = "Fire"
                 Return m
-            Case 16
+            Case mInd.succubus
                 Return New ESuccubus
-            Case 17
+            Case mInd.imp
                 Return New EImp
-            Case 18
+            Case mInd.succ_princess
                 Return New ESuccPrincess
-            Case 19
+            Case mInd.web_caster_arach
                 Return New WebCasterArach
-            Case 20
+            Case mInd.bovinomancer
                 Return New Bovinomancer
-            Case 21
+            Case mInd.time_cop_agent
                 Return New TimeCopAgent
+            Case mInd.less_gorgon
+                Return New LesserGorgon
+            Case mInd.many_squirrel
+                Return New ManySquirrels
+            Case mInd.lepo_ooze
+                Return New LeporineOoze
+            Case mInd.faerie
+                Return New FaerieEnemy
+            Case mInd.faerie
+                Return New FaerieEnemy
+            Case mInd.namestealer_faerie
+                Return New NamestealerFaerie
+            Case mInd.faerie_hunter
+                Return New FaerieHunter
         End Select
 
         Return New Monster()
     End Function
     Shared Function floorMonsterTier(ByVal floorInd As Integer) As Integer()
-        Dim tier = {0, 1, 2, 6}
+        '| -- Random Enemies -- |
+        Dim tier = {mInd.mesm_thrall, mInd.slime, mInd.spider}
 
         Select Case floorInd
             Case 1
-                tier = {0, 1, 2, 6}
+                tier = {mInd.mesm_thrall, mInd.slime, mInd.spider}
             Case 2
-                tier = {0, 1, 2, 4, 6}
+                tier = {mInd.mesm_thrall, mInd.slime, mInd.enth_sorc, mInd.spider}
             Case 3
-                tier = {0, 1, 2, 4, 6, 7}
+                tier = {mInd.mesm_thrall, mInd.slime, mInd.enth_sorc, mInd.spider, mInd.arach_hunt}
             Case 4
-                tier = {0, 1, 2, 3, 4, 6, 7, 19}
+                tier = {mInd.mesm_thrall, mInd.slime, mInd.goo_girl, mInd.enth_sorc, mInd.spider, mInd.arach_hunt, mInd.web_caster_arach}
             Case 7
-                tier = {0, 1, 3, 4, 6, 7, 12, 14, 14, 19}
-            Case 10000
+                tier = {mInd.mesm_thrall, mInd.slime, mInd.goo_girl, mInd.enth_sorc, mInd.spider, mInd.arach_hunt, mInd.alraune, mInd.fox_fire_elem, mInd.fox_fire_elem, mInd.web_caster_arach}
+            Case 13
+                tier = {mInd.faerie, mInd.alraune, mInd.archwitch_recluse, mInd.namestealer_faerie}
+            Case 10000, 91018
                 tier = {}
             Case Else
                 If Int(Rnd() * 3) = 0 Then
-                    tier = {0, 1, 2, 3, 6, 7, 12, 12, 19}
+                    tier = {mInd.mesm_thrall, mInd.slime, mInd.goo_girl, mInd.spider, mInd.arach_hunt, mInd.alraune, mInd.alraune, mInd.web_caster_arach}
                 ElseIf Int(Rnd() * 3) = 1 Then
-                    tier = {0, 1, 2, 3, 4, 6, 14, 19, 19}
+                    tier = {mInd.mesm_thrall, mInd.slime, mInd.goo_girl, mInd.enth_sorc, mInd.spider, mInd.fox_fire_elem, mInd.web_caster_arach, mInd.web_caster_arach}
                 Else
-                    tier = {0, 1, 2, 4, 6, 7, 12, 14, 14}
+                    tier = {mInd.mesm_thrall, mInd.slime, mInd.enth_sorc, mInd.spider, mInd.arach_hunt, mInd.alraune, mInd.fox_fire_elem, mInd.fox_fire_elem}
                 End If
         End Select
 
         If floorInd > 6 And Not mFloor.nonRandomFloors.Contains(floorInd) And Not Game.player1.formName.Equals("Cow") Then
-            DDUtils.append(tier, 20)
+            DDUtils.append(tier, mInd.bovinomancer)
         End If
 
+        If floorInd > 2 And Not mFloor.nonRandomFloors.Contains(floorInd) And Int(Rnd() * 2) = 0 Then
+            DDUtils.append(tier, mInd.lepo_ooze)
+        End If
+
+        If floorInd > 5 And Not mFloor.nonRandomFloors.Contains(floorInd) And Int(Rnd() * 3) = 0 Then
+            DDUtils.append(tier, mInd.less_gorgon)
+        End If
+
+        If IO.File.Exists("gho.sts") And Not mFloor.nonRandomFloors.Contains(floorInd) Then
+            DDUtils.append(tier, mInd.player_ghost)
+        End If
+
+        '| --- Time Cops --- |
         If Game.player1.perks(perk.enemyoftime) > 0 Then
-            DDUtils.append(tier, 21)
-            DDUtils.append(tier, 21)
+            DDUtils.append(tier, mInd.time_cop_agent)
+            DDUtils.append(tier, mInd.time_cop_agent)
 
             If Game.currFloor.floorNumber = 10000 Then Return tier
         End If
 
-        If Game.player1.perks(perk.moamarphne) > 0 Or Settings.active(setting.nospawnsuccubi) Then Return tier
-
-        If Game.player1.getLust = 0 Then
-        ElseIf Game.player1.getLust < 25 Then
-            DDUtils.append(tier, 17)
-            DDUtils.append(tier, 16)
-        ElseIf Game.player1.getLust < 50 Then
-            DDUtils.append(tier, 17)
-            DDUtils.append(tier, 16)
-            DDUtils.append(tier, 16)
-        ElseIf Game.player1.getLust < 75 Then
-            DDUtils.append(tier, 17)
-            DDUtils.append(tier, 17)
-            DDUtils.append(tier, 16)
-            DDUtils.append(tier, 16)
-            DDUtils.append(tier, 18)
-        ElseIf Game.player1.getLust < 100 Then
-            DDUtils.append(tier, 17)
-            DDUtils.append(tier, 17)
-            DDUtils.append(tier, 16)
-            DDUtils.append(tier, 16)
-            DDUtils.append(tier, 16)
-            DDUtils.append(tier, 18)
-            DDUtils.append(tier, 18)
-        ElseIf Game.player1.getLust < 200 Then
-            DDUtils.append(tier, 16)
-            DDUtils.append(tier, 16)
-            DDUtils.append(tier, 16)
-            DDUtils.append(tier, 16)
-            DDUtils.append(tier, 18)
-            DDUtils.append(tier, 18)
-            DDUtils.append(tier, 18)
-            DDUtils.append(tier, 18)
-            DDUtils.append(tier, 18)
-            DDUtils.append(tier, 18)
+        '| --- Succubi --- |
+        If Not Game.player1.perks(perk.moamarphne) > 0 Then
+            If Game.player1.getLust = 0 Then
+            ElseIf Game.player1.getLust < 25 Then
+                DDUtils.append(tier, mInd.imp)
+                DDUtils.append(tier, mInd.succubus)
+            ElseIf Game.player1.getLust < 50 Then
+                DDUtils.append(tier, mInd.imp)
+                DDUtils.append(tier, mInd.succubus)
+                DDUtils.append(tier, mInd.succubus)
+            ElseIf Game.player1.getLust < 75 Then
+                DDUtils.append(tier, mInd.imp)
+                DDUtils.append(tier, mInd.imp)
+                DDUtils.append(tier, mInd.succubus)
+                DDUtils.append(tier, mInd.succubus)
+                DDUtils.append(tier, mInd.succ_princess)
+            ElseIf Game.player1.getLust < 100 Then
+                DDUtils.append(tier, mInd.imp)
+                DDUtils.append(tier, mInd.imp)
+                DDUtils.append(tier, mInd.succubus)
+                DDUtils.append(tier, mInd.succubus)
+                DDUtils.append(tier, mInd.succubus)
+                DDUtils.append(tier, mInd.succ_princess)
+                DDUtils.append(tier, mInd.succ_princess)
+            ElseIf Game.player1.getLust < 200 Then
+                DDUtils.append(tier, mInd.succubus)
+                DDUtils.append(tier, mInd.succubus)
+                DDUtils.append(tier, mInd.succubus)
+                DDUtils.append(tier, mInd.succubus)
+                DDUtils.append(tier, mInd.succ_princess)
+                DDUtils.append(tier, mInd.succ_princess)
+                DDUtils.append(tier, mInd.succ_princess)
+                DDUtils.append(tier, mInd.succ_princess)
+                DDUtils.append(tier, mInd.succ_princess)
+                DDUtils.append(tier, mInd.succ_princess)
+            End If
         End If
 
-        Return tier
+        '| --- Fae Curse Enemies --- |
+        If floorInd = 13 And Game.player1.perks(perk.faecurse) > -1 Then
+            DDUtils.append(tier, mInd.faerie_hunter)
+
+            If Game.player1.perks(perk.faecurse) > 1 Then
+                DDUtils.append(tier, mInd.namestealer_faerie)
+                DDUtils.append(tier, mInd.faerie_hunter)
+            End If
+        End If
+
+        '| -- Final Tier Creation -- |
+        Dim final_tier As List(Of Integer) = New List(Of Integer)
+
+        For Each m In tier
+            Select Case Settings.getSpawnRate(m)
+                Case 3
+                    final_tier.Add(m)
+                    final_tier.Add(m)
+                    final_tier.Add(m)
+                    final_tier.Add(m)
+                Case 2
+                    final_tier.Add(m)
+                    final_tier.Add(m)
+                Case 1
+                    final_tier.Add(m)
+            End Select
+        Next
+
+        Return final_tier.ToArray
     End Function
     Shared Sub createMimic(ByRef contents As Inventory)
         Dim m As Monster = monsterFactory(5)

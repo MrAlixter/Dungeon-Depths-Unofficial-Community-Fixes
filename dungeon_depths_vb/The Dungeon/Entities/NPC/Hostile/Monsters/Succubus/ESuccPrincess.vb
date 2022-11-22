@@ -1,8 +1,13 @@
 ﻿Public Class ESuccPrincess
     Inherits ESuccubus
-    Sub New()
-        name = "Succubus Princess"
 
+    Public Shadows Const BASE_NAME As String = "Succubus Princess"
+
+    Sub New()
+        '|ID Info|
+        name = BASE_NAME
+
+        '|Stats|
         maxHealth = 266
         attack = 99
         defense = 66
@@ -14,7 +19,12 @@
         levelsToDrain = 2
         lustToIncrease = Int(Rnd() * 6) + 6
 
+        '|Inventory|
         setInventory({25, 74, 168, 194, 182, 205, 214, 218, 226, 227})
+
+        '|Dialog Variables|
+
+        '|Misc|
         setupMonsterOnSpawn()
     End Sub
 
@@ -45,8 +55,8 @@
             Dim p = CType(target, Player)
             TextEvent.push("The " & getName() & " casts Curse of the Slut!")
             p.perks(perk.succubuscurse) = 0
-            p.dembimState1.save(p)
-            p.dembimState2.save(p)
+            p.formStates(stateInd.dembimState1).save(p)
+            p.formStates(stateInd.dembimState2).save(p)
             Exit Sub
         End If
 
@@ -94,7 +104,8 @@
     End Sub
 
     Public Overrides Sub sapPlayer(ByRef p As Player)
-        p.deLevel(levelsToDrain)
+        drainedXP += p.deLevel(levelsToDrain)
+        If Not explainedDrain Then TextEvent.pushAndLog("Defeat " & getNameWithTitle() & " to regain your lost XP!") : explainedDrain = True
     End Sub
     Public Overrides Sub sapEntity(ByRef e As Entity)
         e.maxHealth *= 0.8

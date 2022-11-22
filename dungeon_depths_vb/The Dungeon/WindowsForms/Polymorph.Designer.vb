@@ -23,50 +23,50 @@ Partial Class Polymorph
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Polymorph))
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.cboxPMorph = New System.Windows.Forms.ComboBox()
+        Me.lblPolymorphTo = New System.Windows.Forms.Label()
+        Me.btnPolymorphOK = New System.Windows.Forms.Button()
+        Me.cboxPolymorph = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
         '
-        'Label1
+        'lblPolymorphTo
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.BackColor = System.Drawing.Color.Black
-        Me.Label1.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(40, 15)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(126, 19)
-        Me.Label1.TabIndex = 18
-        Me.Label1.Text = "Polymorph to:"
+        Me.lblPolymorphTo.AutoSize = True
+        Me.lblPolymorphTo.BackColor = System.Drawing.Color.Black
+        Me.lblPolymorphTo.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPolymorphTo.ForeColor = System.Drawing.Color.White
+        Me.lblPolymorphTo.Location = New System.Drawing.Point(40, 15)
+        Me.lblPolymorphTo.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblPolymorphTo.Name = "lblPolymorphTo"
+        Me.lblPolymorphTo.Size = New System.Drawing.Size(85, 13)
+        Me.lblPolymorphTo.TabIndex = 18
+        Me.lblPolymorphTo.Text = "Polymorph to:"
         '
-        'Button1
+        'btnPolymorphOK
         '
-        Me.Button1.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Button1.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.ForeColor = System.Drawing.Color.Black
-        Me.Button1.Location = New System.Drawing.Point(98, 76)
-        Me.Button1.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(89, 32)
-        Me.Button1.TabIndex = 17
-        Me.Button1.Text = "OK"
-        Me.Button1.UseVisualStyleBackColor = False
+        Me.btnPolymorphOK.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.btnPolymorphOK.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnPolymorphOK.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnPolymorphOK.ForeColor = System.Drawing.Color.Black
+        Me.btnPolymorphOK.Location = New System.Drawing.Point(98, 76)
+        Me.btnPolymorphOK.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.btnPolymorphOK.Name = "btnPolymorphOK"
+        Me.btnPolymorphOK.Size = New System.Drawing.Size(89, 32)
+        Me.btnPolymorphOK.TabIndex = 17
+        Me.btnPolymorphOK.Text = "OK"
+        Me.btnPolymorphOK.UseVisualStyleBackColor = False
         '
-        'cboxPMorph
+        'cboxPolymorph
         '
-        Me.cboxPMorph.BackColor = System.Drawing.Color.Black
-        Me.cboxPMorph.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cboxPMorph.ForeColor = System.Drawing.Color.White
-        Me.cboxPMorph.FormattingEnabled = True
-        Me.cboxPMorph.Location = New System.Drawing.Point(44, 39)
-        Me.cboxPMorph.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.cboxPMorph.Name = "cboxPMorph"
-        Me.cboxPMorph.Size = New System.Drawing.Size(199, 27)
-        Me.cboxPMorph.TabIndex = 16
-        Me.cboxPMorph.Text = "-- Select --"
+        Me.cboxPolymorph.BackColor = System.Drawing.Color.Black
+        Me.cboxPolymorph.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxPolymorph.ForeColor = System.Drawing.Color.White
+        Me.cboxPolymorph.FormattingEnabled = True
+        Me.cboxPolymorph.Location = New System.Drawing.Point(44, 39)
+        Me.cboxPolymorph.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.cboxPolymorph.Name = "cboxPolymorph"
+        Me.cboxPolymorph.Size = New System.Drawing.Size(199, 21)
+        Me.cboxPolymorph.TabIndex = 16
+        Me.cboxPolymorph.Text = "-- Select --"
         '
         'Polymorph
         '
@@ -74,19 +74,18 @@ Partial Class Polymorph
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(291, 131)
         Me.ControlBox = False
-        Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.Button1)
-        Me.Controls.Add(Me.cboxPMorph)
+        Me.Controls.Add(Me.lblPolymorphTo)
+        Me.Controls.Add(Me.btnPolymorphOK)
+        Me.Controls.Add(Me.cboxPolymorph)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Polymorph"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Polymorph"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents Button1 As System.Windows.Forms.Button
-    Friend WithEvents cboxPMorph As System.Windows.Forms.ComboBox
+    Friend WithEvents lblPolymorphTo As System.Windows.Forms.Label
+    Friend WithEvents btnPolymorphOK As System.Windows.Forms.Button
+    Friend WithEvents cboxPolymorph As System.Windows.Forms.ComboBox
 End Class

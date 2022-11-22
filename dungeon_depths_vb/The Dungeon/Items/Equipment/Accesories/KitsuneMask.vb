@@ -7,10 +7,11 @@
         '|ID Info|
         setName(ITEM_NAME)
         id = 198
-        tier = Nothing
+        tier = 3
 
         '|Item Flags|
         usable = False
+        npc_drop_only = True
 
         '|Stats|
         count = 0
@@ -48,12 +49,4 @@
         p.perks(perk.blind) = -1
         Game.drawBoard()
     End Sub
-
-    Public Overrides Function getTier() As Integer
-        If Game.mDun IsNot Nothing AndAlso Game.mDun.numCurrFloor >= 7 Then
-            Return 3
-        Else
-            Return Nothing
-        End If
-    End Function
 End Class

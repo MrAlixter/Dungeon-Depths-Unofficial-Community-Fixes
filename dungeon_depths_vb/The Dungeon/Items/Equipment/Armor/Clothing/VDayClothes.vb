@@ -11,8 +11,7 @@
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
-        MyBase.droppable = False
+        compress_breast = True
         rando_inv_allowed = False
 
         '|Stats|

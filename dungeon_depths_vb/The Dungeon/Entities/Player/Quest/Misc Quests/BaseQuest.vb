@@ -4,7 +4,7 @@
     Sub New()
         MyBase.New("Placeholder")
 
-        qInd = 0
+        quest_index = 0
 
         objectives.Add(New OutOfTimeS1)
     End Sub
@@ -18,7 +18,7 @@
     End Function
 End Class
 
-Public Class BaseQuestS1
+Friend Class BaseQuestS1
     Inherits Objective
 
     Sub New()

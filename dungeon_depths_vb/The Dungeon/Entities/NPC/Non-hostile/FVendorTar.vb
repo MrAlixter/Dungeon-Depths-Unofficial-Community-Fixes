@@ -23,7 +23,7 @@
         '|ID Info|
         name = "Food Vendor (Targax)"
         sName = name
-        npc_index = sNPCInd.foodvendor
+        npc_index = ShopNPCInd.foodvendor
 
         '|NPC Flags|
         pronoun = "he"
@@ -58,28 +58,20 @@
         sSpeed = speed
 
         '|Images|
-        picNormal = ShopNPC.npcLib.atrs(0).getAt(78)
-        picPrincess = ShopNPC.npcLib.atrs(0).getAt(79)
-        picBunny = ShopNPC.npcLib.atrs(0).getAt(80)
-        picArachne = ShopNPC.npcLib.atrs(0).getAt(81)
+        local_img = New Dictionary(Of ShopNPC.LocalImgInd, Image)()
 
-        picNPC = New List(Of Image)
-        picNPC.AddRange({picNormal,
-                         ShopNPC.npcLib.atrs(0).getAt(4),
-                         ShopNPC.npcLib.atrs(0).getAt(5),
-                         picPrincess,
-                         picBunny})
-
-        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(16),
-                         ShopNPC.npcLib.atrs(0).getAt(15),
-                         ShopNPC.npcLib.atrs(0).getAt(23),
-                         ShopNPC.npcLib.atrs(0).getAt(82),
-                         ShopNPC.npcLib.atrs(0).getAt(61),
-                         picArachne,
-                         ShopNPC.npcLib.atrs(0).getAt(82),
-                         ShopNPC.npcLib.atrs(0).getAt(96)})
+        local_img.Add(LocalImgInd.normal, ShopNPC.gbl_img.atrs(0).getAt(78))
+        local_img.Add(LocalImgInd.frog, ShopNPC.gbl_img.atrs(0).getAt(4))
+        local_img.Add(LocalImgInd.bunny, ShopNPC.gbl_img.atrs(0).getAt(80))
+        local_img.Add(LocalImgInd.princess, ShopNPC.gbl_img.atrs(0).getAt(79))
+        local_img.Add(LocalImgInd.sheep, ShopNPC.gbl_img.atrs(0).getAt(5))
+        local_img.Add(LocalImgInd.doll, ShopNPC.gbl_img.atrs(0).getAt(82))
+        local_img.Add(LocalImgInd.arachne, ShopNPC.gbl_img.atrs(0).getAt(81))
+        local_img.Add(LocalImgInd.catgirl, ShopNPC.gbl_img.atrs(0).getAt(149))
+        local_img.Add(LocalImgInd.trilobite, ShopNPC.gbl_img.atrs(0).getAt(96))
+        local_img.Add(LocalImgInd.beegirl, ShopNPC.gbl_img.atrs(0).getAt(148))
+        local_img.Add(LocalImgInd.alt1, ShopNPC.gbl_img.atrs(0).getAt(61))
     End Sub
-
 
     Public Overrides Sub encounter()
         'If the food vendor has the sword, use the alternate food vendor character
@@ -90,99 +82,98 @@
         End If
 
         MyBase.encounter()
-
-        discount = 0
-
-        If img_index = 0 Then
-            TextEvent.pushNPCDialog("Welcome and check out the new menu!  Turns out this sword was a little more cursed than expected.  No worries though, I'm sure it'll work itself out...  Eat up!")
-        ElseIf img_index = 1 Then
-            TextEvent.pushNPCDialog("Broak, croak, ribbit.")
-        ElseIf img_index = 2 Then
-            TextEvent.pushNPCDialog("...")
-        ElseIf img_index = 3 Then
-            TextEvent.pushNPCDialog("You... ~mmm~... dine with royalty this day, " & Game.player1.className & "...  I assure you, I am more than fit for a princess, and you would know! ~🖤  " &
-                               "Oh, you might have thought you got the upper hand by turning me into a helpless princess, but...  ~ooohhh~ this... probably doesn't bode well...")
-        ElseIf img_index = 4 Then
-            discount = 2.0
-            TextEvent.pushNPCDialog("Hello once again, my murderer.  Remember me?  Targax?  This fool is usually able to supress my influance, but in her current state taking full control was easy pickings.  As a show of gratitude I won't turn you away this time, but once I've finished turning the chef into a proper vessal you will know my wrath.")
-        ElseIf img_index = 8 Or img_index = 12 Then
-            TextEvent.pushNPCDialog("...")
-        ElseIf img_index = 10 Then
-            If Game.player1.formName.Equals("Arachne") Then
-                TextEvent.pushNPCDialog("Hey, it's you!  All hail the spider goddess or whatever we're on about, to be completely honest I wasn't really paying attention during my initiation." & DDUtils.RNRN &
-                                   "So, whatcha eatin'?")
-            Else
-                TextEvent.pushNPCDialog("Ya know, they did give me this extra strength venom you could use if you wanted to try this spider thing out...")
-            End If
-        ElseIf img_index = 11 Then
-            TextEvent.pushNPCDialog("I'll be the one to say it, you're better at this than Marissa.  Are you two working together or something?")
-        End If
-
-        If img_index = 5 Then inv.setCount(98, 1) Else inv.setCount(98, 0)
-        If img_index = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
-
-        Game.picNPC.BackgroundImage = picNPC(img_index)
     End Sub
 
-    Public Overrides Function toFight() As String
-        If img_index = 0 Then
-            Return "Looks like someone ordered...a knuckle sandwich!  Hahaha, aaahhh...no?  Not a fan of the puns?  Well, all the more reason to kick your ass."
-        ElseIf img_index = 1 Then
-            Return "rrrrrrrr..."
-        ElseIf img_index = 2 Then
-            Return "!!!"
-        ElseIf img_index = 3 Then
-            Return "Wait, you wouldn't hit a princess, right?"
-        ElseIf img_index = 4 Then
-            Return "Well then, round two time..."
-        ElseIf img_index = 8 Or img_index = 12 Then
-            Return "..."
-        ElseIf img_index = 10 Then
-            Return "Whelp, time for one of us to die."
-        ElseIf img_index = 11 Then
-            Return "Alright, let's do this..."
+    '| - DIALOG - |
+    Protected Overrides Function normalDialog(ByRef p As Player)
+        Return "Welcome and check out the new menu!" & DDUtils.RNRN &
+               "Turns out this sword was a little more cursed than expected.  No worries though, I'm sure it'll work itself out..."
+    End Function
+    Protected Overrides Function frogDialog(ByRef p As Player)
+        Return "Broak, croak, ribbit."
+    End Function
+    Protected Overrides Function bunnyDialog(ByRef p As Player)
+        discount = -2.0
+        Return "Hello once again, my murderer." & DDUtils.RNRN &
+               "Remember me?  Targax?  This fool is usually able to supress my influence, but in this form taking full control was easy pickings." & DDUtils.RNRN &
+               "As a show of gratitude I won't turn you away this time, but you will face my wrath once I've finished turning this pathetic chef into a proper vessel."
+    End Function
+    Protected Overrides Function princessDialog(ByRef p As Player)
+        Return "You... ~mmm~... dine with royalty this day, " & p.className & "...  I assure you, I am more than fit for a princess, and you would know! ~🖤  " & DDUtils.RNRN &
+               "Oh, you might have thought you got the upper hand by turning me into a helpless princess, but...  ~ooohhh~ this... probably doesn't bode well..."
+
+    End Function
+    Protected Overrides Function sheepDialog(ByRef p As Player)
+        Return "..."
+    End Function
+    Protected Overrides Function arachneDialog(ByRef p As Player)
+        If p.formName.Equals("Arachne") Then
+            Return "Hey, it's you!  All hail the spider goddess or whatever we're on about, to be completely honest I wasn't really paying attention during my initiation." & DDUtils.RNRN &
+                   "So, whatcha eatin'?"
+        Else
+            Return "Ya know, they did give me this extra strength venom you could use if you wanted to try this spider thing out..."
         End If
-        Return "Looks like someone ordered...a knuckle sandwich!  Hahaha, aaahhh...no?  Not a fan of the puns?  Well, all the more reason to kick your ass."
     End Function
-    Public Overrides Function hitBySpell() As String
-        If img_index = 0 Or img_index = 10 Then
-            Game.NPCtoCombat(Me)
-            Return "*sigh* Alright, here we go."
-        ElseIf img_index = 1 Then
-            Game.NPCtoCombat(Me)
-            Return "rrrrrr."
-        ElseIf img_index = 2 Then
-            Game.NPCtoCombat(Me)
-            Return "!!!"
-        ElseIf img_index = 3 Then
-            Return "Hmmmm...  This actually might be useful..."
-        ElseIf img_index = 4 Then
-            Return "Magic?  Oh you *are* precious..."
-        ElseIf img_index = 8 Or img_index = 12 Then
-            Return "..."
-        ElseIf img_index = 11 Then
-            Game.NPCtoCombat(Me)
-            Return "Mrrrrrr..."
-        End If
-
-        Game.NPCtoCombat(Me)
-        Return "*sigh* Alright, here we go."
+    Protected Overrides Function catgirlDialog(ByRef p As Player)
+        Return "Umm... I... Meow?"
+    End Function
+    Protected Overrides Function beegirlDialog(ByRef p As Player)
+        Return "Bzz, h o n e y..."
     End Function
 
-    Public Overrides Sub toDoll()
-        TextEvent.pushNPCDialog("...")
-        Game.picNPC.BackgroundImage = picNPC(8)
-
-        discount = 0.5
-    End Sub
-
-    Public Overrides Function getArachneImageInd() As Integer
-        Return 10
+    Protected Overrides Function normalFightDialog(ByRef p As Player)
+        Return "Looks like someone ordered... a knuckle sandwich!" & DDUtils.RNRN &
+               "Hahaha, aaahhh... no?  Not a fan of the puns?  Well, all the more reason to kick your ass."
     End Function
-    Public Overrides Function getCatgirlImageInd() As Integer
-        Return 11
+    Protected Overrides Function frogFightDialog(ByRef p As Player)
+        Return "rrrrrrrr..."
     End Function
-    Public Overrides Function getTrilobiteImageInd() As Integer
-        Return 12
+    Protected Overrides Function bunnyFightDialog(ByRef p As Player)
+        Return "Well then, time for round two..."
+    End Function
+    Protected Overrides Function princessFightDialog(ByRef p As Player)
+        Return "Wait, you wouldn't hit a princess, right?"
+    End Function
+    Protected Overrides Function sheepFightDialog(ByRef p As Player)
+        Return "!!!"
+    End Function
+    Protected Overrides Function arachneFightDialog(ByRef p As Player)
+        Return "Whelp, time for one of us to die."
+    End Function
+    Protected Overrides Function catgirlFightDialog(ByRef p As Player)
+        Return "Alright, let's do this..."
+    End Function
+    Protected Overrides Function beegirlFightDialog(ByRef p As Player)
+        Return "ZBZBZBZB!"
+    End Function
+
+    Protected Overrides Function normalSpellDialog(ByRef p As Player)
+        Return "*sigh*" & DDUtils.RNRN &
+               "Alright, here we go."
+    End Function
+    Protected Overrides Function frogSpellDialog(ByRef p As Player)
+        Return frogFightDialog(p)
+    End Function
+    Protected Overrides Function bunnySpellDialog(ByRef p As Player)
+        Return "Magic?  Oh you *are* precious..."
+    End Function
+    Protected Overrides Function princessSpellDialog(ByRef p As Player)
+        Return "Hmmmm...  This actually might be useful..."
+    End Function
+    Protected Overrides Function sheepSpellDialog(ByRef p As Player)
+        Return sheepFightDialog(p)
+    End Function
+    Protected Overrides Function arachneSpellDialog(ByRef p As Player)
+        Return normalSpellDialog(p)
+    End Function
+    Protected Overrides Function catgirlSpellDialog(ByRef p As Player)
+        Return "Mrrrrrr..."
+    End Function
+    Protected Overrides Function beegirlSpellDialog(ByRef p As Player)
+        Return beegirlFightDialog(p)
+    End Function
+
+    Public Overrides Function postPurchaseDialog(ByRef p As Player) As Object
+        Return "Anything else I can get ya?"
     End Function
 End Class

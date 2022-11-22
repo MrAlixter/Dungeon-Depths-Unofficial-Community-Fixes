@@ -5,6 +5,7 @@
     amazon
     arachne
     archdemoness
+    beehoney
     berrybimbo
     blindness
     blueox
@@ -22,15 +23,21 @@
     coserv
     cow
     cynndisguise
+    cynntonic
     dancer
     darkpact
     demonbimbo
     demonmino
     dragonpolymorph
     dragonfruitbimbo
+    faebimbo
+    faecleric
     faepie
+    faeprincess
+    faerie
     femmino
     femminopolymorph
+    gabimbo
     goddess
     goldbimbo
     googirl
@@ -40,6 +47,8 @@
     halfgorgon
     halfsuccubus
     horse
+    hpbimbo
+    humanpolymorph
     inversion
     kitsune
     maggirl
@@ -55,6 +64,7 @@
     mimicmino
     mindless
     mintbimbo
+    mpbimbo
     neko
     plantfolk
     plush
@@ -64,6 +74,7 @@
     princess
     princessbackfire
     rando
+    scaletalisman
     sheepbackfire
     shrunken
     slime
@@ -75,6 +86,7 @@
     targax
     thrall
     tigresspolymorph
+    unicornpolymorph
     valkyrie
     vialofslime
     watermelonbimbo
@@ -141,6 +153,9 @@ Public MustInherit Class Transformation
         ElseIf tf = tfind.archdemoness Then
             Return New ArchDemonessTF(cs, n, tts, wi, cbs, tfd)
 
+        ElseIf tf = tfind.beehoney Then
+            Return New BeeHoneyTF(cs, n, tts, wi, cbs, tfd)
+
         ElseIf tf = tfind.berrybimbo Then
             Return New BBBimboTF(cs, n, tts, wi, cbs, tfd)
 
@@ -189,6 +204,9 @@ Public MustInherit Class Transformation
         ElseIf tf = tfind.cow Then
             Return New CowTF(cs, n, tts, wi, cbs, tfd)
 
+        ElseIf tf = tfind.cynntonic Then
+            Return New CynnTonicTF(cs, n, tts, wi, cbs, tfd)
+
         ElseIf tf = tfind.cynndisguise Then
             Return New CynnDisguiseTF(cs, n, tts, wi, cbs, tfd)
 
@@ -210,14 +228,29 @@ Public MustInherit Class Transformation
         ElseIf tf = tfind.dragonfruitbimbo Then
             Return New DragonfruitBimboTF(cs, n, tts, wi, cbs, tfd)
 
+        ElseIf tf = tfind.faebimbo Then
+            Return New FBimboTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.faecleric Then
+            Return New FClericTF(cs, n, tts, wi, cbs, tfd)
+
         ElseIf tf = tfind.faepie Then
             Return New FaePieTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.faeprincess Then
+            Return New FaePrincessTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.faerie Then
+            Return New FaerieTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.femmino Then
             Return New MinoFTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.femminopolymorph Then
             Return New MinotaurCowTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.gabimbo Then
+            Return New GABimboTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.goddess Then
             Return New GoddessTF(cs, n, tts, wi, cbs, tfd)
@@ -245,6 +278,12 @@ Public MustInherit Class Transformation
 
         ElseIf tf = tfind.horse Then
             Return New HorseTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.hpbimbo Then
+            Return New HPBimboTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.humanpolymorph Then
+            Return New HumanTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.inversion Then
             Return New InversionTF(cs, n, tts, wi, cbs, tfd)
@@ -291,6 +330,9 @@ Public MustInherit Class Transformation
         ElseIf tf = tfind.mintbimbo Then
             Return New MBimboTF(cs, n, tts, wi, cbs, tfd)
 
+        ElseIf tf = tfind.mpbimbo Then
+            Return New MPBimboTF(cs, n, tts, wi, cbs, tfd)
+
         ElseIf tf = tfind.neko Then
             Return New NekoTF(cs, n, tts, wi, cbs, tfd)
 
@@ -317,6 +359,9 @@ Public MustInherit Class Transformation
 
         ElseIf tf = tfind.rando Then
             Return New RandoTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.scaletalisman Then
+            Return New ScaleTalismanTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.sheepbackfire Then
             Return New SheepTFB(cs, n, tts, wi, cbs, tfd)
@@ -351,6 +396,9 @@ Public MustInherit Class Transformation
         ElseIf tf = tfind.tigresspolymorph Then
             Return New TigressTF(cs, n, tts, wi, cbs, tfd)
 
+        ElseIf tf = tfind.unicornpolymorph Then
+            Return New UnicornTF(cs, n, tts, wi, cbs, tfd)
+
         ElseIf tf = tfind.valkyrie Then
             Return New ValkyrieTF2(cs, n, tts, wi, cbs, tfd)
 
@@ -366,12 +414,10 @@ Public MustInherit Class Transformation
     End Function
     Shared Function canBeTFed(ByRef p As Player) As Boolean
         If Game.player1.ongoingTFs.count < 1 And
-            (Not p.polymorphs.ContainsKey(p.className) And Not p.polymorphs.ContainsKey(p.formName)) And
-            Not p.className.Equals("Magical Girl") And
-            Not p.className.Equals("Valkyrie") And
-            Not p.className.Equals("Unconscious") And
-            Not p.formName.Equals("Blowup Doll") And
-            Not p.formName.Equals("Fae") And
+            p.pClass.canBeTFed And
+            p.pForm.canBeTFed And
+            p.prt.oneLayerImgCheck(p.formName, p.className) Is Nothing And
+            Not p.perks(perk.polymorphed) > 0 And
             Not p.perks(perk.astatue) > 1 And
             Not p.perks(perk.tfedbyweapon) > 0 And
             Not p.perks(perk.pdeflector) > 0 Then
@@ -386,7 +432,7 @@ Public MustInherit Class Transformation
         Return False
     End Function
 
-    'updateable implementation
+    'updateable implementation 
     Overridable Sub update() Implements Updatable.update
         If Not update_during_combat And Game.combat_engaged Then Exit Sub
         If turns_until_next_step = 0 Then
@@ -401,6 +447,8 @@ Public MustInherit Class Transformation
         Else
             turns_until_next_step -= 1
         End If
+    End Sub
+    Overridable Sub removeFromTFList()
     End Sub
 
     'sequential tf methods
@@ -442,7 +490,7 @@ Public MustInherit Class Transformation
     Public Function getTurnsTilNextStep() As Integer
         Return turns_until_next_step
     End Function
-    Public Function getTFDone() As Boolean
+    Public Overridable Function getTFDone() As Boolean
         Return tf_done
     End Function
     Public Function getTFName() As String

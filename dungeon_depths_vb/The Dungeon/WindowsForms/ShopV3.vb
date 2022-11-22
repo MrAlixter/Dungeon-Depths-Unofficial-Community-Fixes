@@ -6,7 +6,7 @@ Friend Enum inv_type
 End Enum
 
 Public Class ShopV3
-    Private Const P_ITEMNAME_LENGTH As Integer = 23
+    Public Const P_ITEMNAME_LENGTH As Integer = 23
     Private Const S_ITEMNAME_LENGTH As Integer = 28
     Private Const P_PRICE_LENGTH As Integer = 7
     Private Const S_PRICE_LENGTH As Integer = 8
@@ -27,8 +27,8 @@ Public Class ShopV3
 
         'update the player's inventory
         For Each itm In getFormattedInventory(p.inv, inv_type.player)
-            If Not itm.EndsWith(":") And Not itm.Equals("") Then
-                boxInventory.Items.Add(lineup(p.inv.item(itm).getAName(), (p.inv.item(itm).value / 2), p.inv.item(itm).count))
+            If Not p.inv.item(itm) Is Nothing AndAlso Not itm.EndsWith(":") And Not itm.Equals("") Then
+                boxInventory.Items.Add(lineup(p.inv.item(itm).getName(), (p.inv.item(itm).value / 2), p.inv.item(itm).count))
                 pInventory.Add(itm)
             Else
                 boxInventory.Items.Add(itm)
@@ -37,8 +37,8 @@ Public Class ShopV3
 
         'update the shopkeeper's inventory
         For Each itm In getFormattedInventory(sk.inv, inv_type.shopkeeper)
-            If Not itm.EndsWith(":") And Not itm.Equals("") Then
-                boxShop.Items.Add(lineupSeller(sk.inv.item(itm).getAName(), (sk.inv.item(itm).value)))
+            If Not sk.inv.item(itm) Is Nothing AndAlso Not itm.EndsWith(":") And Not itm.Equals("") Then
+                boxShop.Items.Add(lineupSeller(sk.inv.item(itm).getAName(), ShopNPC.getAdjustedValue(sk, itm)))
                 skInventory.Add(itm)
             Else
                 boxShop.Items.Add(itm)
@@ -125,16 +125,26 @@ Public Class ShopV3
 
     '| - EVENT HANDLERS - |
     Private Sub Shop_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If sk Is Nothing OrElse Not sk.isShop Then
+            TextEvent.pushLog("There isn't an NPC to shop with here...")
+            Me.Close()
+            Exit Sub
+        End If
+
         skInventory = New List(Of String)
         pInventory = New List(Of String)
 
         txtDesc.Text = ""
 
         DDUtils.resizeForm(Me)
+        Me.CenterToParent()
 
         RefreshScreen()
         lblPlayer.Text = p.getName
         lblShopkeeper.Text = sk.name
+    End Sub
+    Private Sub ShopV3_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        If Not sk Is Nothing And Not Game.lblEvent.Visible And Not Game.pnlEvent.Visible Then TextEvent.pushNPCDialog(sk.postPurchaseDialog(p))
     End Sub
     Private Sub inventory_SelectedIndexChange(sender As Object, e As EventArgs) Handles boxInventory.SelectedIndexChanged, boxShop.SelectedIndexChanged
         If sender.SelectedItem Is Nothing Or sender.SelectedItem.endsWith(":") Or sender.SelectedItem.Equals("") Then Exit Sub
@@ -323,7 +333,7 @@ Public Class ShopV3
             'add the value of the shopkeeper's item to the total
             Dim item As Item = sk.getShopInv.item(item_index)
             If number.Value > item.saleLim Then number.Value = item.saleLim
-            cost += (item.value) * number.Value
+            cost += ShopNPC.getAdjustedValue(sk, item.getAName) * number.Value
         Next
 
         If cost <= p.gold Then

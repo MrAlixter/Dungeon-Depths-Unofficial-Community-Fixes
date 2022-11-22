@@ -13,6 +13,7 @@
         usable = false
         compress_breast = True
         show_underboob = False
+        adjust_sleeve_layer = False
         droppable = False
         rando_inv_allowed = False
 

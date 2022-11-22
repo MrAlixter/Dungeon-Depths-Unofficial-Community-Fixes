@@ -1,12 +1,24 @@
 ﻿Public Class SlimeMonster
     Inherits Monster
+
+    Public Const BASE_NAME As String = "Slime"
+
     Sub New()
-        name = "Slime"
+        '|ID Info|
+        name = BASE_NAME
+
+        '|Stats|
         maxHealth = 30
         attack = 15
         defense = 60
         speed = 6
+
+        '|Inventory|
         setInventory({2, 3})
+
+        '|Dialog Variables|
+
+        '|Misc|
         setupMonsterOnSpawn()
     End Sub
 

@@ -27,6 +27,8 @@
     'Potion_of_Benediction	    wonky
     'Potion_of_Dodging          dodgy
     'Incandescent_Potion        suspicious
+    'Mana_Potion_(Homebrewed)   astral
+    'Health_Potion_(Homebrewed) earthy
 
     Overrides Sub use(ByRef p As Player)
         If Not hasBeenUsed Then reveal()
@@ -42,6 +44,17 @@
 
         effectList.Clear()
         count -= 1
+    End Sub
+
+    Sub textlessApply(ByRef p As Player)
+        setEffectList()
+
+        For Each effect In effectList
+            effect.apply(p)
+        Next
+        pushLblEventEffects(effectList)
+
+        effectList.Clear()
     End Sub
 
     Sub mimicThrow(ByRef p As Player)

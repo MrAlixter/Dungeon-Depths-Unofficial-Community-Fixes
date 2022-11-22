@@ -1,11 +1,13 @@
 ﻿Public Class Mimic
     Inherits Monster
 
+    Public Const BASE_NAME As String = "Mimic"
+
     Dim potions_spat As Integer = 0
 
     Sub New()
         '|ID Info|
-        name = "Mimic"
+        name = BASE_NAME
 
         '|Stats|
         maxHealth = 175
@@ -13,12 +15,13 @@
         defense = 20
         speed = 50
         will = 15
+        setupMonsterOnSpawn()
 
         '|Inventory|
         setInventory({0})
 
         '|Misc|
-        setupMonsterOnSpawn()
+
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

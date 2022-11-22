@@ -30,9 +30,9 @@
         MyBase.onEquip(p)
         p.learnSpell("Aquageyser")
     End Sub
-    Public Overloads Overrides Sub onUnEquip(ByRef p As Player, ByRef w As Weapon)
-        MyBase.onUnEquip(p, w)
-        p.knownSpells.Remove("Aquageyser")
+    Public Overloads Overrides Sub onUnequip(ByRef p As Player, ByRef w As Weapon)
+        MyBase.onUnequip(p, w)
+        p.forgetSpell("Aquageyser")
     End Sub
 
     Public Overrides Function getABoost(ByRef p As Player) As Integer

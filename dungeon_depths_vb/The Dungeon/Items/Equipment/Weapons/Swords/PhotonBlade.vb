@@ -28,7 +28,7 @@
         If dmg <= 4 Then
             Return -1
         ElseIf p.mana < 5 Then '+ ((p.lust Mod 20)) Then
-            TextEvent.push("Your blade, lacking energy, fades into non-existance.")
+            TextEvent.push("Your blade, lacking energy, fades into non-existence.")
             Return -1
         ElseIf dmg >= 11 Then
             Return -2

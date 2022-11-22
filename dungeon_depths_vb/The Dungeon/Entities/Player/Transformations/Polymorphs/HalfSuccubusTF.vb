@@ -25,7 +25,6 @@
         'unequips
         If p.inv.getCountAt("Succubus_Garb") < 1 Then p.inv.add("Succubus_Garb", 1)
         EquipmentDialogBackend.armorChange(p, "Succubus_Garb")
-         EquipmentDialogBackend.weaponChange(p, "Fists")
         Equipment.accChange(p, "Nothing")
 
         'succubus transformation
@@ -44,6 +43,8 @@
         p.prt.setIAInd(pInd.fronthair, 13, True, True)
         p.prt.setIAInd(pInd.hat, 0, True, False)
         p.prt.setIAInd(pInd.wings, 2, True, False)
+
+        p.prt.changeHairColor(Color.FromArgb(255, 64, 0, 128))
 
         'transformation description push
         p.TextColor = Color.HotPink

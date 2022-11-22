@@ -34,7 +34,7 @@
         Game.hideNPCButtons()
 
         If getClasses(Game.player1).Count < 1 Then
-            Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(102), "Hmmm, it doesn't look like your current class meets the prerequisites for any advanced classes at the moment...")
+            Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(102), "Hmmm, it doesn't look like your current class meets the prerequisites for any advanced classes at the moment...")
             Game.player1.gold += COST
             Game.shop_npc_engaged = False
             Exit Sub

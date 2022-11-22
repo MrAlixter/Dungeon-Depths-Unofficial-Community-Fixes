@@ -1,4 +1,20 @@
 ﻿Public Class PerkEffects
+    Private Enum randomPolymorph
+        minotaurCow
+        minotaurBull
+        dragon
+        succubus
+        slime
+        cake
+        alraune
+        bunnyGirl
+        blob
+        halfDragonR
+        tigress
+        faerie
+        beegirl
+    End Enum
+
     '|GENERAL EFFECTS|
     Shared Sub staminaEffect(ByRef p As Player)
         If p.perks(perk.hunger) > -1 And Game.getTurn Mod 5 = 0 Then
@@ -218,6 +234,44 @@
             If p.equippedAcce.getAName.Equals("Mark_of_Amaraphne") Then EquipmentDialogBackend.equipAcce(p, "Nothing", False) : p.inv.add("Mark_of_Amaraphne", -1)
         End If
     End Sub
+    Shared Function dragonBoobsMana(ByRef p As Player) As Integer
+        If p.perks(perk.dragonboobs) < 0 Then Return 0
+        Select Case p.breastSize
+            Case 0
+                Return 5
+            Case 1
+                Return 8
+            Case 2
+                Return 11
+            Case 3
+                Return 14
+            Case 4
+                Return 17
+            Case 5
+                Return 20
+            Case 6
+                Return 25
+            Case 7, Is > 7
+                Return 30
+            Case Else
+                Return 0
+        End Select
+    End Function
+    Shared Sub faeleafBloom(ByRef p As Player)
+        TextEvent.pushAndLog("A puff of pollen poofs out from the " & FaerieBlossom.ITEM_NAME.Replace("_", " ") & "...")
+
+        Dim d10 As Integer = Int(Rnd() * 10)
+        If d10 = 0 Or d10 = 1 Then
+            p.inv.setPotionNames()
+            TextEvent.pushLog("The labels on your potions shift and twist around!")
+        ElseIf d10 = 2 Or d10 = 3 Then
+            Dim mp = Int(0.35 * p.getMaxMana())
+            p.mana += mp
+            TextEvent.pushLog("Your MP is restored by " & mp & "!")
+        Else
+            TextEvent.pushLog("...but nothing else happens.")
+        End If
+    End Sub
 
     '|TRANSFORMATION TRIGGERS|
     Shared Sub targaxSwordTF(ByRef p As Player)
@@ -246,10 +300,24 @@
     Shared Sub statueMove(obj As Entity)
         TextEvent.push("You, being a statue, can not do anything.")
     End Sub
-    Shared Sub mesStun(obj As Entity)
-        TextEvent.push("You stare blankly forward, lost in a mesmerized daze...")
+    Shared Sub mesStun()
+        TextEvent.pushAndLog("You stare blankly forward, lost in a mesmerized daze...")
+    End Sub
+    Shared Sub namestealerStun()
+        EquipmentDialogBackend.equipArmor(Game.player1, "Naked", True)
+        TextEvent.pushAndLog("You stare blankly forward, taking off your " & If(Game.player1.equippedArmor.getAName.Contains("Armor"), "armor", "clothes") & " in a dazed trance...")
+    End Sub
+    Shared Sub firstStun()
+        TextEvent.pushAndLog("You are too stunned to act!")
+        Game.player1.perks(perk.stunned) = 1
+    End Sub
+    Shared Sub stun()
+        TextEvent.pushAndLog("You shake off the stun, though you don't have time to do anything else...")
+        Game.player1.perks(perk.stunned) = -1
     End Sub
     Shared Sub magicGirlStatusCheck(ByRef p As Player)
+        If p.ongoingQuests.contains("Phantastic Fantom") Then Exit Sub
+
         If p.getMana > 0 AndAlso Game.getTurn Mod (11 + (p.level * p.getWIL() / 4)) = 0 Then
             p.mana -= 6
             TextEvent.pushLog("Your transformation consumes six mana!")
@@ -271,6 +339,21 @@
             EquipmentDialogBackend.weaponChange(p, "Fists")
             p.perks(perk.tfedbyweapon) = -1
             TextEvent.push("You no longer can keep up your transformation, and revert to your previous form!")
+        End If
+    End Sub
+    Shared Sub faeleafHair(ByRef p As Player)
+        If Not p.prt.checkNDefFemInd(pInd.midhair, 13) And Not p.prt.checkNDefMalInd(pInd.midhair, 6) Then
+            Dim faeleaf_green As Color = Color.FromArgb(255, 117, 183, 139)
+
+            If Not p.prt.iArrInd(pInd.midhair).Item2 Then
+                p.prt.setIAInd(pInd.midhair, 6, False, True)
+                p.prt.setIAInd(pInd.fronthair, 7, False, True)
+            Else
+                p.prt.setIAInd(pInd.midhair, 13, True, True)
+                p.prt.setIAInd(pInd.fronthair, 22, True, True)
+            End If
+
+            p.changeHairColor(faeleaf_green)
         End If
     End Sub
 
@@ -411,6 +494,10 @@
         Dim updatePortrait = False
         If p.perks(perk.copoly) = 0 AndAlso Transformation.canBeTFed(p) Then
             randomPoly()
+
+            TextEvent.pushLog("You're enveloped by a crimson aura...")
+            TextEvent.push("You are swiftly enveloped by a blinding crimson aura!  By the time you can see again, it's obvious that you've been physically changed by your curse.")
+
             p.perks(perk.copoly) = 50 + Int(Rnd() * 100)
             Return True
         ElseIf p.perks(perk.copoly) > 0 Then
@@ -432,52 +519,62 @@
                 p.perks(perk.succubuscurse) = 1
                 DemBimboTF.tfPlayer(1, p)
             ElseIf p.perks(perk.succubuscurse) > 1 Then
-                p.revertToState(p.dembimState1)
+                p.revertToState(p.formStates(stateInd.dembimState1))
                 p.perks(perk.succubuscurse) = 1
             End If
 
         ElseIf p.getLust < 66 Then
             If p.perks(perk.succubuscurse) < 2 Then
-                p.dembimState1.save(p)
+                p.formStates(stateInd.dembimState1).save(p)
                 p.perks(perk.succubuscurse) = 2
                 DemBimboTF.tfPlayer(2, p)
             ElseIf p.perks(perk.succubuscurse) > 2 Then
-                p.revertToState(p.dembimState2)
+                p.revertToState(p.formStates(stateInd.dembimState2))
                 p.perks(perk.succubuscurse) = 2
             End If
 
         Else
             If p.perks(perk.succubuscurse) < 3 Then
-                p.dembimState2.save(p)
+                p.formStates(stateInd.dembimState2).save(p)
                 DemBimboTF.tfPlayer(3, p)
                 p.perks(perk.succubuscurse) = 3
             End If
         End If
     End Sub
-    Private Shared Sub randomPoly()
+    Public Shared Sub randomPoly()
+        randomPoly(Game.player1.pState)
+    End Sub
+    Public Shared Sub randomPoly(ByRef revert_state As State)
         Randomize(Game.currFloor.floorCode.GetHashCode)
+
+        Game.player1.revertToState(revert_state)
         Game.player1.savePState()
-        Dim tfs As Dictionary(Of String, Action) = New Dictionary(Of String, Action)
-        tfs.Add("Minotaur Cow", AddressOf New MinotaurCowTF().step1)
-        tfs.Add("Minotaur Bull", AddressOf New MinoMTF().fulltf)
-        tfs.Add("Dragon", AddressOf New DragonTF().step1)
-        tfs.Add("Succubus", AddressOf New SuccubusTF().step1)
-        tfs.Add("Slime", AddressOf New slimetf().step1)
-        tfs.Add("Bimbo", AddressOf New BimboTF(2, 0, 0.25, True).doubleTf)
-        tfs.Add("Cake", AddressOf New TTCCBF().step1)
-        tfs.Add("Alraune", AddressOf New AlrauneTF().fullTF)
+
+        Dim tfs As Dictionary(Of randomPolymorph, Action) = New Dictionary(Of randomPolymorph, Action)
+        tfs.Add(randomPolymorph.minotaurCow, AddressOf New MinotaurCowTF().step1)
+        tfs.Add(randomPolymorph.minotaurBull, AddressOf New MinoMTF().fulltf)
+        tfs.Add(randomPolymorph.dragon, AddressOf New DragonTF().step1Full)
+        tfs.Add(randomPolymorph.succubus, AddressOf New SuccubusTF().step1)
+        tfs.Add(randomPolymorph.slime, AddressOf New SlimeTF().step1)
+        tfs.Add(randomPolymorph.cake, AddressOf New TTCCBF().step1)
+        tfs.Add(randomPolymorph.alraune, AddressOf New AlrauneTF().fullRNDTF)
+        tfs.Add(randomPolymorph.bunnyGirl, AddressOf DancerTF.step1RND)
+        tfs.Add(randomPolymorph.blob, AddressOf SlimeTF.blobTF)
+        tfs.Add(randomPolymorph.halfDragonR, AddressOf DragonTF.halfDragonRTF)
+        tfs.Add(randomPolymorph.tigress, AddressOf New TigressTF().step1Full)
+        tfs.Add(randomPolymorph.faerie, AddressOf New FaerieTF().step1)
+        tfs.Add(randomPolymorph.beegirl, AddressOf BeeHoneyTF.fullTF)
 
         Dim form = tfs.Keys(Int(Rnd() * (tfs.Keys.Count - 1)))
         While Game.player1.formName.Equals(form)
             form = tfs.Keys(Int(Rnd() * (tfs.Keys.Count - 1)))
         End While
-        Game.player1.revertToPState()
+
         Game.player1.perks(perk.polymorphed) = 999
+
         tfs(form)()
         Game.player1.drawPort()
         Game.player1.UIupdate()
-        TextEvent.pushLog("You're enveloped by a crimson aura...")
-        TextEvent.push("You are swiftly enveloped by a blinding crimson aura!  By the time you can see again, it's obvious that you've been physically changed by your curse.")
     End Sub
 
     '|TAKE DAMAGE PERKS|
@@ -488,6 +585,7 @@
         flag = bimboDodge(p) Or flag
         flag = stealthDodge(p) Or flag
         flag = spidersilkEffect(dmg, p) Or flag
+        flag = faeStaySafe(p) Or flag
 
         If p.perks(perk.rotlg) > 0 And dmg >= p.getIntHealth Then
             Dim a = New AmaraphneAngelTF()
@@ -503,6 +601,7 @@
         If p.perks(perk.bunnyears) = 2 Then p.addLust(-dmg / 2)
         If p.perks(perk.infernoa) > -1 Then flag = reflectDamage(dmg, 0.45, p.currTarget, p)
         If p.equippedAcce.getAName.Equals("Hallowed_Talisman") Then flag = reflectDamage2(dmg, 0.55, p.currTarget, p, crit)
+
         Return flag
     End Function
     Shared Function bowTieEffect(ByRef p As Player) As Boolean
@@ -514,13 +613,13 @@
                 p.drawPort()
                 Return True
             ElseIf r > 5 Then
-                TextEvent.push("Your bowtie begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncomming blow!  Time returns to its normal speed shortly, and your bowtie returns to its inert state.")
+                TextEvent.push("Your bowtie begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncoming blow!  Time returns to its normal speed shortly, and your bowtie returns to its inert state.")
                 Return True
             End If
         ElseIf p.perks(perk.bunnyears) > -1 Then
             Dim r = Int(Rnd() * 10)
             If r > 4 Then
-                TextEvent.push("Your headband begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncomming blow!  Time returns to its normal speed shortly, and your bunny ear headband returns to its inert state.")
+                TextEvent.push("Your headband begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncoming blow!  Time returns to its normal speed shortly, and your bunny ear headband returns to its inert state.")
                 Return True
             End If
         End If
@@ -552,12 +651,14 @@
         Return False
     End Function
     Shared Function bimboDodge(ByRef p As Player) As Boolean
-        Dim out = "You, like, totally aren't feeling this right now." & DDUtils.RNRN &
-                  "Giving your best pout, you wimper ""Hey, stop it!  You're gonna, like, hurt me or something!"".  As you squeeze your arms together to show off your cleavage, you look up at your opponent making sure your lip is quivering just a little bit." & DDUtils.RNRN &
-                  "They stop their attack short, looking more confused than anything else.  You don't even consider this subtle distinction though, instead deciding that they, like, totally thought you were too cute to hit!"
-        Dim out2 = "You realize that you probably need to dodge this next attack." & DDUtils.RNRN &
-                   "Giving your best pout, you wimper ""Hey, stop it!  You're gonna, like, hurt me or something!"".  As you squeeze your arms together to show off your cleavage, you look up at your opponent making sure your lip is quivering just a little bit." & DDUtils.RNRN &
-                   "They stop their attack short, looking more confused than merciful.  Inwardly, you groan to yourself.   It looks like you aren't out of the woods yet..."
+        Dim out = "As your opponent attacks, you pout and wimper ""Hey, stop it!""" & DDUtils.RNRN &
+                  "You squeeze your arms together to show off your titties, gazing longingly at your opponent while trying to look as cute as possible." & DDUtils.RNRN &
+                  "Your foe stops short, looking more confused than anything..." & DDUtils.RNRN &
+                  "They must be, like, totally into you!"
+        Dim out2 = "As your opponent attacks, you pout and wimper ""Hey, stop it!""" & DDUtils.RNRN &
+                   "You squeeze your arms together to show off your cleavage, gazing longingly at your opponent while making sure your lip is quivering just a little bit." & DDUtils.RNRN &
+                   "Your foe stops short, looking more confused than merciful..." & DDUtils.RNRN &
+                   "Inwardly, you groan to yourself.   It looks like you aren't out of the woods yet..."
         If p.className.Equals("Bimbo") And Int(Rnd() * 3) = 0 Then
             TextEvent.push(out)
             Return True
@@ -599,6 +700,45 @@
             TextEvent.pushAndLog("Your opponent takes " & CInt(dmg * ratio) & " from their attack!")
             currTarget.takeDMG(CInt(dmg * ratio), p)
 
+            Return True
+        End If
+
+        Return False
+    End Function
+    Shared Function faeStaySafe(ByRef p As Player)
+        If Game.player1.perks(perk.faestaysafe) = 1 Then
+            If Game.combat_engaged Then Game.fromCombat()
+
+            Dim healing_item As Item = Nothing
+
+            If p.inv.getCountAt(HealthPotion.ITEM_NAME) > 0 Then
+                healing_item = p.inv.item(HealthPotion.ITEM_NAME)
+            ElseIf p.inv.getCountAt(Herbs.ITEM_NAME) > 0 Then
+                healing_item = p.inv.item(Herbs.ITEM_NAME)
+            ElseIf p.inv.getCountAt(BetterHerbs.ITEM_NAME) > 0 Then
+                healing_item = p.inv.item(BetterHerbs.ITEM_NAME)
+            ElseIf p.inv.getCountAt(MajHealthPotion.ITEM_NAME) > 0 Then
+                healing_item = p.inv.item(MajHealthPotion.ITEM_NAME)
+            ElseIf p.inv.getCountAt(GardenSalad.ITEM_NAME) > 0 Then
+                healing_item = p.inv.item(GardenSalad.ITEM_NAME)
+            ElseIf p.inv.getCountAt(NatureKiss.ITEM_NAME) > 0 Then
+                healing_item = p.inv.item(NatureKiss.ITEM_NAME)
+            ElseIf p.inv.getCountAt(HHealthPotion.ITEM_NAME) > 0 Then
+                healing_item = p.inv.item(HHealthPotion.ITEM_NAME)
+            ElseIf p.inv.getCountAt(Panacea.ITEM_NAME) > 0 Then
+                healing_item = p.inv.item(Panacea.ITEM_NAME)
+            End If
+
+            If Not healing_item Is Nothing Then
+                healing_item.use(p)
+                TextEvent.push("Gasping, you dart away from your foe.  You reach into your bag and grab a " & healing_item.getName() & ", and as you use it the fae's words echo in your head." & DDUtils.RNRN &
+                               """Stay safe...""")
+            Else
+                TextEvent.push("Gasping, you dart away from your foe, the fae's words echoing in your head." & DDUtils.RNRN &
+                               """Stay safe...""")
+            End If
+
+            Game.player1.perks(perk.faestaysafe) = -1
             Return True
         End If
 

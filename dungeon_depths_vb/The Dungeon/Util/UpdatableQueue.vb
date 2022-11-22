@@ -22,17 +22,15 @@
     Public Sub ping()
         If isEmpty() Then Exit Sub
 
+        Dim startTime As Double = DDDateTime.getTimeNow()
         Dim sortedKeys = sortMaxToMin(indexes)
 
         For i = 0 To sortedKeys.Count - 1
             If updatables.Count < 1 Then Exit For
-            Dim startTime As Double = DDDateTime.getTimeNow()
-            Dim endTime As Double = startTime
             updatables(sortedKeys(i)).update()
-            endTime = DDDateTime.getTimeNow()
-            Console.WriteLine("UPDATE TIME (" & updatables.Count & "): " + (endTime - startTime).ToString())
         Next
-
+        Dim endTime As Double = DDDateTime.getTimeNow()
+        Console.WriteLine(" - UPDATE TIME (" & updatables.Count & "): " + (endTime - startTime).ToString())
         clear()
     End Sub
 

@@ -34,7 +34,7 @@
         ElseIf Game.screenSize = "Medium" Then
             Size = New Size(Size.Width * 0.9, Size.Height * 0.95)
         ElseIf Game.screenSize = "XLarge" Then
-            Size = New Size(Size.Width * 1.3, Size.Height * 1.3)
+            Size = New Size(Size.Width * 1.32, Size.Height * 1.32)
         End If
         Dim RW As Double = (Me.Width - startingWidth) / startingWidth ' Ratio change of width
         Dim RH As Double = (Me.Height - startingHeight) / startingHeight ' Ratio change of height
@@ -46,5 +46,7 @@
             Me.Controls(i).Left += CDbl(Me.Controls(i).Left * RW)
             Me.Controls(i).Top += CDbl(Me.Controls(i).Top * RH)
         Next
+
+        Me.CenterToParent()
     End Sub
 End Class

@@ -36,6 +36,8 @@
         p.drawPort()
     End Sub
     Public Overrides Sub onEquip(ByRef p As Player)
+        MyBase.onEquip(p)
+
         If p.perks(perk.moamarphne) > 0 Then
             EquipmentDialogBackend.equipAcce(p, "Nothing", False)
             TextEvent.pushAndLog("The ring slips off your finger...")
@@ -45,6 +47,8 @@
         p.UIupdate()
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)
+        MyBase.onEquip(p)
+
         p.perks(perk.rotlg) = -1
         Equipment.antiClothingCurse(p)
         p.drawPort()

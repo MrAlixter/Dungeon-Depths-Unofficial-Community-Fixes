@@ -13,9 +13,9 @@
     End Sub
 
     Public Overrides Sub step1()
-        If Not Game.player1.quests(qInds.oppositeDay).canGet Then Exit Sub
+        If Not Game.player1.quests(qInd.oppositeDay).canGet Then Exit Sub
 
-        Game.player1.quests(qInds.oppositeDay).init()
+        Game.player1.quests(qInd.oppositeDay).init()
 
         snapTF()
         Game.player1.savePState()

@@ -13,14 +13,13 @@
 
         '|Item Flags|
         usable = False
-        MyBase.compress_breast = True
-        MyBase.droppable = False
-        MyBase.slut_var_ind = 250
+        compress_breast = True
+        slut_var_ind = 250
 
         '|Stats|
-        MyBase.d_boost = 3
-        MyBase.m_boost = 20
-        MyBase.s_boost = -3
+        d_boost = 3
+        m_boost = 20
+        s_boost = -3
         count = 0
         value = 200
 

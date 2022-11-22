@@ -23,7 +23,7 @@
 
         '|Image Index|
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(68, False, True)
-        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(325, True, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(320, True, True)
         bsize1 = New Tuple(Of Integer, Boolean, Boolean)(321, True, True)
         bsize2 = New Tuple(Of Integer, Boolean, Boolean)(322, True, True)
         bsize3 = New Tuple(Of Integer, Boolean, Boolean)(323, True, True)
@@ -35,6 +35,8 @@
         usize2 = New Tuple(Of Integer, Boolean, Boolean)(249, True, True)
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(250, True, True)
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(251, True, True)
+
+        hood = New Tuple(Of Integer, Boolean, Boolean)(14, True, True)
 
         '|Description|
         setDesc("A sultry outfit worn by waitresses in a club.  This particular bunny suit is from the far off age of ""2017""." & DDUtils.RNRN &

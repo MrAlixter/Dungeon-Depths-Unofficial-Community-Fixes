@@ -35,7 +35,6 @@ Public Class LabcoatSV
         usize1 = New Tuple(Of Integer, Boolean, Boolean)(290, True, True)
         usize2 = New Tuple(Of Integer, Boolean, Boolean)(291, True, True)
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(292, True, True)
-        usize4 = New Tuple(Of Integer, Boolean, Boolean)(293, True, True)
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(294, True, True)
 
         '|Description|

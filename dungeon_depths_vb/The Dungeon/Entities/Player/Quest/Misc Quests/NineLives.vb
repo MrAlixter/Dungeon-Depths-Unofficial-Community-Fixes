@@ -4,7 +4,7 @@
     Sub New()
         MyBase.New("Nine Lives")
 
-        qInd = qInds.nineLives
+        quest_index = qInd.nineLives
 
         objectives.Add(New NineLivesS1)
         objectives.Add(New NineLivesS2)
@@ -17,7 +17,7 @@
     End Sub
 
     Private Sub introDialog()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(99), """Oh, thank you for stopping..."" she says, sheepishly.  She turns around, revealing that there is an unconscious cat in a pouch slung across her back." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(99), """Oh, thank you for stopping..."" she says, sheepishly.  She turns around, revealing that there is an unconscious cat in a pouch slung across her back." & DDUtils.RNRN &
                           """My familiar got hurt and-  I mean, I just had to run-  Can you please help me get some medical supplies together?  Everything down here is more than I can handle...""", AddressOf introDialog2)
     End Sub
 
@@ -26,7 +26,7 @@
     End Sub
 
     Private Sub helpOut()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(99), """Great, you're the best!  Thank you so, so much... Ok, um, first we need to pick up two health potions and a restoration potion.  I have a recipe for, um... a potent healing ritual, and the first step is getting the medicine together...""" & DDUtils.RNRN & "Quest ""Nine Lives"" acquired!")
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(99), """Great, you're the best!  Thank you so, so much... Ok, um, first we need to pick up two health potions and a restoration potion.  I have a recipe for, um... a potent healing ritual, and the first step is getting the medicine together...""" & DDUtils.RNRN & "Quest ""Nine Lives"" acquired!")
     End Sub
 
     Private Sub beADick()
@@ -43,7 +43,7 @@
     End Function
 End Class
 
-Public Class NineLivesS1
+Friend Class NineLivesS1
     Inherits Objective
 
     Sub New()
@@ -53,7 +53,7 @@ Public Class NineLivesS1
     Public Overrides Sub complete()
         MyBase.complete()
 
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(99), """Thank you so much for your help, I don't know what I'd, um, do without you...  The last thing we need is a mana potion to power the incantation.  Um... I know those can be bit pricy, so please take this gold to help cover any costs...""" & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(99), """Thank you so much for your help, I don't know what I'd, um, do without you...  The last thing we need is a mana potion to power the incantation.  Um... I know those can be bit pricy, so please take this gold to help cover any costs...""" & DDUtils.RNRN &
                           "+300 gold")
         Game.player1.gold += 300
         Game.player1.UIupdate()
@@ -71,7 +71,7 @@ Public Class NineLivesS1
     End Function
 End Class
 
-Public Class NineLivesS2
+Friend Class NineLivesS2
     Inherits Objective
 
     Sub New()
@@ -88,7 +88,7 @@ Public Class NineLivesS2
     End Sub
 
     Public Sub complete2()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(100), """...from an enemy.""" & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(100), """...from an enemy.""" & DDUtils.RNRN &
                           "You pause for a couple seconds before asking what she's talking about.  The woman bursts into a rather sinister giggle before pushing her glasses back into place with an uncharacteristically confident grin." & DDUtils.RNRN &
                           """This isn't my familiar, it's all that's left of Lady Marissa after YOU got through with her!  If she weren't the best enchantress in history, she'd be dead!""" & DDUtils.RNRN &
                           "You remind her that Marissa was the one to attack you, but she cuts you off by drawing her staff and charging a spell." & DDUtils.RNRN &
@@ -96,7 +96,7 @@ Public Class NineLivesS2
     End Sub
 
     Public Sub complete3()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(97), "I won't let you interfere with Lady Marissa's revival, you... jerk..." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(97), "I won't let you interfere with Lady Marissa's revival, you... jerk..." & DDUtils.RNRN &
                           "If you're going to fight anyone, it's gonna be ME!", AddressOf fightMayue)
     End Sub
 

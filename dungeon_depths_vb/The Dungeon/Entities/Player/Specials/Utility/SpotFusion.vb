@@ -10,7 +10,9 @@
         TextEvent.pushLog("Spot Fusion!")
 
         If MyBase.getUser.perks(perk.isspotfused) > 0 Then
-            TextEvent.push("You can not fuse again for " & MyBase.getUser.perks(perk.isspotfused) & " more turns.")
+            TextEvent.pushAndLog("You can not fuse again for " & MyBase.getUser.perks(perk.isspotfused) & " more turns.")
+        ElseIf Not Transformation.canBeTFed(MyBase.getUser) Then
+            TextEvent.pushAndLog("You cannot fuse right now...")
         Else
             TextEvent.pushCombat("Spot Fusion!" & vbCrLf & "Fuses two explorers for 100 turns.")
 
@@ -31,17 +33,17 @@
         r = Int(Rnd() * 2)
         If r = 0 Then p1.sex = p2.sex
 
-        p1.maxHealth = Math.Max(p1.maxHealth * 1.5, p2.maxHealth * 1.5)
+        p1.hBuff = Math.Abs(p1.maxHealth - Math.Max(p1.maxHealth * 1.5, p2.maxHealth * 1.5))
 
-        p1.maxMana = Math.Max(p1.maxMana * 1.5, p2.maxMana * 1.5)
+        p1.mBuff = Math.Abs(p1.maxMana - Math.Max(p1.maxMana * 1.5, p2.maxMana * 1.5))
 
-        p1.attack = Math.Max(p1.attack * 1.5, p2.attack * 1.5)
+        p1.aBuff = Math.Abs(p1.attack - Math.Max(p1.attack * 1.5, p2.attack * 1.5))
 
-        p1.defense = Math.Max(p1.defense * 1.5, p2.defense * 1.5)
+        p1.dBuff = Math.Abs(p1.defense - Math.Max(p1.defense * 1.5, p2.defense * 1.5))
 
-        p1.will = Math.Max(p1.will * 1.5, p2.will * 1.5)
+        p1.wBuff = Math.Abs(p1.will - Math.Max(p1.will * 1.5, p2.will * 1.5))
 
-        p1.speed = Math.Max(p1.speed * 1.5, p2.speed * 1.5)
+        p1.sBuff = Math.Abs(p1.speed - Math.Max(p1.speed * 1.5, p2.speed * 1.5))
 
         p1.lust = Math.Max(p1.lust * 1.5, p2.lust * 1.5)
 
@@ -70,7 +72,6 @@
 
         p1.breastSize = (p1.breastSize + p2.breastSize) / 2
 
-        p1.perks(perk.isspotfused) = 110
         Return p1
     End Function
 

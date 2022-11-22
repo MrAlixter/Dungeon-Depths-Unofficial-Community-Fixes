@@ -24,7 +24,6 @@
 
         'unequips
         EquipmentDialogBackend.armorChange(p, "Succubus_Garb")
-         EquipmentDialogBackend.weaponChange(p, "Fists")
 
         'succubus transformation
         If p.sex = "Male" Then

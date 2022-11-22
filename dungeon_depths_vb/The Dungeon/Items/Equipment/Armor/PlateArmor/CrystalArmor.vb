@@ -10,12 +10,13 @@
         tier = Nothing
 
         '|Item Flags|
-        usable = false
-        MyBase.compress_breast = True
+        usable = False
+        slut_var_ind = 357
+        compress_breast = True
 
         '|Stats|
-        MyBase.d_boost = 20
-        MyBase.m_boost = 15
+        d_boost = 20
+        m_boost = 15
         w_boost = 5
         count = 0
         value = 2777

@@ -104,6 +104,7 @@
         p.changeClass("Kitty")
         be()
 
+        If p.inv.getCountAt(CatLingerie.ITEM_NAME) < 1 Then p.inv.add(CatLingerie.ITEM_NAME, 1)
         EquipmentDialogBackend.armorChange(p, "Cat_Lingerie")
 
         Game.fromCombat()

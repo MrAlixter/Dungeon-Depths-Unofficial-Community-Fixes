@@ -32,10 +32,11 @@
         p.perks(perk.thrall) += 1
         If p.perks(perk.thrall) > 11 Then
             p.prefForm.snapShift(Game.player1)
-
         End If
+
         MyBase.curr_step -= 1
     End Sub
+
     Sub crystalSpawn()
         Dim p As player = Game.player1
         If p.forcedPath Is Nothing And Not Game.combat_engaged And Not Game.shop_npc_engaged Then
@@ -48,22 +49,24 @@
             p.forcedPath = Game.currfloor.route(p.pos, crystal)
 
             Dim s As String = ""
-            If p.getWIL() > 10 Then
-                s = "you mock your instructions under your breath, before stiffly moving towards the crystal." + DDUtils.RNRN + """If only I could get this damn collar off..."""
-            ElseIf p.getWIL() > 7 Then
-                s = "you reluctantly start off towards the crystal." + DDUtils.RNRN + """Oh well, better me than one of their other idiots..."""
+            If p.getWIL() > 40 Then
+                s = "you mock your instructions under your breath, before stiffly moving towards the crystal." + DDUtils.RNRN + "'If only I could get this damn collar off...'"
+            ElseIf p.getWIL() > 15 Then
+                s = "you reluctantly start off towards the crystal." + DDUtils.RNRN + "'Oh well, better me than one of their other idiots...'"
             ElseIf p.getWIL() > 4 Then
-                s = "you jump immediately into action, happy to help the voice in your head with whatever it may need." + DDUtils.RNRN + """I'm gonna make quick work of this!"""
+                s = "you jump immediately into action, eager to help the voice in your head with whatever it may need." + DDUtils.RNRN + "'I'm going to make quick work of this!'"
             Else
                 s = "you mindlessly obey, moving towards the crystal with a vacant grin."
             End If
-            TextEvent.push("As your collar flares to life, you grimace as the location of a large mana crystal becomes clear in your mind." & DDUtils.RNRN &
-                              """SERVANT!"", your controller's voice booms in your head, ""This is another of the crystals!  Recover it immediately!""" & DDUtils.RNRN & _
-                              "As their voice leaves your head, " & s)
+            TextEvent.push("SNAP!" & DDUtils.RNRN &
+                           "You pause in your tracks, mind once again blank as your surroundings fade away.  As it ripples into focus, you become aware of a large, glyph-covered jewel located nearby." & DDUtils.RNRN &
+                           """SERVANT!"",  a familiar voice booms through your trance, ""THIS SHALL BE YOUR NEXT OBJECTIVE!""" & DDUtils.RNRN &
+                           "As their presence leaves, " & s)
         End If
 
         stopTF()
     End Sub
+
     Shared Sub postLoadCrystalSpawn(ByVal e As Entity)
         Dim p = Game.player1
         Dim crystal As Point = New Point(p.forcedPath(0).X, p.forcedPath(0).Y)
@@ -75,7 +78,7 @@
     Shared Sub fightSorc()
         Dim p As player = Game.player1
         Dim m As Monster
-        m = Monster.monsterFactory(9)
+        m = Monster.monsterFactory(mInd.enth_demon)
 
         Monster.targetRoute(m)
         Game.toCombat(m)
@@ -86,7 +89,7 @@
         Dim p As player = Game.player1
         Game.lblEvent.Visible = False
         Dim m As Monster
-        m = Monster.monsterFactory(8)
+        m = Monster.monsterFactory(mInd.enrage_sorc)
 
         Monster.targetRoute(m)
         Game.toCombat(m)
@@ -98,38 +101,39 @@
         p.perks(perk.thrall) = -1
         p.ongoingTFs.Add(New HalfSuccubusTF())
         p.update()
-        TextEvent.push("""Then I deem your task concluded as a success.  Go now, and take care not to fall under the spell of any others...""")
+        TextEvent.push("""Then I deem your task concluded as a success.  Go now, and try not to fall under the spell of anyone else...""")
     End Sub
     Shared Sub betraySorc()
         Dim p As player = Game.player1
-        TextEvent.push("Brushing past you, your ""boss"" heads straight for the crystal.  Once they begin fiddling with it, you take advantage of their distraction and begin creeping into a position behind them." & DDUtils.RNRN &
-                          "As they chant over the array, you prepare to make your move.  The runes enscribed on the crystal begin to glow as the sorcerer's raving reaches its zenith, and in that moment you strike the back of their head, disrupting the ritual." & DDUtils.RNRN &
-                          """YOU!  DO YOU HAVE ANY IDEA ..."" screams the mage, and while they shout you realize you couldn't care less about them.  Looking down, you see that your collar has gone dark and dangles unlatched from your neck." & DDUtils.RNRN &
-                          "Grinning, your prepare to fight for your life.", AddressOf fightSorc2)
+        TextEvent.push("Your master doesn't seem to notice your dilemma, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and... wait, are those horns sprouting out from under their hair?" & DDUtils.RNRN &
+                       "Once the collar's clasp is broken, you creep behind them and prepare to make your move.  The runes enscribed on the crystal begin to shine brighter as the sorcerer's raving reaches its zenith, and in that moment you strike the back of their head!  They stagger forward, cursing under their breath as the ritual is disrupted and the crystal shatters into pieces." & DDUtils.RNRN &
+                       """YOU!  HOW?  WHY?  DO YOU HAVE ANY IDEA..."" screams the mage, before they gasp at the sight of your now-bare neck." & DDUtils.RNRN &
+                       "Grinning, your prepare to fight for your life and for your freedom.", AddressOf fightSorc2)
 
         Equipment.accChange(p, "Nothing")
-        p.inv.add(69, -1)
+        If p.inv.getCountAt(ThrallCollar.ITEM_NAME) > 0 Then p.inv.add(ThrallCollar.ITEM_NAME, -1)
 
         p.drawPort()
     End Sub
     Shared Sub waitSorc()
-        Dim out = "You decide against making a move now, instead waiting to see what happens next." & DDUtils.RNRN &
-                  "Your controller doesn't seem to notice you, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and... wait, are those horns sprouting out of their hair?  With a flourish, they complete... something... and a blinding flash engulfs them." & DDUtils.RNRN &
-                  "Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & DDUtils.RNRN &
-                  """Well... It looks like you succeeded.  For that, I will give you an ultimatium.  Join me as my general, or die in these dungeons as my slave."""
+        Dim p As Player = Game.player1
+        Dim out = "You decide against making a move now..." & DDUtils.RNRN &
+                  "Your master doesn't seem to notice your dilemma, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and... wait, are those horns sprouting out from under their hair?" & DDUtils.RNRN &
+                  "With a flourish, they complete their ritual, and with a deafening hum you are both engulfed by a blinding light that flashes out from the crystal!" & DDUtils.RNRN &
+                  "As the dungeon fades back in, you glance around nervously.  Where once stood a mere human now stands a much-taller demon, clad in the tatters of their former clothes.  They cackle maniacally as a realization washes over you..." & DDUtils.RNRN &
+                  "The collar around your neck has been reduced to ash!"
 
-        TextEvent.push(out, AddressOf acceptSorc, AddressOf fightSorc, "Do you accept?")
+        Equipment.equipAcce(p, "Nothing", False)
+        If p.inv.getCountAt(ThrallCollar.ITEM_NAME) > 0 Then p.inv.add(ThrallCollar.ITEM_NAME, -1)
+
+        TextEvent.push(out, AddressOf waitSorc2)
     End Sub
-
-    Shared Sub thrallLN2()
-        Dim ptype = If(Int(Rnd() * 2) = 0, "sister", "brother")
-
-        TextEvent.push("""LISTEN UP, NEW SLAVE!  I have need of your services."" your new master begins," & DDUtils.RNRN &
-                          """In this dungeon, there are several high-powered mana arrays scrawled into purple gems.  Only one of them, however, is capable of bestowing the power of a demon lord onto a mortal." & DDUtils.RNRN &
-                          "Your task is to find and inspect these arrays, and report back to me with your findings.""" & DDUtils.RNRN &
-                          "They snicker,  ""I'm sure you won't let me down, but I'm going to need to make a few changes to make you more... uniform... with the rest of your collegues.""" & DDUtils.RNRN &
-                          "       .....       " & DDUtils.RNRN &
-                          "With a final warning not to fail them, the foreign presence leaves your mind and you are once again alone with your thoughts, your new " & ptype & ", and your task.")
+    Shared Sub waitSorc2()
+        Dim p As Player = Game.player1
+        TextEvent.push("""Well, well, well..."" the smug demon says, with a toothy grin." & DDUtils.RNRN &
+                       """It seems like someone is finally free...  For the time being, at least.""" & DDUtils.RNRN &
+                       "They flare their wings, and a jet black aura of crackling energy erupts around them.  ""Hmm, you were a loyal minion, though...""" & DDUtils.RNRN &
+                       "LISTEN AND LISTEN WELL, I have an ultimatium for you.  Join me as a vessel for my infernal power, or... die.  Understand?""", AddressOf acceptSorc, AddressOf fightSorc, "Do you accept?")
     End Sub
 
     Public Overrides Sub stopTF()
@@ -138,7 +142,9 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As player = Game.player1
+        Dim p As Player = Game.player1
+
+        If Not p.equippedAcce.getAName.Equals(ThrallCollar.ITEM_NAME) Then Return AddressOf stopTF
         If p.perks(perk.thrall) = -1 Or p.formName.Equals("Half-Succubus") Then
             Return AddressOf stopTF
         ElseIf Not p.prefForm.playerMeetsForm(p) And Not p.perks(perk.thrall) > 10 Then
@@ -146,6 +152,7 @@
         ElseIf p.prefForm.playerMeetsForm(p) Or p.perks(perk.thrall) > 10 Then
             Return AddressOf crystalSpawn
         End If
+
         Return Nothing
     End Function
     Public Overrides Sub setWaitTime(stage As Integer)

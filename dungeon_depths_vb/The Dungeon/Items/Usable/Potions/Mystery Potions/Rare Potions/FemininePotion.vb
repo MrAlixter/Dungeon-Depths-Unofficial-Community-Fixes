@@ -18,7 +18,7 @@
         value = 500
 
         '|Description|
-        setDesc("A off-looking potion")
+        setDesc("An off-looking potion")
 
     End Sub
 

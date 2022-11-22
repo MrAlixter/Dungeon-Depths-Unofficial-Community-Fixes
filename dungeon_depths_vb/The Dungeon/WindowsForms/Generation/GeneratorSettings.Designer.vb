@@ -521,7 +521,6 @@ Partial Class GeneratorSettings
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "GeneratorSettings"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = " "
         CType(Me.boxWidth, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxHeight, System.ComponentModel.ISupportInitialize).EndInit()

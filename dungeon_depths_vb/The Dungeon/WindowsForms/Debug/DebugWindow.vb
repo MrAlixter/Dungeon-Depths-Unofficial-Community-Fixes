@@ -52,12 +52,22 @@ Public Class Debug_Window
         boxSex.Checked = playerPortrait.sexBool
         AddHandler boxSex.CheckedChanged, AddressOf boxSex_CheckedChanged
 
-        boxForm.SelectedItem = Game.player1.className
+        boxClass.Items.Clear()
+        For Each c In Player.classes
+            boxClass.Items.Add(c.Value.name)
+        Next
+        boxClass.SelectedItem = Game.player1.className
+
+        boxForm.Items.Clear()
+        For Each f In Player.forms
+            boxForm.Items.Add(f.Value.name)
+        Next
+        boxForm.SelectedItem = Game.player1.formName
 
         boxHealth.Value = Game.player1.getIntHealth
-        boxMaxHealth.Value = Game.player1.getMaxHealth
+        boxMaxHealth.Value = Game.player1.maxHealth
         boxMana.Value = Game.player1.getMana
-        boxMaxMana.Value = Game.player1.getMaxMana
+        boxMaxMana.Value = Math.Max(Game.player1.maxMana, boxMaxMana.Minimum)
         boxstamina.Value = Game.player1.stamina
         boxAtk.Value = Game.player1.attack
         boxDef.Value = Game.player1.defense
@@ -113,6 +123,7 @@ Public Class Debug_Window
                     If TypeOf (c) Is NumericUpDown Then
                         num = c
                         num.Maximum = 9999999
+                        num.Minimum = -10
                     ElseIf TypeOf (c) Is Label Then
                         lbl = c
                     End If
@@ -492,7 +503,7 @@ Public Class Debug_Window
 
     Private Sub boxAlpha_ValueChanged(sender As Object, e As EventArgs) Handles boxAlpha.ValueChanged
         Dim c As Color = Color.FromArgb(boxAlpha.Value, Game.player1.prt.haircolor.R, Game.player1.prt.haircolor.G, Game.player1.prt.haircolor.B)
-        Game.player1.changeHairColor(c)
+        Game.player1.changeHairColor(c, True)
         picPreview.Image = Portrait.CreateBMP(Game.player1.prt.iArr)
     End Sub
 
@@ -597,7 +608,7 @@ Public Class Debug_Window
         box.ForeColor = System.Drawing.Color.White
         box.Name = p.Key & "Box"
         box.Location = New System.Drawing.Point(lbl.Location.X + lbl.Size.Width + 10, lbl.Location.Y)
-        box.Minimum = -1
+        box.Minimum = -100
         box.Maximum = 999999999
         box.Value = p.Value
         box.Size = New System.Drawing.Size(63, 26)
@@ -781,5 +792,13 @@ Public Class Debug_Window
         Else
             e.ItemHeight *= 0.33
         End If
+    End Sub
+
+    Private Sub boxForm_SelectedIndexChanged(sender As Object, e As EventArgs) Handles boxForm.SelectedIndexChanged
+        If Not Game.player1.formName.Equals(boxForm.SelectedItem) And Player.forms.ContainsKey(boxForm.SelectedItem) Then Game.player1.changeForm(boxForm.SelectedItem)
+    End Sub
+
+    Private Sub boxClass_SelectedIndexChanged(sender As Object, e As EventArgs) Handles boxClass.SelectedIndexChanged
+        If Not Game.player1.className.Equals(boxClass.SelectedItem) And Player.classes.ContainsKey(boxClass.SelectedItem) Then Game.player1.changeClass(boxClass.SelectedItem)
     End Sub
 End Class

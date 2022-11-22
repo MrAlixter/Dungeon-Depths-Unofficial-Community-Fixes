@@ -61,7 +61,7 @@
         End If
     End Sub
     Overridable Sub s1TFText(ByRef p As Player)
-        TextEvent.push("You pause to rub your temples, a massive headache comming down on you like a ton of bricks.  As you take a few minutes to recover, you notice that your center of balance is off and more disturbingly, that you can't seem to focus enough to figure out why." & DDUtils.RNRN & "Maybe you can just walk this off...")
+        TextEvent.push("You pause to rub your temples, a massive headache coming down on you like a ton of bricks.  As you take a few minutes to recover, you notice that your center of balance is off and more disturbingly, that you can't seem to focus enough to figure out why." & DDUtils.RNRN & "Maybe you can just walk this off...")
     End Sub
     Overridable Sub step1()
         Dim p As Player = Game.player1
@@ -126,7 +126,6 @@
     End Sub
     Overridable Sub s2WrapUp(ByRef p As Player, ByRef out As String)
         p.changeClass("Bimbo")
-        p.setplayer_image()
         p.TextColor = Color.FromArgb(255, 255, 235, 240)
         p.perks(perk.bimbotf) = -1
         'p.drawPort()
@@ -184,22 +183,30 @@
         stopTF()
         s2WrapUp(p, out)
     End Sub
-    Sub chickenTf()
-        Dim p As Player = Game.player1
+    Sub chickenTf(ByRef p As Player)
         Dim cRed = Color.FromArgb(255, 215, 0, 4)
-        Dim out As String = "As you don the chicken suit you found, part of you half expects to turn into some sort of bird.  You chuckle to yourself at the idea, and this quickly devolves into a giggling fit.  Parting your short red bangs off to one side, you adjust your large breasts in the suit.  You note that despite covering most of your body, it doesn't even begin to provide enough support.  You strip some parts of the outfit away, shift other parts around, and soon you are left with a pair of wings and a set of straps that provide just about all the support you think you're going to get out of it.  Proud of your handiwork, you strut back out into the dungeon still giggling at the noshun...notshi...""idea"" that some silly chicken costume could change you in any way."
+
+        Dim out As String = "As you don the chicken suit you found, part of you half expects to turn into some sort of bird." & DDUtils.RNRN &
+                            "Parting your short red bangs off to one side, you adjust the loose fit of the suit.  Nothing seems to be happening, and after a few boring seconds you guess that it's probably safe after all... if a little frumpy." & DDUtils.RNRN &
+                            "Even though it, like, covers most of your body, it doesn't even begin to provide enough support for your tits.  You strip some parts of the outfit away, shift other parts around, and soon you are left with a pair of wings and a set of straps that provide just about all the support you think you're going to get out of it." & DDUtils.RNRN &
+                            "Proud of your handiwork, you strut back out into the dungeon; still giggling at your ditzy self for being, like, scared of some silly chicken costume."
 
         p.setName(Polymorph.bimboizeName(p.getName))
 
-        s2M2F(p, out, "bright red")
-        s2BodyChange(p)
+        s2M2F(p, "", "bright red")
+
+        If p.breastSize < 3 Then
+            p.breastSize = 3
+        ElseIf p.breastSize < 7 Then
+            p.breastSize += 1
+        End If
 
         'Face Change
         If p.prt.checkNDefFemInd(pInd.ears, 6) Then p.prt.setIAInd(pInd.ears, 0, True, True)
-        p.prt.setIAInd(pInd.cloak, 0, True, False) 'glasses
         p.prt.setIAInd(pInd.hat, 0, True, False) 'hat
         p.prt.setIAInd(pInd.eyes, 8, True, True) 'eyes
         p.prt.setIAInd(pInd.mouth, 6, True, True) 'mouth
+
         'Hair Change
         p.prt.haircolor = cRed
         p.prt.setIAInd(pInd.rearhair, 11, True, True) 'rhair 2

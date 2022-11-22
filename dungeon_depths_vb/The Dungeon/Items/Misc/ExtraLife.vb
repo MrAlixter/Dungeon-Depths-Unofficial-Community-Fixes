@@ -11,7 +11,6 @@
 
         '|Item Flags|
         usable = false
-        MyBase.droppable = False
         rando_inv_allowed = False
 
         '|Stats|

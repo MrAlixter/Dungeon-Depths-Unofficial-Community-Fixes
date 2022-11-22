@@ -110,7 +110,7 @@
     End Sub
     Overrides Sub tfDialogStep5()
         TextEvent.push("As you trudge through a particularly dusty patch of dungeon, you feel a powerful sneeze coming on." & DDUtils.RNRN &
-                          "A""Achoo!"" the sneeze rocks your body, and your head feels slightly heavier.  As you feel around your head, you can tell that your horns have both gotten longer and developed a more extreme curl." & DDUtils.RNRN &
+                          """Achoo!"" the sneeze rocks your body, and your head feels slightly heavier.  As you feel around your head, you can tell that your horns have both gotten longer and developed a more extreme curl." & DDUtils.RNRN &
                           "Epic.")
     End Sub
 
@@ -133,7 +133,7 @@
         End If
 
         If mtf Then
-            out += "  You also notice that you feel a little ... tighter ... between your legs and a quick pat down confirms that you now have a dick.  Seems like this curse isn't exactly turning you into a proper cow after all..."
+            out += "  You also notice that you feel a little... tighter... between your legs and a quick pat down confirms that you now have a dick.  Seems like this curse isn't exactly turning you into a proper cow after all..."
         End If
 
         TextEvent.push(out)

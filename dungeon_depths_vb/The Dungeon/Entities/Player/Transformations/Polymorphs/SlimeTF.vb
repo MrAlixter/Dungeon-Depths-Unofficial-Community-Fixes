@@ -43,4 +43,8 @@
 
         TextEvent.push(out)
     End Sub
+
+    Public Shared Sub blobTF()
+        Game.player1.changeForm("Blob")
+    End Sub
 End Class

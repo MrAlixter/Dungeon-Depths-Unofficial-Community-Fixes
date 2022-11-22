@@ -22,7 +22,7 @@
         mInd = New Tuple(Of Integer, Boolean, Boolean)(1, False, False)
 
         '|Description|
-        setDesc("An aggressive looking red headband." & DDUtils.RNRN &
+        setDesc("A crimson length of cloth to be wrapped around the forehead of a fighter." & DDUtils.RNRN &
                 getStatInformation())
     End Sub
 End Class

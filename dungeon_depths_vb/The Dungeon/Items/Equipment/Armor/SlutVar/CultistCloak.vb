@@ -16,6 +16,7 @@
         usable = false
         compress_breast = True
         show_underboob = True
+        hide_rearhair = True
         anti_slut_ind = 265
 
         '|Stats|

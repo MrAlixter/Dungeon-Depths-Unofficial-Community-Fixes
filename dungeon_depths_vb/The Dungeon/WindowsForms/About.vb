@@ -17,7 +17,7 @@
         Me.LabelVersion.Text = String.Format("Version {0}", My.Application.Info.Version.ToString)
         Me.LabelCopyright.Text = My.Application.Info.Copyright
         Me.LabelCompanyName.Text = My.Application.Info.CompanyName
-        Me.TextBoxDescription.Text = "Dungeon Depths is a 2D dungeon crawler with art made in Kisekae2.0 featuring adult TF content.  Please do not play this game if you are younger than 18 years old." & DDUtils.RNRN &
+        Me.TextBoxDescription.Text = "Dungeon Depths is a 2D dungeon crawler with art made in Kisekae2.0 featuring adult transformation and hypnosis content.  Please do not play this game if you are younger than 18 years old." & DDUtils.RNRN &
                                      "-----------------------------------------------" & DDUtils.RNRN &
                                      "Outside of myself (VHU), there have been several people to join the game's development team.  I would like to recognize:" & DDUtils.RNRN &
                                      "- Houdini111 for extensive contributions in debugging and game features, namely in the design and implementation of the debug menu, the current shop UI, and the dungeon customization menu." & DDUtils.RNRN &
@@ -27,10 +27,10 @@
                                      "Writing Credits: " & DDUtils.RNRN &
                                     "- Marionette: Slime Loss/TF Scenes, yet-to-be-implemented Vial of Slime & Mimic loss scenes" & DDUtils.RNRN &
                                     "- Big Iron Red: Unwilling versions of Maid TF, Marissa Loss, and Slut curse passages; yet-to-be-implemented Gothic & Sweet Lolita TF, Victorian Mannequin TF scenes" & DDUtils.RNRN &
-                                    "- Lazerbear7: Proofreading and editing of new passages" & DDUtils.RNRN &
+                                    "- Lazerbear7: Proofreading and editing of some passages" & DDUtils.RNRN &
                                      "-----------------------------------------------" & DDUtils.RNRN &
                                      "I would also like to send a special thanks to:" & DDUtils.RNRN &
-                                     "- undercoversam for advice on the balancing of weapons and armor through simulated dice" & DDUtils.RNRN &
+                                     "- undercoversam for advice on the balancing of weapons and armor" & DDUtils.RNRN &
                                      "- Rangorak for advice on Kisekae2.0 and for the design of the fourth default clothing options, as well as extensive contributions to debugging." & DDUtils.RNRN &
                                      "- Storm for the ability to bodyswap with the explorer" & DDUtils.RNRN &
                                      "- Arrhae Khellian for help cleaning up the BitBucket"

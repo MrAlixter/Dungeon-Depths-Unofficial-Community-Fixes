@@ -14,6 +14,7 @@
         compress_breast = True
         cursed = True
         bind_wearer = True
+        adjust_sleeve_layer = False
         rando_inv_allowed = False
         hide_dick = False
 

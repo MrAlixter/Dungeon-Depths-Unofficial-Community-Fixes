@@ -28,6 +28,23 @@
         Return (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
     End Function
 
+    Public Shared Function getGeneralTimeOfDay() As String
+        Select Case DateTime.Now.Hour
+            Case 1, 2, 3, 4, 5
+                Return "... morning"
+            Case 6, 7, 8, 9, 10, 11
+                Return " morning"
+            Case 12
+                Return " midday"
+            Case 13, 14, 15, 16
+                Return " afternoon"
+            Case 17, 18, 19, 20
+                Return " evening"
+            Case Else
+                Return " night"
+        End Select
+    End Function
+
 
     Private Shared Function plusMinus(ByVal x As Integer, ByVal y As Integer, ByVal o As Integer) As Boolean
         'returns true if y is within x +- o

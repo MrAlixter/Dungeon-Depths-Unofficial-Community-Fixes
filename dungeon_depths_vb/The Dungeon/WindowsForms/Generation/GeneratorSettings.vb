@@ -28,6 +28,7 @@
 
         'scale to the screen size
         DDUtils.resizeForm(Me)
+        Me.CenterToParent()
     End Sub
 
     Sub reset()
@@ -39,7 +40,7 @@
         chestRichnessBase = 1
         chestRichnessRange = 4
         encounterRate = 25
-        eClockResetVal = 5
+        eClockResetVal = 10
         trapFreqMin = 3
         trapFreqRange = 5
         trapSizeDependence = 30

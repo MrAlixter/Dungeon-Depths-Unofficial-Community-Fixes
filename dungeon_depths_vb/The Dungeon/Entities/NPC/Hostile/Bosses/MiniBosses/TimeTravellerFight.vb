@@ -11,6 +11,7 @@
         speed = 40
         will = 60
         xp_value = 5000
+        setupMonsterOnSpawn()
 
         '|Inventory|
         inv.setCount("AAAAAA_Battery", CInt(Int(Rnd() * 2000)) + 1)
@@ -22,7 +23,6 @@
         r_pronoun = "her"
 
         '|Misc|
-        setupMonsterOnSpawn()
 
     End Sub
 
@@ -42,7 +42,7 @@
 
 
             TextEvent.push("The Time Traveler tosses a cryogrenade at you!")
-            Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(42), "Alright, easy there.  Let's just put you on ice for a bit...", AddressOf OutOfTime.hostileArrest)
+            Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(42), "Alright, easy there.  Let's just put you on ice for a bit...", AddressOf OutOfTime.hostileArrest)
             Exit Sub
         End If
 
@@ -68,6 +68,6 @@
     Public Overrides Sub die(ByRef cause As Entity)
         MyBase.die(cause)
 
-        Game.player1.quests(qInds.outOfTime).finishEarly()
+        Game.player1.quests(qInd.outOfTime).finishEarly()
     End Sub
 End Class

@@ -21,13 +21,13 @@
 
         '|Image Index|
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(9, False, True)
-        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(9, False, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(100, False, True)
         bsize1 = New Tuple(Of Integer, Boolean, Boolean)(51, True, True)
         bsize2 = New Tuple(Of Integer, Boolean, Boolean)(52, True, True)
         bsize3 = New Tuple(Of Integer, Boolean, Boolean)(53, True, True)
 
         usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(59, False, True)
-        usize0 = New Tuple(Of Integer, Boolean, Boolean)(264, True, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(96, False, True)
         usize1 = New Tuple(Of Integer, Boolean, Boolean)(264, True, True)
         usize2 = New Tuple(Of Integer, Boolean, Boolean)(265, True, True)
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(266, True, True)

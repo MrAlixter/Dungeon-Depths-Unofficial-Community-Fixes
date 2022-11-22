@@ -16,14 +16,14 @@
         Game.player1.mana += getMBoost(p)
     End Sub
 
-    Public Overrides Sub onunEquip(ByRef p As Player, ByRef w As Weapon)
+    Public Overrides Sub onUnequip(ByRef p As Player, ByRef w As Weapon)
         MyBase.onUnequip(p, w)
 
         Game.player1.mana -= getMBoost(p)
         If Game.player1.mana < 0 Then Game.player1.mana = 0
 
         If p.perks(perk.tfcausingwand) <> -1 Then
-            CType(p.inv.item(p.perks(perk.tfcausingwand)), Wand).onunEquip(p, w)
+            CType(p.inv.item(p.perks(perk.tfcausingwand)), Wand).onUnequip(p, w)
             p.perks(perk.tfcausingwand) = -1
         End If
     End Sub

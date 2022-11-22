@@ -26,6 +26,10 @@
         Next
     End Sub
 
+    Function contains(ByVal s As String) As Boolean
+        Return internalList.ContainsKey(s)
+    End Function
+
     Sub remove(ByVal s As String)
         If internalList.ContainsKey(s) Then
             internalList.Remove(s)

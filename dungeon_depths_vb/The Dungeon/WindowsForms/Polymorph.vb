@@ -3,7 +3,8 @@
     Public target As NPC
     Public tfForm As Boolean = False
 
-    Private Sub Form4_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    '| - FORM EVENT HANDLERS - |
+    Private Sub Polymorph_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'scale to the screen size
         Dim startingWidth = Me.Width
         Dim startingHeight = Me.Height
@@ -12,7 +13,7 @@
         ElseIf Game.screenSize = "Medium" Then
             Size = New Size(Size.Width * 0.9, Size.Height * 0.9)
         ElseIf Game.screenSize = "XLarge" Then
-            Size = New Size(Size.Width * 1.3, Size.Height * 1.3)
+            Size = New Size(Size.Width * 1.32, Size.Height * 1.32)
         End If
         Dim RW As Double = (Me.Width - startingWidth) / startingWidth ' Ratio change of width
         Dim RH As Double = (Me.Height - startingHeight) / startingHeight ' Ratio change of height
@@ -29,50 +30,52 @@
         Select Case porm
             Case True
                 For i = 0 To p.selfPolyForms.Count - 1
-                    cboxPMorph.Items.Add(p.selfPolyForms.Item(i))
+                    cboxPolymorph.Items.Add(p.selfPolyForms.Item(i))
                 Next
-                If cboxPMorph.Items.Contains(p.className) Then cboxPMorph.Items.Remove(p.className)
-                If cboxPMorph.Items.Contains(p.formName) Then cboxPMorph.Items.Remove(p.formName)
+                If cboxPolymorph.Items.Contains(p.className) Then cboxPolymorph.Items.Remove(p.className)
+                If cboxPolymorph.Items.Contains(p.formName) Then cboxPolymorph.Items.Remove(p.formName)
             Case False
                 For i = 0 To p.enemPolyForms.Count - 1
-                    cboxPMorph.Items.Add(p.enemPolyForms.Item(i))
+                    cboxPolymorph.Items.Add(p.enemPolyForms.Item(i))
                 Next
         End Select
+
+        Me.CenterToParent()
     End Sub
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        '|--Cancel the Polymorph if an Invalid Form Type is Selected--|
-        If cboxPMorph.Text = "-- Select --" Or Not tfForm Then
+    Private Sub BtnPolymorphOK_Click(sender As Object, e As EventArgs) Handles btnPolymorphOK.Click
+        'Cancel the polymorph if an invalid form type is selected
+        If cboxPolymorph.Text = "-- Select --" Or Not tfForm Then
             Me.Close()
             Game.player1.mana += 12
             Exit Sub
         End If
 
-        '|--Route the Polymorph Based on Target Type--|
+        'Route the polymorph based on target type
         Select Case porm
             Case True
-                '|-Polymorph a Player-|
-                transform(Game.player1, cboxPMorph.Text)
+                '| -- Player -- |
+                transform(Game.player1, cboxPolymorph.Text)
             Case False
                 If target.GetType().IsSubclassOf(GetType(ShopNPC)) Then
-                    '|-Polymorph a NPC-|
-                    transformN(target, cboxPMorph.Text)
+                    '| -- NPC -- |
+                    transformN(target, cboxPolymorph.Text)
                 Else
-                    '|-Polymorph an Enemy-|
-                    transform(target, cboxPMorph.Text)
+                    '| -- Enemy -- |
+                    transform(target, cboxPolymorph.Text)
                 End If
         End Select
 
-        '|--Close the Form--|
         Me.Close()
     End Sub
 
-    'player transform methods
+    '| - PLAYER TRANSFORMATIONS -|
     Shared Sub transform(ByRef p As Player, ByVal form As String, Optional ByVal checkform As Boolean = True)
+        '| -- Pre-transformation Checks -- |
         If checkform AndAlso (form.Equals(p.className) Or form.Equals(p.formName) Or Not p.polymorphs.Keys.Contains(form)) Then
             Exit Sub
         End If
 
-        'gets the revert text for whatever is being changed
+        '| -- Revert Previous Form/Class -- |
         Dim revertText = ""
         If Not form.Equals(p.className) Then
             p.pClass.revert()
@@ -84,12 +87,14 @@
             DDError.badPolymorphError(form)
         End If
 
-        'polymorph updates
+        '| -- Transformation -- |
         p.ongoingTFs.resetPolymorphs()
 
-        p.polymorphs(form) = PolymorphTF.newPoly(form)
-        p.ongoingTFs.add(p.polymorphs(form))
-        p.perks(perk.polymorphed) = p.polymorphs(form).getTurnsTilNextStep()
+        Dim active_polymorph = PolymorphTF.newPoly(form)
+
+        p.polymorphs(form) = active_polymorph
+        p.ongoingTFs.add(active_polymorph)
+        p.perks(perk.polymorphed) = active_polymorph.getTurnsTilNextStep()
 
         If form = "MASBimbo" Then form = "Bimbo"
         If Player.forms.Keys.Contains(form) Then
@@ -98,11 +103,14 @@
             p.changeClass(form)
         End If
 
-        'cleanup
-        TextEvent.push(revertText & Game.lblEvent.Text.Split(vbCrLf)(0))
+        '| -- Cleanup -- |
+        If Not revertText = "" & DDUtils.RNRN Then TextEvent.push(revertText & Game.lblEvent.Text.Split(vbCrLf)(0))
+
         p.ongoingTFs.ping()
+
         p.specialRoute()
         p.magicRoute()
+
         p.drawPort()
     End Sub
     'NPC transform method
@@ -196,9 +204,15 @@
             t.will *= 1.25
             t.tfEnd = 2
 
+        ElseIf s = "Bee-Girl" Then              '+WIL/SPD Debuff
+            t.maxHealth *= 0.5
+            t.attack *= 1.5
+            t.defense *= 1.5
+            t.speed *= 3.0
+            t.will *= 0.33
+            t.tfEnd = 6
         Else
             Exit Sub
-
         End If
 
         t.tfCt = 1
@@ -218,10 +232,12 @@
             t.toCatgirl()
         ElseIf s = "Trilobite" Then
             t.toTrilobite()
+        ElseIf s = "Bee-Girl" Then
+            t.toBeeGirl()
         End If
     End Sub
 
-    Shared Sub giveRNDFName(ByRef p As Player)
+    Shared Function rndFName() As String
         Randomize()
         Dim fFNames() As String = {"Abigail", "Abby", "Anna", "Ann", "Ana", "Alexis", "Allie", _
                                "Becky", _
@@ -239,11 +255,15 @@
                                "Samantha", "Sarah", "Sally", "Sophie", _
                                "Tanja", "Trisha", _
                                "Vanessa"}
-        p.name = fFNames(Int(Rnd() * fFNames.Length))
+
+        Return fFNames(Int(Rnd() * fFNames.Length))
+    End Function
+    Shared Sub giveRNDFName(ByRef p As Player)
+        p.name = rndFName()
     End Sub
-    Shared Sub giveRNDMName(ByRef p As Player)
+    Shared Function rndMName() As String
         Randomize()
-        Dim fFNames() As String = {"Aaron", "Alan", "Alexander", _
+        Dim mFNames() As String = {"Aaron", "Alan", "Alexander", _
                                "Bob", "Bruce", "Brandon", "Bailey", _
                                "Chris", "Ciaran", _
                                "Daniel", "Dave", "David", _
@@ -262,11 +282,54 @@
                                "Tanner", "Tristan", "Travis", _
                                "Vance", _
                                "Zachary", "Zack"}
-        p.name = fFNames(Int(Rnd() * fFNames.Length))
+
+        Return mFNames(Int(Rnd() * mFNames.Length))
+    End Function
+    Shared Sub giveRNDMName(ByRef p As Player)
+        p.name = rndMName()
     End Sub
 
-    Shared Function bimboizeName(ByVal name As String) As String
+    Shared Function rndBimName(ByRef p As Player) As String
+        Randomize()
+        Dim bimNames As Dictionary(Of Char, String()) = New Dictionary(Of Char, String())
+        bimNames.Add("A", {"Alicia", "Ana", "Alexis", "Allie", "Amber", "Ali", "Aurora"})
+        bimNames.Add("B", {"Becky", "Becki", "Bambi", "Brandi", "Bunni", "Bianca"})
+        bimNames.Add("C", {"Crystal", "Coco", "Cassie", "Cara", "Chloe", "Cindi", "Candi"})
+        bimNames.Add("D", {"Daisy", "Dani", "Diamond", "Danni", "Dixi", "Daphne"})
+        bimNames.Add("E", {"Erika", "Emmy", "Eliza", "Envi", "Evie", "Emily"})
+        bimNames.Add("F", {"Felicity", "Frankie", "Faith", "Foxi", "Fia"})
+        bimNames.Add("G", {"Gabi", "Gigi", "Glamour", "Gia", "Gia"})
+        bimNames.Add("H", {"Heather", "Hailey", "Honey", "Halli", "Haylee", "Harmoni"})
+        bimNames.Add("I", {"Izzy", "Izzi", "Ina", "Ivy"})
+        bimNames.Add("J", {"Joni", "Jenna", "Jenni", "Jojo", "Jade"})
+        bimNames.Add("K", {"Kelli", "Kelsi", "Krystal", "Kitty", "Kyra"})
+        bimNames.Add("L", {"Lana", "Leora", "Lexi", "Lace", "Lacy", "Lia", "Lila", "Lori"})
+        bimNames.Add("M", {"Monica", "Mia", "Monique", "Merci", "May", "Misty"})
+        bimNames.Add("N", {"Nancy", "Nicki", "Nat", "Nica", "Nina"})
+        bimNames.Add("O", {"Opal", "Ophelia", "Olivia"})
+        bimNames.Add("P", {"Paris", "Pixi", "Porsche", "Pansi"})
+        bimNames.Add("Q", {"Quinn", "Qui"})
+        bimNames.Add("R", {"Racheal", "Ruby", "Rita", "Ria", "Rio", "Rosi"})
+        bimNames.Add("S", {"Sammi", "Sam", "Salli", "Sara", "Sofi", "Staci", "Sapphire", "Skye"})
+        bimNames.Add("T", {"Trisha", "Trixie", "Tiffany", "Thia", "Tara", "Tawni", "Tia", "Tricia", "Tess"})
+        bimNames.Add("U", {"Unique"})
+        bimNames.Add("V", {"Vivi", "Viola", "Venus", "Vanessa"})
+        bimNames.Add("W", {"Wendi", "Willow"})
+        bimNames.Add("X", {"Xena", "Xia", "Xiola"})
+        bimNames.Add("Y", {"Yvonne", "Yvette"})
+        bimNames.Add("Z", {"Zena", "Zoe", "Zozo", "Zi"})
 
+        If bimNames.Keys.Contains(p.name.ToUpper.First) Then
+            Dim r = Int(Rnd() * bimNames(p.name.ToUpper.First).Length)
+            Return bimNames(p.name.ToUpper.First)(r)
+        Else
+            Dim r1 = Int(Rnd() * bimNames.Keys.Count)
+            Dim r2 = Int(Rnd() * bimNames(bimNames.Keys(r1)).Length)
+            Return bimNames(bimNames.Keys(r1))(r2)
+        End If
+    End Function
+    Shared Function bimboizeName(ByVal name As String) As String
+        If Settings.active(setting.bimbonames) Then Return rndBimName(Game.player1)
 
         Dim vowels() As String = {"a", "e", "i", "o", "u"}
 
@@ -294,7 +357,8 @@
 
         If (name.EndsWith("chelli")) Then Return name.Substring(0, name.Length - 1) & "e"
         If (name.EndsWith("vi")) Then Return name.Substring(0, name.Length) & "i"
-        If (name.EndsWith("Ali")) Then Return "Alli"
+        If (name.StartsWith("Ali")) Then Return "Alli"
+        If (name.StartsWith("Mel")) Then Return "Mel"
         If (name.EndsWith("au")) Then Return name.Substring(0, name.Length) & "li"
         If (name.EndsWith("sa") Or name.EndsWith("sta")) Then Return name.Substring(0, name.Length - 2) & "sie"
         If (name.EndsWith("oo")) Then name = name.Substring(0, name.Length - 1)
@@ -325,7 +389,7 @@
             ElseIf (name.EndsWith("a")) Then
                 Return name.Substring(0, name.Length - 1) & "ia"
             ElseIf (name.EndsWith("e")) Then
-                Return name.Substring(0, name.Length - 1) & "na"
+                Return name.Substring(0, name.Length) & "na"
             End If
         Else
             Return name
@@ -334,7 +398,7 @@
         Return "Allie"
     End Function
 
-    Private Sub cboxPMorph_SelectedValueChanged(sender As Object, e As EventArgs) Handles cboxPMorph.SelectedValueChanged
+    Private Sub cboxPMorph_SelectedValueChanged(sender As Object, e As EventArgs) Handles cboxPolymorph.SelectedValueChanged
         tfForm = True
     End Sub
 End Class

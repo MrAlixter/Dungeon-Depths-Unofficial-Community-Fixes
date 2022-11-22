@@ -15,7 +15,7 @@ Public Class PhotonBikini
         compress_breast = True
         show_underboob = True
         rando_inv_allowed = False
-        anti_slut_ind = 105
+        anti_slut_ind = 104
 
         '|Stats|
         m_boost = 7
@@ -37,9 +37,9 @@ Public Class PhotonBikini
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(308, True, True)
 
         '|Description|
-        setDesc("Though at a glance it may seem unlikely, this swimsuit houses a powerful shield generator that harnesses its users mana to withstand impacts." & DDUtils.RNRN & _
-                        "Hardlight Effect" & DDUtils.RNRN &
-                        getSizeInformation() & DDUtils.RNRN & getStatInformation())
+        setDesc("Though at a glance it may seem unlikely, this swimsuit houses a powerful shield generator that harnesses its users mana to withstand impacts." & DDUtils.RNRN &
+                "Hardlight Effect" & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

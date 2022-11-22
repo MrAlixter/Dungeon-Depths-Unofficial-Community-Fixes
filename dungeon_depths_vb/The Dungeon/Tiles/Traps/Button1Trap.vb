@@ -33,7 +33,7 @@
     End Sub
 
     Sub postcheck()
-        If Not Game.player1.quests(qInds.outOfTime).getComplete Or Game.currFloor.mBoard(5, 72).Text = "" Then
+        If Not Game.player1.quests(qInd.outOfTime).getComplete Or Game.currFloor.mBoard(5, 72).Text = "" Then
             OutOfTimeS3.alert(False)
         End If
     End Sub

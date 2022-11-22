@@ -3,6 +3,8 @@
 
     Public Const ITEM_NAME As String = "Valkyrie_Sword"
 
+    Protected uniform_id As Integer = 95
+
     Sub New()
         '|ID Info|
         setName(ITEM_NAME)
@@ -26,23 +28,23 @@
     Public Overrides Sub onEquip(ByRef p As Player)
         If Not p.className.Equals("Valkyrie") And Not p.perks(perk.tfedbyweapon) > 0 Then
             Dim valkyrieTF = New ValkyrieTF2(1, 0, 0, False)
-            valkyrieTF.step1()
+
+            valkyrieTF.update()
+            p.ongoingTFs.add(valkyrieTF)
+
             p.perks(perk.tfcausingsword) = id
             p.perks(perk.tfedbyweapon) = 1
-            p.drawPort()
         End If
     End Sub
 
-    Public Overrides Sub onunEquip(ByRef p As Player, ByRef w As Weapon)
+    Public Overrides Sub onUnequip(ByRef p As Player, ByRef w As Weapon)
         If (p.className.Equals("Valkyrie") Or p.perks(perk.tfedbyweapon) > 0) And Not w Is Nothing AndAlso Not w.GetType.IsSubclassOf(GetType(Sword)) Then
-            TextEvent.pushLog("Putting away your sword causes you to change into your regular self!")
-            TextEvent.pushLog("Sighing, you stow away your sword and revert to your base form.  Helix Slash special forgotten...")
-            If p.knownSpecials.Contains("Helix Slash") Then p.knownSpecials.Remove("Helix Slash")
-            If p.knownSpecials.Contains("Blazing Angel Strike") Then p.knownSpecials.Remove("Blazing Angel Strike")
+            TextEvent.push("Sighing, you sheath your blade and revert to your base form.")
+
+            p.inv.add(uniform_id, -1)
 
             p.perks(perk.tfedbyweapon) = -1
 
-            p.inv.add(95, -1)
             p.revertToPState()
         End If
     End Sub

@@ -26,7 +26,7 @@
         p.perks(perk.slutcurse) = -1
 
         If Equipment.antiClothingCurse(p) Then
-            TextEvent.push("You apply the anti-curse tag to your equipment.  The slut curse is neutralized!")
+            If Not Game.combat_engaged And Game.pnlEvent.Visible Then Game.txtPNLEvents.Text = ("You apply the anti-curse tag to your equipment, and " & Game.txtPNLEvents.Text.Substring(0, 1).ToLower & Game.txtPNLEvents.Text.Substring(1, Game.txtPNLEvents.Text.Length - 1)) Else TextEvent.push("You apply the anti-curse tag to your equipment.  The slut curse is neutralized!")
         ElseIf p.equippedArmor.getCursed(p) Then
             EquipmentDialogBackend.equipArmor(p, "Naked")
         ElseIf p.equippedWeapon.getCursed(p) Then

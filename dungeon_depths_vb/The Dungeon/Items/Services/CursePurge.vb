@@ -20,7 +20,7 @@
         value = 3110
 
         '|Description|
-        setDesc("""There's no good reason to continue a cursed existance if you don't want to.  Come, let's get those curses off of you so that they can be put to better use elsewhere...""")
+        setDesc("""There's no good reason to continue a cursed existence if you don't want to.  Come, let's get those curses off of you so that they can be put to better use elsewhere...""")
     End Sub
 
     Sub purge()
@@ -47,6 +47,8 @@
         If p.equippedGlasses.getCursed(p) Then EquipmentDialogBackend.equipGlasses(p, "Nothing", False) : TextEvent.pushLog("Cursed glasses removed")
 
         TextEvent.pushNPCDialog("Ah, a fresh slate.  Don't stay out of too much trouble now, caution won't lead you anywhere...interesting...")
+
+        p.drawPort()
 
         count -= 1
     End Sub

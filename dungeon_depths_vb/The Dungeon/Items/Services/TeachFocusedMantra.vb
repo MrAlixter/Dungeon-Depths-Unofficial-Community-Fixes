@@ -27,7 +27,7 @@
         Game.hideNPCButtons()
 
         If Game.player1.knownSpecials.Contains("Focus Up") Then
-            Game.player1.gold += value * Game.hteach.getDiscount
+            Game.player1.gold += (value - (value * Game.hteach.discount))
             TextEvent.pushNPCDialog("Well, it looks like you already know 'Focus Up'.", AddressOf CType(Game.hteach, HypnoTeach).back)
             Exit Sub
         End If

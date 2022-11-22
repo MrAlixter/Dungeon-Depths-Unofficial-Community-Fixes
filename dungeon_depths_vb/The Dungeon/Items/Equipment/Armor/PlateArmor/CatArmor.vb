@@ -3,8 +3,6 @@
 
     Public Const ITEM_NAME As String = "Cat_Armor"
 
-    Dim oldHat As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-
     Sub New()
         '|ID Info|
         setName(ITEM_NAME)
@@ -38,20 +36,11 @@
         usize2 = New Tuple(Of Integer, Boolean, Boolean)(77, True, True)
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(78, True, True)
 
+        hood = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
+        cloak = New Tuple(Of Integer, Boolean, Boolean)(14, True, False)
+
         '|Description|
         setDesc("An adorable cat themed set of lightweight armor that also boosts attack. Nya." & DDUtils.RNRN &
                                       getSizeInformation() & DDUtils.RNRN & getStatInformation())
-    End Sub
-
-    Public Overrides Sub onEquip(ByRef p As Player)
-        MyBase.onEquip(p)
-        oldHat = p.prt.iArrInd(pInd.hat)
-
-        p.prt.setIAInd(pInd.hat, 9, True, True)
-    End Sub
-
-    Public Overrides Sub onUnequip(ByRef p As Player)
-        MyBase.onUnequip(p)
-        p.prt.iArrInd(pInd.hat) = oldHat
     End Sub
 End Class

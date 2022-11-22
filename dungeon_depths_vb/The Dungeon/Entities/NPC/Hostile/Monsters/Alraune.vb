@@ -1,11 +1,13 @@
 ﻿Public Class Alraune
     Inherits Monster
 
+    Public Const BASE_NAME As String = "Alraune"
+
     Dim firstMove = True
 
     Sub New()
         '|ID Info|
-        name = "Alraune"
+        name = BASE_NAME
 
         '|Stats|
         maxHealth = 175
@@ -13,6 +15,7 @@
         defense = 35
         speed = 1
         will = 13
+        setupMonsterOnSpawn()
 
         '|Inventory|
         inv.setCount("Medicinal_Tea", 3)
@@ -25,7 +28,7 @@
         r_pronoun = "her"
 
         '|Misc|
-        setupMonsterOnSpawn()
+
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

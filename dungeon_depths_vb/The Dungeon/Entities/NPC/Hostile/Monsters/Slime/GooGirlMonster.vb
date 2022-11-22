@@ -1,12 +1,24 @@
 ﻿Public Class GooGirlMonster
     Inherits SlimeMonster
+
+    Public Shadows Const BASE_NAME As String = "Goo Girl"
+
     Sub New()
-        name = "Goo Girl"
+        '|ID Info|
+        name = BASE_NAME
+
+        '|Stats|
         maxHealth = 90
         attack = 30
         defense = 80
         speed = 14
+
+        '|Inventory|
         setInventory({3, 136})
+
+        '|Dialog Variables|
+
+        '|Misc|
         setupMonsterOnSpawn()
     End Sub
 

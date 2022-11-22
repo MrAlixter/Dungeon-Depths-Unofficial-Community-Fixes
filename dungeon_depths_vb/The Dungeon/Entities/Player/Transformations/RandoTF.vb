@@ -22,11 +22,17 @@
 
         'assign a pointer to the player character
         Dim p As player = Game.player1
-        If Not p.preBSStartState.initFlag Then p.preBSStartState = p.sState.clone(p)
+        If Not p.formStates(stateInd.preBSStartState).initFlag Then p.formStates(stateInd.preBSStartState) = p.sState.clone(p)
 
         'assign a starter class / form
         p.changeClass("Classless")
         p.changeForm("Human")
+
+        'remove the player's gear
+        EquipmentDialogBackend.equipArmor(p, "Naked", False)
+        EquipmentDialogBackend.equipWeapon(p, "Fists", False)
+        EquipmentDialogBackend.equipAcce(p, "Nothing", False)
+
         'assign a random sex
         Randomize()
         Dim r = Int(Rnd() * 2)
@@ -51,6 +57,7 @@
 
         p.prt.setIAInd(pInd.wings, 0, True, False)
         p.prt.setIAInd(pInd.horns, 0, True, False)
+        p.prt.setIAInd(pInd.hairacc, 0, True, False)
 
         'set a random hair color
         p.prt.haircolor = Color.FromArgb(255, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100)
@@ -104,7 +111,6 @@
         setLoadout()
 
         p.TextColor = Color.White
-        If Game.mDun.numCurrFloor < 6 Then p.player_image = Game.picPlayer.BackgroundImage Else p.player_image = Game.picPlayerf.BackgroundImage
 
         p.inv.invNeedsUDate = True
         p.UIupdate()
@@ -124,8 +130,6 @@
         Dim armorIndex As Integer = -1
         Dim weaponIndex As Integer = -1
 
-        EquipmentDialogBackend.armorChange(p, "Naked")
-        EquipmentDialogBackend.weaponChange(p, "Fists")
         Select Case Int(Rnd() * 23)
             Case 0   'basic warrior
                 p.changeClass("Warrior")
@@ -141,7 +145,7 @@
                 weapon = New Integer() {6, 23, 40, 118, 176}
             Case 3   'advanced mage
                 p.changeClass("Mage")
-                armor = New Integer() {5, 17, 46, 83}
+                armor = New Integer() {5, 17, 46, 83, 300}
                 weapon = New Integer() {21, 22}
             Case 4   'basic bimbo
                 p.changeClass("Bimbo")
@@ -294,34 +298,47 @@
     End Sub
 
     Shared Sub floor4FirstBossEncounter()
-        TextEvent.push("Turning around, you start to leave with the key before a giggle from behind you stops you in your tracks.  Looking over your shoulder, you see the chest become swallowed and dissolved into a mass of turquoise slime that is rapidly making its way towards you.  Drawing your weapon, you stash the key and prepare yourself for a fight!" & DDUtils.RNRN &
-                          "As you begin your attack, a single, large, gooey tendril shoots out of the mass, yanking your weapon from your hand before several smaller tentacles wrap around your limbs, restraining you." & DDUtils.RNRN & _
-                          """Well, well, well.  What do we have here?"", a slightly distorted female voice chuckles from somewhere behind you." & DDUtils.RNRN &
-                          "Suddenly, you find yourself being flipped upside down and dragged upwards to the ceiling, where you meet the gaze of a translucent, teal woman who's lower half seems to be a mass of tentacles that has it rooted firmly to the dungeon's roof.  Her remarkably curvy figure, as well as her more mature attitude suggest that you might be in for something unique from the other slime girls you've encountered so far.  Glancing more closely at your captor, you notice some vaugely human-shaped bodies mixed in with the writhing tendrils of slime, and you wonder what exactly you're in for here." & DDUtils.RNRN &
-                          """I ..."" the slime says, drawing your attention back to her, ""... am the Ooze Empress.  This floor, and all who inhabit it fall under my ..."".  As she introduces herself, you find it harder and harder to focus.  Your body, especially where her tentacles are making direct contact, feels as though every inch of it is flushing with arousal.", AddressOf floor4FirstBossEncounterP2)
+        TextEvent.push("Once you've plucked a key from the chest, a giggle from behind you stops you in your tracks." & DDUtils.RNRN &
+                       "As you look back over your shoulder, the chest is swallowed and then dissolved by a blob of turquoise slime that rapidly makes its way towards you.  Drawing your weapon, you stash the key and prepare yourself for a fight!" & DDUtils.RNRN &
+                       "Before you can attack, though, a large, gooey tendril shoots out and yanks your weapon from your hands.  Several smaller tentacles wrap around your limbs and pin you to the wall, as a final tendril flows into your mouth, gagging you." & DDUtils.RNRN &
+                       """Well, well, well.  What do we have here?"", a slightly distorted female voice chuckles from somewhere behind you.", AddressOf floor4FirstBossEncounterP2)
     End Sub
     Shared Sub floor4FirstBossEncounterP2()
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(147), "Suddenly, you find yourself being flipped upside down and dragged upwards to the ceiling, where you meet the translucent smug gaze of a teal woman made of slime." & DDUtils.RNRN &
+                                                             "Her lower half seems to be a writhing mass of tentacles rooted firmly to the dungeon's roof, and closer inspection highlights a number of vaugely human-shaped bodies mixed in with the tendrils of slime.  Her curvy figure and mature demeanor set her apart as unique from any other goo girl you've encountered so far." & DDUtils.RNRN &
+                                                             """I..."" the slime says, drawing your attention back to her, ""...am the Ooze Empress.  This fourth floor, and all who inhabit it, fall well under my control.""" & DDUtils.PAKTC, AddressOf floor4FirstBossEncounterP3)
+    End Sub
+    Shared Sub floor4FirstBossEncounterP3()
         Dim p As Player = Game.player1
-        p.preBSBody = If(Transformation.canBeTFed(p), New State(p), p.pState.clone(p))
+        p.formStates(stateInd.preBSBody) = If(Transformation.canBeTFed(p), New State(p), p.pState.clone(p))
         Game.floor_4_starting_inv = New ArrayList()
         For i = 0 To p.inv.upperBound
             Game.floor_4_starting_inv.Add(p.inv.getCountAt(i))
         Next
-        p.ongoingTFs.Add(New RandoTF())
+        p.ongoingTFs.add(New RandoTF())
         p.update()
         p.sState.save(p)
         p.savePState()
-        TextEvent.push("The warmth slowly builds until you are burning with lust, and you can't help but lose intrest in what your captor is saying, lost in the fog of your pleasure.  A small giggle tells you that your distraction has not gone unnoticed." & DDUtils.RNRN &
-                          """Enjoying yourself?"" the Empress asks, giving you a gentle shake, ""What you're feeling now is the powerful aphrodesiac that is mixed into my body.  Would you like a more intimate taste, little one?""" & DDUtils.RNRN &
-                          "In your state, you don't even need to consider her offer.  After you give her a vigorous nod, the slime purrs ""Wonderful, darling, you seem like you could use a little relaxation."", plunging you into the mass of her tendrils.  If the aphrodisiac was overwhelming before, being submmerged in it practically puts you in a horny coma.  Before passing out from the burning need flowing throug every part of your body, you catch her motherly gaze as she giggles," & DDUtils.RNRN &
-                          """Have fun!""" & DDUtils.RNRN & DDUtils.RNRN &
-                          "When you come to, you can tell some time has passed.  Though the Emperess is nowhere to be found, the amount of slime you are drenched still fills you with a bit of lust.  Looking down, however, you are not met with your familiar body, but instead that of a stranger!  You must have had one hell of a time to wake up in the wrong body, and a quick pat down reveals that all of your belongings, including the key, are missing as well!  At least the ooze didn't seem that malevolent, maybe if you can find her again you can straighten this out.")
+        TextEvent.push("As she introduces herself, you find it harder and harder to focus.  Wherever her tentacles make direct contact, your body flushing with an overwhelming arousal." & DDUtils.RNRN &
+                       "The heat slowly builds until you consumed with lust, and despite your best attempts you lose intrest in what your captor is saying, lost in the fog of your pleasure." & DDUtils.RNRN &
+                       "A small giggle tells you that your distraction has not gone unnoticed." & DDUtils.RNRN &
+                       """Enjoying yourself?"" the Empress asks, giving you a gentle shake, ""What you're feeling now is the powerful aphrodesiac that is mixed into my body.  Would you like a more intimate taste, little one?""" & DDUtils.RNRN &
+                       "In your state, you don't even need to consider her offer.  After you give her a vigorous nod, the slime purrs ""Wonderful, darling, you seem like you could use a little relaxation."", plunging you into the mass of her tendrils." & DDUtils.RNRN &
+                       "If the aphrodisiac was overwhelming before, being submmerged in it practically puts you in a horny coma.  Before passing out from the burning need flowing through every part of your body, you catch her motherly gaze as she giggles," & DDUtils.RNRN &
+                       """Have fun!""", AddressOf floor4FirstBossEncounterP4)
+    End Sub
+    Shared Sub floor4FirstBossEncounterP4()
+        Dim p = Game.player1
+        TextEvent.push("When you come to, it's obvious some time has passed." & DDUtils.RNRN &
+                       "Though the Emperess is nowhere to be found, the amount of slime she's left you drenched in still fills you with a bit of lust.  Your body... well, the body that you're currently inhabiting... still tingles with longing from your encounter." & DDUtils.RNRN &
+                       "It seems you've woken up in the wrong body, and a quick pat down reveals that all of your belongings, including the key, are missing as well!" & DDUtils.RNRN &
+                       "Hmm, at least the ooze didn't seem that" & If(p.className.Contains("Bimbo") Or p.className.Contains("Bimbo"), " malevolent...", ", like, mean...") & " maybe if you can find her again you can straighten this out?")
     End Sub
     Shared Sub floor4revert()
         Dim p As player = Game.player1
-        p.preBSStartState.load(p)
+        p.formStates(stateInd.preBSStartState).load(p)
         p.sState.save(p)
-        p.preBSBody.load(p)
+        p.formStates(stateInd.preBSBody).load(p)
         p.pState.save(p)
         p.revertToPState()
         For i = 0 To Game.floor_4_starting_inv.Count - 1

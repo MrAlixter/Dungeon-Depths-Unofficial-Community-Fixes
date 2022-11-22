@@ -1,8 +1,22 @@
-﻿Public Class MagGirlTF
+﻿Public Enum mgind
+    magicalgirl         '0
+    redmagicalgirl      '1
+    pinkmagicalgirl     '2
+    greenmagicalgirl    '3
+    darkmagicalgirl     '4
+    promagicalgirl      '5
+    proredmagicalgirl   '6
+    magicalslut         '7
+    magicalmimic        '8
+End Enum
+
+Public Class MagGirlTF
     Inherits Transformation
 
     Protected Const className As String = "Magical Girl"
     Private Const TF_IND As tfind = tfind.maggirl
+
+    Protected MG_IND As mgind = mgind.magicalgirl
 
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
@@ -16,19 +30,24 @@
     End Sub
 
     Overridable Sub step1dialog(ByRef p As Player)
-        Dim out = "Swinging your wand, you are engulfed in a rain of stars. As the light around your body grows blinding and your clothes disolve into the aether, you become a buxom young woman wearing a skimpy uniform!"
+        Dim out = "You swing your wand in a wide arc over your head, and you are engulfed in a rain of stars." & DDUtils.RNRN &
+                  "The light around your body becomes blinding and your clothes disolve into the aether, as beams of rainbow-colored energy twirl around your shifting silhouette." & DDUtils.RNRN &
+                  "With a final flash of brilliant white, the wand dims and you strike a cutesy pose."
+
         TextEvent.push(out, AddressOf step2)
-        p.TextColor = Game.lblEvent.ForeColor
+        TextEvent.pushLog("You activate your magical girl transformation!")
+        p.textColor = Game.lblEvent.ForeColor
     End Sub
     Sub step1()
         Dim p As Player = Game.player1
-        p.changeClass("Magical Girl​")
+
+        HumanTF.change(p)
 
         If p.sex = "Male" Then
             p.MtF()
         End If
 
-        'p.prt.setIAInd(pInd.hat, Portrait.imgLib.atrs(pInd.hat).getF.Count - 3, True, False)
+        p.changeClass("Magical Girl​")
 
         step1dialog(p)
 
@@ -65,16 +84,20 @@
 
         Equipment.accChange(p, "Nothing")
         EquipmentDialogBackend.armorChange(p, "Magical_Girl_Outfit")
+
+        p.textColor = Color.CornflowerBlue
     End Sub
     Overridable Sub step2()
         Dim p As Player = Game.player1
-        If p.magGState.initFlag Then
-            p.magGState.load(p)
+        If p.formStates(stateInd.magGState).initFlag And (p.perks(perk.mgind) = MG_IND Or p.perks(perk.mgind) = -1) Then
+            revertPToState(p, p.formStates(stateInd.magGState))
         Else
             tfBody(p)
+            p.changeClass(className)
 
-            p.magGState.save(p)
-            p.magGState.initFlag = True
+            p.perks(perk.mgind) = MG_IND
+            p.formStates(stateInd.magGState).save(p)
+            p.formStates(stateInd.magGState).initFlag = True
         End If
 
         setSpells(p)
@@ -90,6 +113,22 @@
         p.drawPort()
 
         stopTF()
+    End Sub
+
+    Protected Sub revertPToState(ByRef p As Player, ByRef s As State)
+        Dim tHth As Integer = p.health
+        Dim tMna As Integer = p.mana
+        Dim tHun As Integer = p.stamina
+        Dim tGold As Integer = p.gold
+
+        s.load(p, False)
+
+        p.health = tHth
+        p.mana = tMna
+        p.stamina = tHun
+        p.gold = tGold
+
+        p.UIupdate()
     End Sub
 
     Shared Sub halfRevert(ByRef p As Player)

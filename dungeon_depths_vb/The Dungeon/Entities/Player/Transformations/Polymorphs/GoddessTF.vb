@@ -23,6 +23,7 @@
         Dim out = ""
 
         'unequips
+        If Not p.inv.getCountAt(GoddessGown.ITEM_NAME) > 0 Then p.inv.add(GoddessGown.ITEM_NAME, 1)
         EquipmentDialogBackend.armorChange(p, "Goddess_Gown")
          EquipmentDialogBackend.weaponChange(p, "Fists")
 
@@ -46,7 +47,7 @@
         p.prt.setIAInd(pInd.cloak, 0, True, False)
         p.prt.setIAInd(pInd.fronthair, 9, True, True)
         p.prt.setIAInd(pInd.hat, 0, True, False)
-        p.goddState.save(p)
+        p.formStates(stateInd.goddState).save(p)
 
         'transformation description push
         p.TextColor = Color.LightGoldenrodYellow

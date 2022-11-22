@@ -4,13 +4,14 @@
     Public hasFemaleHair As Boolean
     Public fHairInd, rHairInd As Integer
     Public isFemale As Boolean
-    Public breastSize As Integer
+    Public breastSize, buttSize, dickSize As Integer
     Public isSlut As Boolean
     Public earType As Integer
+
     Public onComplete As Action
 
     Public Sub New(ByVal hc As Color, ByVal sc As Color, ByVal fh As Boolean, ByVal f As Boolean, ByVal bs As Integer, ByVal s As Boolean, ByVal et As Integer,
-                   Optional fhi As Integer = -1, Optional rhi As Integer = -1, Optional oc As Action = Nothing)
+                   Optional fhi As Integer = -1, Optional rhi As Integer = -1, Optional oc As Action = Nothing, Optional us As Integer = 2, Optional ds As Integer = -1)
         hairColor = hc
         skinColor = sc
         hasFemaleHair = fh
@@ -18,6 +19,10 @@
         If rhi = -1 Then rHairInd = Int(Rnd() * 5) Else rHairInd = rhi
         isFemale = f
         breastSize = bs
+        buttSize = us
+        If breastSize = -1 Or breastSize = 0 Then buttSize = breastSize
+        If breastSize > 0 And buttSize < 1 Then buttSize = 1
+        dickSize = ds
         isSlut = s
         earType = et
         onComplete = oc
@@ -59,8 +64,12 @@
             isFemale = False
         End If
 
-        breastSize = Int(Rnd() * 5)
-        If breastSize = 0 Then breastSize = -1
+        breastSize = Int(Rnd() * 5) - 1
+        buttSize = Int(Rnd() * 4) - 1
+        If breastSize = -1 Or breastSize = 0 Then buttSize = breastSize
+        If breastSize > 0 And buttSize < 1 Then buttSize = 1
+        dickSize = Int(Rnd() * 3)
+        If Int(Rnd() * 3) <> 0 Then dickSize = -1
 
         If Int(Rnd() * 2) = 0 Then
             isSlut = True
@@ -68,18 +77,22 @@
             isSlut = False
         End If
 
-        earType = Int(Rnd() * 5)
+        earType = Int(Rnd() * 4)
     End Sub
 
     Public Function playerMeetsForm(ByRef p As Player)
 
-        If p.prt.iArrInd(pInd.rearhair).Item2 = hasFemaleHair Then
+        If p.prt.iArrInd(pInd.rearhair).Item2 <> hasFemaleHair Then
             Return False
         ElseIf p.prt.iArrInd(pInd.rearhair).Item1 <> rHairInd Then
             Return False
         ElseIf p.prt.iArrInd(pInd.fronthair).Item1 <> fHairInd + 1 Then
             Return False
         ElseIf p.breastSize <> breastSize Then
+            Return False
+        ElseIf p.buttSize <> buttSize Then
+            Return False
+        ElseIf p.dickSize <> dickSize Then
             Return False
         ElseIf p.prt.iArrInd(pInd.ears).Item1 <> earType Then
             Return False
@@ -92,7 +105,7 @@
 
     Public Sub shiftTowards(ByRef p As Player)
         Randomize()
-        TextEvent.pushAndLog("The glow of someone else's magic slightly tweaks your form...")
+        TextEvent.pushAndLog("The crackle of someone else's magic slightly tweaks your form...")
 
         If Not p.className.Equals("Thrall") Then p.changeClass("Thrall")
         If playerMeetsForm(p) Then Exit Sub
@@ -122,7 +135,19 @@
             p.breastSize += 1
         End If
 
-        If isFemale And ((p.perks(perk.slutcurse) = -1 And isSlut) Or (p.perks(perk.slutcurse) > -1 And Not isSlut)) And (Int(Rnd() * 3) = 0 Or Settings.active(setting.norng)) Then
+        If p.buttSize > buttSize Then
+            p.buttSize -= 1
+        ElseIf p.buttSize < buttSize Then
+            p.buttSize += 1
+        End If
+
+        If p.dickSize > dickSize Then
+            p.dickSize -= 1
+        ElseIf p.dickSize < dickSize Then
+            p.dickSize += 1
+        End If
+
+        If ((p.perks(perk.slutcurse) = -1 And isSlut) Or (p.perks(perk.slutcurse) > -1 And Not isSlut)) And (Int(Rnd() * 3) = 0 Or Settings.active(setting.norng)) Then
             If (p.perks(perk.slutcurse) = -1 And isSlut) Then
                 p.perks(perk.slutcurse) = 0
                 Equipment.clothingCurse1(p)
@@ -165,15 +190,9 @@
             End If
         End If
 
-        If p.breastSize > breastSize Then
-            While p.breastSize > breastSize
-                p.breastSize -= 1
-            End While
-        ElseIf p.breastSize < breastSize Then
-            While p.breastSize < breastSize
-                p.breastSize += 1
-            End While
-        End If
+        p.breastSize = breastSize
+        p.buttSize = buttSize
+        p.dickSize = dickSize
 
         If isFemale And ((p.perks(perk.slutcurse) = -1 And isSlut) Or (p.perks(perk.slutcurse) > -1 And Not isSlut)) Then
             If (p.perks(perk.slutcurse) = -1 And isSlut) Then
