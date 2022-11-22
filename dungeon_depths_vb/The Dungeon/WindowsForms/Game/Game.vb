@@ -461,7 +461,7 @@ Public Class Game
 
         zoom()
 
-        If mDun.floorboss.ContainsKey(mDun.numCurrFloor) AndAlso currFloor.beatBoss = False AndAlso Not mDun.floorboss(mDun.numCurrFloor).Equals("Key") And
+        If mDun.floor_boss.ContainsKey(mDun.numCurrFloor) AndAlso currFloor.beatBoss = False AndAlso Not mDun.floor_boss(mDun.numCurrFloor).Equals("Key") And
             combat_engaged = False And player1.health > 0 And player1.canMoveFlag = True AndAlso
             New Point(player1.pos.Y, player1.pos.X).Equals(New Point(currFloor.stairs.Y, currFloor.stairs.X)) Then
             If Not combat_engaged Then TextEvent.pushYesNo("Challenge the floor boss?", AddressOf ChallengeBoss, Nothing)
@@ -710,9 +710,9 @@ Public Class Game
             Case "x"
                 Return 13
             Case "H"
-                If Not mDun.floorboss.ContainsKey(mDun.numCurrFloor) Or currFloor.beatBoss Then
+                If Not mDun.floor_boss.ContainsKey(mDun.numCurrFloor) Or currFloor.beatBoss Then
                     Return 3
-                ElseIf mDun.floorboss.ContainsKey(mDun.numCurrFloor) AndAlso mDun.floorboss(mDun.numCurrFloor).Equals("Key") Then
+                ElseIf mDun.floor_boss.ContainsKey(mDun.numCurrFloor) AndAlso mDun.floor_boss(mDun.numCurrFloor).Equals("Key") Then
                     Return 9
                 Else
                     Return 10
@@ -2233,7 +2233,7 @@ Public Class Game
             Next
         End If
 
-        If mDun.floorboss.ContainsKey(mDun.numCurrFloor) Then
+        If mDun.floor_boss.ContainsKey(mDun.numCurrFloor) Then
             If mDun.currFloorBoss.Equals("Key") And player1.inv.getCountAt("Key") > 0 Then currFloor.beatBoss = True
             If player1.pos = currFloor.stairs And currFloor.beatBoss Then
                 If mDun.currFloorBoss.Equals("Key") Then player1.inv.add("Key", -1)
@@ -2732,7 +2732,7 @@ Public Class Game
         writer.WriteLine("----------------------------------PLAYER------------------------------------")
         writer.WriteLine(player1.ToString)
         'save the player's original body prior to the floor 4 body swap
-        If (mDun.numCurrFloor = 4 And mDun.floorboss(4) = "Ooze Empress") Then
+        If (mDun.numCurrFloor = 4 And mDun.floor_boss(4) = "Ooze Empress") Then
             writer.WriteLine("placeholder")
             writer.WriteLine("placeholder")
             writer.WriteLine(floor_4_starting_inv.Count - 1)
@@ -2834,7 +2834,7 @@ Public Class Game
         reader.ReadLine()
         player1 = New Player(reader.ReadLine(), v)
         'load the pre-floor 4 body if needed
-        If (mDun.numCurrFloor = 4 And mDun.floorboss(4) = "Ooze Empress") Then
+        If (mDun.numCurrFloor = 4 And mDun.floor_boss(4) = "Ooze Empress") Then
             Dim l1 = reader.ReadLine()
             Dim l2 = reader.ReadLine()
             If Not l1.Equals("placeholder") Then player1.formStates(stateInd.preBSBody).read(l1, version)
@@ -3617,7 +3617,7 @@ Public Class Game
     Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
         solFlag = False
         If (lblEvent.Visible Or pnlEvent.Visible) Or combat_engaged Or shop_npc_engaged Or Me.MdiChildren.Length > 0 Or
-            (mDun.numCurrFloor = 4 And mDun.floorboss(4) = "Ooze Empress" And Not player1.formStates(stateInd.preBSStartState).initFlag) Then
+            (mDun.numCurrFloor = 4 And mDun.floor_boss(4) = "Ooze Empress" And Not player1.formStates(stateInd.preBSStartState).initFlag) Then
             TextEvent.push("You can't save now!")
             Exit Sub
         End If

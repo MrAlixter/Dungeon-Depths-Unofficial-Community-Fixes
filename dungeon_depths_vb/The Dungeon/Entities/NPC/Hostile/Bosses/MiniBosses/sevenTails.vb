@@ -279,7 +279,7 @@
                 Game.player1.perks(perk.seventailsstage) = 1
 
                 Game.currFloor.beatBoss = True
-                Game.mDun.floorboss(7) = "Key"
+                Game.mDun.floor_boss(7) = "Key"
                 Game.hteach.pos = New Point(Game.player1.pos.X, Game.player1.pos.Y)
             End If
         End If

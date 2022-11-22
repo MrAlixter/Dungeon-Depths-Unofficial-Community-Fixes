@@ -225,7 +225,7 @@ Public Class NPC
             If Game.player1.perks(perk.blind) = 2 Then Game.player1.perks(perk.blind) = -1
         End If
         If sName.Equals("Ooze Empress") Then
-            Game.mDun.floorboss(4) = "Key"
+            Game.mDun.floor_boss(4) = "Key"
             Exit Sub
         End If
 

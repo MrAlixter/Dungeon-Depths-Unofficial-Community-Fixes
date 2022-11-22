@@ -123,7 +123,7 @@ Public MustInherit Class ShopNPC
 
         tInv.mergeRevalue(inv)
 
-        If Game.mDun.floorboss.ContainsKey(Game.mDun.numCurrFloor) AndAlso Game.mDun.floorboss(Game.mDun.numCurrFloor).Equals("Key") Then
+        If Game.mDun.floor_boss.ContainsKey(Game.mDun.numCurrFloor) AndAlso Game.mDun.floor_boss(Game.mDun.numCurrFloor).Equals("Key") Then
             tInv.setCount(53, 1)
         Else
             tInv.setCount(53, 0)
@@ -159,7 +159,7 @@ Public MustInherit Class ShopNPC
         firstTurn = True
 
         '| -- Inventory Update -- |
-        If Game.mDun.floorboss.ContainsKey(Game.mDun.numCurrFloor) AndAlso Game.mDun.floorboss(Game.mDun.numCurrFloor).Equals("Key") Then
+        If Game.mDun.floor_boss.ContainsKey(Game.mDun.numCurrFloor) AndAlso Game.mDun.floor_boss(Game.mDun.numCurrFloor).Equals("Key") Then
             inv.setCount(53, 1)
         Else
             inv.setCount(53, 0)

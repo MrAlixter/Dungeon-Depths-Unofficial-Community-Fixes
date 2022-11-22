@@ -5,6 +5,8 @@
     Private Const IMAGE_INDEX_SEG As String = "IMG"
     Private Const PERK_COUNT_SEG As String = "PERKC"
     Private Const PERK_SEG As String = "PERK"
+    Private Const WFLAG_COUNT_SEG As String = "WFLGC"
+    Private Const WFLAG_SEG As String = "WFLG"
     Private Const PREFERRED_FORM_SEG As String = "PRF"
     Private Const FORCED_PATH_SEG As String = "PATH"
     Private Const COLOR_SEG As String = "CLR"
@@ -27,6 +29,9 @@
     Private Const DUNGEON_SETTING_SEG As String = "DSET"
     Private Const PLAYER_HEADER_SEG As String = "PLR"
     Private Const PLAYER_END_SEG As String = "EPLR"
+    Private Const DUNGEON_HEADER_SEG As String = "DUN"
+    Private Const DUNGEON_END_SEG As String = "EDUN"
+    Private Const DUNGEON_FLOOR_SEG As String = "FLR"
 
     Private Shared resumableSegments() As String = {SAVE_SEG, INVENTORY_HEADER_SEG, PORTRAIT_HEADER_SEG, PERK_COUNT_SEG, NPCS_HEADER_SEG, PLAYER_STATE_HEADER_SEG, DUNGEON_SETTING_SEG, PLAYER_HEADER_SEG}
 
@@ -62,7 +67,50 @@
     End Sub
 
     '| - World Flag Loop - |
+    Public Shared Function saveWorldFlagSegment(ByRef f As Tuple(Of wFlag, Integer)) As String
+        Return WFLAG_SEG & VALUE_DELIMITER &
+               f.Item1.ToString & VALUE_DELIMITER &
+               f.Item2 & SEGMENT_DELIMITER
+    End Function
+    Public Shared Function loadWorldFlagSegment(ByVal seg As String) As Tuple(Of wFlag, Integer)
+        seg = seg.Replace(SEGMENT_DELIMITER, "")
 
+        Dim subseg = seg.Split(VALUE_DELIMITER)
+
+        Return New Tuple(Of wFlag, Integer)([Enum].Parse(GetType(wFlag), CInt(subseg(0))), CInt(subseg(1)))
+    End Function
+    Public Shared Function loadWorldFlagUpperBound(ByVal seg As String) As Integer
+        seg = seg.Replace(SEGMENT_DELIMITER, "")
+
+        Dim subseg = seg.Split(VALUE_DELIMITER)
+
+        Return CInt(subseg(1))
+    End Function
+    Public Shared Function saveWorldFlagLoop(ByRef flags As Dictionary(Of wFlag, Integer)) As String
+        'portrait header segment
+        Dim wflag_loop = WFLAG_COUNT_SEG & VALUE_DELIMITER &
+                         flags.Count & SEGMENT_DELIMITER & vbCrLf
+
+        For Each f In flags.Keys
+            wflag_loop += saveWorldFlagSegment(New Tuple(Of wFlag, Integer)(f, flags(f))) & vbCrLf
+        Next
+
+        Return wflag_loop
+    End Function
+    Public Shared Function loadWorldFlagLoop(ByVal save As List(Of String), ByRef start_pos As Integer) As Dictionary(Of wFlag, Integer)
+        If Not save(start_pos).StartsWith(WFLAG_COUNT_SEG) Then Throw New Exception("Saved world flags at line " & start_pos & " are corrupt!")
+
+        Dim flags As Dictionary(Of wFlag, Integer) = New Dictionary(Of wFlag, Integer)
+        Dim flagCount = loadWorldFlagUpperBound(save(start_pos))
+        For i = 0 To flagCount
+            Dim flag = loadWorldFlagSegment(save(start_pos + 1 + i))
+            flags.Add(flag.Item1, flag.Item2)
+        Next
+
+        start_pos += 2 + flagCount
+
+        Return flags
+    End Function
 
     '| - Dungeon Map Loop - |
 

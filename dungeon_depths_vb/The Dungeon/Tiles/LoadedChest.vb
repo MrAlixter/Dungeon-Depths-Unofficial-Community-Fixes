@@ -48,7 +48,7 @@
         Game.player1.inv.add(53, 1)
         Game.currFloor.beatBoss = False
         Game.player1.formStates(stateInd.preBSBody) = New State()
-        Game.mDun.floorboss(4) = "Ooze Empress"
+        Game.mDun.floor_boss(4) = "Ooze Empress"
         Game.player1.formStates(stateInd.preBSBody) = New State(Game.player1)
         Game.player1.forcedPath = Game.currFloor.route(Game.player1.pos, Game.player1.pos)
         Game.player1.forcedPath = {Game.player1.forcedPath(0)}

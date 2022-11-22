@@ -142,7 +142,7 @@
 
         Game.currFloor.beatBoss = False
         Game.shop_npc_engaged = False
-        Game.mDun.floorboss.Add(7, "Seven-Tails")
+        Game.mDun.floor_boss.Add(7, "Seven-Tails")
 
         Game.hteach.pos = New Point(-1, -1)
         Game.drawBoard()
