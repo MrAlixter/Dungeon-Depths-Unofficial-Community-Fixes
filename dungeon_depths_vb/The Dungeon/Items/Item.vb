@@ -54,7 +54,7 @@
     Sub setDesc(ByVal s As String)
         description = s
     End Sub
-    Public Overridable Function getTier() As Integer
+    Public Overridable Function getTier(ByVal floor_num As Integer) As Integer
         Return tier
     End Function
     Public Function getId()

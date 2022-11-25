@@ -1329,8 +1329,8 @@ Public Class mFloor
         Next
         For i = 0 To DDConst.BASE_CHEST.contents.upperBound
             Dim c_item = DDConst.BASE_CHEST.contents.item(i)
-            If c_item.getTier() <> Nothing And Not c_item.npc_drop_only Then
-                DDConst.BASE_CHEST.tiers(c_item.getTier()).Add(c_item)
+            If c_item.getTier(Game.mDun.numCurrFloor) <> Nothing And Not c_item.npc_drop_only Then
+                DDConst.BASE_CHEST.tiers(c_item.getTier(Game.mDun.numCurrFloor)).Add(c_item)
             End If
         Next
 

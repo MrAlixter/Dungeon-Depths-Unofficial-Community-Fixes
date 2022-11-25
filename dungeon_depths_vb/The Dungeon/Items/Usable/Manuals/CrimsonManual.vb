@@ -27,9 +27,9 @@
         Return {"Tits Up", "Tits Down", "Ass Up", "Ass Down", "Dick Up", "Dick Down", "Chameleon"}
     End Function
 
-    Public Overrides Function getTier() As Integer
+    Public Overrides Function getTier(ByVal floor_num As Integer) As Integer
         If DDDateTime.isValen Then Return 2
 
-        Return MyBase.getTier()
+        Return MyBase.getTier(floor_num)
     End Function
 End Class

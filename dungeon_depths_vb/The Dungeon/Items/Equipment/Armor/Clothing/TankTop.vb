@@ -34,6 +34,12 @@
 
         '|Description|
         setDesc("A grey tanktop made of a breathable fabric for the athletic." & DDUtils.RNRN &
-                          getSizeInformation() & DDUtils.RNRN & getStatInformation())
+                getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        If Not LootTable.getBracket(floor_num) = LootTable.bracket.f1f2 Then Return Nothing
+
+        Return MyBase.getTier(floor_num)
+    End Function
 End Class

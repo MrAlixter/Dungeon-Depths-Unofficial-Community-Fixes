@@ -40,7 +40,7 @@
                 getStatInformation())
     End Sub
 
-    Public Overrides Function getTier() As Integer
+    Public Overrides Function getTier(ByVal floor_num As Integer) As Integer
         If DDDateTime.isSummer Then Return 3
 
         Return Nothing

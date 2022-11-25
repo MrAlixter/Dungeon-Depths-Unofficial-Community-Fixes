@@ -32,7 +32,7 @@
         End If
     End Sub
 
-    Public Overrides Function getTier() As Integer
-        If Game.player1.perks(perk.irondagger) > 0 Then Return Nothing Else Return MyBase.getTier()
+    Public Overrides Function getTier(ByVal floor_num As Integer) As Integer
+        If Game.player1.perks(perk.irondagger) > 0 Then Return Nothing Else Return MyBase.getTier(floor_num)
     End Function
 End Class

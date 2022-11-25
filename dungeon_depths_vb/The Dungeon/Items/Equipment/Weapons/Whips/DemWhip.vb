@@ -23,7 +23,7 @@
                 getStatInformation())
     End Sub
 
-    Public Overrides Function getTier() As Integer
+    Public Overrides Function getTier(ByVal floor_num As Integer) As Integer
         If Game.currFloor IsNot Nothing AndAlso Game.currFloor.floorNumber > 7 Then
             Return 3
         Else

@@ -21,9 +21,9 @@
         setDesc("A shattered chunk of an indeterminate set of armor that seems to be made of a wide selection of different metals.  If one has a high-end furnace it might possible to smelt into something usefull, but otherwise it's basically worthless.")
     End Sub
 
-    Public Overrides Function getTier() As Integer
+    Public Overrides Function getTier(ByVal floor_num As Integer) As Integer
         'If Game.player1.quests(qInd.dfaUpgrade).getActive Then Return 1
 
-        Return MyBase.getTier()
+        Return MyBase.getTier(floor_num)
     End Function
 End Class

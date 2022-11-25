@@ -33,7 +33,7 @@
         If p.health > 1 Then p.health = 1
     End Sub
 
-    Public Overrides Function getTier() As Integer
+    Public Overrides Function getTier(ByVal floor_num As Integer) As Integer
         If Not Game.currFloor Is Nothing AndAlso Game.currFloor.floorNumber > 5 Then Return 2
 
         Return Nothing

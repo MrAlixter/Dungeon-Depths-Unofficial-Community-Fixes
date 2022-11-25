@@ -305,6 +305,7 @@
     <Compile Include="Items\Equipment\Weapons\Wands\StickWand.vb" />
     <Compile Include="Items\Equipment\Weapons\Wands\HBSWand.vb" />
     <Compile Include="Items\Equipment\Weapons\Wands\LepSlimeWhip.vb" />
+    <Compile Include="Items\LootTable.vb" />
     <Compile Include="Items\Misc\ArmorFragments.vb" />
     <Compile Include="Items\Misc\ExtraLife.vb" />
     <Compile Include="Items\Misc\LumpOfIron.vb" />

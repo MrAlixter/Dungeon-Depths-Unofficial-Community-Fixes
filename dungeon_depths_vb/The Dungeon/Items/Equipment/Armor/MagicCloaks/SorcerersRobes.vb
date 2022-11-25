@@ -39,7 +39,7 @@
                                           getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 
-    Public Overrides Function getTier() As Integer
+    Public Overrides Function getTier(ByVal floor_num As Integer) As Integer
         If Game.currFloor Is Nothing Then Return 3
         Select Case Game.currFloor.floorNumber
             Case 1, 2

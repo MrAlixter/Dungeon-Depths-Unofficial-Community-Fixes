@@ -36,4 +36,10 @@
         setDesc("A sports bra made of a strechy matierial that allows it to fit many different bust sizes." & DDUtils.RNRN & _
                               getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        If Not LootTable.getBracket(floor_num) = LootTable.bracket.f1f2 Then Return Nothing
+
+        Return MyBase.getTier(floor_num)
+    End Function
 End Class

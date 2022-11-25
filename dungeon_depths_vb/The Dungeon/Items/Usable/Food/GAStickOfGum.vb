@@ -37,7 +37,7 @@
         End If
     End Sub
 
-    Public Overrides Function getTier() As Integer
+    Public Overrides Function getTier(ByVal floor_num As Integer) As Integer
         If Not Game.mDun Is Nothing AndAlso Game.mDun.numCurrFloor = 13 Then Return 2
         Return Nothing
     End Function

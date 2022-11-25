@@ -22,7 +22,7 @@
                 "+40 Stamina")
     End Sub
 
-    Public Overrides Function getTier() As Integer
+    Public Overrides Function getTier(ByVal floor_num As Integer) As Integer
         If Not Game.currFloor Is Nothing AndAlso Game.currFloor.floorNumber > 5 Then Return 2
 
         Return Nothing

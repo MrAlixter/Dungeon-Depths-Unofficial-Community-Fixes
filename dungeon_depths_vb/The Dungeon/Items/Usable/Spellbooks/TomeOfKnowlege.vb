@@ -13,6 +13,7 @@
         usable = true
         rando_inv_allowed = False
         droppable = False
+        only_drop_one = True
 
         '|Stats|
         count = 0
@@ -38,7 +39,7 @@
         Game.player1.drawPort()
     End Sub
 
-    Public Overrides Function getTier() As Integer
-        Return If(Game.player1.quests(qInd.oppositeDay).canGet, 2, Nothing) And Game.player1.inv.getCountAt(getAName) < 1
+    Public Overrides Function getTier(ByVal floor_num As Integer) As Integer
+        Return If(Game.player1.quests(qInd.oppositeDay).canGet, 2, Nothing)
     End Function
 End Class
