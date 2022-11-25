@@ -52,7 +52,7 @@
 
         'transformation description push
         out += "As you near the end of the ice pop, you suddenly find yourself feeling... strange..." & DDUtils.RNRN &
-               "Your head feels dizzy, and as you reach for your bag to see if you have anything that might help you find that you can no longer move your limbs.  Your body collapses in on itself, leaving you as nothing more than an immobile sheet of vinyl." & DDUtils.RNRN &
+               "Your head feels dizzy, and as you reach for your bag to see if you have anything that might help you find that you can no longer move your limbs.  Your body collapses in on itself, leaving you as nothing more than an immobile sheet of rubber." & DDUtils.RNRN &
                "A rush of air from within inflates you into an exagerated female form.  Propping yourself up, you try to re-equip your gear only to find that you can barely hold a weapon, let alone wear armor.  A warning on the stick of the ice pop lists ""summer fun"" as a side effect, and it seems to have turned you into a sentient sex doll!"
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
         If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out

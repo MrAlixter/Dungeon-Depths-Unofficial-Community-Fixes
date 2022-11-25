@@ -69,7 +69,7 @@
         While learnable_spells.Count > 0 And learned_spell = ""
             Dim spell As String = learnable_spells(Int(Rnd() * learnable_spells.Count))
 
-            If Not Game.player1.knownSpells.Contains(spell) Or spell.Equals("Polymorph Enemy") Or spell.Equals("Self Polymorph") Then
+            If Not p.knownSpells.Contains(spell) Or spell.Equals("Polymorph Enemy") Or spell.Equals("Self Polymorph") Then
                 learned_spell = spell
 
                 If spell = "Self Polymorph" AndAlso Not learnSelfPolymorph(p) Then learned_spell = ""

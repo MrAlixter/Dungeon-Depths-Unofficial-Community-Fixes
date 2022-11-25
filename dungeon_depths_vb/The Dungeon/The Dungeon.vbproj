@@ -166,6 +166,7 @@
     <Compile Include="Entities\Player\Quest\NPC Quests\CursedContraband.vb" />
     <Compile Include="Entities\Player\Quest\NPC Quests\BreakingAnEgg.vb" />
     <Compile Include="Entities\Player\Specials\Combat\Swashbuckle.vb" />
+    <Compile Include="Entities\Player\Specials\Crimson Manual\Chameleon.vb" />
     <Compile Include="Entities\Player\Specials\Utility\Crowsnest.vb" />
     <Compile Include="Entities\Player\Specials\Utility\CLight.vb" />
     <Compile Include="Entities\Player\Specials\Utility\Pluck.vb" />
@@ -318,6 +319,7 @@
     <Compile Include="Items\Usable\Food\FaePApple.vb" />
     <Compile Include="Items\Usable\Food\MPStickOfGum.vb" />
     <Compile Include="Items\Usable\Food\HPStickOfGum.vb" />
+    <Compile Include="Items\Usable\Manuals\Manual.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Rare Potions\HealthPotionHB.vb" />
     <Compile Include="Items\Usable\Potions\Lepanacea.vb" />
     <Compile Include="Items\Usable\OuijaBoard.vb" />
@@ -377,14 +379,8 @@
     <Compile Include="Entities\Player\Quest\NPC Quests\HelpWanted.vb" />
     <Compile Include="Entities\Player\Quest\Quest.vb" />
     <Compile Include="Entities\Player\Specials\Combat\BladeBreaker.vb" />
-    <Compile Include="Entities\Player\Specials\Crimson Manual\CHBlackHair.vb" />
-    <Compile Include="Entities\Player\Specials\Crimson Manual\CHPastels.vb" />
-    <Compile Include="Entities\Player\Specials\Crimson Manual\CHNeon.vb" />
-    <Compile Include="Entities\Player\Specials\Crimson Manual\CHRedhead.vb" />
-    <Compile Include="Entities\Player\Specials\Crimson Manual\CHBrunette.vb" />
     <Compile Include="Entities\Player\Specials\Crimson Manual\DDn.vb" />
     <Compile Include="Entities\Player\Specials\Crimson Manual\UDn.vb" />
-    <Compile Include="Entities\Player\Specials\Crimson Manual\CHBlonde.vb" />
     <Compile Include="Entities\Player\Specials\Crimson Manual\UUp.vb" />
     <Compile Include="Entities\Player\Specials\Crimson Manual\DUp.vb" />
     <Compile Include="Entities\Player\Specials\Crimson Manual\TDn.vb" />

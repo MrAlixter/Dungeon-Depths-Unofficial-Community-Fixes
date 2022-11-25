@@ -20,6 +20,6 @@
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object
-        Return "Changes the user's appearance using an arousing energy imparted by a succubus."
+        Return "Changes the user's appearance through the infernal dexterity of a succubus."
     End Function
 End Class

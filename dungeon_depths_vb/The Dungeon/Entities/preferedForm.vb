@@ -106,6 +106,7 @@
     Public Sub shiftTowards(ByRef p As Player)
         Randomize()
         TextEvent.pushAndLog("The crackle of someone else's magic slightly tweaks your form...")
+        Application.DoEvents()
 
         If Not p.className.Equals("Thrall") Then p.changeClass("Thrall")
         If playerMeetsForm(p) Then Exit Sub

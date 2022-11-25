@@ -24,7 +24,7 @@
     End Sub
     Public Sub activateP3()
         TextEvent.push("You flip the ad over, and your fingers brush against a rune that begins to glow in response." & DDUtils.RNRN &
-                       "With a sudden pulse of mana, you find yourself unable to move as your body collapses into a sheet of folded vinyl." & DDUtils.RNRN &
+                       "With a sudden pulse of mana, you find yourself unable to move as your body collapses into a sheet of folded rubber." & DDUtils.RNRN &
                        "A rush of magical air puffs you up into the form of a busty lady, allowing you to get back on your feet with a quiet *squeak*.  You try to put your scattered gear back on; only to find that you can barely even hold a weapon, let alone wear armor." & DDUtils.RNRN &
                        "This ""free sample"" seems to have turned you into a living sex doll!" & DDUtils.RNRN &
                        "'Brown Hat', huh...")

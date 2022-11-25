@@ -1505,7 +1505,7 @@ Public Class mFloor
                 End If
             Next
         End While
-        path.RemoveAt(0)
+        If path.Count > 1 Then path.RemoveAt(0)
         Return path.ToArray
     End Function
     Sub printBoard()

@@ -28,7 +28,7 @@
                 learnedS = omniSpells(Int(Rnd() * omniSpells.Length))
             End While
         Else
-            Dim omniSpec() As String = CombatManual.specials.Union(UtilityManual.specials).ToArray
+            Dim omniSpec() As String = CombatManual.getSpecials.Union(UtilityManual.getSpecials).ToArray
             If omniSpec.Count = p.knownSpecials.Count Then
                 errorout()
                 Exit Sub
