@@ -200,6 +200,8 @@
 
         If p.prt.sexBool Then p.FtM()
 
+        p.changeForm("Minotaur Bull")
+
         'Minotaur M transformation
         p.changeHairColor(Color.FromArgb(255, 234, 189, 134))
         p.breastSize = -2
@@ -216,8 +218,6 @@
 
         If p.inv.getCountAt("Barbarian_Armor") < 1 Then p.inv.add("Barbarian_Armor", 1)
         EquipmentDialogBackend.armorChange(p, "Barbarian_Armor")
-
-        p.changeForm("Minotaur Bull")
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action

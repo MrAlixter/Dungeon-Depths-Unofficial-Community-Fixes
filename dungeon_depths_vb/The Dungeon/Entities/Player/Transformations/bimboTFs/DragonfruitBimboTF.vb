@@ -44,12 +44,13 @@
         p.prt.setIAInd(pInd.fronthair, 6, True, True) 'fronthair
     End Sub
     Public Overrides Sub s2FaceChange(ByRef p As Player)
+        p.changeForm("Half-Dragon (R)")
+
         p.prt.haircolor = bimbopink2
         p.prt.setIAInd(pInd.eyes, 16, True, True)  'eyes
         p.prt.setIAInd(pInd.mouth, 2, True, False)  'mouth
         p.prt.setIAInd(pInd.wings, 5, True, False)
         p.prt.setIAInd(pInd.horns, 4, True, False)
-        p.changeForm("Half-Dragon (R)")
     End Sub
 
     Public Overrides Function hasBimboHair(p As Player) As Boolean

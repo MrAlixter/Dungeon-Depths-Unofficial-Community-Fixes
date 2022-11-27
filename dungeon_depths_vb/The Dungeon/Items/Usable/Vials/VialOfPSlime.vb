@@ -32,13 +32,15 @@
             count -= 1
             Exit Sub
         End If
-        If p.perks(perk.googirltf) = -1 Or p.prt.haircolor.A = 255 Then
+
+        If p.equippedArmor.getSlutVarInd <> -1 Then
+            p.perks(perk.googirltf) = 1
+        ElseIf p.perks(perk.googirltf) = -1 Or p.prt.haircolor.A = 255 Then
             p.perks(perk.googirltf) = 2
         End If
 
         p.ongoingTFs.Add(New GooGirlTF(p.perks(perk.googirltf)))
         p.update()
         count -= 1
-
     End Sub
 End Class

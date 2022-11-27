@@ -18,6 +18,9 @@
         If p.sex.Equals("Male") Then
             p.MtF()
         End If
+
+        p.changeForm("Gynoid")
+
         p.breastSize = 1 + Int(Rnd() * 2)
         p.buttSize = 1 + Int(Rnd() * 2)
 
@@ -30,7 +33,6 @@
         EquipmentDialogBackend.glassesChange(p, "Cyber_Visor_(G)")
 
         p.prt.haircolor = Color.SpringGreen
-        p.changeForm("Gynoid")
 
         p.setName(p.name & " v2.0")
         p.inv.add("Skin_Tight_Bodysuit", 1)

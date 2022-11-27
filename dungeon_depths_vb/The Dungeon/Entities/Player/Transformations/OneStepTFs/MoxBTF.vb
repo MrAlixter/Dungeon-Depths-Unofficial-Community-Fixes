@@ -20,6 +20,8 @@
             p.MtF()
         End If
 
+        p.changeForm("Minotaur Cow (B)")
+
         'blue ox transformation
         p.changeHairColor(Color.FromArgb(255, 121, 160, 225))
         p.prt.setIAInd(pInd.horns, 11, True, False)
@@ -28,7 +30,7 @@
         If p.breastSize > 0 Then p.be() : p.be() : p.be()
         If p.dickSize > 0 Then p.de() : p.de() : p.de()
 
-        p.changeForm("Minotaur Cow (B)")
+
 
         'transformation description push
         out += """WHO DARES EAT MY CATTLE?!  AS PUNISHMENT, YOU SHALL REPLACE WHAT HAS BEEN STOLEN!"" a feminine voice thunders through the sky." & DDUtils.RNRN &

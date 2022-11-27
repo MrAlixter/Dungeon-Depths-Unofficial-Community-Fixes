@@ -15,6 +15,9 @@
     Public Overrides Sub step1()
         Dim p As Player = Game.player1
 
+        p.changeClass("Maid")
+        p.changeForm("Half-Succubus")
+
         'change equipment
         If p.inv.item("Maid_Lingerie").count < 1 Then p.inv.add("Maid_Lingerie", 1)
         EquipmentDialogBackend.armorChange(p, "Maid_Lingerie")
@@ -36,9 +39,6 @@
         p.prt.setIAInd(pInd.eyes, 12, True, True)
         p.prt.setIAInd(pInd.wings, 2, True, False)
         p.prt.setIAInd(pInd.horns, 3, True, False)
-
-        p.changeClass("Maid")
-        p.changeForm("Half-Succubus")
 
         p.changeHairColor(Color.White)
         p.changeSkinColor(Color.FromArgb(255, 255, 78, 78))

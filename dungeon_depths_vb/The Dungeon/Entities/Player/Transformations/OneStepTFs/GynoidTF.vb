@@ -18,6 +18,9 @@
         If p.sex.Equals("Male") Then
             p.MtF()
         End If
+
+        p.changeForm("Gynoid")
+
         p.breastSize = 2 + Int(Rnd() * 2)
 
         p.prt.setIAInd(pInd.rearhair, 2, True, False)
@@ -31,7 +34,6 @@
         If p.inv.getCountAt("Cyber_Visor_(P)") < 1 Then p.inv.add("Cyber_Visor_(P)", 1)
         EquipmentDialogBackend.glassesChange(p, "Cyber_Visor_(P)")
 
-        p.changeForm("Gynoid")
 
         p.setName(p.name.Substring(0, 1) & "-1" & Int(Rnd() * 999))
         p.inv.add("Gynoid_Uniform", 1)

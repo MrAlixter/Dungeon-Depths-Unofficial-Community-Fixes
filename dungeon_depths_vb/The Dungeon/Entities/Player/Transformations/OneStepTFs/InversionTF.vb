@@ -35,6 +35,9 @@
     End Sub
 
     Private Shared Sub toOrc(ByRef p As Player)
+        p.changeClass("Warrior")
+        p.changeForm("Orc")
+
         p.changeHairColor(Color.FromArgb(255, Math.Max(50, p.prt.haircolor.R - 100), Math.Max(50, p.prt.haircolor.G - 100), Math.Max(50, p.prt.haircolor.B - 100)))
         p.changeSkinColor(Color.FromArgb(255, 122, 158, 109))
 
@@ -52,12 +55,12 @@
             p.breastSize = 2
             p.buttSize = 2
         End If
-
-        p.changeClass("Warrior")
-        p.changeForm("Orc")
     End Sub
 
     Private Shared Sub toElf(ByRef p As Player)
+        p.changeClass("Cleric")
+        p.changeForm("Elf")
+
         p.changeHairColor(Color.FromArgb(255, Math.Min(250, p.prt.haircolor.R + 50), Math.Min(250, p.prt.haircolor.G + 50), Math.Min(250, p.prt.haircolor.B + 50)))
         p.changeSkinColor(Color.FromArgb(255, 251, 237, 221))
 
@@ -77,8 +80,5 @@
         End If
 
         p.breastSize = 0
-
-        p.changeClass("Cleric")
-        p.changeForm("Elf")
     End Sub
 End Class

@@ -31,6 +31,7 @@
             count -= 1
             Exit Sub
         End If
+
         If p.perks(perk.slimetf) = -1 Or p.prt.haircolor.A = 255 Then
             p.perks(perk.slimetf) = 2
         End If

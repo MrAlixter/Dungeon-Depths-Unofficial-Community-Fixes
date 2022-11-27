@@ -51,11 +51,12 @@
     Shared Sub slimeHairRegen(ByRef p As Player)
         If Not p.prt.haircolor.A = 180 Then
             p.perks(perk.slimehair) = -1
+            p.perks(perk.slimeregenplus) = -1
         Else
             If p.health < 1 And Game.getTurn Mod 4 = 0 Then
-                p.health += 5 / p.getMaxHealth()
-                TextEvent.pushLog("Your gel body heals some of the damage done to it. +5 health")
-                If p.health > 1 Then p.health = 1
+                Dim h As Integer = If(p.perks(perk.slimeregenplus) > -1, Math.Max(5, p.getMaxHealth / 12), 5)
+                p.health += h / p.getMaxHealth()
+                TextEvent.pushLog("Your entire body glows, healing you for " & h & " HP!")
             End If
         End If
     End Sub
@@ -77,8 +78,7 @@
             If p.health < 1 And Game.getTurn Mod 7 = 0 Then
                 Dim h As Integer = Int(Rnd() * 5) + 1
                 p.health += h / p.getMaxHealth()
-                TextEvent.pushLog("The gel portion of your body is able to heal some of your wounds! +" & h & " health")
-                If p.health > 1 Then p.health = 1
+                TextEvent.pushLog("Your slime hair glows, healing you for " & h & " HP!")
             End If
         End If
     End Sub

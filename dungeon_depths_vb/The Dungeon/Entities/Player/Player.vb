@@ -102,6 +102,7 @@
     cynnstonic      '100
     metcynthia      '101
     faewishesmade   '102
+    slimeregenplus  '103
 End Enum
 Public Enum stateInd
     goddState
@@ -1455,10 +1456,9 @@ Public Class Player
             perks(perk.polymorphed) -= 1
         End If
         'slime hair health regen
-        If perks(perk.slimehair) > -1 Then
+        If perks(perk.slimehair) > -1 Or perks(perk.slimeregenplus) > -1 Then
             PerkEffects.slimeHairRegen(Me)
         End If
-        'vial of slime hair regen
         If perks(perk.vsslimehair) > -1 Then
             PerkEffects.vslimeHairRegen(Me)
         End If
@@ -1602,7 +1602,7 @@ Public Class Player
 
         '|CURSES|
         'clothing curse
-        If perks(perk.slutcurse) > -1 AndAlso Not equippedArmor.getAName.Contains("Skimpy") Then
+        If perks(perk.slutcurse) > -1 AndAlso equippedArmor.getAntiSlutInd = -1 Then
             needsToUpdatePortrait = Equipment.clothingCurse1(Me)
         End If
         'curse of rust

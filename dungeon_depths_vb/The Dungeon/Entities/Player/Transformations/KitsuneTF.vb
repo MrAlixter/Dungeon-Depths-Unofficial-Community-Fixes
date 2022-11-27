@@ -27,6 +27,8 @@
 
         If p.sex.Equals("Male") Then p.MtF()
 
+        p.changeForm("Kitsune")
+
         p.breastSize = 4
         p.buttSize = 2
 
@@ -44,7 +46,7 @@
         If p.inv.getCountAt("Kitsune's_Robes") < 1 Then p.inv.add("Kitsune's_Robes", 1)
         EquipmentDialogBackend.armorChange(p, "Kitsune's_Robes")
 
-        p.changeForm("Kitsune")
+
     End Sub
 
     Public Overrides Sub stopTF()

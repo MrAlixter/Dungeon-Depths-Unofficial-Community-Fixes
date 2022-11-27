@@ -86,7 +86,8 @@ Public Class Chest
             End If
 
             Dim rng As Integer = Int(Rnd() * tiers(itemTier).Count)
-            If rng > tiers(itemTier).Count - 1 Then rng = tiers(itemTier).Count - 1
+            If rng > tiers(itemTier).Count - 1 Then rng = Math.Max(0, tiers(itemTier).Count - 1)
+
             Dim itemID As Integer = tiers(itemTier)(rng).id 'Int(Rnd() * tier.Length))
             If itemID = 43 Then
                 contents.setCount(itemID, CInt(Rnd() * 150))

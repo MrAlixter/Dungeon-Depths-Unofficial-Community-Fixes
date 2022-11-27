@@ -360,9 +360,12 @@
             p.MtF()
         End If
 
-        If Not p.knownSpells.Contains("Dragon's Breath") Then p.learnSpell("Dragon's Breath")
-        p.prt.setIAInd(pInd.wings, 5, True, False)
         p.changeForm("Half-Dragon (R)")
+
+        If Not p.knownSpells.Contains("Dragon's Breath") Then p.learnSpell("Dragon's Breath")
+
+        p.prt.setIAInd(pInd.wings, 5, True, False)
+
 
         p.UIupdate()
     End Sub

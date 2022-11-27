@@ -31,6 +31,8 @@
             out += "Your body becomes daintier, and you are soon fully female.  "
         End If
 
+        p.changeForm("Goth")
+
         Dim c As Color
         Select Case (Int(Rnd() * 6))
             Case 0
@@ -67,6 +69,5 @@
 
         TextEvent.push(out)
 
-        p.changeForm("Goth")
     End Sub
 End Class

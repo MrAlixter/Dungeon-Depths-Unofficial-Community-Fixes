@@ -165,12 +165,14 @@
     <Compile Include="Entities\Player\Quest\NPC Quests\StudyingSlime.vb" />
     <Compile Include="Entities\Player\Quest\NPC Quests\CursedContraband.vb" />
     <Compile Include="Entities\Player\Quest\NPC Quests\BreakingAnEgg.vb" />
+    <Compile Include="Entities\Player\Specials\Combat\Abso2.vb" />
     <Compile Include="Entities\Player\Specials\Combat\Swashbuckle.vb" />
     <Compile Include="Entities\Player\Specials\Crimson Manual\Chameleon.vb" />
     <Compile Include="Entities\Player\Specials\Utility\Crowsnest.vb" />
     <Compile Include="Entities\Player\Specials\Utility\CLight.vb" />
     <Compile Include="Entities\Player\Specials\Utility\Pluck.vb" />
     <Compile Include="Entities\Player\Specials\Utility\SiphonSlash.vb" />
+    <Compile Include="Entities\Player\Spells\_Combat\Tendrill.vb" />
     <Compile Include="Entities\Player\Spells\_Combat\Slitherslice.vb" />
     <Compile Include="Entities\Player\Spells\_Utility\FotiaGaze.vb" />
     <Compile Include="Entities\Player\Spells\Paths\Water\Hydrodart.vb" />
@@ -568,8 +570,8 @@
     <Compile Include="Entities\Player\Forms\needsPassages\Arachne.vb" />
     <Compile Include="Entities\Player\Forms\needsPassages\Kitsune.vb" />
     <Compile Include="Entities\Player\Forms\needsPassages\Tigress.vb" />
-    <Compile Include="Entities\Player\Forms\needsPassages\GooGirl.vb" />
-    <Compile Include="Entities\Player\Forms\needsPassages\Slime.vb" />
+    <Compile Include="Entities\Player\Forms\GooGirl.vb" />
+    <Compile Include="Entities\Player\Forms\Slime.vb" />
     <Compile Include="Entities\Player\Forms\needsPassages\Succubus.vb" />
     <Compile Include="Entities\Player\PerkEffects.vb" />
     <Compile Include="Entities\Player\Forms\pForm.vb" />

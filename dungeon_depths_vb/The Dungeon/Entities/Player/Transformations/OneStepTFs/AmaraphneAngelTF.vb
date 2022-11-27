@@ -16,6 +16,8 @@
         Dim p As Player = Game.player1
         Dim out = ""
 
+        p.changeForm("Angel")
+
         'angel transformation
         p.changeHairColor(Color.FromArgb(255, 255, 89, 150))
 
@@ -39,7 +41,7 @@
         EquipmentDialogBackend.accessoryChange(p, "Mark_of_Amaraphne")
         p.perks(perk.moamarphne) = 214
 
-        p.changeForm("Angel")
+
         p.changeClass("Cleric")
     End Sub
 End Class

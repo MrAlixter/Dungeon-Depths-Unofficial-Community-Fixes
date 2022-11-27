@@ -88,6 +88,8 @@
             If p.breastSize < 2 Then be()
         End If
 
+        p.changeForm("Arachne")
+
         If p.breastSize < 2 Then be()
         p.prt.setIAInd(pInd.eyes, 22, True, True)
         p.prt.setIAInd(pInd.rearhair, 8, True, True)
@@ -98,7 +100,7 @@
                        "You try to tough it out, until a splitting pain in your legs- unlike anything you've ever felt before- convinces you that unconciousness might be a blessing." & DDUtils.RNRN &
                        "As your vision fades into darkness, you collapse on the floor." & DDUtils.RNRN &
                        "Hours pass...", AddressOf step4pt1)
-        p.changeForm("Arachne")
+
         p.lust += 5
     End Sub
     Sub step4pt1()
@@ -146,6 +148,8 @@
             If p.breastSize < 2 Then p.be()
         End If
 
+        p.changeForm("Arachne")
+
         If p.breastSize < 2 Then p.be()
 
         p.prt.setIAInd(pInd.eyes, 22, True, True)
@@ -154,7 +158,6 @@
         p.prt.setIAInd(pInd.tail, 2, True, False)
         p.prt.changeSkinColor(DDUtils.cShift(p.prt.skincolor, Color.LightSlateGray, 35))
 
-        p.changeForm("Arachne")
         p.lust += 35
 
         p.drawPort()

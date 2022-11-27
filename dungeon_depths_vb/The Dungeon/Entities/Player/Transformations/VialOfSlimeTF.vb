@@ -1,4 +1,4 @@
-﻿Public NotInheritable Class VialOfslimetf
+﻿Public NotInheritable Class VialOfSlimeTF
     Inherits Transformation
 
     Private Const TF_IND As tfind = tfind.vialofslime
@@ -15,15 +15,28 @@
         next_step = getNextStep(cs)
     End Sub
 
-    Shared Sub step1()
-        'In the future this will damage/destroy armor
+    Sub step1()
         Dim p = Game.player1
-        p.inv.add("Dissolved_Clothes", 1)
-        EquipmentDialogBackend.armorChange(p, "Dissolved_Clothes")
-        pushLblEventWithoutLoss("As you take stock of yourself, you notice that your clothing has been partially eaten away by a teal slime that you seem to sweating in small amounts.  This seems like something you are going to need to keep an eye on...")
-        p.drawPort()
-        If Game.player1.perks(perk.slimetf) > -1 Then Game.player1.perks(perk.slimetf) += 1
-        If Game.player1.perks(perk.googirltf) > -1 Then Game.player1.perks(perk.googirltf) += 1
+
+        Dim out As String = "Teal slime coats your " & If(p.equippedArmor.getAName.Contains("Armor"), "armor", "clothing") & "." & DDUtils.RNRN
+
+        If Not p.equippedArmor.getAName.Equals("Naked") And Not p.equippedArmor.getAName.Contains("Armor") And p.equippedArmor.getAntiSlutInd = -1 Then
+            TextEvent.push(out & "With a caustic hiss it evaporates, eating into your gear signifigantly." & DDUtils.RNRN &
+                           Math.Max(p.equippedArmor.durability - 50, 0) & " durability remains on your " & p.equippedArmor.getAName.Replace("_", " ") & "...")
+            p.equippedArmor.damage(50)
+            If p.inv.getCountAt(DissolvedClothes.ITEM_NAME) < 1 Then p.inv.add(DissolvedClothes.ITEM_NAME, 1)
+            EquipmentDialogBackend.armorChange(p, "Dissolved_Clothes")
+        ElseIf p.equippedArmor.getAName.Contains("Armor") Or p.equippedArmor.getAntiSlutInd <> -1 Then
+            TextEvent.push(out & "With a caustic hiss it evaporates, eating into your gear." & DDUtils.RNRN &
+                           Math.Max(p.equippedArmor.durability - 25, 0) & " durability remains on your " & p.equippedArmor.getAName.Replace("_", " ") & "...")
+            p.equippedArmor.damage(25)
+        End If
+
+        If p.equippedArmor.getAName = "Naked" Or p.equippedArmor.getAName.Equals(DissolvedClothes.ITEM_NAME) Then
+            If p.perks(perk.slimetf) > -1 Then p.perks(perk.slimetf) += 1
+        Else
+            curr_step -= 1
+        End If
     End Sub
 
     Sub step2()
@@ -32,37 +45,47 @@
         p.prt.haircolor = Color.FromArgb(180, 5, 245, 198)
         p.drawPort()
         p.perks(perk.vsslimehair) = 0
+
         'Author Credit: Marionette
-        pushLblEventWithoutLoss("Opening the jar the goo slowly works its way out and onto your arm, the soft cool feeling of the Slime surprisingly refreshing as it slowly moves along. It reaches your shoulder and then pushes itself up into your hair, settling in as you reach your hand up to poke at it. It almost seems to nuzzle your finger as it slowly seeps throughout your hair, changing the color and consistency of it to that of goo!")
+        TextEvent.push("As you open the vial, the contained goo slowly works its way out and onto your arm.  The soft, cool feeling of the Slime creeping along is surprisingly refreshing." & DDUtils.RNRN &
+                       "It reaches your shoulder and then pushes itself up into your hair, settling in as you reach your hand up to poke at it.  The Slime almost seems to nuzzle your finger as it slowly seeps throughout your hair, changing the color and consistency of it to that of goo!")
 
         If Game.player1.perks(perk.slimetf) > -1 Then Game.player1.perks(perk.slimetf) += 1
     End Sub
+
     Sub step3()
         Dim p As Player = Game.player1
         p.prt.skincolor = Color.FromArgb(230, 0, 255, 255)
         p.changeForm("Half-Slime")
+
         'Author Credit: Marionette
-        Dim out = "As soon as the lid of the jar comes off the goo jumps out.  "
+        Dim out = "As soon as the lid of the vial comes off, the contained goo jumps out.  It "
+
         If p.breastSize < 1 Then
-            out += "landing on your flat chest and splattering about; "
+            out += "lands on your flat chest, splattering around as it grasps for something to hang onto." & DDUtils.RNRN
         ElseIf p.breastSize > 0 And p.breastSize < 4 Then
-            out += "lands on your breasts, some of the goo seeping between your mammaries.  "
+            out += "lands on your breasts, wiggling around as it seeps between your mammaries." & DDUtils.RNRN
         Else
-            out += "lands on your massive breast, your massive mammaries jiggling a little at the impact as a bit of the goo seeps in between the crevice of your tits.  "
+            out += "lands on you breasts, your massive mammaries jiggling a little with the impact as a bit of the goo seeps into your cleavage." & DDUtils.RNRN
         End If
-        out += "Your skin tingles where the slime touches it and you can’t help but smile as the blob of goo nuzzles your chest. Slowly you watch as the goo starts to squirm and creep along your skin, the tingling sensation growing stronger as you see your skin start to change to the same consistency of the slime. By the time it's done your skin has changed color and become nearly translucent. You are now a half-slime!"
-        pushLblEventWithoutLoss(out)
-        p.drawPort()
+
+        out += "Your skin tingles where the slime touches it and you can’t help but smile as the blob of goo nuzzles your chest.  Slowly, you watch as the goo starts to squirm and creep along your skin; the tingling sensation growing stronger as your body starts to change to the same color and consistency of the Slime." & DDUtils.RNRN &
+               "You are now a half-slime!"
+        TextEvent.push(out)
+
         If Game.player1.perks(perk.slimetf) > -1 Then Game.player1.perks(perk.slimetf) += 1
     End Sub
+
     Sub step4()
         Dim p As Player = Game.player1
         If p.equippedWeapon.getName.Equals("Magical_Girl_Wand") Or
             p.equippedWeapon.getName.Equals("Valkyrie_Sword") Then
-             EquipmentDialogBackend.weaponChange(p, "Fists")
+            EquipmentDialogBackend.weaponChange(p, "Fists")
         End If
 
         p.health = 1
+
+        p.changeForm("Slime")
 
         p.prt.setIAInd(pInd.ears, 5, True, True)
         If p.sex.Equals("Male") Then
@@ -74,12 +97,15 @@
         p.prt.setIAInd(pInd.cloak, 0, True, False)
         p.prt.setIAInd(pInd.hat, 0, True, False)
 
-        p.changeForm("Slime")
         EquipmentDialogBackend.armorChange(p, "Naked")
 
         p.prt.skincolor = Color.FromArgb(200, p.prt.skincolor.R, p.prt.skincolor.G, p.prt.skincolor.B)
 
-        pushLblEventWithoutLoss("Nearly as soon as you make contact with the slime, a reaction begins and you start to melt.  Suprisingly, this doesn't really hurt so much as just feel weird, and you figure that with how much of your body was gelatinous this must have been just enough to finish you off.  Now a puddle, you further reflect that regardless of how you started out, you probably are just a slime now.  Being a sentient ball of goo means you can easily reshape your body, right?  Focusing all your willpower, you pull your body into a rough aproximation of yourself.  You are now a slime! (You will restore to this form)")
+        TextEvent.push("Teal slime coats your entire body." & DDUtils.RNRN &
+                       "Nearly as soon as you make contact, a reaction begins and you start to melt.  Suprisingly, this doesn't really hurt so much as it just feels weird, and you figure that with how much of your body was gelatinous this must have been just enough to finish you off." & DDUtils.RNRN &
+                       "Now a puddle, you further reflect that regardless of how you started out, you seem to have been completely turned into a slime.  Hmm, but being a sentient ball of goo means you can easily reshape your body, right?" & DDUtils.RNRN &
+                       "Focusing all your willpower, you sculpt yourself into a rough aproximation of your former body." & DDUtils.RNRN &
+                       "Your base form is now that of a Slime!  Should you revert to your start state, this is what you will become.")
         p.drawPort()
 
         If Game.player1.perks(perk.slimetf) > -1 Then Game.player1.perks(perk.slimetf) = -1
@@ -106,11 +132,7 @@
                 Return AddressOf stopTF
         End Select
     End Function
-    Public Shared Sub pushLblEventWithoutLoss(ByRef out As String)
-        Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
-        If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
-        TextEvent.push(out)
-    End Sub
+
     Public Overrides Sub setWaitTime(stage As Integer)
         stopTF()
     End Sub

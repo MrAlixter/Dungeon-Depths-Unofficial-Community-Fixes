@@ -23,4 +23,18 @@
             MyBase.discard()
         End If
     End Sub
+
+    Overrides Sub break()
+        Dim p = Game.player1
+
+        TextEvent.pushLog("The " & getName() & " breaks!")
+
+        p.inv.add(id, -1)
+        p.inv.item(id).durability = 100
+
+        If Not p Is Nothing Then
+            If p.equippedWeapon.getAName.Equals(getAName) Then EquipmentDialogBackend.equipWeapon(p, "Fists", False)
+            p.UIupdate()
+        End If
+    End Sub
 End Class

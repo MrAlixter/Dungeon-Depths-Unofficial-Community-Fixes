@@ -56,8 +56,8 @@
     End Sub
 
     Public Shared Sub halfDragonRTF()
+        Game.player1.changeForm("Half-Dragon (R)")
         Game.player1.changeHairColor(BroodmotherTF.hc)
         Game.player1.changeSkinColor(BroodmotherTF.sc)
-        Game.player1.changeForm("Half-Dragon (R)")
     End Sub
 End Class

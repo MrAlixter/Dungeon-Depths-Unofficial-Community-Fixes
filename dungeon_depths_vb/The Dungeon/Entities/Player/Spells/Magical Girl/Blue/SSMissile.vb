@@ -7,17 +7,17 @@
         MyBase.setcost(7)
     End Sub
     Public Overrides Sub effect()
-        Dim dmg As Integer = 69
+        Dim dmg As Integer = 79
         Dim d6 = Int(Rnd() * 7)
         If d6 = 2 Then
             'critical hit
             dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, 2 * (dmg + d6))
-            TextEvent.pushAndLog(CStr("Critical hit!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!  The enemy is stunned for 2 turns!"))
+            TextEvent.pushAndLog(CStr("Critical hit!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!  The enemy is stunned for 1 turn!"))
             MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
         Else
             'non critical hit
             dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, dmg + d6)
-            TextEvent.pushAndLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!  The enemy is stunned for 2 turns!"))
+            TextEvent.pushAndLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!  The enemy is stunned for 1 turn!"))
             MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
         End If
 

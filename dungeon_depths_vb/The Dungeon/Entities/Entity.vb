@@ -116,7 +116,7 @@
     End Function
     Public Overridable Function getSpellDamage(ByRef target As Entity, ByVal dmg As Integer) As Integer
         'target.takeDMG(calcDamage(dmg * (will / 10), target.getWIL), Me)
-        Return calcDamage(dmg + (Math.Max(will - 10, -10)), target.getWIL)
+        Return calcDamage(dmg + (Math.Max(getWIL() - 10, -10)), target.getWIL)
     End Function
 
     '|GETTERS|

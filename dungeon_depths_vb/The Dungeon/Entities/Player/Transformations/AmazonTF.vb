@@ -25,6 +25,9 @@
             p.breastSize = 0
         End If
 
+        p.changeForm("Amazon")
+        p.changeClass("Warrior")
+
         If p.breastSize > 3 Then p.breastSize = 3
 
         Dim r1 = Int(Rnd() * Portrait.imgLib.atrs(pInd.rearhair).ndoF)
@@ -39,10 +42,7 @@
         p.changeSkinColor(Color.FromArgb(255, 180, 138, 120))
         p.inv.add("Amazonian_Attire", 1)
         EquipmentDialogBackend.armorChange(p, "Amazonian_Attire")
-         EquipmentDialogBackend.weaponChange(p, "Fists")
-
-        p.changeForm("Amazon")
-        p.changeClass("Warrior")
+        EquipmentDialogBackend.weaponChange(p, "Fists")
 
         p.perks(perk.amazon) = 1
     End Sub

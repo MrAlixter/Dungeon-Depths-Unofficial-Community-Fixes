@@ -22,6 +22,8 @@
         Dim p As Player = Game.player1
         Dim out = ""
 
+        p.changeForm("Combat Unit")
+
         'transformation
         If p.sex.Equals("Male") Then
             p.prt.setIAInd(pInd.face, 0, False, True)
@@ -37,7 +39,6 @@
         EquipmentDialogBackend.glassesChange(p, "Cyber_Visor_(O)")
 
         p.prt.setIAInd(pInd.mouth, 12, True, False)
-        p.changeForm("Combat Unit")
 
         p.perks(perk.slutcurse) = -1
     End Sub

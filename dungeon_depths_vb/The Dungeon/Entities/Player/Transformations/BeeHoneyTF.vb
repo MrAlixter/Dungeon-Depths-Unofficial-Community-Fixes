@@ -43,6 +43,8 @@
             p.MtF()
         End If
 
+        p.changeForm("Bee Girl")
+
         '| -- Face TF -- |
         p.prt.setIAInd(pInd.horns, 14, False, False)
         p.prt.setIAInd(pInd.eyes, 62, True, True)
@@ -50,7 +52,6 @@
         '| -- Body TF -- |
         p.prt.setIAInd(pInd.wings, 8, False, False)
         p.prt.setIAInd(pInd.tail, 5, False, False)
-        p.changeForm("Bee Girl")
 
         p.drawPort()
     End Sub

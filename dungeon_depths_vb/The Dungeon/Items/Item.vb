@@ -101,9 +101,14 @@
         Return False
     End Function
     Overridable Sub break()
+        Dim p = Game.player1
+
         TextEvent.pushLog("The " & getName() & " breaks!")
-        count -= 1
-        durability = 100
+
+        p.inv.add(id, -1)
+        p.inv.item(id).durability = 100
+
+        Game.player1.UIupdate()
     End Sub
 
     '| -- Misc. -- |

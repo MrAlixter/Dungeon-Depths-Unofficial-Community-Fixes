@@ -15,6 +15,8 @@
     Public Overrides Sub step1()
         Dim p As Player = Game.player1
 
+        p.changeForm("Half-Gorgon")
+
         'transformation
         If p.sex.Equals("Male") Then p.MtF()
         p.changeHairColor(Color.FromArgb(255, 92, 154, 1))
@@ -24,7 +26,7 @@
         p.prt.setIAInd(pInd.eyes, 30, True, True)
         p.prt.setIAInd(pInd.eyebrows, 5, True, False)
 
-        p.changeForm("Half-Gorgon")
+
 
         p.learnSpell("Petrify II")
     End Sub

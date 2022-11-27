@@ -64,6 +64,8 @@
         specialList.Add("Swashbuckle", New Swashbuckle(Nothing, Nothing))
         specialList.Add("Crow's Nest", New Crowsnest(Nothing, Nothing))
         specialList.Add("Chameleon", New Chameleon(Nothing, Nothing))
+        specialList.Add("Absorption", New Abso(Nothing, Nothing))
+        specialList.Add("Absorption II", New Abso2(Nothing, Nothing))
     End Sub
 
     Sub New(ByRef u As Player, ByRef t As NPC)

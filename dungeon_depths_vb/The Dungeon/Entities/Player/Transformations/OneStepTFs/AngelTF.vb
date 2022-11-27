@@ -16,10 +16,10 @@
         Dim p As Player = Game.player1
         Dim out = ""
 
+        p.changeForm("Angel")
+
         'angel transformation
         p.prt.setIAInd(pInd.wings, 1, True, False)
-
-        p.changeForm("Angel")
 
         'transformation description push
         Dim revertPassage = p.pForm.revertPassage

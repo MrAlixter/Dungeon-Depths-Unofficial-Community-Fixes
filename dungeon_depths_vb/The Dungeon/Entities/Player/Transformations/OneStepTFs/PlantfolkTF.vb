@@ -21,6 +21,8 @@
         Dim p As player = Game.player1
         Dim out = ""
 
+        p.changeForm("Plantfolk")
+
         If DDDateTime.isWinter Then
             p.changeHairColor(winterColor)
         ElseIf DDDateTime.isSpring Then
@@ -41,10 +43,9 @@
             p.prt.setIAInd(pInd.fronthair, 22, True, True)
         End If
 
-
         p.changeSkinColor(DDUtils.cShift(p.prt.skincolor, summerColor, 50))
 
-        p.changeForm("Plantfolk")
+
         'transformation description push
         out += "As you chew on a particularly leafy portion of the salad, you feel the familiar flow of transformative magic flow through your body!  Expecting the worse, you are suprised to find that it seems to be providing your body with a benevolent energy.  It isn't until a leaf droops down from the top of your head that you realize something has indeed been changed.  You are now a plantfolk."
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)

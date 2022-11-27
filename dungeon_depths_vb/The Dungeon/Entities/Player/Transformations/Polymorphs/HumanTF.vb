@@ -24,8 +24,8 @@
         change(p)
     End Sub
 
-    Shared Sub change(ByRef p As Player)
-        p.changeForm("Human")
+    Shared Sub change(ByRef p As Player, Optional ByVal changeForm As Boolean = True)
+        If changeForm Then p.changeForm("Human")
 
         'color tfs
         p.prt.changeHairColor(Color.FromArgb(255, p.prt.haircolor.R, p.prt.haircolor.G, p.prt.haircolor.B))

@@ -205,13 +205,13 @@
     End Sub
 
     '| - Clothing Curses - |
-    Public Shared Function clothingCurse(ByRef p As Player) As Boolean
+    Public Shared Function clothingCurse(ByRef p As Player, Optional ByVal push_text As Boolean = True) As Boolean
         'If this curse cannot be applied to the player's current armor, no action is needed
         If p.equippedArmor.getSlutVarInd = -1 Then Return False
 
         'Push a text dialog
         TextEvent.pushLog("Your curse twists and changes your clothing.")
-        If Not Game.lblEvent.Visible And Not Game.combat_engaged Then
+        If Not Game.lblEvent.Visible And Not Game.combat_engaged And push_text Then
             If p.isUnwilling Then
                 'Author Credit: Big Iron Red
                 TextEvent.push("Suddenly, something seems... off..." & DDUtils.RNRN &
@@ -225,7 +225,7 @@
                                "The flashes of magic intensify, and your clothing seems to be getting lighter as its shape is reweaved by the whims of the curse.  With a final corrupting surge of rose electricity, the curse finishes its work and you hesitantly open your eyes again." & DDUtils.RNRN &
                                "You strip down and inspect your outfit which, as far as you can tell, seems just as skimpy as it has always been.  With a vacant smile, you get dressed again and with a twirl you set back out on your adventure.")
             End If
-        ElseIf Game.combat_engaged Then
+        ElseIf Game.combat_engaged And push_text Then
             TextEvent.push("Arcs of blinding pink lightning crackle across your body, and your clothing becomes lighter as its shape is reweaved by the whims of a curse!" & DDUtils.RNRN &
                            "Your outfit has been corrupted into a slutty perversion of its original form!")
         End If
@@ -407,7 +407,7 @@
         If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
 
         'if the player has the slut curse, this takes care of it
-        If p.perks(perk.slutcurse) > -1 Then
+        If p.perks(perk.slutcurse) > -1 AndAlso p.equippedArmor.getAntiSlutInd = -1 Then
             clothingCurse(p)
         End If
 

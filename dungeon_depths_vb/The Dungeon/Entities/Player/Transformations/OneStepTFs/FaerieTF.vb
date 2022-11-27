@@ -17,6 +17,15 @@
 
         p.savePState()
 
+        '| - STAT TRANSFORMATION - |
+        If p.getMaxMana > 0 Then
+            Dim mratio As Double = p.mana / p.getMaxMana
+            p.changeForm("Faerie")
+            p.mana = mratio * p.getMaxMana
+        Else
+            p.changeForm("Faerie")
+        End If
+
         '| - HAIR TRANSFORMATION - |
         p.prt.changeHairColor(getHairColor(p.prt.haircolor))
 
@@ -29,20 +38,12 @@
 
         If p.buttSize > 2 Then p.buttSize = 2
         If p.buttSize < 0 Then p.buttSize = 0
-
-        '| - STAT TRANSFORMATION - |
-
-        If p.getMaxMana > 0 Then
-            Dim mratio As Double = p.mana / p.getMaxMana
-            p.changeForm("Faerie")
-            p.mana = mratio * p.getMaxMana
-        Else
-            p.changeForm("Faerie")
-        End If
     End Sub
 
     Public Shared Sub step1alt(ByRef p As Player)
         p.savePState()
+
+        p.changeForm("Faerie")
 
         '| - HAIR TRANSFORMATION - |
         Dim colors = {Color.Aqua, Color.Chartreuse, Color.Lime, Color.SpringGreen, Color.PaleGreen, Color.LightGreen}
@@ -62,7 +63,6 @@
         If p.buttSize < 1 Then p.buttSize = 1
 
         '| - STAT TRANSFORMATION - |
-        p.changeForm("Faerie")
         If p.inv.getCountAt(SkycladRunes.ITEM_NAME) < 1 Then p.inv.add(SkycladRunes.ITEM_NAME, 1)
         If p.inv.getCountAt(Ballgag.ITEM_NAME) < 1 Then p.inv.add(Ballgag.ITEM_NAME, 1)
         EquipmentDialogBackend.equipArmor(p, SkycladRunes.ITEM_NAME, False)

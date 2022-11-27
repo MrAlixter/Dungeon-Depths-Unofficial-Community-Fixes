@@ -98,6 +98,8 @@
     End Sub
 
     Shared Sub halfDragonTF(ByRef p As Player)
+        p.changeForm("Half-Dragon (R)")
+
         p.prt.setIAInd(pInd.mouth, 7, True, True)
         p.prt.setIAInd(pInd.eyes, 40, True, True)
         p.prt.setIAInd(pInd.wings, 5, True, False)
@@ -112,8 +114,6 @@
         p.breastSize = 2
         p.buttSize = 1
         p.dickSize = -1
-
-        p.changeForm("Half-Dragon (R)")
 
         p.drawPort()
     End Sub

@@ -111,8 +111,8 @@
         If Not p.className.Equals("Thrall") Then p.changeClass("Thrall")
         If playerMeetsForm(p) Then Exit Sub
 
-        If Not p.prt.haircolor.Equals(hairColor) Then p.changeHairColor(DDUtils.cShift(p.prt.haircolor, hairColor, 8))
-        If Not p.prt.skincolor.Equals(skinColor) Then p.changeSkinColor(DDUtils.cShift(p.prt.skincolor, skinColor, 8))
+        If Not p.prt.haircolor.Equals(hairColor) Then p.changeHairColor(DDUtils.cShift(p.prt.haircolor, hairColor, 8, True))
+        If Not p.prt.skincolor.Equals(skinColor) Then p.changeSkinColor(DDUtils.cShift(p.prt.skincolor, skinColor, 8, True))
 
         If Int(Rnd() * 3) = 0 Or Settings.active(setting.norng) Then
             p.prt.iArrInd(pInd.rearhair) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)

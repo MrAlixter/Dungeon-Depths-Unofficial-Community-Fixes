@@ -20,11 +20,11 @@
     Public Overrides Sub step1()
         Dim p As Player = Game.player1
 
+        p.changeForm("Plush")
+
         'transformation
         p.prt.setIAInd(pInd.mouth, 24, True, True)
         p.prt.setIAInd(pInd.eyes, 46, True, True)
         p.prt.setIAInd(pInd.face, 10, True, True)
-
-        p.changeForm("Plush")
     End Sub
 End Class

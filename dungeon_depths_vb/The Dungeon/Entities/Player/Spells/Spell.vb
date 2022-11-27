@@ -59,6 +59,7 @@
         spellList.Add("First Sea's Scourge", New ScourgeFirstSea(Nothing, Nothing))
         spellList.Add("Fotia's Piercing Gaze", New FotiaGaze(Nothing, Nothing))
         spellList.Add("Slitherslice", New Slitherslice(Nothing, Nothing))
+        spellList.Add("Tendrill", New Tendrill(Nothing, Nothing))
     End Sub
 
     Sub New(ByRef c As Player, ByRef t As NPC)

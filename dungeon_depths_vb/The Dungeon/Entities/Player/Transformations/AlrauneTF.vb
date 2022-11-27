@@ -80,6 +80,8 @@
     Sub fullTF()
         Dim p As Player = Game.player1
 
+        p.changeForm("Alraune")
+
         If p.sex = "Male" Then
             p.prt.setIAInd(pInd.midhair, 6, False, True)
             p.prt.setIAInd(pInd.fronthair, 7, False, True)
@@ -93,8 +95,6 @@
 
         p.changeHairColor(hc)
         p.changeSkinColor(sc)
-
-        p.changeForm("Alraune")
 
         'transformation description push
         Dim out = "As you chew on a particularly leafy portion of the salad, you feel the familiar flow of transformative magic flow through your body..." & DDUtils.RNRN &
@@ -112,6 +112,8 @@
     Sub fullRNDTF()
         Dim p As Player = Game.player1
 
+        p.changeForm("Alraune")
+
         If p.sex = "Male" Then
             p.prt.setIAInd(pInd.midhair, 6, False, True)
             p.prt.setIAInd(pInd.fronthair, 7, False, True)
@@ -125,8 +127,6 @@
 
         p.changeHairColor(hc)
         p.changeSkinColor(sc)
-
-        p.changeForm("Alraune")
 
         'transformation description push
         Dim out = "A surge of transformative magic begins to flow through your body..." & DDUtils.RNRN &

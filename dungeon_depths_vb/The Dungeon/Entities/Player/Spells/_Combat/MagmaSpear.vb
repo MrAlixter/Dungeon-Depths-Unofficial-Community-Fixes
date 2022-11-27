@@ -4,7 +4,7 @@
         MyBase.New(c, t)
         setName("Magma Spear")
         MyBase.settier(1)
-        MyBase.setcost(22)
+        MyBase.setcost(14)
     End Sub
     Public Overrides Sub effect()
         Dim dmg As Integer = 85
