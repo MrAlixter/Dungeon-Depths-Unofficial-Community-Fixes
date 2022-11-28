@@ -1,5 +1,4 @@
-﻿'pInd defines the various portrait indexes
-Public Enum pInd
+﻿Public Enum pInd
     bkg             '0
     tail            '1
     wings           '2
@@ -82,7 +81,304 @@ Public Class Portrait
         imgLib = New ImageCollection(1)
         nullImg = imgLib.atrs(pInd.clothes).getAt(New Tuple(Of Integer, Boolean, Boolean)(5, False, True))
     End Sub
-    'converts an array of images into a .bmp image
+
+    '| - PREPARATION - |
+    Public Sub setIArr()
+        'Dim startTime As Double = DDDateTime.getTimeNow()
+
+        For i = 0 To Portrait.NUM_IMG_LAYERS
+            If Not (checkNDefFemInd(pInd.clothes, 47) Or checkNDefMalInd(pInd.clothes, 5)) And i = pInd.genitalia Then
+                iArr(i) = nullImg
+                Continue For
+            End If
+
+            Try
+                iArr(i) = imgLib.atrs(i).getAt(iArrInd(i))
+            Catch ex As Exception
+                iArr(i) = nullImg
+                DDError.portraitCreationError(i)
+            End Try
+        Next
+
+        changeHairColor(haircolor)
+        changeSkinColor(skincolor)
+
+        resolveLayerConflicts()
+        lustBlushUpdate()
+
+        hideEars()
+        hideRearHair()
+
+        If Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing Then
+            hoodsAndCloaks()
+
+            If ent.getPlayer.equippedArmor.hide_dick Or ent.getPlayer.equippedAcce.hide_dick Then
+                iArr(pInd.genitalia) = nullImg
+            End If
+
+            If ent.getPlayer.perks(perk.lurk) > 0 Then
+                iArr(NUM_IMG_LAYERS) = shrub()
+            End If
+        End If
+
+        'Dim endTime = DDDateTime.getTimeNow()
+        'Console.WriteLine("setIArr RENDER TIME (" + renderMode.ToString + "): " + (endTime - startTime).ToString())
+    End Sub
+    Sub resolveLayerConflicts()
+        If ent Is Nothing OrElse ent.getPlayer Is Nothing Then Exit Sub
+
+        Dim acce = ent.getPlayer().equippedAcce
+        Dim armor = ent.getPlayer().equippedArmor
+
+        If acce.under_t_clothes Then
+            iArr(pInd.clothes) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.face), iArr(pInd.accessory), iArr(pInd.clothes)})
+            iArr(pInd.face) = CharacterGenerator.picPort.Image
+            iArr(pInd.accessory) = CharacterGenerator.picPort.Image
+        End If
+
+        If acce.under_chin Then
+            iArr(pInd.clothes) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.clothes), iArr(pInd.accessory), iArr(pInd.face)})
+            iArr(pInd.face) = CharacterGenerator.picPort.Image
+            iArr(pInd.accessory) = CharacterGenerator.picPort.Image
+        End If
+
+        If acce.under_b_clothes And renderMode <> RENDER_MODE.half Then
+            iArr(pInd.clothesbtm) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.accessory), iArr(pInd.clothesbtm)})
+            iArr(pInd.accessory) = CharacterGenerator.picPort.Image
+        End If
+
+        If acce.hide_mouth Then
+            iArr(pInd.mouth) = CharacterGenerator.picPort.Image
+        End If
+
+        If acce.hide_eyes Then
+            iArr(pInd.eyes) = CharacterGenerator.picPort.Image
+        End If
+
+        Dim hatMask As Image = If(iArrInd(pInd.hat).Item1 = 0, imgLib.atrs(pInd.hat).getAt(armor.hood), imgLib.atrs(pInd.hat).getAt(iArrInd(pInd.hat)))
+        If Not hatMask Is Nothing AndAlso Not hatMask.Equals(nullImg) Then
+            iArr(pInd.midhair) = hoodHairMask(iArr(pInd.midhair), hatMask)
+        End If
+
+        If armor.adjust_sleeve_layer And renderMode <> RENDER_MODE.half Then
+            iArr(pInd.clothes) = topClothesMask(iArr(pInd.clothes), iArr(pInd.clothesbtm), getMaskInitialY(ent.getPlayer.breastSize, armor.compress_breast))
+        End If
+
+        If armor.swap_gen_clothesbtm And renderMode <> RENDER_MODE.half Then
+            Dim t = iArr(pInd.clothesbtm).Clone
+            iArr(pInd.clothesbtm) = iArr(pInd.genitalia).Clone
+            iArr(pInd.genitalia) = t
+        End If
+    End Sub
+
+    '| - MASKING - |
+    Shared Function hoodHairMask(ByRef img As Image, ByRef c_mask As Image, Optional ByVal final_y As Integer = 150) As Bitmap
+        'Assumes that the two images are the same size
+        If img Is Nothing OrElse c_mask Is Nothing OrElse Not img.Size.Equals(c_mask.Size) Then Return nullImg
+
+        Dim bmp As Bitmap = New Bitmap(img)
+        Dim b_c_mask As Bitmap = New Bitmap(c_mask)
+
+        Dim clear = Color.FromArgb(0, 0, 0, 0)
+
+        For y = 0 To final_y
+            For x = 0 To bmp.Size.Width - 1
+                If b_c_mask.GetPixel(x, y).A > 0 Then
+                    bmp.SetPixel(x, y, clear)
+                End If
+            Next
+        Next
+
+        Return bmp
+    End Function
+    Shared Function topClothesMask(ByRef img As Image, ByRef c_mask As Image, Optional ByVal initial_y As Integer = 265) As Bitmap
+        'Assumes that the two images are the same size
+        If img Is Nothing OrElse c_mask Is Nothing OrElse Not img.Size.Equals(c_mask.Size) Then Return nullImg
+
+        Dim bmp As Bitmap = New Bitmap(img)
+        Dim b_c_mask As Bitmap = New Bitmap(c_mask)
+
+        Dim clear = Color.FromArgb(0, 0, 0, 0)
+
+        For y = initial_y To bmp.Size.Height - 1
+            For x = 0 To bmp.Size.Width - 1
+                If b_c_mask.GetPixel(x, y).A > 0 Then
+                    bmp.SetPixel(x, y, clear)
+                End If
+            Next
+        Next
+
+        Return bmp
+    End Function
+    Shared Function getMaskInitialY(ByVal bsize As Integer, ByVal compress As Boolean)
+        Select Case bsize
+            Case 4
+                If compress Then Return 265 Else Return 268
+            Case 5
+                If compress Then Return 268 Else Return 277
+            Case 6
+                If compress Then Return 275 Else Return 287
+            Case 7
+                If compress Then Return 284 Else Return 296
+        End Select
+
+        Return 260
+    End Function
+
+    '| - BODY LAYERS - |
+    Sub hideEars()
+        If checkNDefFemInd(pInd.midhair, 41) Then
+            iArr(pInd.ears) = nullImg
+            Exit Sub
+        End If
+
+        Dim mEarIndToNotHide = {1, 2}
+        Dim fEarIndToNotHide = {1, 2}
+
+        Dim mHairIndToNotHide = {1, 3, 4}
+        Dim fHairIndToNotHide = {8, 11, 12}
+
+
+        If iArr(pInd.midhair) Is Nothing Then iArr(pInd.midhair) = nullImg
+        If iArr(pInd.ears) Is Nothing Then iArr(pInd.ears) = nullImg
+
+        If checkFemInd(pInd.ears, fEarIndToNotHide) Or
+           checkFemInd(pInd.midhair, fHairIndToNotHide) Or
+           checkMalInd(pInd.ears, mEarIndToNotHide) Or
+           checkMalInd(pInd.midhair, mHairIndToNotHide) Then Exit Sub
+
+        Dim t = iArr(pInd.midhair).Clone
+        iArr(pInd.midhair) = iArr(pInd.ears).Clone
+        iArr(pInd.ears) = t
+    End Sub
+    Sub colorEars(ByVal c As Color)
+        Dim recolorFunction = If(Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing AndAlso ent.getPlayer.isPetrified, Function(img, clr) petrificationRecolor(img, clr), Function(img, clr) skinRecolor(img, clr))
+
+        If Not checkMalInd(pInd.ears, 1) And Not checkFemInd(pInd.ears, 1) And
+           Not checkMalInd(pInd.ears, 2) And Not checkFemInd(pInd.ears, 2) And
+           Not checkMalInd(pInd.ears, 4) And Not checkFemInd(pInd.ears, 4) And
+           Not checkNDefFemInd(pInd.ears, 7) And
+           Not checkNDefFemInd(pInd.ears, 9) And
+           Not checkNDefFemInd(pInd.ears, 10) And
+           Not checkNDefFemInd(pInd.ears, 11) And
+           Not checkNDefFemInd(pInd.ears, 13) And
+           Not checkNDefFemInd(pInd.ears, 15) And
+           Not checkNDefMalInd(pInd.ears, 6) Then
+            iArr(pInd.ears) = recolorFunction(imgLib.atrs(pInd.ears).getAt(iArrInd(pInd.ears)), c)
+        End If
+    End Sub
+    Sub bodyOverlay()
+        Dim p As Player
+        If Not ent Is Nothing AndAlso ent.GetType Is GetType(Player) Then
+            p = CType(ent, Player)
+        Else
+            Exit Sub
+        End If
+
+        If Not p.pForm.getOverlayU(p).Item1 = 0 Then iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False) : Exit Sub
+
+        If p.className.Equals("Warrior") Or p.className.Equals("Barbarian") Or p.className.Equals("Paladin") Or p.className.Equals("Amazon") Or p.className.Equals("Valkyrie") Or p.className.Equals("Pirate") Or
+         p.formName.Equals("Tigress") Or p.formName.Equals("Orc") Then
+            Select Case p.breastSize
+                Case -1, -2
+                    iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(1, True, False)
+                Case 0
+                    iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(2, True, False)
+                Case Else
+                    iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(3, True, False)
+            End Select
+        ElseIf p.formName.Equals("Minotaur Bull") Then
+            Select Case p.breastSize
+                Case -1, 2
+                    iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(4, True, False)
+                Case 0
+                    iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(2, True, False)
+                Case Else
+                    iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(3, True, False)
+            End Select
+        Else
+            iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        End If
+
+        spiderBody()
+
+        p.dsizeroute()
+    End Sub
+
+    '| - HAIR LAYERS - |
+
+    '| - CLOTHING LAYERS - |
+    Sub hideRearHair()
+        If checkNDefFemInd(pInd.hat, 9) Then
+            iArr(pInd.rearhair) = imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(10, True, True))
+
+        ElseIf checkNDefFemInd(pInd.hat, 11) Then
+            iArr(pInd.rearhair) = imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(12, True, True))
+
+        ElseIf checkFemInd(pInd.hat, 1) Or checkNDefFemInd(pInd.hat, 17) Then
+            iArr(pInd.rearhair) = CreateFullBodyBMP({nullImg, imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(15, True, True)), iArr(pInd.rearhair)})
+
+        ElseIf checkFemInd(pInd.hat, 3) Or checkNDefFemInd(pInd.hat, 18) Then
+            iArr(pInd.rearhair) = CreateFullBodyBMP({nullImg, imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(16, True, True)), iArr(pInd.rearhair)})
+
+        ElseIf checkMalInd(pInd.hat, 2) Or checkNDefFemInd(pInd.hat, 18) Then
+            iArr(pInd.rearhair) = CreateFullBodyBMP({nullImg, imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(16, True, True)), iArr(pInd.rearhair)})
+
+        ElseIf checkMalInd(pInd.hat, 5) Or checkFemInd(pInd.hat, 4) Then
+            iArr(pInd.rearhair) = CreateFullBodyBMP({nullImg, imgLib.atrs(pInd.hairacc).getAt(New Tuple(Of Integer, Boolean, Boolean)(29, True, False)), iArr(pInd.rearhair)})
+
+        ElseIf checkMalInd(pInd.hat, 8) Or checkFemInd(pInd.hat, 10) Then
+            iArr(pInd.rearhair) = CreateFullBodyBMP({nullImg, imgLib.atrs(pInd.hairacc).getAt(New Tuple(Of Integer, Boolean, Boolean)(30, True, False))})
+
+        ElseIf checkNDefFemInd(pInd.accessory, 14) Or checkNDefMalInd(pInd.accessory, 13) Then
+            iArr(pInd.rearhair) = imgLib.atrs(pInd.ears).getAt(New Tuple(Of Integer, Boolean, Boolean)(5, True, True))
+        End If
+    End Sub
+    Sub hoodsAndCloaks()
+        If ent.getPlayer.equippedArmor.hide_rearhair Then
+            iArr(pInd.rearhair) = nullImg
+        End If
+
+        If Not ent.getPlayer.equippedArmor.hood Is Nothing Then
+            iArr(pInd.hat) = CreateFullBodyBMP({nullImg, imgLib.atrs(pInd.hat).getAt(ent.getPlayer.equippedArmor.hood), imgLib.atrs(pInd.hat).getAt(iArrInd(pInd.hat))})
+            iArr(pInd.hairacc) = nullImg
+        End If
+
+        If Not ent.getPlayer.equippedArmor.cloak Is Nothing Then
+            iArr(pInd.wings) = CreateFullBodyBMP({nullImg, iArr(pInd.wings), imgLib.atrs(pInd.hairacc).getAt(ent.getPlayer.equippedArmor.getCloak(ent.getPlayer))})
+        End If
+    End Sub
+
+    '| - OTHER LAYERS - |
+    Public Sub lustBlushUpdate()
+        If ent Is Nothing OrElse Not ent.GetType Is GetType(Player) Then
+            iArr(pInd.blush) = nullImg
+            Exit Sub
+        End If
+
+        Select Case Int(ent.lust / 20)
+            Case 0
+                iArr(pInd.blush) = nullImg
+            Case 1
+                iArr(pInd.blush) = Game.picLust1.BackgroundImage
+            Case 2
+                iArr(pInd.blush) = Game.picLust2.BackgroundImage
+            Case 3
+                iArr(pInd.blush) = Game.picLust3.BackgroundImage
+            Case Else
+                iArr(pInd.blush) = Game.picLust4.BackgroundImage
+        End Select
+    End Sub
+    Sub spiderBody()
+        If iArrInd(pInd.tail).Item1 = 2 Then
+            iArr(pInd.clothesbtm) = CreateFullBodyBMP({iArr(pInd.clothesbtm), imgLib.atrs(pInd.horns).getAt(6)})
+        End If
+    End Sub
+    Function shrub() As Image
+        Return CreateFullBodyBMP({imgLib.atrs(pInd.bkg).getAt(1), imgLib.atrs(pInd.bodyoverlay).getAt(5), imgLib.atrs(pInd.eyes).getAt(iArrInd(pInd.eyes))})
+    End Function
+
+    '| - DRAW - |
     Shared Function CreateBMP(ByRef img() As Image, Optional ByVal drawBoarder As Boolean = True) As Bitmap
         Dim startTime As Double = DDDateTime.getTimeNow()
         Dim bmp As New Bitmap(146, 216)
@@ -196,41 +492,23 @@ Public Class Portrait
             Return 610
         End If
     End Function
-    Shared Function topClothesMask(ByRef img As Image, ByRef c_mask As Image, Optional ByVal initial_y As Integer = 265) As Bitmap
-        'Assumes that the two images are the same size
-        If img Is Nothing OrElse c_mask Is Nothing OrElse Not img.Size.Equals(c_mask.Size) Then Return nullImg
 
-        Dim bmp As Bitmap = New Bitmap(img)
-        Dim b_c_mask As Bitmap = New Bitmap(c_mask)
+    '| - MISC. - |
+    Public Function sexBool() As Boolean
+        If Not ent Is Nothing AndAlso ent.GetType() Is GetType(Player) Then
+            If CType(ent, Player).dickSize = -1 Then
+                Return True
+            Else
+                Return False
+            End If
+        End If
 
-        Dim clear = Color.FromArgb(0, 0, 0, 0)
-
-        For y = initial_y To bmp.Size.Height - 1
-            For x = 0 To bmp.Size.Width - 1
-                If b_c_mask.GetPixel(x, y).A > 0 Then
-                    bmp.SetPixel(x, y, clear)
-                End If
-            Next
-        Next
-
-        Return bmp
+        If iArrInd(pInd.genitalia).Item1 = 4 Then
+            Return True
+        Else
+            Return False
+        End If
     End Function
-    Shared Function getMaskInitialY(ByVal bsize As Integer, ByVal compress As Boolean)
-        Select Case bsize
-            Case 4
-                If compress Then Return 265 Else Return 268
-            Case 5
-                If compress Then Return 268 Else Return 277
-            Case 6
-                If compress Then Return 275 Else Return 287
-            Case 7
-                If compress Then Return 284 Else Return 296
-        End Select
-
-        Return 260
-    End Function
-
-    'exports the current assembled portrait as a .bmp image
     Public Function ExportIMG() As Image
         Dim bmp As New Bitmap(146, 216)
         Dim g As Graphics = Graphics.FromImage(bmp)
@@ -240,7 +518,6 @@ Public Class Portrait
         Next
         Return bmp
     End Function
-
     Function oneLayerImgCheck(ByVal pForm As String, ByVal pClass As String) As Image
         '| - Classes - |
         If pClass.Equals("Magical Girl​") Then
@@ -302,48 +579,6 @@ Public Class Portrait
 
         Return Nothing
     End Function
-
-    Public Sub setIArr()
-        'Dim startTime As Double = DDDateTime.getTimeNow()
-
-        For i = 0 To Portrait.NUM_IMG_LAYERS
-            If Not (checkNDefFemInd(pInd.clothes, 47) Or checkNDefMalInd(pInd.clothes, 5)) And i = pInd.genitalia Then
-                iArr(i) = nullImg
-                Continue For
-            End If
-
-            Try
-                iArr(i) = imgLib.atrs(i).getAt(iArrInd(i))
-            Catch ex As Exception
-                iArr(i) = nullImg
-                DDError.portraitCreationError(i)
-            End Try
-        Next
-
-        changeHairColor(haircolor)
-        changeSkinColor(skincolor)
-
-        resolveLayerConflicts()
-        lustBlushUpdate()
-
-        hideEars()
-        hideRearHair()
-
-        If Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing Then
-            hoodsAndCloaks()
-
-            If ent.getPlayer.equippedArmor.hide_dick Or ent.getPlayer.equippedAcce.hide_dick Then
-                iArr(pInd.genitalia) = nullImg
-            End If
-
-            If ent.getPlayer.perks(perk.lurk) > 0 Then
-                iArr(NUM_IMG_LAYERS) = shrub()
-            End If
-        End If
-
-        'Dim endTime = DDDateTime.getTimeNow()
-        'Console.WriteLine("setIArr RENDER TIME (" + renderMode.ToString + "): " + (endTime - startTime).ToString())
-    End Sub
     Public Function drawFull()
         renderMode = RENDER_MODE.full
         'portraitUDate()
@@ -380,6 +615,7 @@ Public Class Portrait
         setIArr()
         Return CreateBMP(iArr)
     End Function
+
     Public Sub changeHairColor(ByVal c As Color)
         haircolor = c
         Dim rearHairIndsToIgnore = {25, 26, 32, 34, 35, 36}
@@ -432,197 +668,7 @@ Public Class Portrait
         colorEars(c)
         'iArr(pInd.nose) = recolorFunction(imgLib.atrs(pInd.nose).getAt(iArrInd(pInd.nose)), c)
     End Sub
-    Public Sub lustBlushUpdate()
-        If ent Is Nothing OrElse Not ent.GetType Is GetType(Player) Then
-            iArr(pInd.blush) = nullImg
-            Exit Sub
-        End If
 
-        Select Case Int(ent.lust / 20)
-            Case 0
-                iArr(pInd.blush) = nullImg
-            Case 1
-                iArr(pInd.blush) = Game.picLust1.BackgroundImage
-            Case 2
-                iArr(pInd.blush) = Game.picLust2.BackgroundImage
-            Case 3
-                iArr(pInd.blush) = Game.picLust3.BackgroundImage
-            Case Else
-                iArr(pInd.blush) = Game.picLust4.BackgroundImage
-        End Select
-    End Sub
-    Sub hideEars()
-        If checkNDefFemInd(pInd.midhair, 41) Then
-            iArr(pInd.ears) = nullImg
-            Exit Sub
-        End If
-
-        Dim mEarIndToNotHide = {1, 2}
-        Dim fEarIndToNotHide = {1, 2}
-
-        Dim mHairIndToNotHide = {1, 3, 4}
-        Dim fHairIndToNotHide = {8, 11, 12}
-
-
-        If iArr(pInd.midhair) Is Nothing Then iArr(pInd.midhair) = nullImg
-        If iArr(pInd.ears) Is Nothing Then iArr(pInd.ears) = nullImg
-
-        If checkFemInd(pInd.ears, fEarIndToNotHide) Or
-           checkFemInd(pInd.midhair, fHairIndToNotHide) Or
-           checkMalInd(pInd.ears, mEarIndToNotHide) Or
-           checkMalInd(pInd.midhair, mHairIndToNotHide) Then Exit Sub
-
-        Dim t = iArr(pInd.midhair).Clone
-        iArr(pInd.midhair) = iArr(pInd.ears).Clone
-        iArr(pInd.ears) = t
-    End Sub
-    Sub colorEars(ByVal c As Color)
-        Dim recolorFunction = If(Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing AndAlso ent.getPlayer.isPetrified, Function(img, clr) petrificationRecolor(img, clr), Function(img, clr) skinRecolor(img, clr))
-
-        If Not checkMalInd(pInd.ears, 1) And Not checkFemInd(pInd.ears, 1) And
-           Not checkMalInd(pInd.ears, 2) And Not checkFemInd(pInd.ears, 2) And
-           Not checkMalInd(pInd.ears, 4) And Not checkFemInd(pInd.ears, 4) And
-           Not checkNDefFemInd(pInd.ears, 7) And
-           Not checkNDefFemInd(pInd.ears, 9) And
-           Not checkNDefFemInd(pInd.ears, 10) And
-           Not checkNDefFemInd(pInd.ears, 11) And
-           Not checkNDefFemInd(pInd.ears, 13) And
-           Not checkNDefFemInd(pInd.ears, 15) And
-           Not checkNDefMalInd(pInd.ears, 6) Then
-            iArr(pInd.ears) = recolorFunction(imgLib.atrs(pInd.ears).getAt(iArrInd(pInd.ears)), c)
-        End If
-    End Sub
-    Sub hideRearHair()
-        If checkNDefFemInd(pInd.hat, 9) Then
-            iArr(pInd.rearhair) = imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(10, True, True))
-
-        ElseIf checkNDefFemInd(pInd.hat, 11) Then
-            iArr(pInd.rearhair) = imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(12, True, True))
-
-        ElseIf checkFemInd(pInd.hat, 1) Or checkNDefFemInd(pInd.hat, 17) Then
-            iArr(pInd.hat) = imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(17, True, True))
-            iArr(pInd.rearhair) = CreateFullBodyBMP({nullImg, imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(15, True, True)), iArr(pInd.rearhair)})
-
-        ElseIf checkFemInd(pInd.hat, 3) Or checkNDefFemInd(pInd.hat, 18) Then
-            iArr(pInd.hat) = imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(18, True, True))
-            iArr(pInd.rearhair) = CreateFullBodyBMP({nullImg, imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(16, True, True)), iArr(pInd.rearhair)})
-
-        ElseIf checkMalInd(pInd.hat, 2) Or checkNDefFemInd(pInd.hat, 18) Then
-            iArr(pInd.hat) = imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(18, True, True))
-            iArr(pInd.rearhair) = CreateFullBodyBMP({nullImg, imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(16, True, True)), iArr(pInd.rearhair)})
-
-        ElseIf checkMalInd(pInd.hat, 5) Or checkFemInd(pInd.hat, 4) Then
-            iArr(pInd.hat) = imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(26, True, True))
-            iArr(pInd.rearhair) = CreateFullBodyBMP({nullImg, imgLib.atrs(pInd.hairacc).getAt(New Tuple(Of Integer, Boolean, Boolean)(29, True, False)), iArr(pInd.rearhair)})
-
-        ElseIf checkMalInd(pInd.hat, 8) Or checkFemInd(pInd.hat, 10) Then
-            iArr(pInd.hat) = imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(27, True, True))
-            iArr(pInd.rearhair) = CreateFullBodyBMP({nullImg, imgLib.atrs(pInd.hairacc).getAt(New Tuple(Of Integer, Boolean, Boolean)(30, True, False))})
-
-        ElseIf checkNDefFemInd(pInd.accessory, 14) Or checkNDefMalInd(pInd.accessory, 13) Then
-            iArr(pInd.rearhair) = imgLib.atrs(pInd.ears).getAt(New Tuple(Of Integer, Boolean, Boolean)(5, True, True))
-        End If
-    End Sub
-    Sub hoodsAndCloaks()
-        If ent.getPlayer.equippedArmor.hide_rearhair Then
-            iArr(pInd.rearhair) = nullImg
-        End If
-
-        If Not ent.getPlayer.equippedArmor.hood Is Nothing Then
-            iArr(pInd.hat) = CreateFullBodyBMP({nullImg, imgLib.atrs(pInd.hat).getAt(ent.getPlayer.equippedArmor.hood), imgLib.atrs(pInd.hat).getAt(iArrInd(pInd.hat))})
-            iArr(pInd.hairacc) = nullImg
-        End If
-
-        If Not ent.getPlayer.equippedArmor.cloak Is Nothing Then
-            iArr(pInd.wings) = CreateFullBodyBMP({nullImg, iArr(pInd.wings), imgLib.atrs(pInd.hairacc).getAt(ent.getPlayer.equippedArmor.getCloak(ent.getPlayer))})
-        End If
-    End Sub
-    Sub resolveLayerConflicts()
-        If ent Is Nothing OrElse ent.getPlayer Is Nothing Then Exit Sub
-
-        Dim acce = ent.getPlayer().equippedAcce
-        Dim armor = ent.getPlayer().equippedArmor
-
-        If acce.under_t_clothes Then
-            iArr(pInd.clothes) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.face), iArr(pInd.accessory), iArr(pInd.clothes)})
-            iArr(pInd.face) = CharacterGenerator.picPort.Image
-            iArr(pInd.accessory) = CharacterGenerator.picPort.Image
-        End If
-
-        If acce.under_chin Then
-            iArr(pInd.clothes) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.clothes), iArr(pInd.accessory), iArr(pInd.face)})
-            iArr(pInd.face) = CharacterGenerator.picPort.Image
-            iArr(pInd.accessory) = CharacterGenerator.picPort.Image
-        End If
-
-        If acce.under_b_clothes And renderMode <> RENDER_MODE.half Then
-            iArr(pInd.clothesbtm) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.accessory), iArr(pInd.clothesbtm)})
-            iArr(pInd.accessory) = CharacterGenerator.picPort.Image
-        End If
-
-        If acce.hide_mouth Then
-            iArr(pInd.mouth) = CharacterGenerator.picPort.Image
-        End If
-
-        If acce.hide_eyes Then
-            iArr(pInd.eyes) = CharacterGenerator.picPort.Image
-        End If
-
-        If armor.adjust_sleeve_layer And renderMode <> RENDER_MODE.half Then
-            iArr(pInd.clothes) = topClothesMask(iArr(pInd.clothes), iArr(pInd.clothesbtm), getMaskInitialY(ent.getPlayer.breastSize, armor.compress_breast))
-        End If
-
-        If armor.swap_gen_clothesbtm And renderMode <> RENDER_MODE.half Then
-            Dim t = iArr(pInd.clothesbtm).Clone
-            iArr(pInd.clothesbtm) = iArr(pInd.genitalia).Clone
-            iArr(pInd.genitalia) = t
-        End If
-    End Sub
-    Sub spiderBody()
-        If iArrInd(pInd.tail).Item1 = 2 Then
-            iArr(pInd.clothesbtm) = CreateFullBodyBMP({iArr(pInd.clothesbtm), imgLib.atrs(pInd.horns).getAt(6)})
-        End If
-    End Sub
-    Function shrub() As Image
-        Return CreateFullBodyBMP({imgLib.atrs(pInd.bkg).getAt(1), imgLib.atrs(pInd.bodyoverlay).getAt(5), imgLib.atrs(pInd.eyes).getAt(iArrInd(pInd.eyes))})
-    End Function
-    Sub bodyOverlay()
-        Dim p As Player
-        If Not ent Is Nothing AndAlso ent.GetType Is GetType(Player) Then
-            p = CType(ent, Player)
-        Else
-            Exit Sub
-        End If
-
-        If Not p.pForm.getOverlayU(p).Item1 = 0 Then iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False) : Exit Sub
-
-        If p.className.Equals("Warrior") Or p.className.Equals("Barbarian") Or p.className.Equals("Paladin") Or p.className.Equals("Amazon") Or p.className.Equals("Valkyrie") Or p.className.Equals("Pirate") Or
-         p.formName.Equals("Tigress") Or p.formName.Equals("Orc") Then
-            Select Case p.breastSize
-                Case -1, -2
-                    iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(1, True, False)
-                Case 0
-                    iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(2, True, False)
-                Case Else
-                    iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(3, True, False)
-            End Select
-        ElseIf p.formName.Equals("Minotaur Bull") Then
-            Select Case p.breastSize
-                Case -1, 2
-                    iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(4, True, False)
-                Case 0
-                    iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(2, True, False)
-                Case Else
-                    iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(3, True, False)
-            End Select
-        Else
-            iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        End If
-
-        spiderBody()
-
-        p.dsizeroute()
-    End Sub
     Shared Function mkIAInd(ByVal i As Integer, ByVal fem As Boolean, ByVal non_def As Boolean) As Tuple(Of Integer, Boolean, Boolean)
         Return New Tuple(Of Integer, Boolean, Boolean)(i, fem, non_def)
     End Function
@@ -632,6 +678,7 @@ Public Class Portrait
     Sub setIAInd(ByVal attrInd As pInd, ByVal iaInd As Tuple(Of Integer, Boolean, Boolean))
         iArrInd(attrInd) = iaInd
     End Sub
+
     Function checkNDefFemInd(ByVal attrInd As pInd, ByVal i As Integer) As Boolean
         Dim ind = iArrInd(attrInd)
         If ind Is Nothing Then Return False
@@ -684,6 +731,7 @@ Public Class Portrait
 
         Return False
     End Function
+
     'hairRecolor changes the color of an image, assumed to be of the same base color as the player's hair 
     Shared Function hairRecolor(ByVal img As Bitmap, ByVal c As Color) As Image
         If img Is Nothing Then Return Nothing
@@ -916,21 +964,4 @@ Public Class Portrait
             End Select
         End If
     End Sub
-
-    'gets the player's current sexBool
-    Public Function sexBool() As Boolean
-        If Not ent Is Nothing AndAlso ent.GetType() Is GetType(Player) Then
-            If CType(ent, Player).dickSize = -1 Then
-                Return True
-            Else
-                Return False
-            End If
-        End If
-
-        If iArrInd(pInd.genitalia).Item1 = 4 Then
-            Return True
-        Else
-            Return False
-        End If
-    End Function
 End Class
