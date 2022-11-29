@@ -55,7 +55,7 @@
 
     Public Sub charmingSnakes(ByRef target As Player)
         Dim out = DDUtils.capitalizeFirst(getNameWithTitle()) & "'s snake hair hisses, and each little pair of eyes starts strobing hypnotically..."
-        If (target.getWIL >= getWIL()) Then
+        If (target.getWIL >= getWIL()) And Not target.perks(perk.blind) > -1 Then
             TextEvent.push(out & DDUtils.RNRN & "...but you don't fall under their influence.")
             TextEvent.pushLog(DDUtils.capitalizeFirst(getNameWithTitle()) & " casts Charming Snakes, but it fails...")
             failed_stun = True
@@ -121,7 +121,7 @@
         Else
             TextEvent.push("The gorgon slithers around you, snaring your legs in the firm embrace of " & p_pronoun & " tail.  You close your eyes, trying to look away as your foe gently caresses your cheek." & DDUtils.RNRN &
                            "A few moments pass, and yet no final blow or tingle of spellcraft comes.  Any efforts to steady your racing heart fall apart as a silky voice whispers in your ear," & DDUtils.RNRN &
-                           """Come on, I'm not going to bite... Aren't you even a little curious what I look like up close?""" & DDUtils.RNRN &
+                           """Come on, I'm not going to bite...  Aren't you even a little curious what I look like up close?""" & DDUtils.RNRN &
                            "You know you shouldn't, but you can't help but peek straight into the emerald gaze you know is waiting for you.  Before you can even regret your decison, your body turns to stone." & DDUtils.RNRN &
                            "As " & pronoun & " victoriously backs away from your statuesque figure, the gorgon takes in " & p_pronoun & " craft." & DDUtils.RNRN &
                            """Hmm, not my best work...""")

@@ -70,24 +70,34 @@
         p.will -= 2
 
         If p.inv.getCountAt("Cat_Lingerie") < 1 Then p.inv.add("Cat_Lingerie", 1)
-        EquipmentDialogBackend.armorChange(p, "Cat_Lingerie")
+        EquipmentDialogBackend.equipArmor(p, "Cat_Lingerie", False)
 
         TextEvent.pushCombat("Your tits expand, your clothes shift, and you feel your will grow weaker. You are now a cat girl!" & DDUtils.RNRN &
                                 "Soon you will be Marissa's pet! ")
     End Sub
 
-    Sub step6alt()
-        Dim p As player = Game.player1
-        EquipmentDialogBackend.weaponChange(p, "Fists")
-        EquipmentDialogBackend.armorChange(p, "Cat_Lingerie")
-        be()
+    Shared Sub snapStep6(ByRef p As Player)
+        EquipmentDialogBackend.equipWeapon(p, "Fists", False)
+
+        If Not p.equippedArmor.getAName = "Naked" Then p.inv.add(p.equippedArmor.getAName, -1)
+        If p.inv.getCountAt(CatLingerie.ITEM_NAME) < 1 Then p.inv.add(CatLingerie.ITEM_NAME, 1)
+        EquipmentDialogBackend.equipArmor(p, "Cat_Lingerie", False)
+
+        p.be()
+        p.prt.setIAInd(pInd.ears, 1, True, False)
         p.prt.setIAInd(pInd.rearhair, 12, True, True)
         p.prt.setIAInd(pInd.midhair, 17, True, True)
         p.prt.setIAInd(pInd.fronthair, 1, True, False)
         p.prt.setIAInd(pInd.clothes, 40, True, True)
         p.prt.setIAInd(pInd.mouth, 9, True, True)
+    End Sub
+    Sub step6alt()
+        Dim p As player = Game.player1
+
+        snapStep6(p)
+
         TextEvent.pushCombat("Your hair grows down to your ass, straightening out as it lengthens.  You now have long, straight hair!  Your tits expand, your clothes shift, and you feel your will grow weaker. You are now a cat girl!" & DDUtils.RNRN &
-                                "Soon you will be Marissa's pet! ")
+                             "Soon you will be Marissa's pet! ")
     End Sub
     Sub step7()
         Dim p As player = Game.player1
@@ -105,7 +115,7 @@
         be()
 
         If p.inv.getCountAt(CatLingerie.ITEM_NAME) < 1 Then p.inv.add(CatLingerie.ITEM_NAME, 1)
-        EquipmentDialogBackend.armorChange(p, "Cat_Lingerie")
+        EquipmentDialogBackend.equipArmor(p, "Cat_Lingerie", False)
 
         Game.fromCombat()
         If p.isUnwilling And p.sex.Equals("Male") Then

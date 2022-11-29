@@ -103,6 +103,7 @@
     metcynthia      '101
     faewishesmade   '102
     slimeregenplus  '103
+    esper           '104
 End Enum
 Public Enum stateInd
     goddState

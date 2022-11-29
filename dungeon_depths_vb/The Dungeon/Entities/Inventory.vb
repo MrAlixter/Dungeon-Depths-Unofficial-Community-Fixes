@@ -410,7 +410,7 @@
         internal_inventory.Add(CommonClothes9.ITEM_NAME, New CommonClothes9)         '384
         internal_inventory.Add(Orange.ITEM_NAME, New Orange)                         '385
         'v12.1.0
-
+        internal_inventory.Add(EyeOfTheBeholder.ITEM_NAME, New EyeOfTheBeholder)     '386
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -477,8 +477,8 @@
                    Me.item(227), Me.item(238), Me.item(244), Me.item(251),
                    Me.item(252), Me.item(277), Me.item(278), Me.item(279),
                    Me.item(280), Me.item(286), Me.item(294), Me.item(306),
-                   Me.item(327), Me.item(328), Me.item(330), Me.item(334),
-                   Me.item(338), Me.item(344), Me.item(350), Me.item(373),
+                   Me.item(327), Me.item(328), Me.item(330), Me.item(338),
+                   Me.item(344), Me.item(350), Me.item(362), Me.item(373),
                    Me.item(375), Me.item(379), Me.item(380)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32),
@@ -488,8 +488,9 @@
                 Me.item(133), Me.item(134), Me.item(135), Me.item(178),
                 Me.item(228), Me.item(230), Me.item(267), Me.item(268),
                 Me.item(269), Me.item(270), Me.item(272), Me.item(291),
-                Me.item(295), Me.item(296), Me.item(341), Me.item(347),
-                Me.item(358), Me.item(360), Me.item(385)}
+                Me.item(295), Me.item(296), Me.item(334), Me.item(341),
+                Me.item(347), Me.item(358), Me.item(360), Me.item(385),
+                Me.item(386)}
 
         acce = {New noAcce(),
                 Me.item(66), Me.item(67), Me.item(68), Me.item(69),

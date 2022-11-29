@@ -246,7 +246,7 @@
                                "Ellen", "Erika", "Erica", _
                                "Heather", _
                                "Iliona", _
-                               "Janice", "Johanna", "Jenna", "Judy", "Jennifer", "Jo-Jo", _
+                               "Janice", "Johanna", "Jenna", "Judy", "Jennifer", _
                                "Kerry", "Katherine", "Katja", _
                                "Lana", _
                                "Monica", "Mary", _
@@ -269,7 +269,7 @@
                                "Daniel", "Dave", "David", _
                                "Eric", _
                                "Gerry", _
-                               "Hank", _
+                               "Hank", "Henry", _
                                "Issac", "Ian", _
                                "James", "Jimmy", "Jim", "Josh", "John", "Jackson", _
                                "Ken", _

@@ -118,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\Mayue.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\MarissasNeophyte.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Slime\LeporineOoze.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\TimeJudgeFight.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\TimeTravellerFight.vb" />
@@ -317,6 +318,7 @@
     <Compile Include="Items\Services\SWRestoration.vb" />
     <Compile Include="Items\Services\UpgradeArmor.vb" />
     <Compile Include="Items\Usable\Food\Acorn.vb" />
+    <Compile Include="Items\Usable\Food\EyeOfTheBeholder.vb" />
     <Compile Include="Items\Usable\Food\Orange.vb" />
     <Compile Include="Items\Usable\Food\GAStickOfGum.vb" />
     <Compile Include="Items\Usable\Food\FaePApple.vb" />

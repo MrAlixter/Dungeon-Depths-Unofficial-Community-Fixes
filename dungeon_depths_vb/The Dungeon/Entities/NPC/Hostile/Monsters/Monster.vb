@@ -29,6 +29,7 @@
     namestealer_faerie
     faerie_hunter
     archwitch_recluse
+    marissa_neop
 End Enum
 
 Public Class Monster
@@ -57,6 +58,7 @@ Public Class Monster
         l.Add(New Tuple(Of mInd, String)(mInd.faerie_hunter, FaerieHunter.BASE_NAME))
         l.Add(New Tuple(Of mInd, String)(mInd.archwitch_recluse, ArchwitchRecluse.BASE_NAME))
         l.Add(New Tuple(Of mInd, String)(mInd.lepo_ooze, LeporineOoze.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.marissa_neop, MarissasNeophyte.BASE_NAME))
 
         Return l
     End Function
@@ -165,6 +167,8 @@ Public Class Monster
                 Return New NamestealerFaerie
             Case mInd.faerie_hunter
                 Return New FaerieHunter
+            Case mInd.marissa_neop
+                Return New MarissasNeophyte
         End Select
 
         Return New Monster()
@@ -212,6 +216,11 @@ Public Class Monster
 
         If IO.File.Exists("gho.sts") And Not mFloor.nonRandomFloors.Contains(floorInd) Then
             DDUtils.append(tier, mInd.player_ghost)
+        End If
+
+        '| --- Marissa's Forces --- |
+        If Game.player1.perks(perk.mrevived) > 0 Then
+            DDUtils.append(tier, mInd.marissa_neop)
         End If
 
         '| --- Time Cops --- |
@@ -297,8 +306,7 @@ Public Class Monster
         'adds the mimmic to combat queues
         targetRoute(m)
 
-        TextEvent.pushCombat(Trim(m.getName() & " attacks!"))
-        TextEvent.pushLog(Trim(m.getName() & " attacks!"))
+        TextEvent.pushAndLog(DDUtils.capitalizeFirst(m.getNameWithTitle) & " attacks!")
 
         Game.drawBoard()
     End Sub

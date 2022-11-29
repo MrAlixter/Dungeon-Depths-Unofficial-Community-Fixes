@@ -20,6 +20,16 @@
 
         '|Misc|
         setupMonsterOnSpawn()
+
+        If Int(Rnd() * 30) = 0 Then
+            name = "Beautiful Slime"
+
+            inv.setCount(EyeOfTheBeholder.ITEM_NAME, 1)
+
+            intro_taunt = "This slime seems to have an... eyeball..." & DDUtils.RNRN &
+                          "A very pretty eyeball..." & DDUtils.RNRN &
+                          "Hmm..."
+        End If
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

@@ -137,6 +137,10 @@
         End Select
 
         picPort.BackgroundImage = portrait.draw
+
+        cboxClass.SelectedItem = cboxClass.Items(Int(Rnd() * cboxClass.Items.Count))
+
+        txtName.Text = If(btnFemale.Enabled = False, Polymorph.rndFName, Polymorph.rndMName)
     End Sub
 
     Private Sub btnHC_Click(sender As Object, e As EventArgs) Handles btnHC.Click

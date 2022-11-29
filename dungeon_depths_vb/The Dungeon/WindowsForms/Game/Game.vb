@@ -609,7 +609,7 @@ Public Class Game
                         viewArray(y, x) = getTileToDisplay(player1.pos.X + indX, player1.pos.Y + indY, tileText, tileTag)
 
                         'if the player is blind, treat all tiles as unseen
-                        If player1.perks(perk.blind) > -1 Then viewArray(y, x) = 1
+                        If player1.perks(perk.blind) > -1 And Not player1.perks(perk.esper) > -1 Then viewArray(y, x) = 1
                     End If
 
                     If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "@" Then
@@ -632,7 +632,7 @@ Public Class Game
                         viewArray(y, x) = getTileToDisplay(player1.pos.X + indX, y_offset, tileText, tileTag)
 
                         'if the player is blind, treat all tiles as unseen
-                        If player1.perks(perk.blind) > -1 Then viewArray(y, x) = 1
+                        If player1.perks(perk.blind) > -1 And Not player1.perks(perk.esper) > -1 Then viewArray(y, x) = 1
                     End If
 
                     If currFloor.mBoard(y_offset, player1.pos.X + indX).Text = "@" Then
@@ -2066,7 +2066,7 @@ Public Class Game
                 Dim m = Monster.monsterFactory(11)
                 m.currTarget = player1
                 toCombat(m)
-                TextEvent.pushLog(Trim(m.getName() & " attacks!"))
+                TextEvent.pushLog(DDUtils.capitalizeFirst(m.getNameWithTitle) & " attacks!")
                 eClock = eClockResetVal
             End If
             Exit Sub
@@ -2113,7 +2113,8 @@ Public Class Game
             m.currTarget = player1
             toCombat(m)
 
-            TextEvent.pushLog(Trim(m.getName() & " attacks!"))
+            If Not m.intro_taunt = "" Then TextEvent.pushCombat(m.intro_taunt)
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(m.getNameWithTitle) & " attacks!")
             eClock = eClockResetVal
         End If
     End Sub
@@ -2699,7 +2700,7 @@ Public Class Game
         queueSetup()
 
         '| - Print Dialog (if any) -|
-        TextEvent.pushLog(Trim(m.getName & " attacks!"))
+        TextEvent.pushLog(DDUtils.capitalizeFirst(m.getNameWithTitle) & " attacks!")
     End Sub
     '| -- Movement -- |
     Private Sub BtnD_Click(sender As Object, e As EventArgs) Handles BtnD.Click

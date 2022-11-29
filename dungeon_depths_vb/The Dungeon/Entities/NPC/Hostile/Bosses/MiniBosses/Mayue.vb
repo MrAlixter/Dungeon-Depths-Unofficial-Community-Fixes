@@ -8,11 +8,11 @@
         name = "Mayue, Feline Enchantress"
 
         '|Stats|
-        maxHealth = 80
+        maxHealth = 140
         attack = 44
-        defense = -5
+        defense = 5
         speed = 44
-        will = -5
+        will = 5
         xp_value = 200
         setupMonsterOnSpawn()
 
@@ -41,7 +41,7 @@
 
                 marissasEnchantment(target.getPlayer)
 
-                turns_until_spell = 3
+                turns_until_spell = 2 + Int(Rnd() * 2)
                 Exit Sub
             ElseIf turns_until_spell < 1 And getIntHealth() < 50 Then
                 Dim healvalue = Int(Rnd() * 4) + Int(Rnd() * 2) + 30
@@ -109,6 +109,7 @@
             health = 0.125 * inv.getCountAt("Extra_Life")
             TextEvent.pushAndLog("Mayue uses an Extra_Life!")
         ElseIf inv.getCountAt("Extra_Life") = 1 Then
+            isDead = True
             MyBase.despawn("quest")
             TextEvent.push("Before you land the final blow, a shimmering barrier appears between Mayue and yourself.  You dart back, spotting a familiar figure as she joins the fray.", AddressOf die2)
         Else

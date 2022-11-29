@@ -26,6 +26,7 @@ Public Class NPC
     Public pronoun As String = "it"
     Public p_pronoun As String = "its"
     Public r_pronoun As String = "it"
+    Public intro_taunt As String = ""
     Public img_index As Integer = 0
     'stun variables
     Public isStunned As Boolean = False

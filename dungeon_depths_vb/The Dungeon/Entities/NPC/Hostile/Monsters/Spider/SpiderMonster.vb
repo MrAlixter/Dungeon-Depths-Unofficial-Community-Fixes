@@ -27,6 +27,7 @@
             attack *= 2
             speed *= 1.5
             xp_value *= 10
+            intro_taunt = "This spider... it glistens!"
         End If
     End Sub
 
