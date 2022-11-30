@@ -543,6 +543,8 @@ Public Class Game
         g.Dispose()
     End Sub
     Sub viewBubble()
+        If currFloor Is Nothing Then Exit Sub
+
         'viewBubble "discovers" the area around the player and erases the players previous location
         Dim viewRad = 1
         If player1.perks(perk.lightsource) > 0 Then viewRad = 2

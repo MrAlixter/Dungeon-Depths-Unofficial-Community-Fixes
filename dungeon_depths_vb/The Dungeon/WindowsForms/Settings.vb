@@ -148,7 +148,7 @@ Public Class Settings
         cboxScreenSize.Items.Add("Medium")
         cboxScreenSize.Items.Add("Large")
         cboxScreenSize.Items.Add("XLarge")
-        cboxScreenSize.Items.Add("Maximized")
+        'cboxScreenSize.Items.Add("Maximized")
 
         cboxScreenSize.Text = ssize
     End Sub
