@@ -116,7 +116,7 @@ Public Class MagGirlTF
     End Sub
 
     Protected Sub revertPToState(ByRef p As Player, ByRef s As State)
-        Dim tHth As Integer = p.health
+        Dim tHth As Double = p.health
         Dim tMna As Integer = p.mana
         Dim tHun As Integer = p.stamina
         Dim tGold As Integer = p.gold

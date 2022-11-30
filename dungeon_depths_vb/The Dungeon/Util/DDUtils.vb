@@ -121,6 +121,8 @@
             newSize = New Size(sWidth * 0.9, sHeight * 0.9)
         ElseIf Game.screenSize = "XLarge" Or (form.Equals(Game) And Game.screenSize = "Maximized") Then
             newSize = New Size(sWidth * 1.32, sHeight * 1.32)
+        ElseIf Game.screenSize = "XXLarge" Then
+            newSize = New Size(sWidth * 1.75, sHeight * 1.75)
         ElseIf Game.screenSize = "Maximized" And form.Equals(Game) Then
             newSize = My.Computer.Screen.Bounds.Size
         End If

@@ -39,7 +39,7 @@
     End Sub
 
     Public Overrides Function canGet() As Boolean
-        Return Not getActive() And Game.currFloor.floorNumber > 5 And Not getComplete() And Game.player1.inv.getCountAt("Restore_Potion") > 0
+        Return Not getActive() And Game.currFloor.floorNumber > 5 And Not Game.currFloor.floorNumber = 13 And Not getComplete() And Game.player1.inv.getCountAt("Restore_Potion") > 0
     End Function
 End Class
 

@@ -58,7 +58,7 @@ Public Class NPC
         End If
 
         If Not isStunned Then
-            If (Game.player1.formName.Equals("Frog") Or Game.player1.formName.Equals("Chicken") Or (Game.player1.formName.Equals("Cow") And Not sName = Bovinomancer.BASE_NAME) Or Game.player1.formName.Equals("Horse") Or Game.player1.formName.Equals("Unicorn")) And Me.GetType().IsSubclassOf(GetType(Monster)) Then
+            If (Game.player1.formName.Equals("Frog") Or Game.player1.formName.Equals("Chicken") Or (Game.player1.formName.Equals("Cow") And Not sName = Bovinomancer.BASE_NAME) Or Game.player1.formName.Equals("Horse") Or Game.player1.formName.Equals("Unicorn")) And (Me.GetType().IsSubclassOf(GetType(Monster)) And Not Me.GetType().IsSubclassOf(GetType(MiniBoss))) Then
                 despawn("animaltf")
                 Exit Sub
             End If
