@@ -141,7 +141,7 @@
 
         If m Is Nothing Then
             Dim out = "As you throw the lance across the dungeon at nothing in particular, " & If(current_mode = mode.bimbo, "Tia", "Cynthia") & " materializes next to you and extends a hand." & DDUtils.RNRN &
-                        """" & If(current_mode = mode.bimbo, "Heat of Hotness", "Righteous Incandescence") & "!"" she shouts, and it bursts into an inferno of cherry-red flame!"
+                        """" & If(current_mode = mode.bimbo, "Magic Lance", "Righteous Incandescence") & "!"" she shouts, and it bursts into an inferno of cherry-red flame!"
 
             If p.inv.getCountAt(AngelicSweater.ITEM_NAME) < 1 AndAlso CType(p.inv.item(AngelicSweater.ITEM_NAME), AngelicSweater).fits(p) Then
                 out += DDUtils.RNRN & "In the aftermath of the blast, a familiar outfit flutters to the ground..."
@@ -155,7 +155,7 @@
             Game.picPortrait.BackgroundImage = cast2
         Else
             Dim out = "You hurl the lance, and " & If(current_mode = mode.bimbo, "Tia", "Cynthia") & " materializes next to you and extends a hand." & DDUtils.RNRN &
-            """" & If(current_mode = mode.bimbo, "Heat of Hotness", "Righteous Incandescence") & "!"" she shouts, and it bursts into an inferno of cherry-red flame!"
+            """" & If(current_mode = mode.bimbo, "Magic Lance", "Righteous Incandescence") & "!"" she shouts, and it bursts into an inferno of cherry-red flame!"
 
             TextEvent.push(out)
             TextEvent.pushLog("You throw the lance, and " & If(current_mode = mode.bimbo, "Tia", "Cynthia") & " casts " & If(current_mode = mode.bimbo, "Heat of Hotness", "Righteous Incandescence") & "!")

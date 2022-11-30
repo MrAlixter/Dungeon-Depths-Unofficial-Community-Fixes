@@ -317,6 +317,7 @@
     <Compile Include="Items\Services\MGReset.vb" />
     <Compile Include="Items\Services\SWRestoration.vb" />
     <Compile Include="Items\Services\UpgradeArmor.vb" />
+    <Compile Include="Items\Usable\CynthiasRemote.vb" />
     <Compile Include="Items\Usable\Food\Acorn.vb" />
     <Compile Include="Items\Usable\Food\EyeOfTheBeholder.vb" />
     <Compile Include="Items\Usable\Food\Orange.vb" />

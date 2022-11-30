@@ -411,6 +411,7 @@
         internal_inventory.Add(Orange.ITEM_NAME, New Orange)                         '385
         'v12.1.0
         internal_inventory.Add(EyeOfTheBeholder.ITEM_NAME, New EyeOfTheBeholder)     '386
+        internal_inventory.Add(CynthiasRemote.ITEM_NAME, New CynthiasRemote)         '387
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -479,7 +480,7 @@
                    Me.item(280), Me.item(286), Me.item(294), Me.item(306),
                    Me.item(327), Me.item(328), Me.item(330), Me.item(338),
                    Me.item(344), Me.item(350), Me.item(362), Me.item(373),
-                   Me.item(375), Me.item(379), Me.item(380)}
+                   Me.item(375), Me.item(379), Me.item(380), Me.item(387)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32),
                 Me.item(33), Me.item(34), Me.item(35), Me.item(44),
