@@ -238,7 +238,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        If Game.player1.perks(perk.cowbell) = -1 Then
+        If Game.player1.perks(perk.cowbell) = -1 Or Not (Game.player1.equippedArmor.getAName.Equals(Cowbell.ITEM_NAME) Or Game.player1.equippedArmor.getAName.Equals(Bimbell.ITEM_NAME) Or Game.player1.equippedArmor.getAName.Equals(ImmitationCowbell.ITEM_NAME)) Then
             Return AddressOf stopTF
         End If
         Select Case stage

@@ -107,6 +107,8 @@ Public Class Dungeon
         Else
             setPositions()
         End If
+
+        If Not Game.player1.forcedPath Is Nothing Then Game.player1.forcedPath = Nothing
     End Sub
     Private Sub setPositions()
         If floors(numCurrFloor).playerPosition.X = -1 Or floors(numCurrFloor).playerPosition.Y = -1 Or mFloor.nonRandomFloors.Contains(numCurrFloor) Then
