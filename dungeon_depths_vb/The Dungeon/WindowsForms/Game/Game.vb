@@ -90,7 +90,7 @@ Public Class Game
     Dim imagesWorker As BackgroundWorker
     Public boardWorker As BackgroundWorker
     Dim cKeys As List(Of System.Windows.Forms.Keys) = New List(Of Keys)
-    Dim iHeight, iWidth As Integer
+    Public iHeight, iWidth As Integer
     Dim debugWindow As Debug_Window                     '(NOT SAVED)
     Public shopMenu As ShopV3                           '(NOT SAVED)
     Dim health_bar_color_grad As Bitmap = Nothing
@@ -3579,14 +3579,6 @@ Public Class Game
         Dim s As Settings = New Settings
         s.ShowDialog()
         s.Dispose()
-
-        If screenSize = "Maximized" Then
-            Me.FormBorderStyle = Windows.Forms.FormBorderStyle.None
-            Me.WindowState = FormWindowState.Maximized
-        Else
-            Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
-            Me.WindowState = FormWindowState.Normal
-        End If
 
         If Not ss.Equals(screenSize) And Not ss.Equals("Large") Then
             Application.Restart()

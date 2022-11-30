@@ -35,8 +35,9 @@
             Size = New Size(Size.Width * 0.9, Size.Height * 0.95)
         ElseIf Game.screenSize = "XLarge" Then
             Size = New Size(Size.Width * 1.32, Size.Height * 1.32)
-        ElseIf Game.screenSize = "XXLarge" Then
-            Size = New Size(Size.Width * 1.75, Size.Height * 1.75)
+        ElseIf Game.screenSize = "Maximized" Then
+            Dim r = Game.Height / Game.iHeight
+            Size = New Size(Size.Width * r, Size.Height * r)
         End If
         Dim RW As Double = (Me.Width - startingWidth) / startingWidth ' Ratio change of width
         Dim RH As Double = (Me.Height - startingHeight) / startingHeight ' Ratio change of height

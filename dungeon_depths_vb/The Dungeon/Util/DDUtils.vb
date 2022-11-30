@@ -119,18 +119,29 @@
             newSize = New Size(sWidth * 0.8, sHeight * 0.8)
         ElseIf Game.screenSize = "Medium" Then
             newSize = New Size(sWidth * 0.9, sHeight * 0.9)
-        ElseIf Game.screenSize = "XLarge" Or (form.Equals(Game) And Game.screenSize = "Maximized") Then
+        ElseIf Game.screenSize = "XLarge" Then
             newSize = New Size(sWidth * 1.32, sHeight * 1.32)
-        ElseIf Game.screenSize = "XXLarge" Then
-            newSize = New Size(sWidth * 1.75, sHeight * 1.75)
         ElseIf Game.screenSize = "Maximized" And form.Equals(Game) Then
             newSize = My.Computer.Screen.Bounds.Size
+        ElseIf Game.screenSize = "Maximized" And Not form.Equals(Game) Then
+            Dim r = Game.Height / Game.iHeight
+            newSize = New Size(sWidth * r, sHeight * r)
         End If
 
         If newSize.Equals(form.Size) Then Exit Sub
 
+        If Game.screenSize = "Maximized" Then
+            Game.FormBorderStyle = Windows.Forms.FormBorderStyle.None
+            Game.WindowState = FormWindowState.Maximized
+        Else
+            Game.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
+            Game.WindowState = FormWindowState.Normal
+        End If
+
         Dim RW As Double = (newSize.Width - sWidth) / sWidth ' Ratio change of width
         Dim RH As Double = (newSize.Height - sHeight) / sHeight ' Ratio change of height
+
+        If Game.screenSize = "Maximized" Then RW = RH
 
         For Each ctrl In form.Controls
             resizeControl(ctrl, RW, RH, newSize.Width / sWidth)
