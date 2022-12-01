@@ -116,7 +116,7 @@
                   """Give it a sec,"" " & pronoun & " states, ""Or don't.  I don't really care.""" & DDUtils.RNRN &
                   "You desperatly lunge at them, the flood of mana coursing through you still increasing and before you can take three steps your body shrinks with a sudden jolt, leaving you looking at a far larger world." & DDUtils.RNRN &
                   "The energy within you seems to have only been focused by your diminished stature.  Its electric flow overwhelms you, and you see small crystals of pure mana beginning to form on your arms.  You try to flee, but your now giant opponent simply places the crook of their staff around you.  Escape no longer an option, you can do nothing but cower as the crystals swiftly replace your flesh and bone.  Nothing more than a gem full of magical energy now, you can't even react as the wizard raises their staff to inspect you."
-        Game.picPortrait.BackgroundImage = Game.picStaffEnd.BackgroundImage
+        Game.picPortrait.BackgroundImage = Portrait.ol_img_lib.getImg(8)
         TextEvent.push(out, AddressOf SWizDeath2)
     End Sub
     Sub SWizDeath2()
@@ -127,7 +127,7 @@
                   "He snaps " & p_pronoun & " fingers, and though you can not see it your body is instantly changed to that of an incredibly busty, nude young woman." & DDUtils.RNRN &
                   """Now that's a look that will draw in customers.  I might have to make more of these, assuming I can find a couple more shmucks like you!  I wonder what that food guy is up to...""" & DDUtils.RNRN &
                   "GAME OVER!"
-        Game.picPortrait.BackgroundImage = Game.picStaffEnd.BackgroundImage
+        Game.picPortrait.BackgroundImage = Portrait.ol_img_lib.getImg(8)
         TextEvent.push(out, AddressOf p.die)
     End Sub
 

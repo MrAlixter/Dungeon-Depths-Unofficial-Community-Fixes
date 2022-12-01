@@ -47,12 +47,12 @@ Public Class Portrait
     Public renderMode As RENDER_MODE = RENDER_MODE.full
 
     Public Shared imgLib As ImageCollection
-    Public Shared fb_img_lib As FullBodyImageCollection
+    Public Shared ol_img_lib As OneLayerImageCollection
     Public Shared nullImg As Image
 
     Shared Sub New()
         imgLib = New ImageCollection(1)
-        fb_img_lib = New FullBodyImageCollection()
+        ol_img_lib = New OneLayerImageCollection()
         nullImg = imgLib.atrs(pInd.clothes).getAt(New Tuple(Of Integer, Boolean, Boolean)(5, False, True))
     End Sub
 
@@ -523,60 +523,60 @@ Public Class Portrait
     Function oneLayerImgCheck(ByVal pForm As String, ByVal pClass As String) As Image
         '| - Classes - |
         If pClass.Equals("Magical Girl​") Then
-            Return Game.picmgp1.BackgroundImage
+            Return ol_img_lib.getImg(0)
         ElseIf pClass.Equals("Valkyrie​") Then
-            Return Game.picvalktf.BackgroundImage
+            Return ol_img_lib.getImg(26)
         ElseIf pClass.Equals("Princess​") Then
-            Return Game.picPrin.BackgroundImage
+            Return ol_img_lib.getImg(5)
         ElseIf pClass.Equals("Thong") Then
-            Return Game.picWSmithThong1.BackgroundImage
+            Return ol_img_lib.getImg(18)
         ElseIf pClass.Equals("Thong​") Then
-            Return Game.picWSmithThong2.BackgroundImage
+            Return ol_img_lib.getImg(19)
         ElseIf pClass.Equals("Fae Bee") Then
-            Return Game.picFaeBee.BackgroundImage
+            Return ol_img_lib.getImg(24)
         ElseIf pClass.Equals("Fae Bee​") Then
-            Return Game.picFaeBee2.BackgroundImage
+            Return ol_img_lib.getImg(25)
         ElseIf pClass.Equals("Bunny Girl​") Then
-            Return Game.picBun.BackgroundImage
+            Return ol_img_lib.getImg(4)
         ElseIf pClass.Equals("Cynn Onahole") Then
-            Return Game.picCynnOnahole1.BackgroundImage
+            Return ol_img_lib.getImg(27)
         ElseIf pClass.Equals("Onahole") Then
-            Return Game.picCynnOnahole2.BackgroundImage
+            Return ol_img_lib.getImg(28)
         End If
 
         '| - Forms - |
         If pForm.Equals("Dragon") And Not sexBool() Then
-            Return Game.picDragonM.BackgroundImage
+            Return ol_img_lib.getImg(1)
         ElseIf pForm.Equals("Dragon") And sexBool() Then
-            Return Game.picDragonF.BackgroundImage
+            Return ol_img_lib.getImg(2)
         ElseIf pForm.Equals("Sheep") Then
-            Return Game.picSheep.BackgroundImage
+            Return ol_img_lib.getImg(7)
         ElseIf pForm.Equals("Cake") Then
-            Return Game.picCake.BackgroundImage
+            Return ol_img_lib.getImg(3)
         ElseIf pForm.Equals("Frog") Then
-            Return Game.picFrog.BackgroundImage
+            Return ol_img_lib.getImg(6)
         ElseIf pForm.Equals("Half-Dragoness") Then
-            Return Game.picHalfDragon1.BackgroundImage
+            Return ol_img_lib.getImg(16)
         ElseIf pForm.Equals("Half-Broodmother") Then
-            Return Game.picHalfDragon2.BackgroundImage
+            Return ol_img_lib.getImg(17)
         ElseIf pForm.Equals("Broodmother") Then
-            Return Game.picBroodmother.BackgroundImage
+            Return ol_img_lib.getImg(15)
         ElseIf pForm.Equals("Horse") Then
-            Return Game.picHorse.BackgroundImage
+            Return ol_img_lib.getImg(11)
         ElseIf pForm.Equals("Unicorn") Then
-            Return Game.picUnicorn.BackgroundImage
+            Return ol_img_lib.getImg(12)
         ElseIf pForm.Equals("Oni") Then
-            Return Game.picOniF.BackgroundImage
+            Return ol_img_lib.getImg(13)
         ElseIf pForm.Equals("Blob") And Not sexBool() Then
-            Return Game.picBlobM.BackgroundImage
+            Return ol_img_lib.getImg(9)
         ElseIf pForm.Equals("Blob") And sexBool() Then
-            Return Game.picBlobF.BackgroundImage
+            Return ol_img_lib.getImg(10)
         ElseIf pForm.Equals("Faerie (B)") Then
-            Return Game.picPFae.BackgroundImage
+            Return ol_img_lib.getImg(22)
         ElseIf pForm.Equals("Cow") Then
-            Return Game.picCow.BackgroundImage
+            Return ol_img_lib.getImg(30)
         ElseIf pForm.Equals("Blow-Up Cynn") Then
-            Return Game.picBlowupCynn.BackgroundImage
+            Return ol_img_lib.getImg(29)
         End If
 
         Return Nothing

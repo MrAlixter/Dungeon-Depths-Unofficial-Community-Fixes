@@ -3651,7 +3651,6 @@ Public Class Game
         Me.Close()
     End Sub
 
-
     '| - TIMERS - |
     Private Sub tmrKeyCD_Tick(sender As Object, e As EventArgs) Handles tmrKeyCD.Tick
         tmrKeyCD.Enabled = False
@@ -3980,5 +3979,9 @@ Public Class Game
 
     Private Sub lstLog_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstLog.SelectedIndexChanged
         lstLog.SelectedIndex = -1
+    End Sub
+
+    Private Sub btnSaveTile_Click(sender As Object, e As EventArgs) Handles btnS9.Click, btnS8.Click, btnS7.Click, btnS6.Click, btnS5.Click, btnS4.Click, btnS3.Click, btnS2.Click, btnS10.Click, btnS1.Click
+
     End Sub
 End Class

@@ -1,8 +1,8 @@
-﻿Public Class FullBodyImageCollection
+﻿Public Class OneLayerImageCollection
     Dim imgset As ImageDump
 
     Sub New()
-        imgset = New ImageDump("img/FullBody")
+        imgset = New ImageDump("img/OneLayer")
     End Sub
 
     Public Function getImg(ByVal i As Integer) As Image
