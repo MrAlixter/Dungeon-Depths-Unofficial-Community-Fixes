@@ -69,4 +69,7 @@
     Public Shared Sub failedToLoadTile(ByVal t As tile, ByVal s As tSet)
         push("019", "Failed to find/load the " & t.ToString & " tile from the " & s.ToString & " tileset.")
     End Sub
+    Public Shared Sub failedToLoadFBImg(ByVal i As Integer)
+        push("020", "Failed to find/load full-body image with index """ & i & """.")
+    End Sub
 End Class

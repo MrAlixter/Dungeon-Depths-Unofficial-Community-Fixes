@@ -47,10 +47,12 @@ Public Class Portrait
     Public renderMode As RENDER_MODE = RENDER_MODE.full
 
     Public Shared imgLib As ImageCollection
+    Public Shared fb_img_lib As FullBodyImageCollection
     Public Shared nullImg As Image
 
     Shared Sub New()
         imgLib = New ImageCollection(1)
+        fb_img_lib = New FullBodyImageCollection()
         nullImg = imgLib.atrs(pInd.clothes).getAt(New Tuple(Of Integer, Boolean, Boolean)(5, False, True))
     End Sub
 

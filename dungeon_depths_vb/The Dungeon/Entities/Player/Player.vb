@@ -1033,7 +1033,6 @@ Public Class Player
 
     '|TRANSFORMATION METHODS|
     Public Sub revertToState(ByRef s As State)
-        Dim tHth As Integer = health + hBuff
         Dim tMna As Integer = mana + mBuff
         Dim tHun As Integer = stamina
         Dim tGold As Integer = gold
@@ -1059,7 +1058,6 @@ Public Class Player
         currState.save(Me)
         savePState()
 
-        If health > 1 Then health = 1
         If mana > maxMana + mBuff Then mana = maxMana + mBuff
 
         Dim out = ""

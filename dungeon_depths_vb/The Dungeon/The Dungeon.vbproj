@@ -354,6 +354,7 @@
     <Compile Include="Items\Usable\Vials\SthenoSalve.vb" />
     <Compile Include="Items\Usable\Vials\VialOfManyNames.vb" />
     <Compile Include="Items\Usable\Vials\VialOfRockJuice.vb" />
+    <Compile Include="Portrait\FullBodyImageCollection.vb" />
     <Compile Include="Portrait\ImagePathCollection.vb" />
     <Compile Include="Portrait\ImagePathAttribute.vb" />
     <Compile Include="Portrait\ImagePathDump.vb" />
