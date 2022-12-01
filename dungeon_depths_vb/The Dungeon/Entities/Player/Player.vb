@@ -812,7 +812,7 @@ Public Class Player
         If board(newY, newX).Tag = 0 Then Exit Sub
 
         '|-Mindless-|
-        If className.Equals("Mindless") Then wander() : Exit Sub
+        If className.Equals("Mindless") Then wander(board) : Exit Sub
 
         '|-Move-|
         board(pos.Y, pos.X).Text = ""
@@ -869,17 +869,20 @@ Public Class Player
             'Next
         End If
     End Sub
-    Public Sub wander()
-        Select Case Int(Rnd() * 4) + 1
-            Case 1
-                moveUp()
-            Case 2
-                moveDown()
-            Case 3
-                moveLeft()
-            Case 4
-                moveRight()
-        End Select
+    Public Sub wander(ByRef board(,) As mTile)
+        Dim points As List(Of Point) = New List(Of Point)({New Point(pos.X, pos.Y - 1), New Point(pos.X, pos.Y + 1), New Point(pos.X - 1, pos.Y), New Point(pos.X + 1, pos.Y)})
+
+        While points.Count > 0
+            Dim i As Integer = Int(Rnd() * points.Count)
+
+            If Game.currFloor.ptInBounds(points(i)) And board(points(i).Y, points(i).X).Tag > 0 Then
+                board(pos.Y, pos.X).Text = ""
+                pos = New Point(points(i).X, points(i).Y)
+                Exit Sub
+            End If
+
+            points.Remove(points(i))
+        End While
     End Sub
 
     '|COMBAT COMMANDS|
