@@ -36,6 +36,8 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(228, True, True)
         usize5 = New Tuple(Of Integer, Boolean, Boolean)(229, True, True)
 
+        hood = New Tuple(Of Integer, Boolean, Boolean)(28, True, True)
+
         '|Description|
         setDesc("A mysterious uniform worn by a mysterious protector with a bovine flair." & DDUtils.RNRN &
                 getSizeInformation() & DDUtils.RNRN &
@@ -52,5 +54,4 @@
 
         count -= 1
     End Sub
-
 End Class
