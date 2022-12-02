@@ -447,7 +447,58 @@ Public MustInherit Class ShopNPC
     End Function
 
     Public Overridable Function postPurchaseDialog(ByRef p As Player)
+        Select Case img_index
+            Case LocalImgInd.frog
+                Return frogPostPurchaseDialog(p)
+            Case LocalImgInd.bunny
+                Return bunnyPostPurchaseDialog(p)
+            Case LocalImgInd.princess
+                Return princessPostPurchaseDialog(p)
+            Case LocalImgInd.sheep
+                Return sheepPostPurchaseDialog(p)
+            Case LocalImgInd.doll
+                Return dollPostPurchaseDialog(p)
+            Case LocalImgInd.arachne
+                Return arachnePostPurchaseDialog(p)
+            Case LocalImgInd.catgirl
+                Return catgirlPostPurchaseDialog(p)
+            Case LocalImgInd.trilobite
+                Return trilobitePostPurchaseDialog(p)
+            Case LocalImgInd.beegirl
+                Return beegirlPostPurchaseDialog(p)
+            Case Else
+                Return normalPostPurchaseDialog(p)
+        End Select
+    End Function
+    Protected Overridable Function normalPostPurchaseDialog(ByRef p As Player) As String
         Return "Thank you, valued customer!"
+    End Function
+    Protected Overridable Function frogPostPurchaseDialog(ByRef p As Player) As String
+        Return "Croak..."
+    End Function
+    Protected Overridable Function bunnyPostPurchaseDialog(ByRef p As Player) As String
+        Return normalPostPurchaseDialog(p)
+    End Function
+    Protected Overridable Function princessPostPurchaseDialog(ByRef p As Player) As String
+        Return normalPostPurchaseDialog(p)
+    End Function
+    Protected Overridable Function sheepPostPurchaseDialog(ByRef p As Player) As String
+        Return "Baaaahhhh..."
+    End Function
+    Protected Overridable Function dollPostPurchaseDialog(ByRef p As Player) As String
+        Return "..."
+    End Function
+    Protected Overridable Function arachnePostPurchaseDialog(ByRef p As Player) As String
+        Return normalPostPurchaseDialog(p)
+    End Function
+    Protected Overridable Function catgirlPostPurchaseDialog(ByRef p As Player) As String
+        Return normalPostPurchaseDialog(p)
+    End Function
+    Protected Overridable Function trilobitePostPurchaseDialog(ByRef p As Player) As String
+        Return "..."
+    End Function
+    Protected Overridable Function beegirlPostPurchaseDialog(ByRef p As Player) As String
+        Return "Bzz..."
     End Function
 
     '| -- SAVE / LOAD -- |

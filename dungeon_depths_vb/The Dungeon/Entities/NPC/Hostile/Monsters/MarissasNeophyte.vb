@@ -3,7 +3,7 @@
 
     Dim enchantment_inds_used As List(Of Integer)
 
-    Public Const BASE_NAME As String = "Marissa's Neophyte"
+    Public Const BASE_NAME As String = "Marissa's Student"
 
     Sub New()
         '|ID Info|

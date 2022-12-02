@@ -487,6 +487,8 @@ Friend Class FWQ2APassenger3
 
         Game.player1.perks(perk.faepassangers) = -1
 
+        If Not Game.currFloor.mBoard(29, 7).Tag = 2 Then FaeQueen.spawn(Game.currFloor)
+
         Game.player1.ongoingQuests.getAt("Fae Woods Q2A - Simple Instructions").completeEntireQuest()
         Game.player1.drawPort()
     End Sub
