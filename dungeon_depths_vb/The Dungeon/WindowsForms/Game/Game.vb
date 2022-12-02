@@ -397,6 +397,7 @@ Public Class Game
 
     '| - DRAW - |
     Sub drawBoard()
+        If currFloor Is Nothing Then Exit Sub
         'Dim startTime As Double = DDDateTime.getTimeNow()
         '"discover" any hidden tiles adjacent to the player and erase the players last location
         viewBubble()
@@ -1556,12 +1557,13 @@ Public Class Game
             Case Keys.Escape
                 If screenSize.Equals("Maximized") Then
                     screenSize = "Large"
-                    Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
-                    Me.WindowState = FormWindowState.Normal
+                    MaximizeBox = True
                     Size = New Size(iWidth, iHeight)
+                    Me.WindowState = FormWindowState.Normal
                     DDUtils.resizeForm(Me)
                     If Not player1 Is Nothing Then player1.UIupdate()
                     drawBoard()
+                    Me.TopMost = False
                     Return True
                 End If
         End Select
@@ -3981,7 +3983,15 @@ Public Class Game
         lstLog.SelectedIndex = -1
     End Sub
 
-    Private Sub btnSaveTile_Click(sender As Object, e As EventArgs) Handles btnS9.Click, btnS8.Click, btnS7.Click, btnS6.Click, btnS5.Click, btnS4.Click, btnS3.Click, btnS2.Click, btnS10.Click, btnS1.Click
-
+    Private Sub Game_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
+        If Me.WindowState = FormWindowState.Maximized And Not screenSize = "Maximized" Then
+            screenSize = "Maximized"
+            MaximizeBox = False
+            Size = New Size(iWidth, iHeight)
+            DDUtils.resizeForm(Me)
+            If Not player1 Is Nothing Then player1.UIupdate()
+            Me.TopMost = True
+            drawBoard()
+        End If
     End Sub
 End Class

@@ -113,6 +113,14 @@
         resizeForm(form, form.Height, form.Width)
     End Sub
     Public Shared Sub resizeForm(ByRef form As Form, ByVal sHeight As Integer, ByVal sWidth As Integer)
+        If Game.screenSize = "Maximized" Then
+            Game.FormBorderStyle = Windows.Forms.FormBorderStyle.None
+            Game.WindowState = FormWindowState.Maximized
+        ElseIf Game.FormBorderStyle = Windows.Forms.FormBorderStyle.None Then
+            Game.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
+            Game.WindowState = FormWindowState.Normal
+        End If
+
         'scale to the screen size
         Dim newSize As Size = New Size(sWidth, sHeight)
         If Game.screenSize = "Small" Then
@@ -129,14 +137,6 @@
         End If
 
         If newSize.Equals(form.Size) Then Exit Sub
-
-        If Game.screenSize = "Maximized" Then
-            Game.FormBorderStyle = Windows.Forms.FormBorderStyle.None
-            Game.WindowState = FormWindowState.Maximized
-        Else
-            Game.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
-            Game.WindowState = FormWindowState.Normal
-        End If
 
         Dim RW As Double = (newSize.Width - sWidth) / sWidth ' Ratio change of width
         Dim RH As Double = (newSize.Height - sHeight) / sHeight ' Ratio change of height
