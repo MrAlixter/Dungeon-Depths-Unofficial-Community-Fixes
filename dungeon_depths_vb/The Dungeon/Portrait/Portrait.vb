@@ -113,6 +113,7 @@ Public Class Portrait
 
         If Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing Then
             hoodsAndCloaks()
+            clothingLayerClipping()
 
             If ent.getPlayer.equippedArmor.hide_dick Or ent.getPlayer.equippedAcce.hide_dick Then
                 iArr(pInd.genitalia) = nullImg
@@ -307,8 +308,6 @@ Public Class Portrait
         p.dsizeroute()
     End Sub
 
-    '| - HAIR LAYERS - |
-
     '| - CLOTHING LAYERS - |
     Sub hideRearHair()
         If checkNDefFemInd(pInd.hat, 9) Then
@@ -348,6 +347,18 @@ Public Class Portrait
 
         If Not ent.getPlayer.equippedArmor.cloak Is Nothing Then
             iArr(pInd.wings) = CreateFullBodyBMP({nullImg, iArr(pInd.wings), imgLib.atrs(pInd.hairacc).getAt(ent.getPlayer.equippedArmor.getCloak(ent.getPlayer))})
+        End If
+    End Sub
+    Sub clothingLayerClipping()
+        If ent.getPlayer.equippedArmor.getAName.Equals(MagGirlOutfitC.ITEM_NAME) Then
+            Select Case ent.getPlayer.breastSize
+                Case 4
+                    iArr(pInd.clothes) = CreateFullBodyBMP({iArr(pInd.clothes), imgLib.atrs(pInd.hairacc).getAt(31)})
+                Case 5
+                    iArr(pInd.clothes) = CreateFullBodyBMP({iArr(pInd.clothes), imgLib.atrs(pInd.hairacc).getAt(32)})
+                Case 6
+                    iArr(pInd.clothes) = CreateFullBodyBMP({iArr(pInd.clothes), imgLib.atrs(pInd.hairacc).getAt(33)})
+            End Select
         End If
     End Sub
 
