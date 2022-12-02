@@ -10,6 +10,7 @@
     blindness
     blueox
     bimbo
+    bimbomaid
     bimbomino
     bimboplus
     blowupdoll
@@ -167,6 +168,9 @@ Public MustInherit Class Transformation
 
         ElseIf tf = tfind.bimbo Then
             Return New BimboTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.bimbomaid Then
+            Return New BimboMaidTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.bimbomino Then
             Return New BimBellTF(cs, n, tts, wi, cbs, tfd)

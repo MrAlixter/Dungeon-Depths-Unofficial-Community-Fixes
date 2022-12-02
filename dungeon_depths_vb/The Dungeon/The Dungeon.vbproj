@@ -204,6 +204,7 @@
     <Compile Include="Entities\Player\Transformations\MaggirlTFs\MagGirlGTF.vb" />
     <Compile Include="Entities\Player\Transformations\MaggirlTFs\MagMimicTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\CynnTonicTF.vb" />
+    <Compile Include="Entities\Player\Transformations\OneStepTFs\BimboMaidTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\HumanTF.vb" />
     <Compile Include="Entities\Player\Transformations\ScaleTalismanTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\AmaraphneAngelTF.vb" />
@@ -288,6 +289,7 @@
     <Compile Include="Items\Equipment\Weapons\Daggers\IronDagger.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\FeatherDagger.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\VipersFang.vb" />
+    <Compile Include="Items\Equipment\Weapons\Misc\PixieDuster.vb" />
     <Compile Include="Items\Equipment\Weapons\Staffs\Hyacinth.vb" />
     <Compile Include="Items\Equipment\Weapons\Whips\Rose.vb" />
     <Compile Include="Items\Equipment\Weapons\Axes\Tulip.vb" />

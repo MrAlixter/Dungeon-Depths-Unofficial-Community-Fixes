@@ -71,6 +71,23 @@
         p.drawPort()
     End Sub
 
+    Shared Sub step1VisualOnly(ByRef p As Player)
+        p.savePState()
+
+        '| - HAIR TRANSFORMATION - |
+        p.prt.changeHairColor(getHairColor(p.prt.haircolor))
+
+        '| - BODY TRANSFORMATION - |
+        p.prt.setIAInd(pInd.ears, 3, p.prt.iArrInd(pInd.ears).Item2, False)
+        p.prt.setIAInd(pInd.wings, 10, True, False)
+
+        If p.breastSize > 2 Then p.breastSize = 2
+        If p.breastSize < 0 Then p.breastSize = 0
+
+        If p.buttSize > 2 Then p.buttSize = 2
+        If p.buttSize < 0 Then p.buttSize = 0
+    End Sub
+
     Private Shared Function getHairColor(ByVal hc As Color) As Color
         Dim c As Color
 
