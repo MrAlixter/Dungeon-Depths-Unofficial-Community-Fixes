@@ -44,4 +44,31 @@
 
         p.changeClass("Cleric")
     End Sub
+
+    Public Shared Sub succubusPrincessStep1()
+        Dim p As Player = Game.player1
+
+        p.changeForm("Angel")
+        p.changeClass("Bimbo")
+
+        'angel transformation
+        p.changeHairColor(Color.FromArgb(255, 255, 89, 150))
+
+        p.prt.setIAInd(pInd.eyes, 26, True, True)
+        p.prt.setIAInd(pInd.eyebrows, 5, True, False)
+        p.prt.setIAInd(pInd.mouth, 27, True, True)
+
+        p.prt.setIAInd(pInd.rearhair, 8, True, False)
+        p.prt.setIAInd(pInd.midhair, 10, True, False)
+
+        p.prt.setIAInd(pInd.wings, 9, True, False)
+
+        p.breastSize = 3
+        p.buttSize = 2
+        p.dickSize = -1
+
+        If Not p.equippedArmor.getAName.Equals("Naked") Then p.inv.add(p.equippedArmor.getAName, -1)
+        If p.inv.getCountAt("Vestment_of_Amaraphne") < 1 Then p.inv.add("Vestment_of_Amaraphne", 1)
+        EquipmentDialogBackend.equipArmor(p, "Vestment_of_Amaraphne", True)
+    End Sub
 End Class

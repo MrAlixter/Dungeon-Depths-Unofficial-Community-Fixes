@@ -16,11 +16,11 @@
             Exit Sub
         End If
 
-        MyBase.getUser.addLust(-20)
-        TextEvent.pushCombat("Focus Up!" & vbCrLf & "-20 Lust.")
+        MyBase.getUser.addLust(-50)
+        TextEvent.pushCombat("Focus Up!" & vbCrLf & "-50 Lust.")
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object
-        Return "Reduces the user's LUST by 20, as long as they are able to focus."
+        Return "Reduces the user's LUST by 50, as long as they are able to focus."
     End Function
 End Class

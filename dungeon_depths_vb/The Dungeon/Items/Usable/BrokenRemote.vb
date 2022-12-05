@@ -3,7 +3,7 @@
 
     Public Const ITEM_NAME As String = "Broken_Remote"
 
-    Public Shared forms = {"Half-Gorgon", "Gynoid", "Amazon", "Mindless", "Rando", "Half-Broodmother", "Broodmother", "Minotaur Cow", "Dragon", "Succubus", "Slime", "Bimbo", "Cake", "Blob", "Horse", "Oni", "Alraune", "Minotaur Bull", "Targax", "Half-Dragon (R)", "Tigress", "Succubus (Q)", "Minotaur Cow (B)", "Inversion", "Bimbo (Gold)", "Bunny Girl", "Tigress", "Apple", "Bee Girl"}
+    Public Shared forms = {"Half-Gorgon", "Gynoid", "Amazon", "Mindless", "Rando", "Half-Broodmother", "Broodmother", "Minotaur Cow", "Dragon", "Succubus", "Slime", "Bimbo", "Cake", "Blob", "Horse", "Oni", "Alraune", "Minotaur Bull", "Targax", "Half-Dragon (R)", "Tigress", "Succubus (Q)", "Minotaur Cow (B)", "Inversion", "Bimbo (Gold)", "Bunny Girl", "Tigress", "Apple", "Bee Girl", "Amaraphne Angel"}
     Public Shared selectedForm = "Rando"
 
     Sub New()
@@ -62,6 +62,7 @@
         tf2s.Add("Bunny Girl", AddressOf DancerTF.step1)
         tf2s.Add("Apple", AddressOf FaePApple.appleTF)
         tf2s.Add("Bee Girl", AddressOf BeeHoneyTF.fullTF)
+        tf2s.Add("Amaraphne Angel", AddressOf AmaraphneAngelTF.succubusPrincessStep1)
 
         If Not tfs.ContainsKey(form) And Not tf2s.ContainsKey(form) Then Exit Sub
 

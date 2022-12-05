@@ -541,6 +541,15 @@
             End If
         End If
     End Sub
+    Shared Sub crypticCursemark(ByRef p As Player)
+        If p.getLust <= 25 And Not p.className.Equals("Mindless") Then
+            MindlessTF.step1alt(p, -1)
+            TextEvent.pushAndLog("Your mind fades away...")
+            p.drawPort()
+        ElseIf p.getLust > 25 And p.className.Equals("Mindless") And Not p.pState.pClass.name.Equals("Mindless") Then
+            p.revertToPState()
+        End If
+    End Sub
     Public Shared Sub randomPoly()
         randomPoly(Game.player1.pState)
     End Sub

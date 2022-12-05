@@ -67,8 +67,7 @@
             p.knownSpecials.Add(learnedS)
         End If
 
-        TextEvent.pushLog("Uvona's Blessing!")
-        TextEvent.push("Uvona's Blessing!" & vbCrLf & "Praying to the goddess of fugue has caused you to forget " & forgottenS & ", and learn " & learnedS & "!")
+        TextEvent.pushAndLog("Uvona's Blessing!" & vbCrLf & "Praying to the goddess of fugue has caused you to forget " & forgottenS & ", and learn " & learnedS & "!")
     End Sub
 
     Sub errorout()

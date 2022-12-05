@@ -56,7 +56,7 @@
     End Sub
     Shared Sub tf()
         CType(Game.hteach, HypnoTeach).hypnotize("Perfect!" & DDUtils.RNRN &
-                                                 "Speaking of perfection, have you seen my pendant?  I know it is a bit cliched, but does seeing it swing back and forth not just relax you so... perfectly?" & DDUtils.RNRN &
+                                                 "Speaking of perfection, have you seen my pendant?  I know it may seem a bit clichéd, but does seeing it swing back and forth not just relax you so... perfectly?" & DDUtils.RNRN &
                                                  "Back... and forth... watch it glisten in the light..." & DDUtils.RNRN &
                                                  "Feel yourself go deeper and deeper... deeper... and deeper... until you just..." & DDUtils.RNRN &
                                                  "*SNAP*" & DDUtils.RNRN &

@@ -219,6 +219,7 @@
     <Compile Include="Entities\Player\Transformations\PreferredFormTF.vb" />
     <Compile Include="Entities\Player\Transformations\FaePrincessTF.vb" />
     <Compile Include="Entities\Player\Transformations\BeeHoneyTF.vb" />
+    <Compile Include="Items\Equipment\Accesories\SPCursemark.vb" />
     <Compile Include="Items\Equipment\Accesories\FaerieBlossom.vb" />
     <Compile Include="Items\Equipment\Accesories\CursedBridle.vb" />
     <Compile Include="Items\Equipment\Accesories\FaeQueenAmulet.vb" />
