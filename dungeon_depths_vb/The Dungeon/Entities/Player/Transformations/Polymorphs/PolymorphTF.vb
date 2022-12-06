@@ -36,10 +36,6 @@
                 Return New SpotFuseTF()
             Case "Mindless"
                 Return New MindlessTF()
-            Case "MindlessAlt"
-                Dim tf = New MindlessTF()
-                tf.altNew()
-                Return tf
             Case "Shrunken"
                 Return New ShrunkenTF()
             Case "MASBimbo"

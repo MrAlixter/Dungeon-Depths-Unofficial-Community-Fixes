@@ -122,6 +122,16 @@ Public Class Portrait
             If ent.getPlayer.perks(perk.lurk) > 0 Then
                 iArr(NUM_IMG_LAYERS) = shrub()
             End If
+
+            If ent.getPlayer.className.Equals("Mindless") And Not ent.getPlayer.isPetrified Then
+                If sexBool() Then
+                    iArr(pInd.eyes) = imgLib.atrs(pInd.eyes).getAt(New Tuple(Of Integer, Boolean, Boolean)(33, True, True))
+                    iArr(pInd.mouth) = imgLib.atrs(pInd.mouth).getAt(New Tuple(Of Integer, Boolean, Boolean)(16, True, True))
+                Else
+                    iArr(pInd.eyes) = imgLib.atrs(pInd.eyes).getAt(New Tuple(Of Integer, Boolean, Boolean)(10, False, True))
+                    iArr(pInd.mouth) = imgLib.atrs(pInd.mouth).getAt(New Tuple(Of Integer, Boolean, Boolean)(6, False, True))
+                End If
+            End If
         End If
 
         'Dim endTime = DDDateTime.getTimeNow()
@@ -257,7 +267,7 @@ Public Class Portrait
     Sub colorEars(ByVal c As Color)
         Dim recolorFunction = If(Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing AndAlso ent.getPlayer.isPetrified, Function(img, clr) petrificationRecolor(img, clr), Function(img, clr) skinRecolor(img, clr))
 
-        If Not checkMalInd(pInd.ears, 1) And Not checkFemInd(pInd.ears, 1) And
+        If (Not checkMalInd(pInd.ears, 1) And Not checkFemInd(pInd.ears, 1) And
            Not checkMalInd(pInd.ears, 2) And Not checkFemInd(pInd.ears, 2) And
            Not checkMalInd(pInd.ears, 4) And Not checkFemInd(pInd.ears, 4) And
            Not checkNDefFemInd(pInd.ears, 7) And
@@ -266,7 +276,7 @@ Public Class Portrait
            Not checkNDefFemInd(pInd.ears, 11) And
            Not checkNDefFemInd(pInd.ears, 13) And
            Not checkNDefFemInd(pInd.ears, 15) And
-           Not checkNDefMalInd(pInd.ears, 6) Then
+           Not checkNDefMalInd(pInd.ears, 6)) Or (Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing AndAlso ent.getPlayer.isPetrified) Then
             iArr(pInd.ears) = recolorFunction(imgLib.atrs(pInd.ears).getAt(iArrInd(pInd.ears)), c)
         End If
     End Sub
@@ -364,7 +374,7 @@ Public Class Portrait
 
     '| - OTHER LAYERS - |
     Public Sub lustBlushUpdate()
-        If ent Is Nothing OrElse Not ent.GetType Is GetType(Player) Then
+        If ent Is Nothing OrElse ent.getPlayer Is Nothing Then
             iArr(pInd.blush) = nullImg
             Exit Sub
         End If
@@ -642,7 +652,7 @@ Public Class Portrait
 
         If checkFemInd(pInd.wings, 10) Then iArr(pInd.wings) = Portrait.hairRecolor(imgLib.atrs(pInd.wings).getAt(iArrInd(pInd.wings)), DDUtils.cShift(c, Color.White, 75))
 
-        If Not ent Is Nothing AndAlso ent.GetType Is GetType(Player) AndAlso CType(ent, Player).perks(perk.astatue) > -1 Then
+        If Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing AndAlso ent.getPlayer.isPetrified Then
             iArr(pInd.eyes) = Portrait.hairRecolor(imgLib.atrs(pInd.eyes).getAt(iArrInd(pInd.eyes)), c)
             iArr(pInd.mouth) = Portrait.hairRecolor(imgLib.atrs(pInd.mouth).getAt(iArrInd(pInd.mouth)), c)
             iArr(pInd.nose) = Portrait.hairRecolor(imgLib.atrs(pInd.nose).getAt(iArrInd(pInd.nose)), c)
@@ -658,14 +668,34 @@ Public Class Portrait
         Dim p = If((Not ent Is Nothing AndAlso ent.GetType Is GetType(Player)), CType(ent, Player), Nothing)
 
         If c.A = 255 Then
+            '| -- Body -- |
             iArr(pInd.body) = recolorFunction(imgLib.atrs(pInd.body).getAt(iArrInd(pInd.body)), c)
-            If Not p Is Nothing AndAlso Not p.pForm.getOverlayU(p).Item1 = 0 Then iArr(pInd.body) = CreateFullBodyBMP({nullImg, iArr(pInd.body), imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayU(p))})
+            If Not p Is Nothing AndAlso Not p.pForm.getOverlayU(p).Item1 = 0 Then
+                Dim form_overlay As Image = imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayU(p))
+                If p.isPetrified Then form_overlay = recolorFunction(form_overlay, c)
+                iArr(pInd.body) = CreateFullBodyBMP({nullImg, iArr(pInd.body), form_overlay})
+            End If
+
+            '| -- Chest -- |
             iArr(pInd.chest) = recolorFunction(imgLib.atrs(pInd.chest).getAt(iArrInd(pInd.chest)), c)
-            If Not p Is Nothing AndAlso Not p.pForm.getOverlayB(p).Item1 = 0 Then iArr(pInd.chest) = CreateFullBodyBMP({nullImg, iArr(pInd.chest), imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayB(p))})
+            If Not p Is Nothing AndAlso Not p.pForm.getOverlayB(p).Item1 = 0 Then
+                Dim form_overlay As Image = imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayB(p))
+                If p.isPetrified Then form_overlay = recolorFunction(form_overlay, c)
+                iArr(pInd.chest) = CreateFullBodyBMP({nullImg, iArr(pInd.chest), form_overlay})
+            End If
+
+            '| -- Shoulders -- |
             iArr(pInd.shoulders) = recolorFunction(imgLib.atrs(pInd.shoulders).getAt(iArrInd(pInd.shoulders)), c)
-            If Not p Is Nothing AndAlso Not p.pForm.getOverlayS(p).Item1 = 0 Then iArr(pInd.shoulders) = CreateFullBodyBMP({nullImg, iArr(pInd.shoulders), imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayS(p))})
+            If Not p Is Nothing AndAlso Not p.pForm.getOverlayS(p).Item1 = 0 Then
+                Dim form_overlay As Image = imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayS(p))
+                If p.isPetrified Then form_overlay = recolorFunction(form_overlay, c)
+                iArr(pInd.shoulders) = CreateFullBodyBMP({nullImg, iArr(pInd.shoulders), form_overlay})
+            End If
+
+            '| -- Main Body Overlay -- |
             iArr(pInd.bodyoverlay) = recolorFunction(imgLib.atrs(pInd.bodyoverlay).getAt(iArrInd(pInd.bodyoverlay)), c)
         Else
+            'If the transparancy is less than complete, combine all body layers before recoloring
             Dim bImg = CreateFullBodyBMP({imgLib.atrs(pInd.body).getAt(iArrInd(pInd.body)), imgLib.atrs(pInd.bodyoverlay).getAt(iArrInd(pInd.bodyoverlay)),
                                           imgLib.atrs(pInd.shoulders).getAt(iArrInd(pInd.shoulders)), imgLib.atrs(pInd.chest).getAt(iArrInd(pInd.chest))})
             iArr(pInd.body) = recolorFunction(bImg, c)
@@ -674,12 +704,25 @@ Public Class Portrait
             iArr(pInd.bodyoverlay) = nullImg
         End If
 
+        '| -- ;) -- |
         If renderMode <> RENDER_MODE.half Then iArr(pInd.genitalia) = recolorFunction(imgLib.atrs(pInd.genitalia).getAt(iArrInd(pInd.genitalia)), c)
+
+        '| -- Face -- |
         iArr(pInd.face) = recolorFunction(imgLib.atrs(pInd.face).getAt(iArrInd(pInd.face)), c)
-        If Not p Is Nothing AndAlso Not p.pForm.getOverlayF(p).Item1 = 0 Then iArr(pInd.face) = CreateFullBodyBMP({nullImg, iArr(pInd.face), imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayF(p))})
+        If Not p Is Nothing AndAlso Not p.pForm.getOverlayF(p).Item1 = 0 Then
+            Dim form_overlay As Image = imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayF(p))
+            If p.isPetrified Then form_overlay = recolorFunction(form_overlay, c)
+            iArr(pInd.face) = CreateFullBodyBMP({nullImg, iArr(pInd.face), form_overlay})
+        End If
+
+        '| -- Misc. -- |
+        If Not p Is Nothing AndAlso p.isPetrified Then
+            iArr(pInd.wings) = recolorFunction(iArr(pInd.wings), c)
+            iArr(pInd.horns) = recolorFunction(iArr(pInd.horns), c)
+            iArr(pInd.tail) = recolorFunction(iArr(pInd.tail), c)
+        End If
 
         colorEars(c)
-        'iArr(pInd.nose) = recolorFunction(imgLib.atrs(pInd.nose).getAt(iArrInd(pInd.nose)), c)
     End Sub
 
     Shared Function mkIAInd(ByVal i As Integer, ByVal fem As Boolean, ByVal non_def As Boolean) As Tuple(Of Integer, Boolean, Boolean)

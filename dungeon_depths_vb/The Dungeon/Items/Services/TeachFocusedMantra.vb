@@ -33,7 +33,12 @@
         End If
 
         count -= 1
-        CType(Game.hteach, HypnoTeach).hypnotize("Have you seen my pendant?  I know it is a bit of a cliche, but doesn't seeing it swing back and forth just relax you so perfectly?  Back...and forth...watch it glisten in the light...feel yourself go deeper and deeper...deeper...and deeper...until you just...*SNAP*...drift away...", AddressOf wakeup)
+        CType(Game.hteach, HypnoTeach).hypnotize("Perfect!" & DDUtils.RNRN &
+                                                 "Speaking of perfection, have you seen my pendant?  I know it may seem a bit clichéd, but does seeing it swing back and forth not just relax you so... perfectly?" & DDUtils.RNRN &
+                                                 "Back... and forth... watch it glisten in the light..." & DDUtils.RNRN &
+                                                 "Feel yourself go deeper and deeper... deeper... and deeper... until you just..." & DDUtils.RNRN &
+                                                 "*SNAP*" & DDUtils.RNRN &
+                                                 "...drift away...", AddressOf wakeup)
     End Sub
     Sub wakeup()
         Game.player1.learnSpecial("Focus Up")

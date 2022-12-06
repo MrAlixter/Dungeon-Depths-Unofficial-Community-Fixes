@@ -157,9 +157,9 @@
         If Int(Rnd() * 20) = 0 And Game.currFloor.floorNumber <> 7 Then
             discount = 0.25
             img_index = LocalImgInd.alt4
-            Return "Like, hey!  I, like, totally just got back from negot...nagosh... um, trying to work out a deal with that wizard guy, and it like, didn't go too well..." & DDUtils.RNRN &
+            Return "Like, hey!  I, like, totally just got back from negot... nagosh... um, trying to work out a deal with that wizard guy, and it like, didn't go too well..." & DDUtils.RNRN &
                    "But hey, now I feel soooo gooood, and I'm even doing a I'm-having-fun sale!  I ran into Food Guy, and don't tell him I said this but he's, like, toootally a cutie..." & DDUtils.RNRN &
-                   "Anyway, like, he has that panana...penasi...special food thing that can get me back to my normal self!" & DDUtils.RNRN &
+                   "Anyway, like, he has that panana... penasi... special food thing that can get me back to my normal self!" & DDUtils.RNRN &
                    "But for now, I'm, like, gonna take a lil' break from being all serious!  Maybe I'll see what else he has for me to put in my mouth... ~🖤"
         ElseIf Int(Rnd() * 20) = 1 And Game.currFloor.floorNumber <> 7 Then
             img_index = LocalImgInd.alt2
@@ -180,7 +180,7 @@
     End Function
     Protected Overrides Function bunnyDialog(ByRef p As Player)
         Return "HI!" & DDUtils.RNRN &
-               "I, like, don't know if it would be smart for me to try to hypno...hypotho... um, do my thing to you right now... but I totally have some tapes you can use!"
+               "I, like, don't know if it would be smart for me to try to hypno... hypotho... um, do my thing to you right now... but I totally have some tapes you can use!"
     End Function
     Protected Overrides Function princessDialog(ByRef p As Player)
         Return "Hark!" & DDUtils.RNRN &

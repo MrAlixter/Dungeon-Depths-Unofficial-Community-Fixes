@@ -1260,7 +1260,6 @@ Public Class Player
         xp = CInt(nextlevelPercentage * nextLevelXp)
     End Sub
     Public Sub petrify(ByVal c As Color, ByVal dur As Integer)
-        If pForm.name.Equals("Dragon") Or pForm.name.Equals("Broodmother") Then revertToPState()
         savePState()
 
         perks(perk.astatue) = dur
@@ -1368,7 +1367,7 @@ Public Class Player
     Public Overrides Sub update()
         '|COMBAT|
         If perks(perk.astatue) > -1 Then nextCombatAction = AddressOf PerkEffects.statueMove
-        If perks(perk.mesmerized) > -1 AndAlso Int(Rnd() * 2) = 0 Then nextCombatAction = AddressOf PerkEffects.mesStun
+        If (perks(perk.mesmerized) > -1 Or className.Equals("Mindless")) AndAlso Int(Rnd() * 2) = 0 Then nextCombatAction = AddressOf PerkEffects.mesStun
         If perks(perk.stunned) = 1 Then nextCombatAction = AddressOf PerkEffects.stun
         If Game.currFloor.floorNumber = 13 And perks(perk.faepassangers) = 1 Or perks(perk.faepassangers) = 2 Or perks(perk.faepassangers) = 3 Then nextCombatAction = AddressOf FaeWoodsQ2A.faeAttack
 
@@ -1626,6 +1625,9 @@ Public Class Player
         'succubus curse
         If perks(perk.succubuscurse) > -1 Then
             PerkEffects.curseOfBimbo(Me)
+        End If
+        If Not equippedAcce Is Nothing AndAlso equippedAcce.getAName.Equals(SPCursemark.ITEM_NAME) Then
+            PerkEffects.crypticCursemark(Me)
         End If
 
         description = CStr(name & " is a " & sex & " " & pForm.name & " " & pClass.name)

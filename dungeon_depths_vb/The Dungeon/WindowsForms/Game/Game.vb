@@ -1516,6 +1516,8 @@ Public Class Game
                 Return True
             Case cKeys(cmds.special)
                 specialKey()
+            Case (cKeys(cmds.wait) Or Keys.Control)
+                waitXKey()
             Case cKeys(cmds.wait)
                 waitKey()
             Case cKeys(cmds.run)
@@ -2474,16 +2476,45 @@ Public Class Game
     Sub waitKey()
         closeLblEvent()
 
+        TextEvent.pushAndLog("You wait for a bit...")
+        waitAction()
+    End Sub
+    Sub waitXKey()
+        closeLblEvent()
+
+        Dim x_prompt As String = InputBox("Wait for how many turns?", "Wait Timer", 0)
+        Dim x As Integer = Math.Min(If(IsNumeric(x_prompt), CInt(x_prompt), 0), 1000)
+        x_prompt = x
+
+        TextEvent.pushLog("You begin to wait...")
+
+        Do While x > 0
+            x -= 1
+
+            If waitAction() Or lblEvent.Visible Or pnlEvent.Visible Then Exit Do
+        Loop
+
+        TextEvent.pushLog("You wait for " & x_prompt - Math.Max(x, 0) & " turns.")
+        If Not lblEvent.Visible And Not pnlEvent.Visible Then TextEvent.push("You wait for " & x_prompt - Math.Max(x, 0) & " turns...")
+    End Sub
+    Function waitAction() As Boolean
         Dim m As NPC = getCombatTarget(player1)
         player1.setTarget(m)
 
-        If Not combat_engaged And Not shop_npc_engaged And player1.quests(qInd.faewoods1b).canGet Then
-            player1.quests(qInd.faewoods1b).init()
+        If Not combat_engaged And Not shop_npc_engaged And Int(Rnd() * 10) = -1 Then
+            randomEvents()
+            Return True
         End If
 
-        TextEvent.push("You wait for a bit...")
+        If Not combat_engaged And Not shop_npc_engaged And player1.quests(qInd.faewoods1b).canGet Then
+            player1.quests(qInd.faewoods1b).init()
+            Return True
+        End If
+
         progressTurn()
-    End Sub
+
+        Return False
+    End Function
     Private Sub btnWait_Click(sender As Object, e As EventArgs) Handles btnWait.Click
         waitKey()
     End Sub
