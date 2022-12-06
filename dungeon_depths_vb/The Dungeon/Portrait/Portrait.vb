@@ -187,7 +187,7 @@ Public Class Portrait
     '| - MASKING - |
     Shared Function hoodHairMask(ByRef img As Image, ByRef c_mask As Image, Optional ByVal final_y As Integer = 150) As Bitmap
         'Assumes that the two images are the same size
-        If img Is Nothing OrElse c_mask Is Nothing OrElse Not img.Size.Equals(c_mask.Size) Then Return nullImg
+        If img Is Nothing OrElse c_mask Is Nothing OrElse Not img.Size.Equals(c_mask.Size) Then Return img
 
         Dim bmp As Bitmap = New Bitmap(img)
         Dim b_c_mask As Bitmap = New Bitmap(c_mask)
@@ -206,7 +206,7 @@ Public Class Portrait
     End Function
     Shared Function topClothesMask(ByRef img As Image, ByRef c_mask As Image, Optional ByVal initial_y As Integer = 265) As Bitmap
         'Assumes that the two images are the same size
-        If img Is Nothing OrElse c_mask Is Nothing OrElse Not img.Size.Equals(c_mask.Size) Then Return nullImg
+        If img Is Nothing OrElse c_mask Is Nothing OrElse Not img.Size.Equals(c_mask.Size) Then Return img
 
         Dim bmp As Bitmap = New Bitmap(img)
         Dim b_c_mask As Bitmap = New Bitmap(c_mask)

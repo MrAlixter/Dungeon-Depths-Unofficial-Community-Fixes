@@ -50,6 +50,6 @@
 
         p.drawPort()
 
-        count -= 1
+        p.inv.setCount(ITEM_NAME, 0)
     End Sub
 End Class

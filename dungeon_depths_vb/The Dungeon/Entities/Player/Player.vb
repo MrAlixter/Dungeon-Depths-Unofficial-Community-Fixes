@@ -1492,8 +1492,8 @@ Public Class Player
             perks(perk.lightsource) -= 1
         End If
         'bunny ear effect
-        If perks(perk.bunnyears) > -1 Then
-            PerkEffects.bunnyEars(Me)
+        If perks(perk.bunnyears) > -1 And equippedAcce.getAName.Equals(BunnyEars.ITEM_NAME) Then
+            PerkEffects.bunnyEarsEff(Me)
         End If
         'phase deflector effect
         If perks(perk.pdeflector) > -1 Then

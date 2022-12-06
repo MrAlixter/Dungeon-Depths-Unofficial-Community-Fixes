@@ -24,7 +24,7 @@
         mInd = New Tuple(Of Integer, Boolean, Boolean)(0, False, True)
 
         '|Description|
-        setDesc("A black headband with a pair of white rabbit ears that would go well with .  While it seems ordinary enough at a glance, every once and a while it sparks suspiciously." & DDUtils.RNRN &
+        setDesc("A black headband with a pair of white rabbit ears that would go well with a skimpy outfit.  While it seems ordinary enough at a glance, every once and a while it sparks suspiciously." & DDUtils.RNRN &
                 "Dodge Effect" & DDUtils.RNRN &
                 "If equipped by a Bunny Girl:" & vbCrLf &
                 "+Max HP based on equipped armor" & vbCrLf &

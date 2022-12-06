@@ -34,6 +34,8 @@
         TextEvent.pushNPCDialog(out, AddressOf reset)
 
         p.drawPort()
+
+        p.inv.setCount(ITEM_NAME, 0)
     End Sub
 
     Private Shared Sub reset()

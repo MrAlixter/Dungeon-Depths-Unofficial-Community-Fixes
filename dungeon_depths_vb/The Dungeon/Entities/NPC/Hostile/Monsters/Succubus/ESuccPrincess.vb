@@ -243,15 +243,15 @@
 
     '| - MISC - |
     Private Function getPrefMode() As mode
-        Dim r = Int(Rnd() * 3)
+        Dim r = Int(Rnd() * 5)
 
         'If (Game.player1.formName.Equals("Angel") Or Game.player1.className.Equals("Valkyrie")) And Not pref_mode = mode.angel Then
         '    Return mode.angel
         'End If 
 
-        If r = 0 And Not pref_mode = mode.slut Then
+        If (r = 0 Or r = 3) And Not pref_mode = mode.slut Then
             Return mode.slut
-        ElseIf r = 1 And Not pref_mode = mode.cow Then
+        ElseIf (r = 1 Or r = 4) And Not pref_mode = mode.cow Then
             Return mode.cow
         ElseIf r = 2 And Not pref_mode = mode.dick Then
             Return mode.dick
