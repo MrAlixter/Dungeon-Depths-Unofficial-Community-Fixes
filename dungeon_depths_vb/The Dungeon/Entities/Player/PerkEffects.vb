@@ -43,6 +43,8 @@
 
             TextEvent.pushLog(exclaim & "  -2 health!")
             p.health -= 2 / p.getMaxHealth
+            p.UIupdate()
+
             If p.health <= 0 Then p.die(Monster.monsterFactory(15))
 
             If p.perks(perk.burn) >= 0 Then p.perks(perk.burn) -= 1
