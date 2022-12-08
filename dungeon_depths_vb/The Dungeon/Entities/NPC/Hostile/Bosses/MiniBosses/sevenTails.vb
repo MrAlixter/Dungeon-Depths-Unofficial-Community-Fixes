@@ -45,11 +45,11 @@
 
             hit(67, target)
         ElseIf target.getSPD > getSPD() Then
-            TextEvent.pushAndLog((getName() & " casts Swifter Haunches!  " & r_pronoun & " SPD raises massively..."))
+            TextEvent.pushAndLog((getName() & " casts Swifter Haunches!  " & DDUtils.capitalizeFirst(r_pronoun) & " SPD raises massively..."))
 
             speed *= 4
         ElseIf target.getATK > getATK() Then
-            TextEvent.pushAndLog((getName() & " casts Sharper Claws!  " & r_pronoun & " ATK raises massively..."))
+            TextEvent.pushAndLog((getName() & " casts Sharper Claws!  " & DDUtils.capitalizeFirst(r_pronoun) & " ATK raises massively..."))
 
             attack *= 4
         Else
@@ -61,14 +61,14 @@
 
     Public Overrides Function reactToSpell(spell As String) As Boolean
         If spell.Contains("Polymorph") Or spell.Contains("Turn to") Or spell.Contains("Petrify") Then
-            TextEvent.pushAndLog("Seven-Tails grins as the spell washes over her, to no effect!")
+            TextEvent.pushAndLog("Seven-Tails grins as the spell washes over " & r_pronoun & ", to no effect!")
             Return False
         End If
 
         If Game.player1.getWIL < 21 Then
-            TextEvent.pushLog("Seven-Tails grins as the spell washes over her, to no effect!" & DDUtils.RNRN &
-                            """Ooh, you need a deeper resolve for that one to do anything, dummy!  I'd say you're about... " & 21 - Game.player1.getWIL & " WIL points short...""")
-            TextEvent.pushCombat("Seven-Tails grins as the spell washes over her, to no effect!")
+            TextEvent.push("Seven-Tails grins as the spell washes over " & r_pronoun & ", to no effect!" & DDUtils.RNRN &
+                           """Ooh, you'd need better resolve for that one to do anything, dummy!  I'd say you're about... " & 21 - Game.player1.getWIL & " WIL points short...""")
+            TextEvent.pushLog("Seven-Tails grins as the spell washes over her, to no effect!")
             Return False
         End If
 
@@ -93,9 +93,11 @@
         Return took_dmg
     End Function
     Public Overrides Function takeCritDMG(ByRef dmg As Integer, ByRef source As Entity) As Boolean
-        TextEvent.pushAndLog("Seven-Tails lets out a little ""eep!"" as she dodges what would have been a critical hit...")
+        TextEvent.pushAndLog("Seven-Tails lets out a little ""eep!"" as " & pronoun & " dodges what would have been a critical hit...")
+
         Dim took_dmg = MyBase.takeDMG(1, source)
         shouldRun = shouldRunST()
+
         Return took_dmg
     End Function
 
@@ -123,15 +125,20 @@
 
         shouldRun = False
         Game.fromCombat()
-        TextEvent.push("With a poof of smoke, Seven-Tails teleports backwards, placing some distance between the two of you." & DDUtils.RNRN &
-                          """You..."" she mutters, venom dripping in her tone, ""I refuse to lose to the likes of you...""" & DDUtils.RNRN &
-                          "An inferno kicks up at her feet, and seven lines of fire rise out of the air behind her.  As she raises her arms, they spiral together into a seven-sided ring, and she boldly declares ""BEHOLD, MY ULTIMATE TECHNIQUE!  This spell is the PINNACLE of pyrotechnics, capable of rending the VERY SOUL of ANY who would dare stand against it.""" & DDUtils.RNRN &
-                          "Stiffling a smug giggle, she continues, ""Normally such an overwhelming spell would backfire 5 of 6 times even for a master of flame magic, but my ability 'LUCKY 7' allows me to cheat the VERY LAWS OF PROBABILITY!  PREPARE YOURSELF, FOR THE ALL-CONSUMING BLAZE OF MY '7th RING'!""" & DDUtils.RNRN &
-                          "You brace yourself for an impact, as a number strobes of heat ignite the surrounding foliage.  As the ring begins spinning in place though, Seven-Tails' maniacal grin slowly erodes.  ""Bu-bu-but the o-odds of t-that would only be one in t-three milli...""" & DDUtils.RNRN &
-                          "Before she has time to let out any more than an ""eep!"", the blazing wheel erupts into a thick, blinding cloud of black ash.  As the plume settles down it's clear that your opponent is nowhere to be seen, although there does seem to be another ornemental fox statue in her place.", AddressOf deathStage2)
-        TextEvent.pushLog("Seven-Tails casts 7th Ring... but it backfires...")
+        TextEvent.push("With a poof of smoke, Seven-Tails teleports backwards." & DDUtils.RNRN &
+                       """You..."" she mutters, venom dripping in her tone, ""I refuse to lose to the likes of you...""" & DDUtils.RNRN &
+                       "An inferno kicks up at her feet, and seven lines of fire rise out of the air behind her.  As she raises her arms, they spiral together into a seven-sided ring, and she boldly declares ""BEHOLD, MY ULTIMATE TECHNIQUE!  This spell is the PINNACLE of pyrotechnics, capable of rending the VERY SOUL of ANY who would dare stand against it.""" & DDUtils.RNRN &
+                       "Stiffling a smug giggle, she continues, ""Normally such an overwhelming spell would backfire 5 of 6 times even for a master of flame magic, but my ability 'LUCKY 7' allows me to cheat the VERY LAWS OF PROBABILITY!  PREPARE YOURSELF, FOR THE ALL-CONSUMING BLAZE OF MY '7th RING'!""" & DDUtils.RNRN &
+                       "You brace yourself for an impact, as strobes of heat ignite the surrounding foliage.", AddressOf deathStage2)
     End Sub
     Private Sub deathStage2()
+        TextEvent.pushLog("Seven-Tails casts 7th Ring... but it backfires.")
+        TextEvent.push("The ring of flame begins spinning in place though, and Seven-Tails' maniacal grin slowly fades.  " & DDUtils.capitalizeFirst(pronoun) & " seems distracted by " & p_pronoun & " spellcraft, almost as though she has forgotten your presence." & DDUtils.RNRN &
+                       """B-b-but the odds of t-that would only be one in t-three milli...""" & DDUtils.RNRN &
+                       "Before she has time to let out any more than an ""eep!"", the blazing wheel erupts into a thick, blinding cloud of black ash.  As the plume settles down, you find that Seven-Tails has once again vanished." & DDUtils.RNRN &
+                       "There does seem to be another ornemental fox statue in her place, though...", AddressOf deathStage3)
+    End Sub
+    Private Sub deathStage3()
         Game.pnlEvent.Visible = False
 
         Game.combat_engaged = True
@@ -158,7 +165,8 @@
         Dim p = Game.player1
 
         Game.picNPC.BackgroundImage = ShopNPC.gbl_img.atrs(0).getAt(65)
-        TextEvent.pushNPCDialog("AHHH, what the hell!  Where did...  Why would...  WHAT?!?", AddressOf stailsDeath3)
+        TextEvent.pushNPCDialog("""AHHH, what the hell!  Where did... why would..." & DDUtils.RNRN &
+                                "WHAT?!?""", AddressOf stailsDeath3)
     End Sub
     Public Sub stailsDeath3()
         Dim p = Game.player1
@@ -166,17 +174,18 @@
         'Game.picNPC.BackgroundImage = ShopNPC.gbl_img.atrs(0).getAt(66)
         Game.picNPC.Visible = False
         TextEvent.push("As she relaxes her posture and her suprise fades into visible annoyance, the kitsune angles her weapon in your general direction. " & DDUtils.RNRN &
-                          """Clearly you're a product of my sister's work...  I don't suppose you were one of her opponents, were you?""" & DDUtils.RNRN &
-                          "With a rush of scorching wind, the edge of her blade glows white and the air surrounding it bursts into flame.  As the blaze engulfs you, her expression hardens and she continues," & DDUtils.RNRN &
-                          """Well, you should know for the rest of whatever future awaits you...""", AddressOf stailsDeath4)
+                       """Clearly you're a product of my sister's work...  I don't suppose you were one of her opponents, were you?""" & DDUtils.RNRN &
+                       "With a rush of scorching wind, the edge of her blade glows white and the air surrounding it bursts into flame.  As the blaze engulfs you, her expression hardens and she continues," & DDUtils.RNRN &
+                       """No matter.  Learn this well, should we ever come to somehow meet again...""", AddressOf stailsDeath4)
     End Sub
     Public Sub stailsDeath4()
         Dim p = Game.player1
 
         Game.picNPC.BackgroundImage = ShopNPC.gbl_img.atrs(0).getAt(66)
         Game.picNPC.Visible = True
-        TextEvent.pushNPCDialog("""...that I am nothing like my sister.""" & DDUtils.RNRN &
-                           "Press any non combat key to continue...", AddressOf p.die)
+        TextEvent.pushNPCDialog(DDUtils.capitalizeFirst(pronoun) & " slashes clean through you in a single blinding cut." & DDUtils.RNRN &
+                                """I am nothing like my sister.""" & DDUtils.RNRN &
+                                "Press any non combat key to continue...", AddressOf p.die)
     End Sub
 
     '|Arachne Fight|

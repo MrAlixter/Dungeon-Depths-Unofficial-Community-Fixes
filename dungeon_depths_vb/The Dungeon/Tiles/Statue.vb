@@ -16,7 +16,7 @@
             If m.name = "Marissa the Enchantress" Then
                 desc = "Marissa, once a powerful sorceress, is now little more than a lawn decoration."
             ElseIf m.name = "Targax the Brutal" Then
-                desc = "Even Targax's ability to reflect spells was not enough to prevent him from his stony fate."
+                desc = "Even Targax's ability to reflect spells was not enough to save him from his stony fate."
             End If
         ElseIf m.GetType().IsSubclassOf(GetType(ShopNPC)) Then
             desc = "The " & name & " has been turned to stone."
@@ -43,23 +43,29 @@
 
     Sub examine()
         If name = "seventailsstatue" Then
-            Dim m As SevenTails = MiniBoss.miniBossFactory(7)
-
-            'adds the miniboss to combat queues
-            Monster.targetRoute(m)
-            Game.toCombat(m)
-
-            TextEvent.pushCombat(("The golden statue comes to life, and " & m.getName() & " attacks!"))
-            TextEvent.pushLog(("The golden statue comes to life, and " & m.getName() & " attacks!"))
-
-            Game.player1.perks(perk.seventailsstage) = 1
-
-            pos = New Point(-1, -1)
-            Game.drawBoard()
+            Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(152), "You see here a golden statue of a fox.  It begins to shimmer as you approach, and a disembodied voice seems to boom from all around you." & DDUtils.RNRN &
+                                                                  """Well, well, well...  What do we have here?  Another " & Game.player1.formName & "; here to no doubt slay and steal, right?""" & DDUtils.RNRN &
+                                                                  "The statue begins to morph upwards into a masked kitsune, who stretches lazily as she approaches you.  She clears her throat, and strikes a dramatic pose." & DDUtils.RNRN &
+                                                                  """Call me Seven-Tails, because- um, I have seven tails.  PREPARE YOURSELF, fiend, your rampage ends here...""", AddressOf to7TailsFight)
         Else
             TextEvent.pushLog(desc)
             TextEvent.push(desc)
         End If
+    End Sub
+
+    Private Sub to7TailsFight()
+        Dim m As SevenTails = MiniBoss.miniBossFactory(7)
+
+        'adds the miniboss to combat queues
+        Monster.targetRoute(m)
+        Game.toCombat(m)
+
+        TextEvent.pushAndLog("The golden statue comes to life, and " & m.getName() & " attacks!")
+
+        Game.player1.perks(perk.seventailsstage) = 1
+
+        pos = New Point(-1, -1)
+        Game.drawBoard()
     End Sub
 
     Function getBoardCharacter() As String

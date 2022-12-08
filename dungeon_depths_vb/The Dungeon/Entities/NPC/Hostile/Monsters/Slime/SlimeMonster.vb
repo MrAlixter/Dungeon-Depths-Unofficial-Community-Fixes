@@ -21,7 +21,7 @@
         '|Misc|
         setupMonsterOnSpawn()
 
-        If Int(Rnd() * 30) = 0 Then
+        If Int(Rnd() * 45) = 0 Then
             name = "Beautiful Slime"
 
             inv.setCount(EyeOfTheBeholder.ITEM_NAME, 1)
