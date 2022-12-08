@@ -1341,8 +1341,6 @@ Public Class Player
         source.currTarget = Nothing
         source.nextCombatAction = Nothing
 
-        setHealth(0.25)
-
         If Not source Is Nothing AndAlso Not source.getSName Is Nothing Then
             TextEvent.pushLog("You are defeated!")
 
@@ -1350,11 +1348,14 @@ Public Class Player
                 TextEvent.push("You starve to death!")
             ElseIf source.getName.Equals("Fire") Then
                 TextEvent.push("You burn to death!")
+                setHealth(0.0)
             ElseIf source.GetType.IsSubclassOf(GetType(ShopNPC)) Then
                 CType(source, ShopNPC).playerDeath(Me)
+                setHealth(0.25)
                 Exit Sub
             ElseIf source.GetType.IsSubclassOf(GetType(NPC)) Or source.GetType.IsSubclassOf(GetType(Monster)) Then
                 CType(source, NPC).playerDeath(Me)
+                setHealth(0.25)
                 Exit Sub
             End If
         End If
@@ -1492,8 +1493,8 @@ Public Class Player
             perks(perk.lightsource) -= 1
         End If
         'bunny ear effect
-        If perks(perk.bunnyears) > -1 Then
-            PerkEffects.bunnyEars(Me)
+        If perks(perk.bunnyears) > -1 And equippedAcce.getAName.Equals(BunnyEars.ITEM_NAME) Then
+            PerkEffects.bunnyEarsEff(Me)
         End If
         'phase deflector effect
         If perks(perk.pdeflector) > -1 Then

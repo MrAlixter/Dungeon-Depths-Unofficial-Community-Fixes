@@ -23,8 +23,7 @@
         Dim out = ""
 
         'unequips
-        EquipmentDialogBackend.armorChange(p, "Naked")
-        EquipmentDialogBackend.weaponChange(p, "Fists")
+        EquipmentDialogBackend.armorChange(p, "Naked") 
 
         'dragon transformation
         p.learnSpell("Dragon's Breath")

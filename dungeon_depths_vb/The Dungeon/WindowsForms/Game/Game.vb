@@ -2240,16 +2240,21 @@ Public Class Game
             Next
         End If
 
-        If mDun.floor_boss.ContainsKey(mDun.numCurrFloor) Then
-            If mDun.currFloorBoss.Equals("Key") And player1.inv.getCountAt("Key") > 0 Then currFloor.beatBoss = True
-            If player1.pos = currFloor.stairs And currFloor.beatBoss Then
-                If mDun.currFloorBoss.Equals("Key") Then player1.inv.add("Key", -1)
-                player1.inv.invNeedsUDate = True
-                player1.UIupdate()
+        If mDun.floor_boss.ContainsKey(mDun.numCurrFloor) And Not currFloor.beatBoss Then
+            If mDun.currFloorBoss.Equals("Key") And player1.pos = currFloor.stairs And player1.inv.getCountAt("Key") > 0 Then
+                currFloor.beatBoss = True
+
+                TextEvent.pushLog("Your key fits the lock, and with a *cthunk* the gate swings open!")
+
                 mDun.floorDown()
                 mDun.setFloor(currFloor)
+
                 initializeBoard()
                 If combat_engaged Then fromCombat()
+
+                player1.inv.add("Key", -1)
+                player1.inv.invNeedsUDate = True
+                player1.UIupdate()
                 player1.canMoveFlag = True
             ElseIf player1.pos = currFloor.stairs Then
                 If mDun.currFloorBoss.Equals("Key") Then TextEvent.push("The stairs are behind a locked gate!  Perhaps the key is in a chest..." & DDUtils.RNRN & "[While this game is in development it can also be bought from any shop for 2500]") Else TextEvent.push("You must defeat " & mDun.currFloorBoss & "!")

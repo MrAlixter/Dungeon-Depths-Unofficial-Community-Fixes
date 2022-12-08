@@ -51,6 +51,8 @@
         TextEvent.pushNPCDialog(out)
 
         p.drawPort()
+
+        p.inv.setCount(ITEM_NAME, 0)
     End Sub
 
     Private Shared Function isPlayerTFed(ByRef p As Player) As Boolean

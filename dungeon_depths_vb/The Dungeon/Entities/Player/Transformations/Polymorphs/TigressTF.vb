@@ -24,7 +24,6 @@
 
         'unequips
         EquipmentDialogBackend.armorChange(p, "Naked")
-        EquipmentDialogBackend.weaponChange(p, "Fists")
 
         'goddess transformation
         If p.sex = "Male" Then

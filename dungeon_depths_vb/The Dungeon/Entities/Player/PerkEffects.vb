@@ -43,6 +43,8 @@
 
             TextEvent.pushLog(exclaim & "  -2 health!")
             p.health -= 2 / p.getMaxHealth
+            p.UIupdate()
+
             If p.health <= 0 Then p.die(Monster.monsterFactory(15))
 
             If p.perks(perk.burn) >= 0 Then p.perks(perk.burn) -= 1
@@ -172,7 +174,7 @@
             p.perks(perk.barbarian) = -1
         End If
     End Sub
-    Shared Sub bunnyEars(ByRef p As Player)
+    Shared Sub bunnyEarsEff(ByRef p As Player)
         If p.getLust = 0 Then
             If p.perks(perk.bunnyears) > 1 Then
                 p.revertToPState()
@@ -614,7 +616,7 @@
         Return flag
     End Function
     Shared Function bowTieEffect(ByRef p As Player) As Boolean
-        If p.perks(perk.bowtie) > -1 Then
+        If p.perks(perk.bowtie) > -1 And p.equippedAcce.getAName.Equals(Bowtie.ITEM_NAME) Then
             Dim r = Int(Rnd() * 10)
             If r > 8 And Not p.className.Equals("Bunny Girl") Then
                 Dim dTF = New DancerTF(1, 0, 0, False)
@@ -625,7 +627,7 @@
                 TextEvent.push("Your bowtie begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncoming blow!  Time returns to its normal speed shortly, and your bowtie returns to its inert state.")
                 Return True
             End If
-        ElseIf p.perks(perk.bunnyears) > -1 Then
+        ElseIf p.perks(perk.bunnyears) > -1 And p.equippedAcce.getAName.Equals(BunnyEars.ITEM_NAME) Then
             Dim r = Int(Rnd() * 10)
             If r > 4 Then
                 TextEvent.push("Your headband begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncoming blow!  Time returns to its normal speed shortly, and your bunny ear headband returns to its inert state.")
