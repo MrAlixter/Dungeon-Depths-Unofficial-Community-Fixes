@@ -8,7 +8,7 @@
         name = "Mayue, Feline Enchantress"
 
         '|Stats|
-        maxHealth = 140
+        maxHealth = 120
         attack = 44
         defense = 5
         speed = 44
