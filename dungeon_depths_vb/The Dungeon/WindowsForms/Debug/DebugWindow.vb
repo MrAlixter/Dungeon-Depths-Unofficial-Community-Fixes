@@ -64,16 +64,34 @@ Public Class Debug_Window
         Next
         boxForm.SelectedItem = Game.player1.formName
 
+        boxHealth.Maximum = DDUtils.INTLMT
         boxHealth.Value = Game.player1.getIntHealth
+
+        boxMaxHealth.Maximum = DDUtils.INTLMT
         boxMaxHealth.Value = Game.player1.maxHealth
+
+        boxMana.Maximum = DDUtils.INTLMT
         boxMana.Value = Game.player1.getMana
+
+        boxMaxMana.Maximum = DDUtils.INTLMT
         boxMaxMana.Value = Math.Max(Game.player1.maxMana, boxMaxMana.Minimum)
-        boxstamina.Value = Game.player1.stamina
+
+        boxStamina.Maximum = DDUtils.INTLMT
+        boxStamina.Value = Game.player1.stamina
+
+        boxAtk.Maximum = DDUtils.INTLMT
         boxAtk.Value = Game.player1.attack
+
+        boxDef.Maximum = DDUtils.INTLMT
         boxDef.Value = Game.player1.defense
+
+        boxWil.Maximum = DDUtils.INTLMT
         boxWil.Value = Game.player1.will
+
+        boxSpd.Maximum = DDUtils.INTLMT
         boxSpd.Value = Game.player1.speed
-        boxEvd.Value = -0
+
+        boxGold.Maximum = DDUtils.INTLMT
         boxGold.Value = Game.player1.gold
 
         pnlSC.BackColor = playerPortrait.skincolor
@@ -436,8 +454,8 @@ Public Class Debug_Window
         Game.player1.maxMana = boxMaxMana.Value
     End Sub
 
-    Private Sub boxstamina_ValueChanged(sender As Object, e As EventArgs) Handles boxstamina.ValueChanged
-        Game.player1.stamina = boxstamina.Value
+    Private Sub boxstamina_ValueChanged(sender As Object, e As EventArgs) Handles boxStamina.ValueChanged
+        Game.player1.stamina = boxStamina.Value
     End Sub
 
     Private Sub boxAtk_ValueChanged(sender As Object, e As EventArgs) Handles boxAtk.ValueChanged

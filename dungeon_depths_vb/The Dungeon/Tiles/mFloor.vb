@@ -1308,7 +1308,7 @@ Public Class mFloor
     End Sub
     Public Function getStartPlayerPos() As Point
         Select Case floorNumber
-            Case 5, 75
+            Case 5
                 Return New Point(5, 25)
             Case 9
                 Return New Point(4, 24)

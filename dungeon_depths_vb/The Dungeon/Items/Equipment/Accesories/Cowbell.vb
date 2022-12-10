@@ -31,7 +31,7 @@
 
     Overrides Sub onEquip(ByRef p As Player)
         p.health += 20 / p.getMaxHealth
-        p.ongoingTFs.Add(New MinoFTF(9, 15, 2.0, True))
+        p.ongoingTFs.add(New MinoFTF(9, 15, 2.0, True))
         If p.health > 1 Then p.health = 1
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)

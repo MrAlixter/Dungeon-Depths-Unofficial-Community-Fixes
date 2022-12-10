@@ -465,7 +465,7 @@ Public Class Game
         If mDun.floor_boss.ContainsKey(mDun.numCurrFloor) AndAlso currFloor.beatBoss = False AndAlso Not mDun.floor_boss(mDun.numCurrFloor).Equals("Key") And
             combat_engaged = False And player1.health > 0 And player1.canMoveFlag = True AndAlso
             New Point(player1.pos.Y, player1.pos.X).Equals(New Point(currFloor.stairs.Y, currFloor.stairs.X)) Then
-            If Not combat_engaged Then TextEvent.pushYesNo("Challenge the floor boss?", AddressOf ChallengeBoss, Nothing)
+            If Not combat_engaged And Not lblEvent.Visible And Not pnlEvent.Visible And Not picNPC.Visible Then TextEvent.pushYesNo("Challenge the floor boss?", AddressOf ChallengeBoss, Nothing)
         End If
 
         'If picNPC.Visible Then picNPC.BackgroundImage = NPCimgList(img_index)
@@ -2740,6 +2740,7 @@ Public Class Game
         queueSetup()
 
         '| - Print Dialog (if any) -|
+        If Not m.intro_taunt = "" Then TextEvent.pushCombat(m.intro_taunt)
         TextEvent.pushLog(DDUtils.capitalizeFirst(m.getNameWithTitle) & " attacks!")
     End Sub
     '| -- Movement -- |

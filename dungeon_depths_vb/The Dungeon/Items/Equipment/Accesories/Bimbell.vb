@@ -30,7 +30,7 @@
 
     Overrides Sub onEquip(ByRef p As Player)
         p.health += 40 / p.getMaxHealth
-        p.ongoingTFs.Add(New BimBellTF(9, 15, 2.0, True))
+        p.ongoingTFs.add(New BimBellTF(9, 15, 2.0, True))
         If p.health > 1 Then p.health = 1
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)

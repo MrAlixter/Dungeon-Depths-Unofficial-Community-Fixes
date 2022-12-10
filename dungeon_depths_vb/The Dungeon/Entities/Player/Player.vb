@@ -1322,6 +1322,7 @@ Public Class Player
         If inv.getCountAt("Extra_Life") > 0 Then
             inv.item("Extra_Life").add(-1)
             health = Math.Min(0.125 * inv.getCountAt("Extra_Life"), 1.0)
+            health = Math.Max(health, 0.1)
             TextEvent.pushAndLog("Extra_Life consumed!")
 
             Exit Sub
@@ -1348,7 +1349,6 @@ Public Class Player
                 TextEvent.push("You starve to death!")
             ElseIf source.getName.Equals("Fire") Then
                 TextEvent.push("You burn to death!")
-                setHealth(0.0)
             ElseIf source.GetType.IsSubclassOf(GetType(ShopNPC)) Then
                 CType(source, ShopNPC).playerDeath(Me)
                 setHealth(0.25)
@@ -1512,6 +1512,10 @@ Public Class Player
         If inv.getCountAt("Golden_Gum") > 0 And Not ongoingTFs.contains(tfind.goldbimbo) And Not className.Equals("Bimbo") Then
             TextEvent.push("A dizzy calm washes over you...")
             ongoingTFs.add(New GBimboTF(2, 20, 0.25, True))
+        End If
+        'cowbell cleanup
+        If perks(perk.cowbell) > -1 And Not (equippedAcce.getAName.Equals(Cowbell.ITEM_NAME) Or equippedAcce.getAName.Equals(Bimbell.ITEM_NAME) Or equippedAcce.getAName.Equals(ImmitationCowbell.ITEM_NAME)) Then
+            perks(perk.cowbell) = -1
         End If
         'imitation cowbell
         If Not pClass.name.Equals("Thrall") And forcedPath Is Nothing And prt.checkFemInd(pInd.horns, 12) AndAlso Int(Rnd() * 100) = 0 AndAlso Not Game.combat_engaged AndAlso Not Game.shop_npc_engaged Then

@@ -414,6 +414,7 @@
         internal_inventory.Add(CynthiasRemote.ITEM_NAME, New CynthiasRemote)         '387
         internal_inventory.Add(PixieDuster.ITEM_NAME, New PixieDuster)               '388
         internal_inventory.Add(SPCursemark.ITEM_NAME, New SPCursemark)               '389
+        internal_inventory.Add(CrackedBrick.ITEM_NAME, New CrackedBrick)             '390
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -463,7 +464,8 @@
                    Me.item(326), Me.item(339), Me.item(348), Me.item(351),
                    Me.item(353), Me.item(362), Me.item(365), Me.item(366),
                    Me.item(367), Me.item(368), Me.item(369), Me.item(370),
-                   Me.item(372), Me.item(377), Me.item(381), Me.item(388)}
+                   Me.item(372), Me.item(377), Me.item(381), Me.item(388),
+                   Me.item(390)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4), Me.item(65),
                    Me.item(15), Me.item(36), Me.item(37), Me.item(48),
@@ -483,7 +485,7 @@
                    Me.item(327), Me.item(328), Me.item(330), Me.item(338),
                    Me.item(344), Me.item(350), Me.item(362), Me.item(373),
                    Me.item(375), Me.item(379), Me.item(380), Me.item(387),
-                   Me.item(388)}
+                   Me.item(388), Me.item(390)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32),
                 Me.item(33), Me.item(34), Me.item(35), Me.item(44),
