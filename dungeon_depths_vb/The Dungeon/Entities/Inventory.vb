@@ -415,6 +415,8 @@
         internal_inventory.Add(PixieDuster.ITEM_NAME, New PixieDuster)               '388
         internal_inventory.Add(SPCursemark.ITEM_NAME, New SPCursemark)               '389
         internal_inventory.Add(CrackedBrick.ITEM_NAME, New CrackedBrick)             '390
+        'v13.0.0
+        internal_inventory.Add(RingOfTheRabbit.ITEM_NAME, New RingOfTheRabbit)       '391
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -509,7 +511,7 @@
                 Me.item(327), Me.item(337), Me.item(340), Me.item(342),
                 Me.item(344), Me.item(346), Me.item(349), Me.item(355),
                 Me.item(356), Me.item(361), Me.item(374), Me.item(375),
-                Me.item(376), Me.item(389)}
+                Me.item(376), Me.item(389), Me.item(391)}
 
         services = {Me.item(87), Me.item(113), Me.item(114), Me.item(121),
                     Me.item(122), Me.item(124), Me.item(131), Me.item(245),

@@ -23,29 +23,37 @@
 
         p.changeClass("Bunny Girl")
 
+        '| - Body TF - |
         p.breastSize = 2
-        p.prt.setIAInd(pInd.rearhair, 6, True, True)
-        p.prt.setIAInd(pInd.face, 0, True, False)
-        p.prt.setIAInd(pInd.midhair, 18, True, True)
-        p.prt.setIAInd(pInd.nose, 0, True, False)
+        p.buttSize = 1
 
+        '| - Face TF - |
+        p.prt.setIAInd(pInd.face, 0, True, False)
+        p.prt.setIAInd(pInd.nose, 0, True, False)
         p.prt.setIAInd(pInd.eyes, 24, True, True)
 
-        p.prt.setIAInd(pInd.eyebrows, 0, True, False)
-        p.prt.setIAInd(pInd.cloak, 0, True, False)
+        '| - Hair TF - |
+        p.prt.setIAInd(pInd.rearhair, 6, True, True)
+        p.prt.setIAInd(pInd.midhair, 18, True, True)
         p.prt.setIAInd(pInd.fronthair, 18, True, True)
+        p.prt.setIAInd(pInd.eyebrows, 0, True, False)
+
+        p.prt.setIAInd(pInd.cloak, 0, True, False)
 
         p.changeHairColor(BimboTF.bimboyellow1)
 
         If p.equippedArmor.d_boost > 15 Then
-            p.inv.add(94, 1)
-            EquipmentDialogBackend.armorChange(p, "Armored_Bunny_Suit")
+            If p.inv.getCountAt(BunnySuitA.ITEM_NAME) < 1 Then p.inv.add(BunnySuitA.ITEM_NAME, 1)
+            EquipmentDialogBackend.equipArmor(p, BunnySuitA.ITEM_NAME, True)
         Else
-            p.inv.add(16, 1)
-            EquipmentDialogBackend.armorChange(p, "Bunny_Suit")
+            If p.inv.getCountAt(BunnySuit.ITEM_NAME) < 1 Then p.inv.add(BunnySuit.ITEM_NAME, 1)
+            EquipmentDialogBackend.equipArmor(p, BunnySuit.ITEM_NAME, True)
         End If
 
-        TextEvent.push("Your bowtie glows, and everything slows down.  You attempt to deftly dodge the oncoming blow, but you aren't nimble enough.  Desperately, you focus on getting as much power to the bowtie as possible, and the aura around it shifts to a blinding crimson.  As the glow fades, you find yourself able to easily duck under the attack with a nimbleness you weren't aware you had before.  As time resumes its normal pace, you are shocked to discover that your body has become that of a rabbit themed hostess!  Fortunately you seem to have higher agilty now, though you doubt you can take as hard of a hit.")
+        TextEvent.push("Your bowtie glows, and everything slows down." & DDUtils.RNRN &
+                       "Still, even with this tremendous advantage you aren't fast enough.  Desperately, you focus everything you have into the bowtie and its aura crackles with blinding crimson light; before it erupts with a flare of mana." & DDUtils.RNRN &
+                       "In that instant, you find yourself able to easily duck under the attack." & DDUtils.RNRN &
+                       "Time resumes at its normal pace, and you are shocked to discover that you've been turned into a bunny-themed hostess!  Your speed is higher, though you doubt you can take as hard of a hit...")
         p.canMoveFlag = True
     End Sub
 

@@ -618,20 +618,32 @@
     Shared Function bowTieEffect(ByRef p As Player) As Boolean
         If p.perks(perk.bowtie) > -1 And p.equippedAcce.getAName.Equals(Bowtie.ITEM_NAME) Then
             Dim r = Int(Rnd() * 10)
+
             If r > 8 And Not p.className.Equals("Bunny Girl") Then
                 Dim dTF = New DancerTF(1, 0, 0, False)
                 dTF.update()
                 p.drawPort()
+                ringRabbitEffect(p)
                 Return True
+
             ElseIf r > 5 Then
-                TextEvent.push("Your bowtie begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncoming blow!  Time returns to its normal speed shortly, and your bowtie returns to its inert state.")
+                TextEvent.push("Your bowtie glows, and everything slows down." & DDUtils.RNRN &
+                               "With a deft sidestep, you dodge the oncoming blow!" & DDUtils.RNRN &
+                               "The glow dims, and time resumes at its normal pace.")
+                ringRabbitEffect(p)
                 Return True
+
             End If
         ElseIf p.perks(perk.bunnyears) > -1 And p.equippedAcce.getAName.Equals(BunnyEars.ITEM_NAME) Then
             Dim r = Int(Rnd() * 10)
+
             If r > 4 Then
-                TextEvent.push("Your headband begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncoming blow!  Time returns to its normal speed shortly, and your bunny ear headband returns to its inert state.")
+                TextEvent.push("Your headband glows, and everything slows down." & DDUtils.RNRN &
+                               "With a deft sidestep, you dodge the oncoming blow!" & DDUtils.RNRN &
+                               "The glow dims, and time resumes at its normal pace.")
+                ringRabbitEffect(p)
                 Return True
+
             End If
         End If
         Return False
@@ -687,10 +699,12 @@
         If (p.perks(perk.stealth) > 0 And Int(Rnd() * 7) = 0) Or p.perks(perk.dodge) > 0 Then
             TextEvent.push(out)
             If p.perks(perk.dodge) - 1 > 0 Then p.perks(perk.dodge) -= 1 Else p.perks(perk.dodge) = -1
+            ringRabbitEffect(p)
             Return True
         End If
         If p.perks(perk.lurk) > 0 And Int(Rnd() * 4) = 0 Then
             TextEvent.push(out)
+            ringRabbitEffect(p)
             Return True
         End If
         Return False
@@ -755,4 +769,14 @@
 
         Return False
     End Function
+    Shared Sub ringRabbitEffect(ByRef p As Player)
+        If Not p.equippedAcce.getAName.Equals(RingOfTheRabbit.ITEM_NAME) Then Exit Sub
+
+        Dim rcv As Integer = Math.Min(0.4 * p.getMaxHealth, p.getMaxHealth - p.getIntHealth)
+
+        p.health += rcv * p.getMaxHealth
+        p.UIupdate()
+
+        TextEvent.pushAndLog("Your ring pulses with mana, healing you for " & rcv & " health!")
+    End Sub
 End Class

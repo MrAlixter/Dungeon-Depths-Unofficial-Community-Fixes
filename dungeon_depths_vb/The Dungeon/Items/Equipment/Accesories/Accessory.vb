@@ -37,7 +37,7 @@
     End Sub
 
     Public Overridable Function getAccIMG(ByRef p As Player) As Tuple(Of Integer, Boolean, Boolean)
-        If p.prt.sexBool Then
+        If p.prt.iArrInd(pInd.shoulders).Item2 Then
             If Not p.equippedAcce.fInd Is Nothing Then Return p.equippedAcce.fInd Else Return p.equippedAcce.mInd
         Else
             If Not p.equippedAcce.mInd Is Nothing Then Return p.equippedAcce.mInd Else Return p.equippedAcce.fInd
