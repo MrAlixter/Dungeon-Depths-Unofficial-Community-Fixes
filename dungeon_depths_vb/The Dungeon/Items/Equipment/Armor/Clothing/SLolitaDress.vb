@@ -32,7 +32,7 @@
         usize1 = New Tuple(Of Integer, Boolean, Boolean)(298, True, True)
         usize2 = New Tuple(Of Integer, Boolean, Boolean)(299, True, True)
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(300, True, True)
-        usize3 = New Tuple(Of Integer, Boolean, Boolean)(301, True, True)
+        usize4 = New Tuple(Of Integer, Boolean, Boolean)(301, True, True)
 
         '|Description|
         setDesc("A poofy pink dress." & DDUtils.RNRN &

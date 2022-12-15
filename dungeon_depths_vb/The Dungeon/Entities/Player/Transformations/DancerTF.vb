@@ -33,7 +33,7 @@
         p.prt.setIAInd(pInd.eyes, 24, True, True)
 
         '| - Hair TF - |
-        p.prt.setIAInd(pInd.rearhair, 6, True, True)
+        p.prt.setIAInd(pInd.rearhair, 18, True, True)
         p.prt.setIAInd(pInd.midhair, 18, True, True)
         p.prt.setIAInd(pInd.fronthair, 18, True, True)
         p.prt.setIAInd(pInd.eyebrows, 0, True, False)

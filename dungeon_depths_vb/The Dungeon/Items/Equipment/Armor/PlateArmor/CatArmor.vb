@@ -11,13 +11,13 @@
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
-        MyBase.slut_var_ind = 12
+        compress_breast = True
+        slut_var_ind = 12
 
         '|Stats|
-        MyBase.d_boost = 15
-        MyBase.a_boost = 7
-        MyBase.s_boost = 33
+        d_boost = 15
+        a_boost = 7
+        s_boost = 33
         count = 0
         value = 2456
 
@@ -37,10 +37,11 @@
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(78, True, True)
 
         hood = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
-        cloak = New Tuple(Of Integer, Boolean, Boolean)(14, True, False)
+        cloak = New Tuple(Of Integer, Boolean, Boolean)(34, True, False)
 
         '|Description|
-        setDesc("An adorable cat themed set of lightweight armor that also boosts attack. Nya." & DDUtils.RNRN &
-                                      getSizeInformation() & DDUtils.RNRN & getStatInformation())
+        setDesc("An adorable, cat-themed set of lightweight armor that also boosts one's attack.  Nya." & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class
