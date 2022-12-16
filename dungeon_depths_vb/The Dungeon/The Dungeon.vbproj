@@ -205,6 +205,7 @@
     <Compile Include="Entities\Player\Transformations\MaggirlTFs\MagMimicTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\CynnTonicTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\BimboMaidTF.vb" />
+    <Compile Include="Entities\Player\Transformations\OneStepTFs\SpaceBunTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\HumanTF.vb" />
     <Compile Include="Entities\Player\Transformations\ScaleTalismanTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\AmaraphneAngelTF.vb" />
@@ -242,6 +243,7 @@
     <Compile Include="Items\Equipment\Accesories\MOTOx.vb" />
     <Compile Include="Items\Equipment\Accesories\HallowedTalisman.vb" />
     <Compile Include="Items\Equipment\Accesories\Ballgag.vb" />
+    <Compile Include="Items\Equipment\Armor\Clothing\NanosilkQipao.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\BunnySuitS.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\CommonClothes9.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\FaeLingerie.vb" />
@@ -264,6 +266,7 @@
     <Compile Include="Items\Equipment\Armor\PlateArmor\MaidArmor.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\PaladinArmor.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\PlatArmor.vb" />
+    <Compile Include="Items\Equipment\Armor\SlutVar\AcolyteCosplay.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\PlantBikini.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\CultistCloak.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\PlatAdornment.vb" />
@@ -330,6 +333,7 @@
     <Compile Include="Items\Usable\Food\FaePApple.vb" />
     <Compile Include="Items\Usable\Food\MPStickOfGum.vb" />
     <Compile Include="Items\Usable\Food\HPStickOfGum.vb" />
+    <Compile Include="Items\Usable\Food\SpaceBun.vb" />
     <Compile Include="Items\Usable\Manuals\Manual.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Rare Potions\HealthPotionHB.vb" />
     <Compile Include="Items\Usable\Potions\Lepanacea.vb" />

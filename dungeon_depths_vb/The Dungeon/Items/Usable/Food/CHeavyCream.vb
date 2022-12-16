@@ -19,8 +19,8 @@
 
         '|Description|
         setDesc("An increadibly heavy cream that seems a bit fattening.  Apperantly it might be a little bit cursed." & DDUtils.RNRN &
-                       "-30 stamina" & DDUtils.RNRN &
-                       "Major breast enlargement")
+                "+30 stamina" & DDUtils.RNRN &
+                "Major breast enlargement")
     End Sub
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub

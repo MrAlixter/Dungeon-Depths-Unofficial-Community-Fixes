@@ -21,10 +21,10 @@
 
         Dim curse_success = EquipmentDialogBackend.clothingCurse(p, False)
         If curse_success Then
-            TextEvent.push(out & "It crackles with blinding light, twisting your gear into a warped perversion of itself!  The goo evaporates with a caustic hiss.")
+            TextEvent.fpush(out & "It crackles with blinding light, twisting your gear into a warped perversion of itself!  The goo evaporates with a caustic hiss.")
         ElseIf Not p.equippedArmor.getAName = "Naked" Then
-            TextEvent.push(out & "With a caustic hiss it evaporates, eating into your gear signifigantly." & DDUtils.RNRN &
-                           Math.Max(p.equippedArmor.durability - 50, 0) & " durability remains on your " & p.equippedArmor.getAName.Replace("_", " ") & "...")
+            TextEvent.fpush(out & "With a caustic hiss it evaporates, eating into your gear signifigantly." & DDUtils.RNRN &
+                            Math.Max(p.equippedArmor.durability - 50, 0) & " durability remains on your " & p.equippedArmor.getAName.Replace("_", " ") & "...")
             p.equippedArmor.damage(50)
         End If
 
@@ -33,8 +33,6 @@
         Else
             curr_step -= 1
         End If
-
-        Application.DoEvents()
     End Sub
 
     Private Sub step2()

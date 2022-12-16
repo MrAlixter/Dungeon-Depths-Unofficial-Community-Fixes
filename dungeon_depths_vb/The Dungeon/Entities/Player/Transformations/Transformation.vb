@@ -81,6 +81,7 @@
     slime
     slimepolymorph
     slolita
+    spacebun
     spotfuse
     succubusmaid
     succubuspolymorph
@@ -381,6 +382,9 @@ Public MustInherit Class Transformation
 
         ElseIf tf = tfind.slolita Then
             Return New LolitaSTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.spacebun Then
+            Return New SpaceBunTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.spotfuse Then
             Return New SpotFuseTF(cs, n, tts, wi, cbs, tfd)

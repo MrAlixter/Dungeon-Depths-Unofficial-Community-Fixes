@@ -417,6 +417,9 @@
         internal_inventory.Add(CrackedBrick.ITEM_NAME, New CrackedBrick)             '390
         'v13.0.0
         internal_inventory.Add(RingOfTheRabbit.ITEM_NAME, New RingOfTheRabbit)       '391
+        internal_inventory.Add(SpaceBun.ITEM_NAME, New SpaceBun)                     '392
+        internal_inventory.Add(NanosilkQipao.ITEM_NAME, New NanosilkQipao)           '393
+        internal_inventory.Add(AcolyteCosplay.ITEM_NAME, New AcolyteCosplay)         '394
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -446,7 +449,8 @@
                  Me.item(323), Me.item(324), Me.item(325), Me.item(331),
                  Me.item(332), Me.item(333), Me.item(335), Me.item(336),
                  Me.item(343), Me.item(345), Me.item(354), Me.item(357),
-                 Me.item(363), Me.item(364), Me.item(384)}
+                 Me.item(363), Me.item(364), Me.item(384), Me.item(393),
+                 Me.item(394)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -498,7 +502,7 @@
                 Me.item(269), Me.item(270), Me.item(272), Me.item(291),
                 Me.item(295), Me.item(296), Me.item(334), Me.item(341),
                 Me.item(347), Me.item(358), Me.item(360), Me.item(385),
-                Me.item(386)}
+                Me.item(386), Me.item(392)}
 
         acce = {New noAcce(),
                 Me.item(66), Me.item(67), Me.item(68), Me.item(69),

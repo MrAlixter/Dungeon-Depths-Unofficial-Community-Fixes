@@ -19,7 +19,8 @@
         setCalories(100)
 
         '|Description|
-        setDesc("The forbidden sport's drink.  If you drink it, you will die. " & DDUtils.RNRN & "+100 Stamina")
+        setDesc("The forbidden sport drink.  If you drink it, you will die." & DDUtils.RNRN &
+                "+100 Stamina")
     End Sub
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub

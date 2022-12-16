@@ -17,8 +17,7 @@
             Exit Sub
         End If
 
-        TextEvent.push("Your magic forms a network of vines that dart out around you..." & DDUtils.RNRN & "...")
-        Application.DoEvents()
+        TextEvent.fpush("Your magic forms a network of vines that dart out around you..." & DDUtils.RNRN & "...")
 
         targets = getTargets(Game.currFloor)
 

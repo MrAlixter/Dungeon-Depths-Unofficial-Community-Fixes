@@ -71,6 +71,10 @@
         choiceText = text
         Game.btnEQP.Enabled = False
     End Sub
+    Public Shared Sub fpush(ByVal s As String, Optional effect As Action = Nothing)
+        push(s, effect)
+        Application.DoEvents()
+    End Sub
     Public Shared Sub pushEventBox(s As String, Optional onClose As Action = Nothing)
         If s.Equals("") Then Exit Sub
 
@@ -105,6 +109,10 @@
     Public Shared Sub pushAndLog(ByVal msg As String)
         push(msg)
         pushLog(msg)
+    End Sub
+    Public Shared Sub fpushAndLog(ByVal msg As String)
+        pushAndLog(msg)
+        Application.DoEvents()
     End Sub
     Public Shared Sub pushCombat(ByVal s As String)
         Dim out = wrapText(s, 65)
