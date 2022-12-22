@@ -18,7 +18,7 @@
     Sub step1()
         Dim p = Game.player1
 
-        Dim out As String = "Teal slime coats your " & If(p.equippedArmor.getAName.Contains("Armor"), "armor", "clothing") & "." & DDUtils.RNRN
+        Dim out As String = "Teal slime coats your " & DDUtils.amrOrClth(p) & "." & DDUtils.RNRN
 
         If Not p.equippedArmor.getAName.Equals("Naked") And Not p.equippedArmor.getAName.Contains("Armor") And p.equippedArmor.getAntiSlutInd = -1 Then
             TextEvent.push(out & "With a caustic hiss it evaporates, eating into your gear signifigantly." & DDUtils.RNRN &

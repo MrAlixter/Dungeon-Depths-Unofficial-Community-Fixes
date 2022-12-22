@@ -22,7 +22,7 @@
     Overrides Sub hairColorShift()
         Game.player1.prt.haircolor = DDUtils.cShift(Game.player1.prt.haircolor, clericbrown, 50)
         If Not Game.player1.getHairColor.Equals(clericbrown) Then curr_step -= 1
-        TextEvent.push("Your hair becomes slightly darker, shifting to a chestnut brown." & DDUtils.RNRN & "-6 LUST")
+        TextEvent.fpush("Your hair becomes slightly darker, shifting to a chestnut brown." & DDUtils.RNRN & "-6 LUST")
 
         Game.player1.addLust(-6)
     End Sub
@@ -43,7 +43,7 @@
         p.prt.setIAInd(pInd.fronthair, 6, True, True)
     End Sub
     Public Overrides Sub s1TFText(ByRef p As Player)
-        TextEvent.push("You pause to rub your temples, a massive headache overwhelming your senses.  As you take a few minutes to recover, you notice that your center of balance is also... off." & DDUtils.RNRN &
+        TextEvent.fpush("You pause to rub your temples, a massive headache overwhelming your senses.  As you take a few minutes to recover, you notice that your center of balance is also... off." & DDUtils.RNRN &
                        "Hmm..." & DDUtils.RNRN &
                        "You hypothesize that maybe that fae you encountered might have, like, done something to you...")
     End Sub
@@ -109,7 +109,7 @@
         p.changeClass("Cleric")
         p.perks(perk.bimbotf) = -1
 
-        TextEvent.push(out)
+        TextEvent.fpush(out)
     End Sub
 
     Public Overrides Sub setWaitTime(stage As Integer)

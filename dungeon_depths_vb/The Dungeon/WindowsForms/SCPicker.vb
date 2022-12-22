@@ -38,6 +38,9 @@
         ElseIf Game.screenSize = "Maximized" Then
             Dim r = Game.Height / Game.iHeight
             Size = New Size(Size.Width * r, Size.Height * r)
+        ElseIf Game.screenSize = "Fit-to-Screen" Then
+            Dim r = Math.Min((My.Computer.Screen.Bounds.Size.Height - 50) / Game.iHeight, (My.Computer.Screen.Bounds.Size.Width - 50) / Game.iWidth)
+            newSize = New Size(Size.Width * r, Size.Height * r)
         End If
         Dim RW As Double = (Me.Width - startingWidth) / startingWidth ' Ratio change of width
         Dim RH As Double = (Me.Height - startingHeight) / startingHeight ' Ratio change of height

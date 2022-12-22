@@ -13,6 +13,12 @@
         next_step = getNextStep(cs)
     End Sub
 
+    Public Overrides Sub step1()
+        tf(Game.player1)
+
+        TextEvent.fpush("As you bite into the pastry, you feel- different...")
+    End Sub
+
     Public Shared Sub tf(ByRef p As Player)
         'transformation
         p.MtF()
@@ -30,7 +36,7 @@
         p.prt.setIAInd(pInd.eyes, 64, True, True)
 
         '| -- Clothing TF -- |
-        p.inv.add(NanosilkQipao.ITEM_NAME, 1)
-        EquipmentDialogBackend.armorChange(p, NanosilkQipao.ITEM_NAME)
+        If p.inv.getCountAt(NanosilkQipao.ITEM_NAME) < 1 Then p.inv.add(NanosilkQipao.ITEM_NAME, 1)
+        EquipmentDialogBackend.equipArmor(p, NanosilkQipao.ITEM_NAME)
     End Sub
 End Class

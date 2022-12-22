@@ -21,7 +21,7 @@
                   "The inferno becomes blinding and your clothes burn away into the aether, as beams of red-hot energy twirl around your shifting silhouette." & DDUtils.RNRN &
                   "With a final explosion of brilliant light, the sword dims and you flare your glorious wings."
 
-        TextEvent.push(out, AddressOf step2)
+        TextEvent.fpush(out, AddressOf step2)
         TextEvent.pushLog("You activate your valkyrie transformation!")
         p.textColor = Game.lblEvent.ForeColor
     End Sub

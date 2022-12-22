@@ -22,7 +22,7 @@
 
         out += "Scoffing, you tug at your outfit, unable to remove it.  You try to throw the wand across the dungeon, only for a tendril to flick out and wrap itself around your hand.  Grumbling to yourself, you stomp your feet before setting back out, tugging down on your new skirt in a failing attempt to preserve some of your dignity."
 
-        TextEvent.push(out, AddressOf step2)
+        TextEvent.fpush(out, AddressOf step2)
         p.TextColor = Game.lblEvent.ForeColor
     End Sub
 

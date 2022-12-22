@@ -134,6 +134,9 @@
         ElseIf Game.screenSize = "Maximized" And Not form.Equals(Game) Then
             Dim r = Game.Height / Game.iHeight
             newSize = New Size(sWidth * r, sHeight * r)
+        ElseIf Game.screenSize = "Fit-to-Screen" Then
+            Dim r = Math.Min((My.Computer.Screen.Bounds.Size.Height - 50) / Game.iHeight, (My.Computer.Screen.Bounds.Size.Width - 50) / Game.iWidth)
+            newSize = New Size(sWidth * r, sHeight * r)
         End If
 
         If newSize.Equals(form.Size) Then Exit Sub
@@ -326,6 +329,9 @@
     End Function
     Shared Function rndAlpha() As String
         Return ALPHA.Substring(Int(Rnd() * ALPHA.Length), 1)
+    End Function
+    Shared Function amrOrClth(ByRef p As Player) As String
+        Return If(p.equippedArmor.getAName.Contains("Armor"), "armor", "clothing")
     End Function
 
     '|FILE UTILS|

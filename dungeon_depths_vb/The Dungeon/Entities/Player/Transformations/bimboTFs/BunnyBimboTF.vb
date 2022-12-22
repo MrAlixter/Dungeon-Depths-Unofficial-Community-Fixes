@@ -45,7 +45,7 @@
         If p.inv.getCountAt(222) < 1 Then p.inv.add(222, 1)
         EquipmentDialogBackend.armorChange(p, "Bunny_Suit_(Classic)")
 
-        TextEvent.push("As you begin to feel the familiar heat of arousal, your face flushes as your clothes vanish in a *poof* of smoke.  Your nude body is engulfed in a glow from your bunny ears, and with a flash of light you turn into a rabbit themed hostess!")
+        TextEvent.fpush("As you begin to feel the familiar heat of arousal, your face flushes as your clothes vanish in a *poof* of smoke.  Your nude body is engulfed in a glow from your bunny ears, and with a flash of light you turn into a rabbit themed hostess!")
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action

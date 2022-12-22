@@ -104,6 +104,7 @@
     faewishesmade   '102
     slimeregenplus  '103
     esper           '104
+    spacebun        '105
 End Enum
 Public Enum stateInd
     goddState
@@ -1487,6 +1488,10 @@ Public Class Player
         'caketf effect
         If perks(perk.cupcake) > -1 Then
             If Game.getTurn Mod 20 = 0 Then perks(perk.cupcake) -= 1
+        End If
+        'spacebuntf effect
+        If perks(perk.spacebun) > -1 Then
+            If Game.getTurn Mod 20 = 0 Then perks(perk.spacebun) -= 1
         End If
         'illuminate effect
         If perks(perk.lightsource) > -1 Then

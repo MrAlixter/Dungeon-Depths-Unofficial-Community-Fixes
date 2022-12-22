@@ -17,7 +17,7 @@
 
     Private Sub step1()
         Dim p As Player = Game.player1
-        Dim out As String = "Pink slime coats your " & If(p.equippedArmor.getAName.Contains("Armor"), "armor", "clothing") & "." & DDUtils.RNRN
+        Dim out As String = "Pink slime coats your " & DDUtils.amrOrClth(p) & "." & DDUtils.RNRN
 
         Dim curse_success = EquipmentDialogBackend.clothingCurse(p, False)
         If curse_success Then

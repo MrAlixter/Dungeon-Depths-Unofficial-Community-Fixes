@@ -29,7 +29,7 @@
                    "If you were paying better attention, you might have noticed the sinister crimson aura binding the wand to your perfectly manicured hand, but, like, hey, why would you want to get rid of your cute new wand?"
         End If
 
-        TextEvent.push(out, AddressOf step2)
+        TextEvent.fpush(out, AddressOf step2)
         TextEvent.pushLog("You activate your magical girl transformation!")
         p.TextColor = Game.lblEvent.ForeColor
     End Sub

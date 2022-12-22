@@ -18,12 +18,12 @@
         setCalories(50)
 
         '|Description|
-        setDesc("A 100% not magic totally not cursed cupcake. +50 Stamina")
-
+        setDesc("A 100% not magic totally not cursed cupcake." & DDUtils.RNRN &
+                "+50 Stamina")
     End Sub
 
     Public Overrides Sub effect(ByRef p As Player)
-        If p.perks(perk.cupcake) > 4 Or Settings.active(setting.norng) Then
+        If p.perks(perk.cupcake) > 4 Or Settings.active(setting.norng) And Not p.className.Equals("Maiden") Then
             p.ongoingTFs.add(New LolitaSTF())
             p.update()
             p.perks(perk.cupcake) = -1

@@ -22,7 +22,7 @@
     Overrides Sub hairColorShift()
         Game.player1.prt.haircolor = DDUtils.cShift(Game.player1.prt.haircolor, bimboblue1, 20)
         If Not Game.player1.getHairColor.Equals(bimboblue1) Then curr_step -= 1
-        TextEvent.push("Your hair becomes slightly lighter, shifting to a bright, electric azure.")
+        TextEvent.fpush("Your hair becomes slightly lighter, shifting to a bright, electric azure.")
     End Sub
 
     'Step 1

@@ -1010,19 +1010,19 @@ Public Class mFloor
 
         Dim r = 0
         If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
-        inv.add("Photon_Armor", r)
+        inv.add(PhotonArmor.ITEM_NAME, r)
         If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
-        inv.add("Labcoat", r)
+        inv.add(Labcoat.ITEM_NAME, r)
         If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
-        inv.add("Mobile_Powerbank", r)
+        inv.add(Generator.ITEM_NAME, r)
         If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
-        inv.add("Discharge_Gauntlets", r)
+        inv.add(ManaDisharge.ITEM_NAME, r)
         If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
-        inv.add("Photon_Blade", r)
+        inv.add(PhotonBlade.ITEM_NAME, r)
         If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
-        inv.add("BitGold", r)
+        inv.add(BitGold.ITEM_NAME, r)
 
-        inv.add("Space_Age_Jumpsuit", 1)
+        inv.add(SAJumpsuit.ITEM_NAME, 1)
         c1 = DDConst.BASE_CHEST.Create(inv, p, False)
 
         chestList.Add(c1)
@@ -1035,15 +1035,17 @@ Public Class mFloor
 
         Dim r = 0
         If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
-        inv.add("Shrink_Ray", r)
+        inv.add(ShrinkRay.ITEM_NAME, r)
         If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
-        inv.add("Galaxy_Dye", r)
+        inv.add(GalaxyDye.ITEM_NAME, r)
         If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
-        inv.add("CryoGrenade", r)
+        inv.add(CryoGrenade.ITEM_NAME, r)
         If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
-        inv.add("Combat_Module", r)
+        inv.add(CombatModule.ITEM_NAME, r)
+        If Int(Rnd() * 3) = 0 Then r = 3 Else r = 0
+        inv.add(SpaceBun.ITEM_NAME, r)
 
-        inv.add("Vial_of_BIM_II", 1)
+        inv.add(VialOfBimbo.ITEM_NAME, 1)
         c1 = DDConst.BASE_CHEST.Create(inv, p, False)
 
         chestList.Add(c1)

@@ -24,19 +24,26 @@
         p.prt.setIAInd(pInd.fronthair, 6, True, True)
     End Sub
     Public Overrides Sub s1TFText(ByRef p As Player)
-        TextEvent.push("You pause to rub your temples, a massive headache coming down on you like a ton of bricks.  As you take a few minutes to recover, you notice that your center of balance is off.  You hypothesize that maybe that vial you drank might be causing these effects." & DDUtils.RNRN & "Maybe you can just walk this off...")
+        TextEvent.fpush("You pause to rub your temples, as you begin to develop a massive headache." & DDUtils.RNRN &
+                        "While taking a few minutes to recover, you notice that your center of balance is... off.  Hmm, you hypothesize that perhaps the vial you drank might be causing these effects." & DDUtils.RNRN &
+                        "You may be able to just walk this off...")
     End Sub
 
     'Step 2
     Public Overrides Sub s2M2F(ByRef p As Player, ByRef out As String, ByRef haircolor As String)
         haircolor = "platinum blonde"
         If Not p.prt.sexBool Then
-            out += "Mind clearer than ever, you look down to see breasts blossoming from your chest.  You smirk; while you look like a typical brainless bimbo, you're far more intellegent than you were before. As your dainty hands move down your body, you discover that you no longer have a cock and balls, and insted have a tight moist cunt.  Your hair lengthens, becoming a " & haircolor & ", and your clothes change to match your new figure.  While the effects on your body confirm your hypothesis that BIM_II is likely the chemical used in those sticks of gum the increased IQ hints that there may be another compound involved."
+            out += "In a moment of profound mental clarity, you look down to see breasts blossoming from your chest.  You smirk; despite looking like a typical brainless bimbo you seem to be far more intellegent than you were before." & DDUtils.RNRN &
+                   "As your dainty hands move down your body, you discover that you no longer have a cock and balls, finding instead a tight and moist pussy.  Your hair lengthens, becoming a " & haircolor & ", as your " & DDUtils.amrOrClth(p) & " warps and reweaves itself to match your new figure." & DDUtils.RNRN &
+                   "While your transformation supports your hypothesis that BIM_II is used in those ""magic"" sticks of gum, your increased IQ hints that there may be another compound involved..."
             p.MtF()
         ElseIf p.prt.sexBool And p.breastSize < 3 Then
-            out += "Mind clearer than ever, you look down at your tits. You notice that they seem to have swollen slightly.  You smirk; while you look like a typical brainless bimbo, you're far more intellegent than you were before.  Your hair lengthens, becoming a " & haircolor & ", and your clothes change to match your new figure.  While the effects on your body confirm your hypothesis that BIM_II is likely the chemical used in those sticks of gum the increased IQ hints that there may be another compound involved."
+            out += "In a moment of profound mental clarity, you look down at your tits as they swell and jiggle.  You smirk; despite looking like a typical brainless bimbo you seem to be far more intellegent than you were before." & DDUtils.RNRN &
+                   "Your hair lengthens, becoming a " & haircolor & ", as your " & DDUtils.amrOrClth(p) & " warps and reweaves itself to match your new figure." & DDUtils.RNRN &
+                   "While your transformation supports your hypothesis that BIM_II is used in those ""magic"" sticks of gum, your increased IQ hints that there may be another compound involved..."
         ElseIf p.prt.sexBool And p.breastSize >= 3 Then
-            out += "Mind clearer than ever, you look down to see your clothes have become tight and pink.  You smirk; while you look like a typical brainless bimbo, you're far more intellegent than you were before.  Your hair lengthens, becoming a " & haircolor & ", and your clothes finish changing to match your new figure.  While the effects on your body confirm your hypothesis that BIM_II is likely the chemical used in those sticks of gum the increased IQ hints that there may be another compound involved."
+            out += "In a moment of profound mental clarity, you smirk; despite looking like a typical brainless bimbo you seem to be far more intellegent than you were before.  Your hair lengthens, becoming a " & haircolor & ", as your " & DDUtils.amrOrClth(p) & " warps and reweaves itself to match your new figure." & DDUtils.RNRN &
+                   "While your transformation supports your hypothesis that BIM_II is used in those ""magic"" sticks of gum, your increased IQ hints that there may be another compound involved..."
         End If
     End Sub
     Public Overrides Sub s2HairChange(ByRef p As Player)
@@ -61,29 +68,39 @@
         p.textColor = Color.FromArgb(255, 255, 235, 240)
         p.perks(perk.bimbotf) = -1
         'p.drawPort()
-        TextEvent.push(out)
+        TextEvent.fpush(out)
     End Sub
 
     'Alternate Step 2
     Overrides Sub step2alt()
         Dim p As Player = Game.player1
-        p.prt.setIAInd(pInd.hat, 0, True, True)
+
+        '| -- Body TF -- |
+        p.breastSize = 3
+        p.addLust(10)
+
+        '| -- Hair TF -- |
         p.prt.haircolor = Color.FromArgb(255, 255, 250, 205)
         p.prt.setIAInd(pInd.rearhair, 10, True, True)
         p.prt.setIAInd(pInd.midhair, 10, True, True)
         p.prt.setIAInd(pInd.fronthair, 7, True, True)
+
+        '| -- Face TF -- |
         p.prt.setIAInd(pInd.ears, 0, True, True)
         p.prt.setIAInd(pInd.mouth, 6, True, True)
         p.prt.setIAInd(pInd.eyes, 34, True, True)
+
+        '| -- Misc TF -- |
+        p.prt.setIAInd(pInd.hairacc, 3, True, False)
         p.prt.setIAInd(pInd.cloak, 0, True, True)
         If p.inv.getCountAt("Small_Glasses") < 1 Then p.inv.add("Small_Glasses", 1)
-        EquipmentDialogBackend.glassesChange(p, "Small_Glasses")
+        EquipmentDialogBackend.equipGlasses(p, "Small_Glasses")
         If p.inv.getCountAt("Magical_Slut_Outfit") < 1 Then p.inv.add("Magical_Slut_Outfit", 1)
-        EquipmentDialogBackend.armorChange(p, "Magical_Slut_Outfit")
-        p.breastSize = 3
-        TextEvent.push("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  Mind clearer than ever, you look down to see your clothes have become tight and pink. You smirk; while you look like a typical brainless bimbo, you're far more intellegent than you were before. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.  While the effects on your body confirm your hypothesis that BIM_II is likely the chemical used in those sticks of gum the increased IQ hints that there may be another compound involved.")
-        p.lust += 10
+        EquipmentDialogBackend.equipArmor(p, "Magical_Slut_Outfit")
 
+        TextEvent.fpush("You immediately feel funny, as the increased concentration of magic in your system reacts swiftly with the chemical." & DDUtils.RNRN &
+                        "In a moment of profound mental clarity, you smirk; despite looking like a typical brainless bimbo you are far more intellegent than you were before.  Your hair shifts colors to a platinum blonde, as your " & DDUtils.amrOrClth(p) & " warps and reweaves itself to match your new figure." & DDUtils.RNRN &
+                        "While your transformation supports your hypothesis that BIM_II is used in those ""magic"" sticks of gum, your increased IQ hints that there may be another compound involved...")
         p.TextColor = Color.HotPink
         p.perks(perk.bimbotf) = -1
         stopTF()

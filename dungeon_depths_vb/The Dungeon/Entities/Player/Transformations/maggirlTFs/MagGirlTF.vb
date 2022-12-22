@@ -34,7 +34,7 @@ Public Class MagGirlTF
                   "The light around your body becomes blinding and your clothes disolve into the aether, as beams of rainbow-colored energy twirl around your shifting silhouette." & DDUtils.RNRN &
                   "With a final flash of brilliant white, the wand dims and you strike a cutesy pose."
 
-        TextEvent.push(out, AddressOf step2)
+        TextEvent.fpush(out, AddressOf step2)
         TextEvent.pushLog("You activate your magical girl transformation!")
         p.textColor = Game.lblEvent.ForeColor
     End Sub
@@ -170,6 +170,6 @@ Public Class MagGirlTF
     Public Shared Sub pushLblEventWithoutLoss(ByRef out As String)
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
         If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
-        TextEvent.push(out)
+        TextEvent.fpush(out)
     End Sub
 End Class

@@ -259,7 +259,7 @@
         If Not Game.lblEvent.Visible And Not Game.combat_engaged Then
             If Not Game.lblEvent.Visible Then TextEvent.push("Suddenly, something seems... off..." & DDUtils.RNRN &
                                                              "You look down to see a golden glow beginning to ripple across your outfit.  Mesmerized by the shimmering light, you strip off your clothes as their aura becomes brighter and brighter." & DDUtils.RNRN &
-                                                             "As the glow becomes blinding, your gear gains mass and you shield your eyes as it twists and morphs.  A few seconds later, you peek out to find that the glow has died down and your " & If(p.equippedArmor.getAName.Contains("Armor"), "armor", "clothing") & "... looks the same as it always had." & DDUtils.RNRN &
+                                                             "As the glow becomes blinding, your gear gains mass and you shield your eyes as it twists and morphs.  A few seconds later, you peek out to find that the glow has died down and your " & DDUtils.amrOrClth(p) & "... looks the same as it always had." & DDUtils.RNRN &
                                                              "Annoyed at yourself for getting sidetracked by nothing, you re-equip the " & p.equippedArmor.getAName.Replace("_", " ") & " and set back out on your adventure.")
         ElseIf Game.combat_engaged Then
             TextEvent.push("A blinding golden glow ripples across your body, and your outfit gains mass as its shape is restored to a more practical arrangement!" & DDUtils.RNRN &

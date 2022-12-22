@@ -103,7 +103,7 @@
         TextEvent.fpush("You stagger before the amateur witch, as " & pronoun & " scrambles to pull out a small notebook." & DDUtils.RNRN &
                         """Let's see..."" " & pronoun & " says, quickly flicking through the pages.  ""...if you ever beat so-and-so... cast the such-and-such...  Ok!""" & DDUtils.RNRN &
                         "The mage snaps the book shut, leveling an outstretched hand in your general direction.  ""Cataclysmic Polymorph!""" & DDUtils.RNRN &
-                        DDUtils.capitalizeFirst(p_pronoun) & " spell hits you square, and you collapse to the ground in a plume of smoke as your " & If(p.equippedArmor.getAName.Contains("Armor"), "armor", "clothing") & " twists into cat-themed lingerie.  However, as you fall unconscious the enchanment breaks and Marissa's student jumps back with a sheepish *eep*." & DDUtils.RNRN &
+                        DDUtils.capitalizeFirst(p_pronoun) & " spell hits you square, and you collapse to the ground in a plume of smoke as your " & DDUtils.amrOrClth(p) & " twists into cat-themed lingerie.  However, as you fall unconscious the enchanment breaks and Marissa's student jumps back with a sheepish *eep*." & DDUtils.RNRN &
                         """Umm... that was probably what was supposed to happen...  Right?""", AddressOf p.drawPort)
 
         TextEvent.pushLog("Marissa's Neophyte tries to transform you into a Kitty, but " & p_pronoun & " spell fails...")

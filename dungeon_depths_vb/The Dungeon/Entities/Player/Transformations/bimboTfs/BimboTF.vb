@@ -23,7 +23,7 @@
     Overridable Sub hairColorShift()
         Game.player1.prt.haircolor = DDUtils.cShift(Game.player1.prt.haircolor, bimboYellow1, 25)
         If Not Game.player1.getHairColor.Equals(bimboYellow1) Then curr_step -= 1
-        TextEvent.push("Your hair becomes slightly lighter, brightening to a light blonde.")
+        TextEvent.fpush("Your hair becomes slightly lighter, brightening to a light blonde.")
     End Sub
 
     'Step 1
@@ -61,7 +61,9 @@
         End If
     End Sub
     Overridable Sub s1TFText(ByRef p As Player)
-        TextEvent.push("You pause to rub your temples, a massive headache coming down on you like a ton of bricks.  As you take a few minutes to recover, you notice that your center of balance is off and more disturbingly, that you can't seem to focus enough to figure out why." & DDUtils.RNRN & "Maybe you can just walk this off...")
+        TextEvent.fpush("You pause to rub your temples, as you begin to develop a massive headache." & DDUtils.RNRN &
+                        "While taking a few minutes to recover, you notice that your center of balance is... off.  More disturbingly, you can't seem to focus enough to figure out why that would be." & DDUtils.RNRN &
+                        "Maybe you can just walk this off...")
     End Sub
     Overridable Sub step1()
         Dim p As Player = Game.player1
@@ -80,12 +82,18 @@
     'Step 2
     Overridable Sub s2M2F(ByRef p As Player, ByRef out As String, ByRef haircolor As String)
         If Not p.prt.sexBool Then
-            out += "In your haze, you look down to see breasts blossoming from your chest. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine. As your dainty hands move down your body, you discover that you no longer have a cock and balls, and insted have a tight moist cunt.  Your hair lengthens, becoming a " & haircolor & ", and your clothes change to match your new figure."
+            out += "Lost in a swirling trance, your gaze drifts down to your blossoming pair of breasts... had they always been there?" & DDUtils.RNRN &
+                   "You giggle, as all traces of intellect vanish from your mind while your body becomes more curvy and feminine.  Feeling yorself up with your dainty hands, you discover that you no longer have a cock and balls; finding instead a tight, moist pussy." & DDUtils.RNRN &
+                   "Your hair lengthens, shifting in color to a " & haircolor & ", and your " & DDUtils.amrOrClth(p) & " warps and reweaves itself to match your new figure."
             p.MtF()
         ElseIf p.prt.sexBool And p.breastSize < 3 Then
-            out += "In your haze, you look down at your tits. You, like, never noticed how round and big they had got. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a " & haircolor & ", and your clothes change to match your new figure."
+            out += "Lost in a swirling trance, your gaze drifts down to your tits.  You, like, never noticed how big and round they'd been getting..." & DDUtils.RNRN &
+                   "You giggle as all traces of intellect vanish from your mind, while your body becomes more curvy and feminine." & DDUtils.RNRN &
+                   "Your hair lengthens, shifting in color to a " & haircolor & ", and your " & DDUtils.amrOrClth(p) & " warps and reweaves itself to match your new figure."
         ElseIf p.prt.sexBool And p.breastSize >= 3 Then
-            out += "In your haze, you look down to see your clothes have become tight and revealing. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a " & haircolor & ", and your clothes finish changing to match your new figure."
+            out += "Lost in a swirling trance, your gaze drifts down to your huge tits." & DDUtils.RNRN &
+                   "You giggle, as all traces of intellect vanish from your mind and your body becomes more curvy and feminine.  Giving your chest some exp... um... test bounces, you find yourself lost in their jiggly movement." & DDUtils.RNRN &
+                   "Your hair lengthens, shifting in color to a " & haircolor & ", and your " & DDUtils.amrOrClth(p) & " warps and reweaves itself to match your new figure."
         End If
     End Sub
     Overridable Sub s2FaceChange(ByRef p As Player)
@@ -129,7 +137,7 @@
         p.TextColor = Color.FromArgb(255, 255, 235, 240)
         p.perks(perk.bimbotf) = -1
         'p.drawPort()
-        TextEvent.push(out)
+        TextEvent.fpush(out)
     End Sub
     Sub step2()
         Dim p As Player = Game.player1
@@ -223,7 +231,9 @@
 
         Dim mstf = New MagSlutTF(1, 0, 0, False)
         mstf.fullTF(p)
-        TextEvent.push("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.")
+        TextEvent.fpush("You immediately feel funny, as the increased concentration of magic in your system reacts swiftly with the gum." & DDUtils.RNRN &
+                        "Lost in a swirling trance, you giggle as all traces of intellect vanish from your mind.  Your body becomes curvy and feminine, and your hair lengthens while shifting in color to a platinum blonde." & DDUtils.RNRN &
+                        "Your " & DDUtils.amrOrClth(p) & " warps and reweaves itself to match your new figure.")
         p.lust += 10
 
         p.TextColor = Color.FromArgb(255, 255, 235, 240)
