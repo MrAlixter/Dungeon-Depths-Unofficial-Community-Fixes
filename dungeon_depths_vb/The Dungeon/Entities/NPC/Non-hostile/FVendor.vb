@@ -255,8 +255,10 @@
         MyBase.buildShopArea(floor)
 
         Dim grills = {New Point(pos.X - 1, pos.Y)}
+        If floor.mBoard(grills(0).Y, grills(0).X).Tag = 0 Then grills(0) = New Point(pos.X, pos.Y - 1)
 
         Dim tables = {New Point(pos.X + 1, pos.Y)}
+        If floor.mBoard(tables(0).Y, tables(0).X).Tag = 0 Then tables(0) = New Point(pos.X, pos.Y + 1)
 
         For Each pt In grills
             If floor.ptInBounds(pt) Then floor.mBoard(pt.Y, pt.X).Text = "±"

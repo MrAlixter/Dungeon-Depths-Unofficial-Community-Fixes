@@ -1,6 +1,7 @@
 ﻿Public Class DDUtils
     Public Const RNRN As String = vbCrLf & vbCrLf
     Public Const PAKTC As String = DDUtils.RNRN & "Press any non-movement key to continue."
+    Public Const TODO As String = DDUtils.RNRN & "[This transformation/item/etc is still in development, and placeholder values may still be present.]"
     Public Const INTLMT As Integer = 2147483647
     Public Const ALPHA As String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOQRSTUVWXYZ"
 

@@ -32,12 +32,16 @@
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)
         MyBase.onUnequip(p)
-        p.mana -= 6
 
-        Game.progressTurn()
-        TextEvent.pushAndLog("You focus and are able to break through the enchanted gag!  -6 Mana...")
+        If Not getCursed(p) Then
+            p.mana -= 6
 
-        p.inv.add(getAName, -1)
+            TextEvent.pushAndLog("You focus and are able to break through the enchanted gag!  -6 Mana...")
+
+            p.inv.add(getAName, -1)
+
+            If Game.combat_engaged Then Game.progressTurn()
+        End If
     End Sub
 
     Public Overrides Function getCursed(ByRef p As Player) As Boolean

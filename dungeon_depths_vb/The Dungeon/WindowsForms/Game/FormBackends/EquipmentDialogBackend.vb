@@ -376,6 +376,7 @@
             If p.inv.item("Anti_Curse_Tag").count > 0 Then
                 TextEvent.push("You apply a tag to your clothes, allowing you to remove them.")
                 p.inv.add("Anti_Curse_Tag", -1)
+                p.inv.invNeedsUDate = True
             Else
                 TextEvent.push("Despite a struggle agaisnt your clothes, you are unable to escape!")
                 Return False
@@ -395,11 +396,7 @@
         End If
 
         'unequip the old armor
-        If Not p.equippedArmor.getName.Equals(armor) Then
-            p.equippedArmor.onUnequip(p)
-        Else
-            Return False
-        End If
+        If p.equippedArmor.getName.Equals(armor) Then Return False
 
         'equip the new armor
         armorChange(p, armor)
@@ -432,6 +429,7 @@
             If p.inv.item("Anti_Curse_Tag").count > 0 Then
                 TextEvent.push("You sheath your weapon, despite the resistance it puts up.")
                 p.inv.add("Anti_Curse_Tag", -1)
+                p.inv.invNeedsUDate = True
             Else
                 TextEvent.push("Despite a struggle agaisnt your weapon, you are unable to put it away!")
                 Return False
@@ -440,11 +438,7 @@
 
 
         'unequip the old weapon
-        If Not p.equippedWeapon.getName.Equals(weapon) Then
-            p.equippedWeapon.onUnequip(p, weapon_list(weapon))
-        Else
-            Return False
-        End If
+        If p.equippedWeapon.getName.Equals(weapon) Then Return False
 
         'handles the equiping of weapons
         weaponChange(p, weapon)
@@ -459,6 +453,7 @@
             If p.inv.item("Anti_Curse_Tag").count > 0 Then
                 TextEvent.push("You take off your accessory, despite the resistance it puts up.")
                 p.inv.add("Anti_Curse_Tag", -1)
+                p.inv.invNeedsUDate = True
             Else
                 TextEvent.push("Despite a struggle agaisnt your accessory, you are unable to take it off!")
                 Return False
@@ -477,6 +472,7 @@
             If p.inv.item("Anti_Curse_Tag").count > 0 Then
                 TextEvent.push("You take off your glasses, despite the resistance they put up.")
                 p.inv.add("Anti_Curse_Tag", -1)
+                p.inv.invNeedsUDate = True
             Else
                 TextEvent.push("Despite a struggle agaisnt your glasses, you are unable to take them off!")
                 Return False

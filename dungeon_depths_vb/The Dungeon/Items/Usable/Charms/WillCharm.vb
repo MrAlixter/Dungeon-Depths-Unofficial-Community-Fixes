@@ -17,7 +17,7 @@
         value = 1750
 
         '|Description|
-        setDesc("A charm that slightly boosts your speed.")
+        setDesc("A charm that slightly boosts your will.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

@@ -16,7 +16,7 @@
     Public Overrides Sub step1()
         tf(Game.player1)
 
-        TextEvent.fpush("As you bite into the pastry, you feel- different...")
+        TextEvent.fpush("As you bite into the pastry, you feel... different..." & DDUtils.TODO)
     End Sub
 
     Public Shared Sub tf(ByRef p As Player)
@@ -36,7 +36,7 @@
         p.prt.setIAInd(pInd.eyes, 64, True, True)
 
         '| -- Clothing TF -- |
-        If p.inv.getCountAt(NanosilkQipao.ITEM_NAME) < 1 Then p.inv.add(NanosilkQipao.ITEM_NAME, 1)
-        EquipmentDialogBackend.equipArmor(p, NanosilkQipao.ITEM_NAME)
+        If p.inv.getCountAt(NanosilkQipaoP.ITEM_NAME) < 1 Then p.inv.add(NanosilkQipaoP.ITEM_NAME, 1)
+        EquipmentDialogBackend.equipArmor(p, NanosilkQipaoP.ITEM_NAME)
     End Sub
 End Class

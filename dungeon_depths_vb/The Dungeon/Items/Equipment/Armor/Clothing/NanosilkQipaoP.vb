@@ -1,7 +1,7 @@
-﻿Public Class NanosilkQipao
+﻿Public Class NanosilkQipaoP
     Inherits Armor
 
-    Public Const ITEM_NAME As String = "Nanosilk_Qipao"
+    Public Const ITEM_NAME As String = "Nanosilk_Qipao_(P)"
 
     Sub New()
         '|ID Info|
@@ -36,7 +36,7 @@
         usize5 = New Tuple(Of Integer, Boolean, Boolean)(469, True, True)
 
         '|Description|
-        setDesc("A sleek black dress, made of a remarkably smooth fabric.  Despite its delicate apperance, it actually seems fairly durable." & DDUtils.RNRN &
-                getSizeInformation() & DDUtils.RNRN & getStatInformation())
+        setDesc("A sleek pink dress, made of a remarkably smooth fabric.  Despite its delicate apperance, it actually seems fairly durable." & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN & getStatInformation() & DDUtils.TODO)
     End Sub
 End Class

@@ -23,10 +23,20 @@
     End Sub
 
     Overrides Sub use(ByRef p As Player)
+        MyBase.use(p)
+
         p.perks(perk.slutcurse) = -1
 
         If Equipment.antiClothingCurse(p) Then
-            If Not Game.combat_engaged And Game.pnlEvent.Visible Then Game.txtPNLEvents.Text = ("You apply the anti-curse tag to your equipment, and " & Game.txtPNLEvents.Text.Substring(0, 1).ToLower & Game.txtPNLEvents.Text.Substring(1, Game.txtPNLEvents.Text.Length - 1)) Else TextEvent.push("You apply the anti-curse tag to your equipment.  The slut curse is neutralized!")
+            If Not Game.combat_engaged And Game.pnlEvent.Visible Then
+                Game.txtPNLEvents.Text = ("You apply the anti-curse tag to your equipment, and " & Game.txtPNLEvents.Text.Substring(0, 1).ToLower & Game.txtPNLEvents.Text.Substring(1, Game.txtPNLEvents.Text.Length - 1))
+            Else
+                TextEvent.push("You apply the anti-curse tag to your equipment.  The slut curse is neutralized!")
+            End If
+
+            count -= 1
+
+            Exit Sub
         ElseIf p.equippedArmor.getCursed(p) Then
             EquipmentDialogBackend.equipArmor(p, "Naked")
         ElseIf p.equippedWeapon.getCursed(p) Then
@@ -38,6 +48,5 @@
         End If
 
         p.drawPort()
-        count -= 1
     End Sub
 End Class

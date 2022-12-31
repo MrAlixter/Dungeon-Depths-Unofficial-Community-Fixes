@@ -48,7 +48,7 @@
     Public Overrides Sub onUnequip(ByRef p As Player)
         MyBase.onUnequip(p)
 
-        If Game.currFloor.floorNumber = 13 Then
+        If Game.currFloor.floorNumber = 13 And Not getCursed(p) Then
             p.mana -= 35
 
             Game.progressTurn()

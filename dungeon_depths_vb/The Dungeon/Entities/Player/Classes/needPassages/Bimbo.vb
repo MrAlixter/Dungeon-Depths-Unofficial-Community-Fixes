@@ -8,10 +8,11 @@
     Public Overrides Sub onLVLUp(ByVal level As Integer, ByRef p As Player, Optional learnSkills As Boolean = True)
         If Not learnSkills Then Exit Sub
 
-        p.nextLevelXp = p.nextLevelXp / 2
         If level = 3 Then p.learnSpecial("Charm")
         If level = 4 Then p.perks(perk.slutcurse) = 1
         If level = 4 Then p.learnSpell("Flames of Amaraphne")
+
+        If Not Game.lstLog.Items.Contains("You feel like you're leveling up faster...") Then TextEvent.pushLog("You feel like you're leveling up faster...")
     End Sub
 
     Public Overrides Sub deLVL(level As Integer, ByRef p As Player)

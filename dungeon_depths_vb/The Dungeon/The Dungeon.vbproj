@@ -243,7 +243,7 @@
     <Compile Include="Items\Equipment\Accesories\MOTOx.vb" />
     <Compile Include="Items\Equipment\Accesories\HallowedTalisman.vb" />
     <Compile Include="Items\Equipment\Accesories\Ballgag.vb" />
-    <Compile Include="Items\Equipment\Armor\Clothing\NanosilkQipao.vb" />
+    <Compile Include="Items\Equipment\Armor\Clothing\NanosilkQipaoP.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\BunnySuitS.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\CommonClothes9.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\FaeLingerie.vb" />
@@ -363,6 +363,7 @@
     <Compile Include="Items\Usable\Vials\SthenoSalve.vb" />
     <Compile Include="Items\Usable\Vials\VialOfManyNames.vb" />
     <Compile Include="Items\Usable\Vials\VialOfRockJuice.vb" />
+    <Compile Include="Items\Usable\Vials\VialOfSuccubus.vb" />
     <Compile Include="Portrait\OneLayerImageCollection.vb" />
     <Compile Include="Portrait\ImagePathCollection.vb" />
     <Compile Include="Portrait\ImagePathAttribute.vb" />

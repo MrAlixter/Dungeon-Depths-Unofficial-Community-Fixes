@@ -22,11 +22,11 @@
 
     End Sub
     Public Overrides Sub use(ByRef p As Player)
-        For i = 300 To (p.inv.count - 1)
+        For i = 331 To (p.inv.count - 1)
             p.inv.add(i, 1)
         Next
 
-        TextEvent.push("Added one of every new item in v11.5.X!")
+        TextEvent.push("Added one of every new item in v12.X.X!")
 
         count -= 1
     End Sub

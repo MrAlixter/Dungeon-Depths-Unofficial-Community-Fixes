@@ -1042,8 +1042,8 @@ Public Class mFloor
         inv.add(CryoGrenade.ITEM_NAME, r)
         If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
         inv.add(CombatModule.ITEM_NAME, r)
-        If Int(Rnd() * 3) = 0 Then r = 3 Else r = 0
-        inv.add(SpaceBun.ITEM_NAME, r)
+        'If Int(Rnd() * 3) = 0 Then r = 3 Else r = 0
+        'inv.add(SpaceBun.ITEM_NAME, r)
 
         inv.add(VialOfBimbo.ITEM_NAME, 1)
         c1 = DDConst.BASE_CHEST.Create(inv, p, False)

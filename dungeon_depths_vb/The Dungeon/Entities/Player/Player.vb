@@ -187,7 +187,7 @@ Public Class Player
         lust = 0
         level = 1
         xp = 0
-        nextLevelXp = 125
+        nextLevelXp = DDConst.NEXT_LEVEL_FLOOR
         mana = 3
         maxMana = mana
         stamina = 100
@@ -356,6 +356,7 @@ Public Class Player
 
         '|- Cleanup -|
         currState.load(Me)
+        If perks(perk.tfedbyweapon) > 0 Then equippedWeapon = currState.equippedWeapon
 
         turnCt = Game.getTurn
 
@@ -2950,6 +2951,8 @@ Public Class Player
 
     '|LEVELING| 
     Public Sub addXP(ByVal i As Integer)
+        If className.Contains("Bimbo") Then i *= 2
+     
         xp += i
 
         If perks(perk.odxpgained) > -1 Then perks(perk.odxpgained) += i
@@ -2958,14 +2961,17 @@ Public Class Player
     End Sub
     Public Sub levelUp()
         level += 1
+
         xp -= nextLevelXp
         nextLevelXp = nextLevelXp * level
-        TextEvent.pushLog("Level up!  " & name & " is now level " & level)
+
         health = 1
         maxHealth += 20
 
         pClass.onLVLUp(level, Me)
         pForm.onLVLUp(level, Me)
+
+        TextEvent.pushLog("Level up!  " & name & " is now level " & level)
 
         If xp > nextLevelXp Then levelUp()
 
@@ -2977,13 +2983,17 @@ Public Class Player
         pClass.deLVL(level, Me)
         pForm.deLVL(level, Me)
 
-        nextLevelXp = Math.Max(CInt(nextLevelXp / level), 125)
+        Dim xpR As Double = xp / nextLevelXp
+
+        nextLevelXp = Math.Max(CInt(nextLevelXp / level), DDConst.NEXT_LEVEL_FLOOR)
+
         maxHealth -= 20
         level -= 1
 
-        Dim lostXP As Integer = nextLevelXp + xp
+        Dim lostXP As Integer = nextLevelXp
+        lostXP += xp - (xpR * nextLevelXp)
 
-        If xp > nextLevelXp / 2 Then xp = nextLevelXp / 2
+        xp = xpR * nextLevelXp
 
         If lostLevels > 1 Then
             Return lostXP + deLevel(lostLevels - 1)

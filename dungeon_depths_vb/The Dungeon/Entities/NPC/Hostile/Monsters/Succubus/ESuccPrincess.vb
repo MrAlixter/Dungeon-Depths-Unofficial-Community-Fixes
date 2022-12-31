@@ -43,9 +43,9 @@
 
     '| - COMBAT - |
     Public Overrides Sub attackCMD(ByRef target As Entity)
-        Dim d9 = Int(Rnd() * 9)
+        Dim d4 = Int(Rnd() * 4)
 
-        If d9 = 0 Then
+        If d4 = 0 Then
             If pref_mode = mode.slut Then
                 curseOfTheSlut(target)
             ElseIf pref_mode = mode.cow Then

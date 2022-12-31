@@ -426,8 +426,8 @@ Public MustInherit Class Transformation
             p.pForm.canBeTFed And
             p.prt.oneLayerImgCheck(p.formName, p.className) Is Nothing And
             Not p.perks(perk.polymorphed) > 0 And
-            Not p.perks(perk.astatue) > 1 And
-            Not p.perks(perk.tfedbyweapon) > 0 And
+            Not p.perks(perk.astatue) > 1 And Not p.isPetrified And
+            p.perks(perk.tfedbyweapon) < 0 And p.perks(perk.tfcausingwand) < 0 And p.perks(perk.tfcausingsword) < 0 And
             Not p.perks(perk.pdeflector) > 0 Then
 
             Return True

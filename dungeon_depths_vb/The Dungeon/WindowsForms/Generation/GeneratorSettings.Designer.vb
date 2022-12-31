@@ -73,33 +73,36 @@ Partial Class GeneratorSettings
         '
         'lblFC
         '
-        Me.lblFC.AutoSize = True
+        Me.lblFC.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblFC.Location = New System.Drawing.Point(9, 6)
         Me.lblFC.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblFC.Name = "lblFC"
-        Me.lblFC.Size = New System.Drawing.Size(96, 17)
+        Me.lblFC.Size = New System.Drawing.Size(90, 17)
         Me.lblFC.TabIndex = 0
         Me.lblFC.Text = "FloorCode: "
+        Me.lblFC.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'lblWidth
         '
-        Me.lblWidth.AutoSize = True
+        Me.lblWidth.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblWidth.Location = New System.Drawing.Point(9, 41)
         Me.lblWidth.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblWidth.Name = "lblWidth"
-        Me.lblWidth.Size = New System.Drawing.Size(112, 17)
+        Me.lblWidth.Size = New System.Drawing.Size(180, 17)
         Me.lblWidth.TabIndex = 1
         Me.lblWidth.Text = "Board Width: "
+        Me.lblWidth.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'lblHeight
         '
-        Me.lblHeight.AutoSize = True
+        Me.lblHeight.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblHeight.Location = New System.Drawing.Point(9, 64)
         Me.lblHeight.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblHeight.Name = "lblHeight"
-        Me.lblHeight.Size = New System.Drawing.Size(120, 17)
+        Me.lblHeight.Size = New System.Drawing.Size(180, 17)
         Me.lblHeight.TabIndex = 2
         Me.lblHeight.Text = "Board Height: "
+        Me.lblHeight.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'boxWidth
         '
@@ -145,13 +148,14 @@ Partial Class GeneratorSettings
         '
         'lblChestFreqRange
         '
-        Me.lblChestFreqRange.AutoSize = True
+        Me.lblChestFreqRange.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblChestFreqRange.Location = New System.Drawing.Point(9, 108)
         Me.lblChestFreqRange.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblChestFreqRange.Name = "lblChestFreqRange"
-        Me.lblChestFreqRange.Size = New System.Drawing.Size(144, 17)
+        Me.lblChestFreqRange.Size = New System.Drawing.Size(185, 17)
         Me.lblChestFreqRange.TabIndex = 5
         Me.lblChestFreqRange.Text = "Chest Freq Range:"
+        Me.lblChestFreqRange.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'boxChestFreqMin
         '
@@ -167,13 +171,14 @@ Partial Class GeneratorSettings
         '
         'lblChestFreqMin
         '
-        Me.lblChestFreqMin.AutoSize = True
+        Me.lblChestFreqMin.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblChestFreqMin.Location = New System.Drawing.Point(9, 131)
         Me.lblChestFreqMin.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblChestFreqMin.Name = "lblChestFreqMin"
-        Me.lblChestFreqMin.Size = New System.Drawing.Size(128, 17)
+        Me.lblChestFreqMin.Size = New System.Drawing.Size(185, 17)
         Me.lblChestFreqMin.TabIndex = 7
         Me.lblChestFreqMin.Text = "Chest Freq Min:"
+        Me.lblChestFreqMin.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'boxChestSizeDependence
         '
@@ -191,13 +196,14 @@ Partial Class GeneratorSettings
         '
         'lblChestSize
         '
-        Me.lblChestSize.AutoSize = True
+        Me.lblChestSize.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblChestSize.Location = New System.Drawing.Point(9, 155)
         Me.lblChestSize.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblChestSize.Name = "lblChestSize"
-        Me.lblChestSize.Size = New System.Drawing.Size(184, 17)
+        Me.lblChestSize.Size = New System.Drawing.Size(185, 17)
         Me.lblChestSize.TabIndex = 9
         Me.lblChestSize.Text = "Chest Size Dependence:"
+        Me.lblChestSize.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'separator1
         '
@@ -237,13 +243,14 @@ Partial Class GeneratorSettings
         '
         'lblEncounterRate
         '
-        Me.lblEncounterRate.AutoSize = True
+        Me.lblEncounterRate.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblEncounterRate.Location = New System.Drawing.Point(9, 241)
         Me.lblEncounterRate.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblEncounterRate.Name = "lblEncounterRate"
-        Me.lblEncounterRate.Size = New System.Drawing.Size(176, 17)
+        Me.lblEncounterRate.Size = New System.Drawing.Size(180, 17)
         Me.lblEncounterRate.TabIndex = 14
         Me.lblEncounterRate.Text = "Encounter Rate (.x%):"
+        Me.lblEncounterRate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'boxEClockResetVal
         '
@@ -260,13 +267,14 @@ Partial Class GeneratorSettings
         '
         'lblEClockResetVal
         '
-        Me.lblEClockResetVal.AutoSize = True
+        Me.lblEClockResetVal.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblEClockResetVal.Location = New System.Drawing.Point(9, 264)
         Me.lblEClockResetVal.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblEClockResetVal.Name = "lblEClockResetVal"
-        Me.lblEClockResetVal.Size = New System.Drawing.Size(136, 17)
+        Me.lblEClockResetVal.Size = New System.Drawing.Size(180, 17)
         Me.lblEClockResetVal.TabIndex = 16
         Me.lblEClockResetVal.Text = "Encounter Timer:"
+        Me.lblEClockResetVal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'boxChestRichnessBase
         '
@@ -282,13 +290,14 @@ Partial Class GeneratorSettings
         '
         'lblChestRichnessBase
         '
-        Me.lblChestRichnessBase.AutoSize = True
+        Me.lblChestRichnessBase.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblChestRichnessBase.Location = New System.Drawing.Point(9, 178)
         Me.lblChestRichnessBase.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblChestRichnessBase.Name = "lblChestRichnessBase"
-        Me.lblChestRichnessBase.Size = New System.Drawing.Size(168, 17)
+        Me.lblChestRichnessBase.Size = New System.Drawing.Size(185, 17)
         Me.lblChestRichnessBase.TabIndex = 18
         Me.lblChestRichnessBase.Text = "Chest Richness Base:"
+        Me.lblChestRichnessBase.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'boxChestRichnessRange
         '
@@ -304,13 +313,14 @@ Partial Class GeneratorSettings
         '
         'lblChestRichnessRange
         '
-        Me.lblChestRichnessRange.AutoSize = True
+        Me.lblChestRichnessRange.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblChestRichnessRange.Location = New System.Drawing.Point(9, 202)
         Me.lblChestRichnessRange.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblChestRichnessRange.Name = "lblChestRichnessRange"
-        Me.lblChestRichnessRange.Size = New System.Drawing.Size(176, 17)
+        Me.lblChestRichnessRange.Size = New System.Drawing.Size(185, 17)
         Me.lblChestRichnessRange.TabIndex = 20
         Me.lblChestRichnessRange.Text = "Chest Richness Range:"
+        Me.lblChestRichnessRange.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'btnReset
         '
@@ -320,7 +330,7 @@ Partial Class GeneratorSettings
         Me.btnReset.Location = New System.Drawing.Point(9, 310)
         Me.btnReset.Margin = New System.Windows.Forms.Padding(2)
         Me.btnReset.Name = "btnReset"
-        Me.btnReset.Size = New System.Drawing.Size(54, 23)
+        Me.btnReset.Size = New System.Drawing.Size(54, 25)
         Me.btnReset.TabIndex = 22
         Me.btnReset.Text = "Reset"
         Me.btnReset.UseVisualStyleBackColor = False
@@ -333,7 +343,7 @@ Partial Class GeneratorSettings
         Me.btnConfirm.Location = New System.Drawing.Point(493, 310)
         Me.btnConfirm.Margin = New System.Windows.Forms.Padding(2)
         Me.btnConfirm.Name = "btnConfirm"
-        Me.btnConfirm.Size = New System.Drawing.Size(67, 23)
+        Me.btnConfirm.Size = New System.Drawing.Size(67, 25)
         Me.btnConfirm.TabIndex = 23
         Me.btnConfirm.Text = "Confirm"
         Me.btnConfirm.UseVisualStyleBackColor = False
@@ -373,23 +383,25 @@ Partial Class GeneratorSettings
         '
         'lblTrapFreqMin
         '
-        Me.lblTrapFreqMin.AutoSize = True
+        Me.lblTrapFreqMin.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblTrapFreqMin.Location = New System.Drawing.Point(298, 64)
         Me.lblTrapFreqMin.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblTrapFreqMin.Name = "lblTrapFreqMin"
-        Me.lblTrapFreqMin.Size = New System.Drawing.Size(120, 17)
+        Me.lblTrapFreqMin.Size = New System.Drawing.Size(176, 17)
         Me.lblTrapFreqMin.TabIndex = 238
         Me.lblTrapFreqMin.Text = "Trap Freq Min:"
+        Me.lblTrapFreqMin.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'lblTrapFreqRange
         '
-        Me.lblTrapFreqRange.AutoSize = True
+        Me.lblTrapFreqRange.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblTrapFreqRange.Location = New System.Drawing.Point(298, 41)
         Me.lblTrapFreqRange.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblTrapFreqRange.Name = "lblTrapFreqRange"
-        Me.lblTrapFreqRange.Size = New System.Drawing.Size(144, 17)
+        Me.lblTrapFreqRange.Size = New System.Drawing.Size(176, 17)
         Me.lblTrapFreqRange.TabIndex = 237
         Me.lblTrapFreqRange.Text = "Trap Freq Range: "
+        Me.lblTrapFreqRange.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'boxTrapSizeDependence
         '
@@ -407,13 +419,14 @@ Partial Class GeneratorSettings
         '
         'lblTrapSizeDependence
         '
-        Me.lblTrapSizeDependence.AutoSize = True
+        Me.lblTrapSizeDependence.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblTrapSizeDependence.Location = New System.Drawing.Point(298, 88)
         Me.lblTrapSizeDependence.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblTrapSizeDependence.Name = "lblTrapSizeDependence"
         Me.lblTrapSizeDependence.Size = New System.Drawing.Size(176, 17)
         Me.lblTrapSizeDependence.TabIndex = 241
         Me.lblTrapSizeDependence.Text = "Trap Size Dependence:"
+        Me.lblTrapSizeDependence.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'txtSeed
         '
@@ -453,23 +466,23 @@ Partial Class GeneratorSettings
         '
         'lblFS
         '
-        Me.lblFS.AutoSize = True
+        Me.lblFS.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblFS.Location = New System.Drawing.Point(300, 6)
         Me.lblFS.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblFS.Name = "lblFS"
-        Me.lblFS.Size = New System.Drawing.Size(64, 17)
+        Me.lblFS.Size = New System.Drawing.Size(65, 17)
         Me.lblFS.TabIndex = 246
         Me.lblFS.Text = "Preset:"
+        Me.lblFS.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'chkSavePreset
         '
-        Me.chkSavePreset.AutoSize = True
         Me.chkSavePreset.BackColor = System.Drawing.Color.Black
-        Me.chkSavePreset.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkSavePreset.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkSavePreset.ForeColor = System.Drawing.Color.White
-        Me.chkSavePreset.Location = New System.Drawing.Point(349, 312)
+        Me.chkSavePreset.Location = New System.Drawing.Point(349, 311)
         Me.chkSavePreset.Name = "chkSavePreset"
-        Me.chkSavePreset.Size = New System.Drawing.Size(139, 21)
+        Me.chkSavePreset.Size = New System.Drawing.Size(140, 23)
         Me.chkSavePreset.TabIndex = 247
         Me.chkSavePreset.Text = "Save As Preset"
         Me.chkSavePreset.UseVisualStyleBackColor = False

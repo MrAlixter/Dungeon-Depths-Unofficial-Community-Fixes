@@ -106,7 +106,6 @@ Partial Class Controls
         '
         'Label1
         '
-        Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(13, 21)
@@ -141,7 +140,6 @@ Partial Class Controls
         '
         'Label2
         '
-        Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label2.ForeColor = System.Drawing.Color.White
         Me.Label2.Location = New System.Drawing.Point(13, 47)
@@ -164,7 +162,6 @@ Partial Class Controls
         '
         'Label3
         '
-        Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label3.ForeColor = System.Drawing.Color.White
         Me.Label3.Location = New System.Drawing.Point(13, 73)
@@ -187,7 +184,6 @@ Partial Class Controls
         '
         'Label4
         '
-        Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label4.ForeColor = System.Drawing.Color.White
         Me.Label4.Location = New System.Drawing.Point(13, 99)
@@ -210,7 +206,6 @@ Partial Class Controls
         '
         'Label5
         '
-        Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label5.ForeColor = System.Drawing.Color.White
         Me.Label5.Location = New System.Drawing.Point(13, 203)
@@ -233,7 +228,6 @@ Partial Class Controls
         '
         'Label6
         '
-        Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label6.ForeColor = System.Drawing.Color.White
         Me.Label6.Location = New System.Drawing.Point(13, 177)
@@ -256,7 +250,6 @@ Partial Class Controls
         '
         'Label7
         '
-        Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label7.ForeColor = System.Drawing.Color.White
         Me.Label7.Location = New System.Drawing.Point(13, 151)
@@ -279,7 +272,6 @@ Partial Class Controls
         '
         'Label8
         '
-        Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label8.ForeColor = System.Drawing.Color.White
         Me.Label8.Location = New System.Drawing.Point(13, 125)
@@ -302,7 +294,6 @@ Partial Class Controls
         '
         'Label9
         '
-        Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label9.ForeColor = System.Drawing.Color.White
         Me.Label9.Location = New System.Drawing.Point(13, 410)
@@ -325,7 +316,6 @@ Partial Class Controls
         '
         'Label10
         '
-        Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label10.ForeColor = System.Drawing.Color.White
         Me.Label10.Location = New System.Drawing.Point(13, 384)
@@ -348,7 +338,6 @@ Partial Class Controls
         '
         'Label11
         '
-        Me.Label11.AutoSize = True
         Me.Label11.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label11.ForeColor = System.Drawing.Color.White
         Me.Label11.Location = New System.Drawing.Point(13, 358)
@@ -371,7 +360,6 @@ Partial Class Controls
         '
         'Label12
         '
-        Me.Label12.AutoSize = True
         Me.Label12.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label12.ForeColor = System.Drawing.Color.White
         Me.Label12.Location = New System.Drawing.Point(13, 332)
@@ -394,7 +382,6 @@ Partial Class Controls
         '
         'Label13
         '
-        Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label13.ForeColor = System.Drawing.Color.White
         Me.Label13.Location = New System.Drawing.Point(13, 306)
@@ -417,7 +404,6 @@ Partial Class Controls
         '
         'Label14
         '
-        Me.Label14.AutoSize = True
         Me.Label14.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label14.ForeColor = System.Drawing.Color.White
         Me.Label14.Location = New System.Drawing.Point(13, 280)
@@ -440,7 +426,6 @@ Partial Class Controls
         '
         'Label15
         '
-        Me.Label15.AutoSize = True
         Me.Label15.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label15.ForeColor = System.Drawing.Color.White
         Me.Label15.Location = New System.Drawing.Point(13, 254)
@@ -463,7 +448,6 @@ Partial Class Controls
         '
         'Label16
         '
-        Me.Label16.AutoSize = True
         Me.Label16.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label16.ForeColor = System.Drawing.Color.White
         Me.Label16.Location = New System.Drawing.Point(13, 228)
@@ -486,7 +470,6 @@ Partial Class Controls
         '
         'Label17
         '
-        Me.Label17.AutoSize = True
         Me.Label17.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label17.ForeColor = System.Drawing.Color.White
         Me.Label17.Location = New System.Drawing.Point(13, 536)
@@ -509,7 +492,6 @@ Partial Class Controls
         '
         'Label18
         '
-        Me.Label18.AutoSize = True
         Me.Label18.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label18.ForeColor = System.Drawing.Color.White
         Me.Label18.Location = New System.Drawing.Point(13, 510)
@@ -532,7 +514,6 @@ Partial Class Controls
         '
         'Label19
         '
-        Me.Label19.AutoSize = True
         Me.Label19.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label19.ForeColor = System.Drawing.Color.White
         Me.Label19.Location = New System.Drawing.Point(13, 461)
@@ -555,7 +536,6 @@ Partial Class Controls
         '
         'Label20
         '
-        Me.Label20.AutoSize = True
         Me.Label20.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label20.ForeColor = System.Drawing.Color.White
         Me.Label20.Location = New System.Drawing.Point(13, 435)
@@ -578,7 +558,6 @@ Partial Class Controls
         '
         'Label21
         '
-        Me.Label21.AutoSize = True
         Me.Label21.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label21.ForeColor = System.Drawing.Color.White
         Me.Label21.Location = New System.Drawing.Point(13, 561)
@@ -601,7 +580,6 @@ Partial Class Controls
         '
         'Label22
         '
-        Me.Label22.AutoSize = True
         Me.Label22.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label22.ForeColor = System.Drawing.Color.White
         Me.Label22.Location = New System.Drawing.Point(13, 486)

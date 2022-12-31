@@ -418,8 +418,9 @@
         'v13.0.0
         internal_inventory.Add(RingOfTheRabbit.ITEM_NAME, New RingOfTheRabbit)       '391
         internal_inventory.Add(SpaceBun.ITEM_NAME, New SpaceBun)                     '392
-        internal_inventory.Add(NanosilkQipao.ITEM_NAME, New NanosilkQipao)           '393
+        internal_inventory.Add(NanosilkQipaoP.ITEM_NAME, New NanosilkQipaoP)         '393
         internal_inventory.Add(AcolyteCosplay.ITEM_NAME, New AcolyteCosplay)         '394
+        internal_inventory.Add(VialOfSuccubus.ITEM_NAME, New VialOfSuccubus)         '395
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -491,7 +492,7 @@
                    Me.item(327), Me.item(328), Me.item(330), Me.item(338),
                    Me.item(344), Me.item(350), Me.item(362), Me.item(373),
                    Me.item(375), Me.item(379), Me.item(380), Me.item(387),
-                   Me.item(388), Me.item(390)}
+                   Me.item(388), Me.item(390), Me.item(395)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32),
                 Me.item(33), Me.item(34), Me.item(35), Me.item(44),
