@@ -72,4 +72,10 @@
     Public Shared Sub failedToLoadFBImg(ByVal i As Integer)
         push("020", "Failed to find/load full-body image with index """ & i & """.")
     End Sub
+    Public Shared Sub saveFileResumeError()
+        push("021", "Error in the save file detected!  Applying default values and attempting to resume...")
+    End Sub
+    Public Shared Sub saveFileFatalError()
+        push("022", "Error in the save file detected!  The selected save file cannot be loaded due to a fatal error...")
+    End Sub
 End Class

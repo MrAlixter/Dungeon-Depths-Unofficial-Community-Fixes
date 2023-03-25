@@ -85,7 +85,7 @@ Public Class Game
 
     '| -- Misc. Variables -- |
     Public turn As Integer = 0                          '(NOT SAVED)
-    Public version As Double = 11.0
+    Public version As Double = 13.0
     Public sessionID As Integer = DateTime.Now.GetHashCode
     Dim imagesWorker As BackgroundWorker
     Public boardWorker As BackgroundWorker
@@ -2759,63 +2759,65 @@ Public Class Game
 
     '| - SAVE/LOAD - |
     Sub save(ByVal a As String)
-        'save handles the saving of the game
-        Dim writer As IO.StreamWriter
-        IO.File.Delete(a)
-        writer = IO.File.CreateText(a)
+        ''save handles the saving of the game
+        'Dim writer As IO.StreamWriter
+        'IO.File.Delete(a)
+        'writer = IO.File.CreateText(a)
 
-        writer.WriteLine(version)
-        writer.WriteLine(sessionID)
-        'save the dungeon
-        writer.WriteLine("-------------------------------DUNGEON---------------------------------")
-        writer.WriteLine(mDun.save)
+        'writer.WriteLine(version)
+        'writer.WriteLine(sessionID)
+        ''save the dungeon
+        'writer.WriteLine("-------------------------------DUNGEON---------------------------------")
+        'writer.WriteLine(mDun.save)
 
-        'save the player
-        writer.WriteLine("----------------------------------PLAYER------------------------------------")
-        writer.WriteLine(player1.ToString)
-        'save the player's original body prior to the floor 4 body swap
-        If (mDun.numCurrFloor = 4 And mDun.floor_boss(4) = "Ooze Empress") Then
-            writer.WriteLine("placeholder")
-            writer.WriteLine("placeholder")
-            writer.WriteLine(floor_4_starting_inv.Count - 1)
-            For i = 0 To floor_4_starting_inv.Count - 1
-                writer.WriteLine(floor_4_starting_inv.Item(i))
-            Next
-        End If
+        ''save the player
+        'writer.WriteLine("----------------------------------PLAYER------------------------------------")
+        'writer.WriteLine(player1.ToString)
+        ''save the player's original body prior to the floor 4 body swap
+        'If (mDun.numCurrFloor = 4 And mDun.floor_boss(4) = "Ooze Empress") Then
+        '    writer.WriteLine("placeholder")
+        '    writer.WriteLine("placeholder")
+        '    writer.WriteLine(floor_4_starting_inv.Count - 1)
+        '    For i = 0 To floor_4_starting_inv.Count - 1
+        '        writer.WriteLine(floor_4_starting_inv.Item(i))
+        '    Next
+        'End If
 
-        'save the shop NPCs
-        writer.WriteLine("---------------------------------SHOP NPCs-----------------------------------")
-        writer.WriteLine(shop_npc_list.Count - 1)
-        For i = 0 To shop_npc_list.Count - 1
-            writer.WriteLine(shop_npc_list(i).saveNPC)
-        Next
+        ''save the shop NPCs
+        'writer.WriteLine("---------------------------------SHOP NPCs-----------------------------------")
+        'writer.WriteLine(shop_npc_list.Count - 1)
+        'For i = 0 To shop_npc_list.Count - 1
+        '    writer.WriteLine(shop_npc_list(i).saveNPC)
+        'Next
 
-        'save the dungeon generation settings
-        writer.WriteLine("--------------------------------DUNGEON SETTINGS---------------------------------")
-        writer.WriteLine(mBoardWidth)
-        writer.WriteLine(mBoardHeight)
-        writer.WriteLine(chestFreqMin)
-        writer.WriteLine(chestFreqRange)
-        writer.WriteLine(chestSizeDependence)
-        writer.WriteLine(chestRichnessBase)
-        writer.WriteLine(chestRichnessRange)
-        writer.WriteLine(turn)
-        writer.WriteLine(encounterRate)
-        writer.WriteLine(eClockResetVal)
+        ''save the dungeon generation settings
+        'writer.WriteLine("--------------------------------DUNGEON SETTINGS---------------------------------")
+        'writer.WriteLine(mBoardWidth)
+        'writer.WriteLine(mBoardHeight)
+        'writer.WriteLine(chestFreqMin)
+        'writer.WriteLine(chestFreqRange)
+        'writer.WriteLine(chestSizeDependence)
+        'writer.WriteLine(chestRichnessBase)
+        'writer.WriteLine(chestRichnessRange)
+        'writer.WriteLine(turn)
+        'writer.WriteLine(encounterRate)
+        'writer.WriteLine(eClockResetVal)
 
-        writer.Flush()
-        writer.Close()
+        'writer.Flush()
+        'writer.Close()
+
+        SaveFile.save(a)
         TextEvent.push("Game successfully saved!")
         player1.solFlag = False
         player1.drawPort()
 
-        'SaveFile.save()
+
     End Sub
     Sub loadSave(ByVal a As String)
         Dim reader As IO.StreamReader
         reader = IO.File.OpenText(a)
 
-        Dim v = CDbl(reader.ReadLine())
+        Dim v = CDbl(reader.ReadLine().Replace(SaveFile.SEGMENT_DELIMITER, ""))
         If v < 0.92 Then
             DDError.incorrectSaveVersionError()
             If mDun Is Nothing Then
@@ -2828,101 +2830,104 @@ Public Class Game
                 btnAbout.Visible = True
             End If
             Exit Sub
-        ElseIf v > 0.92 Then
+        ElseIf v < 13.0 Then
             sessionID = CInt(reader.ReadLine)
-        End If
 
-        'loadSave handles the loading of a game
-        Debug_Window.clear()
-        cboxNPCMG.Items.Clear()
-        cboxNPCMG.Text = "-- Select --"
-        cboxSpec.Items.Clear()
-        cboxSpec.Text = "-- Select --"
-        lstLog.Items.Clear()
-        npc_list = New List(Of NPC)
-        updatable_queue.clear()
-        player_image = mTile.imgLib.getImg(tSet.dungeon, tile.player)
-        lblNameTitle.ForeColor = Color.White
-        If Not picPortrait.BackgroundImage Is Nothing Then picPortrait.BackgroundImage.Dispose()
-        lblEvent.Visible = False
-        btnATK.Visible = False
-        btnMG.Visible = False
-        btnRUN.Visible = False
-        picEnemy.Visible = False
-        picNPC.Visible = False
-        btnSpec.Visible = False
-        cboxSpec.Visible = False
-        pnlCombatClose()
+            Debug_Window.clear()
+            cboxNPCMG.Items.Clear()
+            cboxNPCMG.Text = "-- Select --"
+            cboxSpec.Items.Clear()
+            cboxSpec.Text = "-- Select --"
+            lstLog.Items.Clear()
+            npc_list = New List(Of NPC)
+            updatable_queue.clear()
+            player_image = mTile.imgLib.getImg(tSet.dungeon, tile.player)
+            lblNameTitle.ForeColor = Color.White
+            If Not picPortrait.BackgroundImage Is Nothing Then picPortrait.BackgroundImage.Dispose()
+            lblEvent.Visible = False
+            btnATK.Visible = False
+            btnMG.Visible = False
+            btnRUN.Visible = False
+            picEnemy.Visible = False
+            picNPC.Visible = False
+            btnSpec.Visible = False
+            cboxSpec.Visible = False
+            pnlCombatClose()
 
-        player1.canMoveFlag = False
-        If picStart.Visible = False Then picStart.Visible = True
-        picStart.BringToFront()
-        picLoadBar.BringToFront()
+            player1.canMoveFlag = False
+            If picStart.Visible = False Then picStart.Visible = True
+            picStart.BringToFront()
+            picLoadBar.BringToFront()
 
-        System.Threading.Thread.Sleep(750)
+            System.Threading.Thread.Sleep(750)
 
-        initLoadBar()
+            initLoadBar()
 
-        updateLoadbar(10)
+            updateLoadbar(10)
 
-        'load the dungeon
-        reader.ReadLine()
-        mDun = New Dungeon(reader.ReadLine())
-        currFloor = mDun.floors(mDun.numCurrFloor)
-        newBoard()
-        updateLoadbar(45)
+            'load the dungeon
+            reader.ReadLine()
+            mDun = New Dungeon(reader.ReadLine())
+            currFloor = mDun.floors(mDun.numCurrFloor)
+            newBoard()
+            updateLoadbar(45)
 
-        'load the player
-        reader.ReadLine()
-        player1 = New Player(reader.ReadLine(), v)
-        'load the pre-floor 4 body if needed
-        If (mDun.numCurrFloor = 4 And mDun.floor_boss(4) = "Ooze Empress") Then
-            Dim l1 = reader.ReadLine()
-            Dim l2 = reader.ReadLine()
-            If Not l1.Equals("placeholder") Then player1.formStates(stateInd.preBSBody).read(l1, version)
-            If Not l2.Equals("placeholder") Then player1.formStates(stateInd.preBSStartState).read(l2, version)
-            floor_4_starting_inv = New ArrayList
-            For i As Integer = 0 To reader.ReadLine()
-                floor_4_starting_inv.Add(reader.ReadLine())
+            'load the player
+            reader.ReadLine()
+            player1 = New Player(reader.ReadLine(), v)
+            'load the pre-floor 4 body if needed
+            If (mDun.numCurrFloor = 4 And mDun.floor_boss(4) = "Ooze Empress") Then
+                Dim l1 = reader.ReadLine()
+                Dim l2 = reader.ReadLine()
+                If Not l1.Equals("placeholder") Then player1.formStates(stateInd.preBSBody).read(l1, version)
+                If Not l2.Equals("placeholder") Then player1.formStates(stateInd.preBSStartState).read(l2, version)
+                floor_4_starting_inv = New ArrayList
+                For i As Integer = 0 To reader.ReadLine()
+                    floor_4_starting_inv.Add(reader.ReadLine())
+                Next
+            End If
+
+            If player1.quests(qInd.outOfTime).getComplete Then compOOT = True
+            If player1.quests(qInd.darkPact).getComplete Then compDP = True
+
+            updateLoadbar(60)
+
+            'load the NPCs
+            reader.ReadLine()
+            shop_npc_list.Clear()
+            For i = 0 To CInt(reader.ReadLine())
+                shop_npc_list.Add(ShopNPC.shopFactory(i))
+                shop_npc_list(i).loadNPC(reader.ReadLine())
             Next
+            shopkeeper = shop_npc_list(0)
+            swiz = shop_npc_list(1)
+            hteach = shop_npc_list(2)
+            fvend = shop_npc_list(3)
+            wsmith = shop_npc_list(4)
+            cbrok = shop_npc_list(5)
+            mgirl = shop_npc_list(6)
+            ttraveler = shop_npc_list(7)
+            fqueen = shop_npc_list(8)
+            updateLoadbar(70)
+
+            'load the dungeon generation settings
+            reader.ReadLine()
+            mBoardWidth = reader.ReadLine()
+            mBoardHeight = reader.ReadLine()
+            chestFreqMin = reader.ReadLine()
+            chestFreqRange = reader.ReadLine()
+            chestSizeDependence = reader.ReadLine()
+            chestRichnessBase = reader.ReadLine()
+            chestRichnessRange = reader.ReadLine()
+            turn = reader.ReadLine()
+            encounterRate = Int(reader.ReadLine())
+            eClockResetVal = Int(reader.ReadLine())
+            updateLoadbar(80)
+        ElseIf v >= 13.0 Then
+            reader.Close()
+            SaveFile.load(a)
+            'SaveFile.save(a & "1")
         End If
-
-        If player1.quests(qInd.outOfTime).getComplete Then compOOT = True
-        If player1.quests(qInd.darkPact).getComplete Then compDP = True
-
-        updateLoadbar(60)
-
-        'load the NPCs
-        reader.ReadLine()
-        shop_npc_list.Clear()
-        For i = 0 To CInt(reader.ReadLine())
-            shop_npc_list.Add(ShopNPC.shopFactory(i))
-            shop_npc_list(i).loadNPC(reader.ReadLine())
-        Next
-        shopkeeper = shop_npc_list(0)
-        swiz = shop_npc_list(1)
-        hteach = shop_npc_list(2)
-        fvend = shop_npc_list(3)
-        wsmith = shop_npc_list(4)
-        cbrok = shop_npc_list(5)
-        mgirl = shop_npc_list(6)
-        ttraveler = shop_npc_list(7)
-        fqueen = shop_npc_list(8)
-        updateLoadbar(70)
-
-        'load the dungeon generation settings
-        reader.ReadLine()
-        mBoardWidth = reader.ReadLine()
-        mBoardHeight = reader.ReadLine()
-        chestFreqMin = reader.ReadLine()
-        chestFreqRange = reader.ReadLine()
-        chestSizeDependence = reader.ReadLine()
-        chestRichnessBase = reader.ReadLine()
-        chestRichnessRange = reader.ReadLine()
-        turn = reader.ReadLine()
-        encounterRate = Int(reader.ReadLine())
-        eClockResetVal = Int(reader.ReadLine())
-        updateLoadbar(80)
 
         combat_engaged = False
 
@@ -2971,7 +2976,11 @@ Public Class Game
             If solFlag Then
                 Try
                     player1.solFlag = True
-                    loadSave("saves/s" & fileNum & ".ave")
+                    If IO.File.Exists("saves/s" & fileNum & ".ave") Then
+                        loadSave("saves/s" & fileNum & ".ave")
+                    Else
+                        loadSave("saves/s" & fileNum & ".avex")
+                    End If
                     player1.solFlag = False
                 Catch ex As System.IO.FileNotFoundException
                     DDError.noSaveDetectedError()
@@ -2979,12 +2988,12 @@ Public Class Game
                     DDError.saveFileError()
                 End Try
             Else
-                save("saves/s" & fileNum & ".ave")
+                save("saves/s" & fileNum & ".avex")
                 imagesWorkerArg = Convert.ToInt32(fileNum)
                 imagesWorker.RunWorkerAsync()
             End If
-            If picStart.Visible Then closesol()
-        End If
+                If picStart.Visible Then closesol()
+            End If
 
         btnS1.Enabled = True
         btnS2.Enabled = True
@@ -3794,7 +3803,7 @@ Public Class Game
             End Try
 
             For i = 1 To 10
-                If System.IO.File.Exists("saves/s" & i.ToString() & ".ave") Then
+                If System.IO.File.Exists("saves/s" & i.ToString() & ".ave") Or System.IO.File.Exists("saves/s" & i.ToString() & ".avex") Then
                     Dim pic As Image
                     If System.IO.File.Exists("saves/s" & i.ToString() & ".ave.png") Then
                         Using fs As New FileStream("saves/s" & i.ToString() & ".ave.png", FileMode.Open, FileAccess.Read)
@@ -3820,7 +3829,7 @@ Public Class Game
             Next
             savePicsReady = True
         Else
-            If System.IO.File.Exists("saves/s" & imagesWorkerArg.ToString() & ".ave") Then
+            If System.IO.File.Exists("saves/s" & imagesWorkerArg.ToString() & ".ave") Or System.IO.File.Exists("saves/s" & imagesWorkerArg.ToString() & ".avex") Then
                 'Dim pic As Image = getImgFromFile("s" & imagesWorkerArg.ToString() & ".ave")
                 Dim pic As Image = getSavePicture(picPortrait.BackgroundImage.Clone())
                 Try
@@ -4030,21 +4039,5 @@ Public Class Game
             Me.TopMost = True
             drawBoard()
         End If
-    End Sub
-
-    Private Sub Label8_Click(sender As Object, e As EventArgs) Handles Label8.Click
-
-    End Sub
-
-    Private Sub Label9_Click(sender As Object, e As EventArgs) Handles Label9.Click
-
-    End Sub
-
-    Private Sub Label10_Click(sender As Object, e As EventArgs) Handles Label10.Click
-
-    End Sub
-
-    Private Sub Label11_Click(sender As Object, e As EventArgs) Handles Label11.Click
-
     End Sub
 End Class

@@ -2,7 +2,7 @@
 Public Class mFloor
     Public mBoardWidth As Integer = 60
     Public mBoardHeight As Integer = 60
-    Dim coveredBoardSpace As Integer = 0
+    Public coveredBoardSpace As Integer = 0
 
     Public mBoard(,) As mTile
     Dim rooms As List(Of List(Of Room)) = New List(Of List(Of Room))
@@ -72,6 +72,9 @@ Public Class mFloor
         Else
             readFloorFromFile(code)
         End If
+    End Sub
+    Public Sub New()
+        'Used for the save file
     End Sub
 
     '|---GENERAL FLOOR GENERATION METHODS---|
@@ -1552,69 +1555,6 @@ Public Class mFloor
     End Sub
 
     '|---SERIALIZATION METHODS---|
-    Function saveMFloor() As String
-        Dim out = "floornumber" & floorNumber & "%"
-
-        out += floorNumber & "%"                '1
-        out += floorCode & "%"                  '2
-        out += mBoardHeight & "%"               '3
-        out += mBoardWidth & "%"                '4
-
-        out += "traps%"
-        out += trapList.Count - 1 & "%"         '6
-        For i = 0 To trapList.Count - 1
-            out += trapList(i).ToString & "%"   '7 to 6 + traplist.Count
-        Next
-
-        out += "statues%"
-        out += statueList.Count - 1 & "%"       '8 + traplist.Count
-        For i = 0 To statueList.Count - 1
-            out += statueList(i).toString & "%" '9 + traplist.Count to 8 + traplist.Count + statueList.Count
-        Next
-
-        out += "chest%"
-        out += chestList.Count - 1 & "%"        '10 + traplist.Count + statueList.Count
-        For i = 0 To chestList.Count - 1
-            out += chestList(i).ToString & "%"  '11 + traplist.Count + statueList.Count to 10 + traplist.Count + statueList.Count + chestList.Count
-        Next
-
-        out += "beatboss%"
-        out += beatBoss & "%"                   '12 + traplist.Count + statueList.Count + chestList.Count
-
-        out += "stairs%"
-        out += stairs.X & "%"                   '14 + traplist.Count + statueList.Count + chestList.Count
-        out += stairs.Y & "%"                   '15 + traplist.Count + statueList.Count + chestList.Count
-
-        out += "playerpos%"
-        out += playerPosition.X & "%"           '17 + traplist.Count + statueList.Count + chestList.Count
-        out += playerPosition.Y & "%"           '18 + traplist.Count + statueList.Count + chestList.Count
-
-        out += "NPCpos%"
-        out += CStr(npcPositions.Count - 1) & "%" '20 + traplist.Count + statueList.Count + chestList.Count
-        For i = 0 To npcPositions.Count - 1
-            out += npcPositions(i).X & "~"
-            out += npcPositions(i).Y & "%"      '21 + traplist.Count + statueList.Count + chestList.Count to 20 + traplist.Count + statueList.Count + chestList.Count + npcPositions.Count
-        Next
-
-        out += "sessions%"
-        out += CStr(sessions.Count - 1) & "%"   '21 + traplist.Count + statueList.Count + chestList.Count + npcPositions.Count
-        For i = 0 To sessions.Count - 1
-            out += sessions.Values(i).ToString() & "%" '22 + traplist.Count + statueList.Count + chestList.Count + npcPositions.Count to 21 + traplist.Count + statueList.Count + chestList.Count + npcPositions.Count + sessions.Count
-        Next
-
-        out += "boardtags%"
-        For y = 0 To mBoardHeight - 1
-            For x = 0 To mBoardWidth - 1
-                out += mBoard(y, x).Tag.ToString
-                If DDConst.SAVED_CHARS.Contains(mBoard(y, x).Text) Then
-                    out += "`" & mBoard(y, x).Text
-                End If
-                out += "%"   '23 + traplist.Count + statueList.Count + chestList.Count + npcPositions.Count + sessions.Count
-            Next
-        Next
-
-        Return out
-    End Function
     Sub loadMFloor(ByVal s As String)
         Dim buffer = s.Split("%")
 
@@ -1697,17 +1637,32 @@ Public Class mFloor
             If stailsStatue Is Nothing Then statueList.Add(New Statue(Game.player1.pos, "seventailsstatue", "You see here a golden statue of a fox"))
         End If
     End Sub
+    Sub loadMFloor(ByRef f As mFloor)
+        Me.mBoardWidth = f.mBoardWidth
+        Me.mBoardHeight = f.mBoardHeight
+        Me.coveredBoardSpace = f.coveredBoardSpace
+
+        Me.mBoard = f.mBoard
+
+        Me.floorNumber = f.floorNumber
+        Me.floorCode = f.floorCode
+        Me.stairs = f.stairs
+
+        Me.chestList = f.chestList
+        Me.statueList = f.statueList
+        Me.trapList = f.trapList
+
+        Me.playerPosition = f.playerPosition
+        Me.npcPositions = f.npcPositions
+
+        me.bossDialog = f.bossDialog
+        Me.beatBoss = f.beatBoss
+    End Sub
     Public Sub writeFloorToFile()
-        Dim writer As IO.StreamWriter = Nothing
         Try
-            IO.File.Delete("floors/" & floorCode & ".flr")
-            writer = IO.File.CreateText("floors/" & floorCode & ".flr")
-            writer.WriteLine(saveMFloor)
+            SaveFile.saveFloor(Me)
         Catch ex As Exception
             TextEvent.push("Error writing floor " & floorCode & " to file!")
-        Finally
-            writer.Flush()
-            writer.Close()
         End Try
     End Sub
     Public Sub readFloorFromFile(ByVal fCode As String)
@@ -1716,6 +1671,8 @@ Public Class mFloor
             If IO.File.Exists("floors/" & fCode & ".flr") Then
                 reader = IO.File.OpenText("floors/" & fCode & ".flr")
                 loadMFloor(reader.ReadLine)
+            ElseIf IO.File.Exists("floors/" & fCode & ".flrx") Then
+                loadMFloor(SaveFile.loadFloor("floors/" & fCode & ".flrx"))
             End If
         Catch ex As Exception
             TextEvent.push("Error reading floor " & floorCode & " from file!")

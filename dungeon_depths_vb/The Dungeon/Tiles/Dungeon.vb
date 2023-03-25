@@ -22,22 +22,24 @@ Public Class Dungeon
     Public numCurrFloor As Integer = -1
     Public lastVisitedFloor As Integer
 
-    Public Sub New()
-        Randomize()
+    Public Sub New(Optional ByVal init As Boolean = True)
+        If init Then
+            Randomize()
 
-        initFloorBoss()
+            initFloorBoss()
 
-        initFloorCodes()
+            initFloorCodes()
 
-        initWorldFlags()
+            initWorldFlags()
 
-        initFirstFloor()
+            initFirstFloor()
 
-        setPositions()
+            setPositions()
 
-        setFloor(Game.currFloor)
+            setFloor(Game.currFloor)
+        End If
     End Sub
-    Public Sub New(save)
+    Public Sub New(ByVal save As String)
         load(save)
     End Sub
 
@@ -177,29 +179,6 @@ Public Class Dungeon
     End Function
 
     '| - SAVE/LOAD - |
-    Function save()
-        Dim out = ""
-
-        out += numCurrFloor & "@"           '0
-        out += lastVisitedFloor & "@"       '1
-
-        out += floors.Keys.Count - 1 & "@"  '2
-        For i = 0 To floors.Keys.Count - 1
-            out += floors.Values(i).saveMFloor & "@"   '3 to 3 + floors.keys.count - 1
-        Next
-
-        out += floor_boss.Count - 1 & "@"      '2
-        For i = 0 To floor_boss.Count - 1
-            out += floor_boss.Keys(i) & "~" & floor_boss.Values(i) & "@"       '3 to 2 + floor_boss.length
-        Next
-
-        out += floor_codes.Count - 1 & "@"   '4 + floor_boss.length
-        For i = 0 To floor_codes.Count - 1
-            out += floor_codes.Keys(i) & "~" & floor_codes.Values(i) & "@"          '5 + floor_boss.length to 4 + floor_boss.length +  floor_codes.count
-        Next
-
-        Return out
-    End Function
     Sub load(ByRef s As String)
         Dim buffer = s.Split("@")
 

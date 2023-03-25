@@ -5,7 +5,7 @@
     Dim acce() As Accessory
     Dim glasses() As Glasses
     Dim useable(), food(), potions(), services(), misc() As Item
-    Dim mPotions As List(Of MysteryPotion)
+    Public mPotions As List(Of MysteryPotion)
     Public invNeedsUDate As Boolean = False
     Public invIDorder As List(Of Integer)
     Dim sum As Integer = 0
@@ -609,7 +609,7 @@
     End Sub
 
     '|SAVE/LOAD|
-    Function save() As String
+    Public Function save() As String
         Dim out = CStr(upperBound()) & ":"
         For i = 0 To upperBound()
             out += getKeyByID(i) & "~" & item(i).count & "~" & item(i).durability & ":"

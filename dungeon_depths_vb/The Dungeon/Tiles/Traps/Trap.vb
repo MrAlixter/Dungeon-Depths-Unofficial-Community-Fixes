@@ -48,7 +48,8 @@ Public Class Trap
     End Function
 
     Shared Function trapFactory(ByVal s As String)
-        Dim cArray() As String = s.Split("*")
+        Dim cArray() As String = s.Split(SaveFile.VALUE_DELIMITER)
+
         Dim p = New Point(CInt(cArray(0)), CInt(cArray(1)))
         Dim i = CInt(cArray(2))
 

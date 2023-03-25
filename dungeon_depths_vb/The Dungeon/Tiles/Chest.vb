@@ -159,13 +159,4 @@ Public Class Chest
         'adds a quantity "c" to inventory slot "i"
         contents.add(i, c)
     End Sub
-
-    '|SAVE METHOD|
-    Public Overrides Function ToString() As String
-        Dim output As String = ""
-        output += CStr(pos.X & "*")
-        output += CStr(pos.Y & "*")
-        output += contents.save()
-        Return output
-    End Function
 End Class

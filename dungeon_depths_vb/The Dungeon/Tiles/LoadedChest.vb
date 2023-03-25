@@ -2,7 +2,7 @@
     Inherits Chest
 
     Dim onOpen As Action
-    Dim cid As Integer
+    Public cid As Integer
 
     Sub New(ByVal p As Point, ByVal contentID As Integer)
         MyBase.New()
