@@ -62,6 +62,7 @@ Public Class mFloor
             Game.boardWorker.CancelAsync()
         End If
 
+        SaveFile.saveFloor(Me)
         'If Not sessions.ContainsKey(Game.sessionID) Then
         '    sessions.Add(Game.sessionID, New Session(Game.sessionID, Game.player1.pos, beatBoss))
         'End If
