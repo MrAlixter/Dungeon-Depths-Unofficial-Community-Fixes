@@ -95,31 +95,29 @@
             End If
             cursor += 1
         Catch ex As Exception
-            Throw ex
             DDError.saveFileResumeError()
             defaultSaveInfo()
             defaultLoadDungeonSettings()
             cursor = 3
         End Try
 
-        Game.updateLoadbar(45)
+        Game.updateLoadbar(25)
 
         Try
             Game.mDun = loadDungeonLoop(lines, cursor)
             Game.currFloor = Game.mDun.floors(Game.mDun.numCurrFloor)
             Game.newBoard()
         Catch ex As Exception
-            Throw ex
+            Game.mDun = New Dungeon()
             DDError.saveFileResumeError()
         End Try
 
         cursor = findNextResumableSeg(lines, cursor + 1)
-        Game.updateLoadbar(55)
+        Game.updateLoadbar(45)
 
         Try
             loadNPCSLoop(lines, cursor)
         Catch ex As Exception
-            Throw ex
             DDError.saveFileResumeError()
         End Try
 
@@ -129,7 +127,6 @@
         Try
             Game.player1 = loadPlayerLoop(lines, cursor)
         Catch ex As Exception
-            Throw ex
             DDError.saveFileFatalError()
             Throw New Exception("Fatal Save Corruption")
         End Try
@@ -904,7 +901,7 @@
         seg = seg.Replace(SEGMENT_DELIMITER, "")
         seg = seg.Replace(ONGOING_QUEST_SEG & VALUE_DELIMITER, "")
 
-        Return [Enum].Parse(GetType(perk), CInt(seg))
+        Return [Enum].Parse(GetType(qInd), seg)
     End Function
 
     '| - Portrait Loop - |
