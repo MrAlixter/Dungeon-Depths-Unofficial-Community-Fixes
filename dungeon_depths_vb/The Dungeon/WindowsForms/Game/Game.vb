@@ -3121,48 +3121,26 @@ Public Class Game
 
     End Sub
     'save access files
-    Shared Function getImgFromFile(ByVal a As String) As Image
-        Dim reader As IO.StreamReader
-        reader = IO.File.OpenText(a)
-        reader.ReadLine()
-        Dim img As Bitmap = Nothing
-        Try
-            Dim iarr(Portrait.NUM_IMG_LAYERS) As Image
-            Dim pState As String() = reader.ReadLine().Split("#")(0).Split("*")
-            Dim haircolor = Color.FromArgb(255, CInt(pState(22)), CInt(pState(23)), CInt(pState(24)))
-            Dim skincolor = Color.FromArgb(255, CInt(pState(25)), CInt(pState(26)), CInt(pState(27)))
-            Dim ids(Portrait.NUM_IMG_LAYERS) As Tuple(Of Integer, Boolean, Boolean)
-            For i = 0 To Portrait.NUM_IMG_LAYERS
-                Dim arr() As String = pState(32 + CInt(pState(31)) + i).Split("%")
-                Dim id = New Tuple(Of Integer, Boolean, Boolean)(CInt(arr(0)), CBool(arr(1)), CBool(arr(2)))
-
-                If id.Item2 Then
-                    iarr(i) = Portrait.imgLib.fAttributes(i)(id.Item1)
-                Else
-                    iarr(i) = Portrait.imgLib.mAttributes(i)(id.Item1)
-                End If
-                ids(i) = id
-                If i = 6 And (id.Item1 = 0 Or id.Item1 = 3) Then iarr(pInd.ears) = Portrait.skinRecolor(iarr(pInd.ears), skincolor)
-            Next
-            DDUtils.changeHairColor(haircolor, ids, iarr)
-            DDUtils.changeSkinColor(skincolor, ids, iarr)
-
-            img = Portrait.CreateBMP(iarr)
-        Catch ex As Exception
-            Return ShopNPC.gbl_img.atrs(0).getAt(103)
-        End Try
-        reader.Close()
-        Return img
-    End Function
     Shared Function getPlayerFromFile(ByVal a As String) As Tuple(Of Player, Double)
+        If Not System.IO.File.Exists(a) And System.IO.File.Exists(a + "x") Then a += "x"
+
         Dim reader As IO.StreamReader
         reader = IO.File.OpenText(a)
-        Dim vers As Double = CDbl(reader.ReadLine())
-        reader.ReadLine()
-        reader.ReadLine()
-        reader.ReadLine()
-        reader.ReadLine()
-        Dim player1 = New Player(reader.ReadLine, vers)
+
+        Dim player1 As Player = Nothing
+        Dim vers As Double = CDbl(reader.ReadLine().Replace(SaveFile.SEGMENT_DELIMITER, ""))
+
+        If a.EndsWith(".ave") Then
+            reader.ReadLine()
+            reader.ReadLine()
+            reader.ReadLine()
+            reader.ReadLine()
+            player1 = New Player(reader.ReadLine, vers)
+        ElseIf a.EndsWith(".avex") Then
+            Dim lines As List(Of String) = reader.ReadToEnd().Replace(vbCrLf, "").Split(SaveFile.SEGMENT_DELIMITER).ToList
+            player1 = SaveFile.loadPlayerLoop(lines, SaveFile.findFirstPlayerLoop(lines, 0))
+        End If
+
         reader.Close()
         Return New Tuple(Of Player, Double)(player1, vers)
     End Function
@@ -3804,15 +3782,13 @@ Public Class Game
 
             For i = 1 To 10
                 If System.IO.File.Exists("saves/s" & i.ToString() & ".ave") Or System.IO.File.Exists("saves/s" & i.ToString() & ".avex") Then
-                    Dim pic As Image
+                    Dim pic As Image = Nothing
                     If System.IO.File.Exists("saves/s" & i.ToString() & ".ave.png") Then
                         Using fs As New FileStream("saves/s" & i.ToString() & ".ave.png", FileMode.Open, FileAccess.Read)
                             pic = Image.FromStream(fs)
                         End Using
                     Else
-                        pic = getImgFromFile("saves/s" & i.ToString() & ".ave")
-                        'System.IO.File.Create("s" & i.ToString() & ".ave.png")
-                        pic.Save("saves/s" & i.ToString() & ".ave.png")
+                        pic = ShopNPC.gbl_img.atrs(0).getAt(103)
                     End If
                     Try
                         savePics(i) = pic

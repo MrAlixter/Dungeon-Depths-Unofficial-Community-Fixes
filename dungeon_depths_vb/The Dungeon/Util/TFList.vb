@@ -71,18 +71,4 @@
     Function count() As Integer
         Return internalList.Count
     End Function
-
-    Function save() As String
-        Dim output = ""
-        output += internalList.Count - 1 & "Ͱ"
-        For Each tf In internalList
-            output += tf.Value.ToString & "Ͱ"
-        Next
-
-        Return output
-    End Function
-
-    Sub load(ByVal s As String)
-
-    End Sub
 End Class

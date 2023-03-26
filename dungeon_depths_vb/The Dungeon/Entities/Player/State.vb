@@ -280,29 +280,6 @@
         initFlag = True
     End Sub
     'write converts a state into a string to be put into a save file
-    Public Function write() As String
-        If initFlag Then
-            Dim output As String = CStr(name & "*" & pClass.name & "~" & pForm.name & "*" & Replace(description, vbCrLf, "") & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & dickSize & "*" & haircolor.A & "*" & skincolor.A & "*" & _
-               attack & "*" & defense & "*" & will & "*" & speed & "*" & isPetrified & "*" & stamina & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
-               sex & "*" & buttSize & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
-               textColor.R & "*" & textColor.G & "*" & textColor.B & "*" & lust & "*")
-            output += perks.Count & "*"
-            For Each kvp As KeyValuePair(Of perk, Integer) In perks
-                output += (kvp.Key & "!" & kvp.Value & "*")
-            Next
-            output += UBound(iArrInd) & "*"
-            For i = 0 To UBound(iArrInd)
-                output += (iArrInd(i).Item1 & "%" & iArrInd(i).Item2 & "%" & iArrInd(i).Item3 & "*")
-            Next
-
-            output += Game.player1.equippedAcce.getName & "*"
-            output += Game.player1.equippedGlasses.getName & "*"
-            Return output + "#"
-        Else
-            Return "N/A#"
-        End If
-    End Function
-
     Public Function getName() As String
         Return name
     End Function

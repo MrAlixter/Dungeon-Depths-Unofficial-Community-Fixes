@@ -107,7 +107,7 @@ Public Class FusionDialogBackend
         For i = 1 To 10
             Dim saveName = "saves/s" & i & ".ave"
 
-            If Not System.IO.File.Exists(saveName) Then Continue For
+            If Not System.IO.File.Exists(saveName) And Not System.IO.File.Exists(saveName + "x") Then Continue For
 
             Dim save = Game.getPlayerFromFile(saveName)
             Dim p2 As Player = save.Item1

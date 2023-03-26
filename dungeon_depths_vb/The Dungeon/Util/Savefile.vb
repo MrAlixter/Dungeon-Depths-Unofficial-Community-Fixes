@@ -142,6 +142,13 @@
 
         Return cursor + 1
     End Function
+    Public Shared Function findFirstPlayerLoop(ByVal save As List(Of String), ByVal cursor As Integer) As Integer
+        For i = cursor To save.Count - 1
+            If PLAYER_HEADER_SEG.Equals(save(i).Split(VALUE_DELIMITER)(0)) Then Return i
+        Next
+
+        Return -1
+    End Function
 
     '| -- Save Info Segment (SVE) -- |
     Protected Shared Function saveSaveInfoSegment() As String
@@ -688,7 +695,7 @@
 
         Return save_loop & vbCrLf & PLAYER_END_SEG & SEGMENT_DELIMITER
     End Function
-    Protected Shared Function loadPlayerLoop(ByVal save As List(Of String), ByVal start_pos As Integer) As Player
+    Public Shared Function loadPlayerLoop(ByVal save As List(Of String), ByVal start_pos As Integer) As Player
         If Not save(start_pos).StartsWith(PLAYER_HEADER_SEG) Then MsgBox(save(start_pos) & " " & PLAYER_HEADER_SEG) : Throw New Exception("Player at line " & start_pos & " is corrupt!")
 
         Dim p As Player = New Player()
