@@ -64,6 +64,9 @@
 
         Return internalList(s)
     End Function
+    Function getTFs() As List(Of Transformation)
+        Return New List(Of Transformation)(internalList.Values)
+    End Function
 
     Function count() As Integer
         Return internalList.Count

@@ -626,14 +626,16 @@
                p.knownSpells.Count & VALUE_DELIMITER &
                p.knownSpecials.Count & VALUE_DELIMITER &
                p.quests.Count & VALUE_DELIMITER &
-               p.ongoingQuests.count & SEGMENT_DELIMITER
+               p.ongoingQuests.count & VALUE_DELIMITER &
+               If(p.forcedPath Is Nothing, 0, p.forcedPath.Count) & VALUE_DELIMITER &
+               (Not p.prefForm Is Nothing) & SEGMENT_DELIMITER
     End Function
     Protected Shared Function savePlayerLoop(ByRef p As Player) As String
         Dim save_loop As String = savePlayerHeaderSegment(p) & vbCrLf
 
-        For i = 0 To p.ongoingTFs.count - 1
-            If Not (p.ongoingTFs.getAt(i) Is Nothing) Then
-                save_loop += saveTransformationSegment(p.ongoingTFs.getAt(i)) & vbCrLf
+        For Each tf In p.ongoingTFs.getTFs
+            If Not (tf Is Nothing) Then
+                save_loop += saveTransformationSegment(tf) & vbCrLf
             Else
                 save_loop += TRANSFORMATION_SEG & VALUE_DELIMITER & "NULL" & SEGMENT_DELIMITER & vbCrLf
             End If
@@ -662,6 +664,16 @@
         For i = 0 To p.ongoingQuests.count - 1
             save_loop += saveOngoingQuestSegment(p.ongoingQuests.getAt(i).getQInd) & vbCrLf
         Next
+
+        If Not p.forcedPath Is Nothing Then
+            For Each pt In p.forcedPath
+                save_loop += saveForcedPathSegment(pt) & vbCrLf
+            Next
+        End If
+
+        If Not p.prefForm Is Nothing Then
+            save_loop += savePreferedFormSegment(p.prefForm) & vbCrLf
+        End If
 
         save_loop += savePlayerStateLoop(p.currState) & vbCrLf
         save_loop += savePlayerStateLoop(p.pState) & vbCrLf
@@ -757,6 +769,18 @@
             start_pos += 1
         Next
 
+        Dim forced_path As List(Of Point) = New List(Of Point)
+        For i = 1 To CInt(subseg(23))
+            forced_path.Add(loadForcedPathSegment(save(start_pos)))
+            start_pos += 1
+        Next
+        If forced_path.Count > 0 Then p.forcedPath = forced_path.ToArray
+
+        If CBool(subseg(24)) Then
+            p.prefForm = loadPreferedFormSegment(save(start_pos))
+            start_pos += 1
+        End If
+
         Dim cstate_tuple = loadPlayerStateLoop(save, start_pos)
         p.currState = cstate_tuple.Item1
         start_pos = 1 + cstate_tuple.Item2
@@ -787,9 +811,19 @@
             Game.floor_4_starting_inv = loadTempInvSegment(save(start_pos))
         End If
 
-        p.solFlag = False
-
         p.currState.load(p, True)
+        If p.perks(perk.tfedbyweapon) > 0 Then p.equippedWeapon = p.currState.equippedWeapon
+        If p.equippedAcce.getAName.Equals(ThrallCollar.ITEM_NAME) Then p.equippedAcce = p.inv.item(69)
+
+        p.turnCt = Game.getTurn
+
+        p.allRoute()
+        p.drawPort()
+
+        p.magicRoute()
+        p.specialRoute()
+
+        p.solFlag = False
 
         Return p
     End Function
@@ -1073,6 +1107,52 @@
         start_pos += 1 + loadPortraitUpperBound(save(start_pos))
 
         Return New Tuple(Of State, Integer)(ste, start_pos)
+    End Function
+
+    '| - Forced Path Segment - |
+    Protected Shared Function saveForcedPathSegment(ByRef p As Point) As String
+        Return FORCED_PATH_SEG & VALUE_DELIMITER &
+               p.X & VALUE_DELIMITER &
+               p.Y & SEGMENT_DELIMITER
+    End Function
+    Protected Shared Function loadForcedPathSegment(ByVal seg As String) As Point
+        seg = seg.Replace(SEGMENT_DELIMITER, "")
+
+        Dim subseg = seg.Split(VALUE_DELIMITER)
+
+        Return New Point(CInt(subseg(1)), CInt(subseg(2)))
+    End Function
+
+    '| - Prefered Form Segment - |
+    Protected Shared Function savePreferedFormSegment(ByRef p As PreferredForm) As String
+        Return PREFERRED_FORM_SEG & VALUE_DELIMITER &
+               p.hairColor.A & VALUE_DELIMITER &
+               p.hairColor.R & VALUE_DELIMITER &
+               p.hairColor.G & VALUE_DELIMITER &
+               p.hairColor.B & VALUE_DELIMITER &
+               p.skinColor.A & VALUE_DELIMITER &
+               p.skinColor.R & VALUE_DELIMITER &
+               p.skinColor.G & VALUE_DELIMITER &
+               p.skinColor.B & VALUE_DELIMITER &
+               p.hasFemaleHair & VALUE_DELIMITER &
+               p.isFemale & VALUE_DELIMITER &
+               p.breastSize & VALUE_DELIMITER &
+               p.isSlut & VALUE_DELIMITER &
+               p.earType & VALUE_DELIMITER &
+               p.fHairInd & VALUE_DELIMITER &
+               p.rHairInd & VALUE_DELIMITER &
+               p.buttSize & VALUE_DELIMITER &
+               p.dickSize & SEGMENT_DELIMITER
+    End Function
+    Protected Shared Function loadPreferedFormSegment(ByRef seg As String) As PreferredForm
+        seg = seg.Replace(SEGMENT_DELIMITER, "")
+
+        Dim subseg = seg.Split(VALUE_DELIMITER)
+
+        Dim hc = loadColorSegment(COLOR_SEG & VALUE_DELIMITER & subseg(1) & VALUE_DELIMITER & subseg(2) & VALUE_DELIMITER & subseg(3) & VALUE_DELIMITER & subseg(4))
+        Dim sc = loadColorSegment(COLOR_SEG & VALUE_DELIMITER & subseg(5) & VALUE_DELIMITER & subseg(6) & VALUE_DELIMITER & subseg(7) & VALUE_DELIMITER & subseg(8))
+
+        Return New PreferredForm(hc, sc, CBool(subseg(9)), CBool(subseg(10)), CInt(subseg(11)), CBool(subseg(12)), CInt(subseg(13)), CInt(subseg(14)), CInt(subseg(15)), Nothing, CInt(subseg(16)), CInt(subseg(17)))
     End Function
 
     '| - Inventory Loop - |

@@ -126,7 +126,7 @@ Public Class Player
     Public sex, description As String
     Public pClass As pClass = New Classless()
     Public pForm As pForm = New Human()
-    Dim turnCt As Integer = 0
+    Public turnCt As Integer = 0
     Public xp, nextLevelXp As Integer
 
     Public breastSize As Integer = -1

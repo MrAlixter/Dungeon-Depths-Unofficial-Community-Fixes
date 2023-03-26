@@ -218,13 +218,6 @@
 
         p.drawPort()
     End Sub
-
-    Public Overrides Function ToString() As String
-        Return (hairColor.A & "$" & hairColor.R & "$" & hairColor.G & "$" & hairColor.B & "$" &
-                skinColor.A & "$" & skinColor.R & "$" & skinColor.G & "$" & skinColor.B & "$" &
-                hasFemaleHair & "$" & isFemale & "$" & breastSize & "$" & isSlut & "$" & earType) '& "$" &
-        'fHairInd & "$" & rHairInd & "$" & onComplete.ToString)
-    End Function
 End Class
 
 Public Class SuccMaid
