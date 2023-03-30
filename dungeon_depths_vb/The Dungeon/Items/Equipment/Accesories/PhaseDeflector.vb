@@ -26,6 +26,8 @@
                 getStatInformation())
     End Sub
     Public Overrides Sub onEquip(ByRef p As Player)
+        If p.solFlag Then Exit Sub
+
         p.savePState()
 
         p.perks(perk.pdeflector) = 1

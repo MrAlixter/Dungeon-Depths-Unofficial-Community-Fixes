@@ -50,7 +50,8 @@
                 speed *= 1.2
             ElseIf Int(Rnd() * 2) = 0 Then
                 TextEvent.pushLog((getName() & " fires off a shockwave!"))
-                Dim out = (getName() & " fires off a psychic shockwave, knocking you back!")
+                TextEvent.pushCombat(getName() & " fires off a psychic shockwave, knocking you back!")
+                target.takeDMG(10, Me)
 
                 Dim ownedPotions As List(Of Item) = New List(Of Item)
                 For Each p In target.inv.getPotions()
@@ -59,20 +60,14 @@
 
                 If ownedPotions.Count > 0 Then
                     Dim i = Int(Rnd() * ownedPotions.Count)
-                    out += "  As you stumble backwards, you fall, landing on your " &
-                        ownedPotions(i).getAName & ", which breaks open!"
+                    TextEvent.pushLog("You fall on your " & ownedPotions(i).getAName & "!")
+                    TextEvent.pushCombat("You stagger backwards and trip, landing on your " & ownedPotions(i).getAName & " and splattering it all over yourself!")
                     target.inv.item(ownedPotions(i).getAName).use(Game.player1)
                 End If
-
-                target.takeDMG(10, Me)
-
-                TextEvent.pushCombat(out)
             End If
         End If
 
-
-        TextEvent.pushLog((getName() & " slashes at you!"))
-        TextEvent.pushCombat((getName() & " slashes at you!"))
+        TextEvent.pushAndLog((getName() & " slashes at you!"))
         MyBase.attackCMD(target)
     End Sub
 

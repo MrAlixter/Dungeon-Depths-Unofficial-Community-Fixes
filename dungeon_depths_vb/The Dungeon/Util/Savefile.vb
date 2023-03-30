@@ -6,6 +6,7 @@
     Private Const PERK_COUNT_SEG As String = "PERKC"
     Private Const PERK_SEG As String = "PERK"
     Private Const PREFERRED_FORM_SEG As String = "PRF"
+    Private Const POINT_SEG As String = "PNT"
     Private Const FORCED_PATH_SEG As String = "PATH"
     Private Const COLOR_SEG As String = "CLR"
     Private Const TRANSFORMATION_SEG As String = "OTF"
@@ -267,7 +268,7 @@
         For i = 1 To CInt(subseg(4))
             Dim floor_tuple = loadFloorLoop(save, start_pos)
             dun.floors.Add(floor_tuple.Item1.floorNumber, floor_tuple.Item1)
-            start_pos = 1 + floor_tuple.Item2
+            start_pos = floor_tuple.Item2
         Next
 
         Return dun
@@ -344,7 +345,8 @@
                          f.beatBoss & VALUE_DELIMITER &
                          f.chestList.Count & VALUE_DELIMITER &
                          f.statueList.Count & VALUE_DELIMITER &
-                         f.trapList.Count & SEGMENT_DELIMITER
+                         f.trapList.Count & SEGMENT_DELIMITER &
+                         f.npcPositions.Count & SEGMENT_DELIMITER
 
         For y = 0 To f.mBoardHeight - 1
             For x = 0 To f.mBoardWidth - 1
@@ -364,11 +366,16 @@
             floor_loop += vbCrLf + saveTrapSegment(t)
         Next
 
+        For Each p In f.npcPositions
+            floor_loop += vbCrLf + savePointSegment(p)
+        Next
+
         Return floor_loop & vbCrLf & DUNGEON_FLOOR_END_SEG & SEGMENT_DELIMITER
     End Function
     Protected Shared Function loadFloorLoop(ByVal save As List(Of String), ByVal start_pos As Integer) As Tuple(Of mFloor, Integer)
-        Dim subseg() As String = save(start_pos).Split(VALUE_DELIMITER)
+        If save(start_pos).Equals(DUNGEON_FLOOR_END_SEG) Then start_pos += 1
 
+        Dim subseg() As String = save(start_pos).Split(VALUE_DELIMITER)
 
         If Not subseg(0).Equals(DUNGEON_FLOOR_SEG) Then Throw New Exception("Floor at line " & start_pos & " is corrupt!")
 
@@ -384,11 +391,13 @@
         Dim chestCount As Integer = CInt(subseg(12))
         Dim statueCount As Integer = CInt(subseg(13))
         Dim trapCount As Integer = CInt(subseg(14))
+        Dim npcPositionCount As Integer = CInt(subseg(15))
         Dim floor As mFloor = New mFloor()
         ReDim floor.mBoard(mBoardHeight, mBoardWidth)
         floor.chestList = New List(Of Chest)()
         floor.statueList = New List(Of Statue)()
         floor.trapList = New List(Of Trap)()
+        floor.npcPositions = New List(Of Point)()
 
         floor.mBoardWidth = mBoardWidth
         floor.mBoardHeight = mBoardHeight
@@ -437,7 +446,22 @@
             start_pos += 1
         Next
 
+        For i = 0 To npcPositionCount - 1
+            floor.npcPositions.Add(loadPointSegment(save(start_pos)))
+            start_pos += 1
+        Next
+
         Return New Tuple(Of mFloor, Integer)(floor, start_pos)
+    End Function
+    Protected Shared Function savePointSegment(ByRef pt As Point) As String
+        Return POINT_SEG & VALUE_DELIMITER &
+               pt.X & VALUE_DELIMITER &
+               pt.Y & SEGMENT_DELIMITER
+    End Function
+    Protected Shared Function loadPointSegment(ByVal seg As String) As Point
+        Dim subseg = seg.Split(VALUE_DELIMITER)
+
+        Return New Point(CInt(subseg(1)), CInt(subseg(2)))
     End Function
     Protected Shared Function saveTileSegment(ByRef t As mTile, ByVal x As Integer, ByVal y As Integer) As String
         Return TILE_INFO_SEG & VALUE_DELIMITER &

@@ -2926,7 +2926,7 @@ Public Class Game
         ElseIf v >= 13.0 Then
             reader.Close()
             SaveFile.load(a)
-            'SaveFile.save(a & "1")
+            SaveFile.save(a & "1")
         End If
 
         combat_engaged = False

@@ -1391,6 +1391,8 @@ Public Class mFloor
         Next
     End Sub
     Sub placeNPCs(ByRef npc_list As List(Of ShopNPC), ByVal possibleNPCs As Integer())
+        If npc_list.Count < 1 Then Exit Sub
+
         npcPositions.Clear()
 
         Dim numNpc As Integer = Int(Rnd() * possibleNPCs.Length) + 1

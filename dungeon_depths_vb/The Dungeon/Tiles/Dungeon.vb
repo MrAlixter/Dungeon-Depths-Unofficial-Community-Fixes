@@ -174,6 +174,9 @@ Public Class Dungeon
         If Not floors.Keys.Contains(numCurrFloor) And floor_codes.Keys.Contains(numCurrFloor) AndAlso IO.File.Exists("floors/" & floor_codes(numCurrFloor) & ".flr") Then
             floors.Add(numCurrFloor, New mFloor(floor_codes(numCurrFloor)))
             Return True
+        ElseIf Not floors.Keys.Contains(numCurrFloor) And floor_codes.Keys.Contains(numCurrFloor) AndAlso IO.File.Exists("floors/" & floor_codes(numCurrFloor) & ".flrx") Then
+            floors.Add(numCurrFloor, SaveFile.loadFloor("floors/" & floor_codes(numCurrFloor) & ".flrx"))
+            Return True
         End If
         Return False
     End Function
