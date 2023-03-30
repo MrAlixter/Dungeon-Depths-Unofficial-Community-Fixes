@@ -104,14 +104,14 @@
 
         Game.updateLoadbar(25)
 
-        'Try
-        Game.mDun = loadDungeonLoop(lines, cursor)
-        Game.currFloor = Game.mDun.floors(Game.mDun.numCurrFloor)
-        Game.newBoard()
-        'Catch ex As Exception
-        '    Game.mDun = New Dungeon()
-        '    DDError.saveFileResumeError()
-        'End Try
+        Try
+            Game.mDun = loadDungeonLoop(lines, cursor)
+            Game.currFloor = Game.mDun.floors(Game.mDun.numCurrFloor)
+            Game.newBoard()
+        Catch ex As Exception
+            Game.mDun = New Dungeon()
+            DDError.saveFileResumeError()
+        End Try
 
         cursor = findNextResumableSeg(lines, cursor + 1)
         Game.updateLoadbar(45)
