@@ -2974,19 +2974,19 @@ Public Class Game
 
         If mouseEvent IsNot Nothing AndAlso mouseEvent.Button = MouseButtons.Left Then
             If solFlag Then
-                Try
-                    player1.solFlag = True
-                    If IO.File.Exists("saves/s" & fileNum & ".ave") Then
-                        loadSave("saves/s" & fileNum & ".ave")
-                    Else
-                        loadSave("saves/s" & fileNum & ".avex")
-                    End If
-                    player1.solFlag = False
-                Catch ex As System.IO.FileNotFoundException
-                    DDError.noSaveDetectedError()
-                Catch ex2 As Exception
-                    DDError.saveFileError()
-                End Try
+                'Try
+                player1.solFlag = True
+                If IO.File.Exists("saves/s" & fileNum & ".ave") Then
+                    loadSave("saves/s" & fileNum & ".ave")
+                Else
+                    loadSave("saves/s" & fileNum & ".avex")
+                End If
+                player1.solFlag = False
+                'Catch ex As System.IO.FileNotFoundException
+                '    DDError.noSaveDetectedError()
+                'Catch ex2 As Exception
+                '    DDError.saveFileError()
+                'End Try
             Else
                 save("saves/s" & fileNum & ".avex")
                 imagesWorkerArg = Convert.ToInt32(fileNum)

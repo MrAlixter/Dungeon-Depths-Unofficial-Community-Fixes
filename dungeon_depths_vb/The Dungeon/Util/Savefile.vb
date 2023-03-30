@@ -104,14 +104,14 @@
 
         Game.updateLoadbar(25)
 
-        Try
-            Game.mDun = loadDungeonLoop(lines, cursor)
-            Game.currFloor = Game.mDun.floors(Game.mDun.numCurrFloor)
-            Game.newBoard()
-        Catch ex As Exception
-            Game.mDun = New Dungeon()
-            DDError.saveFileResumeError()
-        End Try
+        'Try
+        Game.mDun = loadDungeonLoop(lines, cursor)
+        Game.currFloor = Game.mDun.floors(Game.mDun.numCurrFloor)
+        Game.newBoard()
+        'Catch ex As Exception
+        '    Game.mDun = New Dungeon()
+        '    DDError.saveFileResumeError()
+        'End Try
 
         cursor = findNextResumableSeg(lines, cursor + 1)
         Game.updateLoadbar(45)
@@ -345,7 +345,7 @@
                          f.beatBoss & VALUE_DELIMITER &
                          f.chestList.Count & VALUE_DELIMITER &
                          f.statueList.Count & VALUE_DELIMITER &
-                         f.trapList.Count & SEGMENT_DELIMITER &
+                         f.trapList.Count & VALUE_DELIMITER &
                          f.npcPositions.Count & SEGMENT_DELIMITER
 
         For y = 0 To f.mBoardHeight - 1
