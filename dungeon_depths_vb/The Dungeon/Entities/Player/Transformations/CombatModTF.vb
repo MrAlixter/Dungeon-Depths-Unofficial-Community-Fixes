@@ -38,7 +38,7 @@
         If p.inv.getCountAt("Cyber_Visor_(O)") < 1 Then p.inv.add("Cyber_Visor_(O)", 1)
         EquipmentDialogBackend.glassesChange(p, "Cyber_Visor_(O)")
 
-        p.prt.setIAInd(pInd.mouth, 12, True, False)
+        p.prt.setIAInd(pInd.mouth, 34, True, True)
 
         p.perks(perk.slutcurse) = -1
     End Sub

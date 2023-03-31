@@ -24,7 +24,7 @@
         p.breastSize = 1 + Int(Rnd() * 2)
         p.buttSize = 1 + Int(Rnd() * 2)
 
-        p.prt.setIAInd(pInd.face, 6, True, True)
+        p.prt.setIAInd(pInd.face, 0, True, True)
         p.prt.setIAInd(pInd.mouth, 4, True, False)
         p.prt.setIAInd(pInd.eyes, 53, True, True)
         p.prt.setIAInd(pInd.facemark, 0, True, False)

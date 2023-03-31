@@ -24,7 +24,7 @@
         p.breastSize = 2 + Int(Rnd() * 2)
 
         p.prt.setIAInd(pInd.rearhair, 2, True, False)
-        p.prt.setIAInd(pInd.face, 6, True, True)
+        p.prt.setIAInd(pInd.face, 0, True, True)
         p.prt.setIAInd(pInd.midhair, 2, True, False)
         p.prt.setIAInd(pInd.ears, 9, True, True)
         p.prt.setIAInd(pInd.mouth, 4, True, False)

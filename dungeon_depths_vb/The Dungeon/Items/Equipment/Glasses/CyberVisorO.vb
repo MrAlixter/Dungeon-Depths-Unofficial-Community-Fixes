@@ -21,7 +21,7 @@
         value = 0
 
         '|Image Index|
-        imgInd = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
+        imgInd = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
 
         '|Description|
         setDesc("A set of glasses made up of a single orange lens.  Their futuristic design is both lightweight and durable." & DDUtils.RNRN &
