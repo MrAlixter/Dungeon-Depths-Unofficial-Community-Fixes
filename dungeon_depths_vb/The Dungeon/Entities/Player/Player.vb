@@ -1568,6 +1568,10 @@ Public Class Player
         If pClass.name.Equals("Valkyrie") And perks(perk.tfedbyweapon) > 0 Then
             PerkEffects.valkyrieStatusCheck(Me)
         End If
+        If perks(perk.tfedbyweapon) < 0 And (perks(perk.tfcausingwand) > -1 Or perks(perk.tfcausingsword) > -1) Then
+            perks(perk.tfcausingwand) = -1
+            perks(perk.tfcausingsword) = -1
+        End If
 
         '|SPECIAL MOVE HANDLERS|
         'berserker rage special

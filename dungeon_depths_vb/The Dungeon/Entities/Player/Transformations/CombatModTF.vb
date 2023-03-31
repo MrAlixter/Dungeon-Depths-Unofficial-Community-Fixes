@@ -40,6 +40,9 @@
 
         p.prt.setIAInd(pInd.mouth, 34, True, True)
 
+        If p.breastSize > 2 Then p.breastSize = 2
+        If p.buttSize > 3 Then p.buttSize = 3
+
         p.perks(perk.slutcurse) = -1
     End Sub
 
