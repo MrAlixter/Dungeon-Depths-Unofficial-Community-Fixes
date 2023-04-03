@@ -516,26 +516,26 @@ Public Class Game
 
         For y As Integer = 0 To getViewHeight() - 1
             For x As Integer = 0 To getViewWidth() - 1
-                Select Case mDun.numCurrFloor
-                    Case 6, 7, 8, 9, 10, 11, 12
-                        g.DrawImage(getForestTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
-                    Case 13
-                        g.DrawImage(getFoggyForestTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
-                    Case 14
-                        g.DrawImage(getHubTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
-                        'Case 15
-                        '    g.DrawImage(getDesertTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
-                    Case 9999, 10000
-                        g.DrawImage(getSpaceTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
-                    Case 91017
-                        g.DrawImage(getLegacyTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
-                    Case 91018
-                        g.DrawImage(getCaveHTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
-                    Case Is > 14
-                        g.DrawImage(getHubTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
-                    Case Else
-                        g.DrawImage(getDungeonTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
-                End Select
+                    Select Case mDun.numCurrFloor
+                        Case 6, 7, 8, 9, 10, 11, 12
+                            g.DrawImage(getForestTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                        Case 13
+                            g.DrawImage(getFoggyForestTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                        Case 14
+                            g.DrawImage(getHubTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                            'Case 15
+                            '    g.DrawImage(getDesertTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                        Case 9999, 10000
+                            g.DrawImage(getSpaceTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                        Case 91017
+                            g.DrawImage(getLegacyTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                        Case 91018
+                            g.DrawImage(getCaveHTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                        Case Is > 14
+                            g.DrawImage(getHubTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                        Case Else
+                            g.DrawImage(getDungeonTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                    End Select
             Next
         Next
 
@@ -2241,7 +2241,7 @@ Public Class Game
         End If
 
         If mDun.floor_boss.ContainsKey(mDun.numCurrFloor) And Not currFloor.beatBoss Then
-            If mDun.currFloorBoss.Equals("Key") And player1.pos = currFloor.stairs And player1.inv.getCountAt("Key") > 0 Then
+            If mDun.currFloorBoss.Equals("Key") And DDUtils.ptEquals(player1.pos, currFloor.stairs) And player1.inv.getCountAt("Key") > 0 Then
                 currFloor.beatBoss = True
 
                 TextEvent.pushLog("Your key fits the lock, and with a *cthunk* the gate swings open!")
@@ -2256,10 +2256,10 @@ Public Class Game
                 player1.inv.invNeedsUDate = True
                 player1.UIupdate()
                 player1.canMoveFlag = True
-            ElseIf player1.pos = currFloor.stairs Then
+            ElseIf DDUtils.ptEquals(player1.pos, currFloor.stairs) Then
                 If mDun.currFloorBoss.Equals("Key") Then TextEvent.push("The stairs are behind a locked gate!  Perhaps the key is in a chest..." & DDUtils.RNRN & "[While this game is in development it can also be bought from any shop for 2500]") Else TextEvent.push("You must defeat " & mDun.currFloorBoss & "!")
             End If
-        ElseIf player1.pos = currFloor.stairs Then
+        ElseIf DDUtils.ptEquals(player1.pos, currFloor.stairs) Then
             If mDun.numCurrFloor = 9999 Or mDun.numCurrFloor = 10000 Then
                 mDun.jumpTo(mDun.lastVisitedFloor)
                 mDun.setFloor(currFloor)

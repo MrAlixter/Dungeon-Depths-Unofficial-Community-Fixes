@@ -300,6 +300,9 @@
     Shared Function withinOnePlusMinus(pos As Point, pos1 As Point) As Boolean
         Return (pos.X + 1 = pos1.X Or pos.X - 1 = pos1.X) Or (pos.Y + 1 = pos1.Y Or pos.Y - 1 = pos1.Y)
     End Function
+    Shared Function ptEquals(ByVal a As Point, ByVal b As Point) As Boolean
+        Return a.X = b.X And a.Y = b.Y
+    End Function
 
     '|STRING UTILS|
     Shared Function capitalizeFirst(ByVal str As String) As String

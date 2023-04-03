@@ -1444,7 +1444,10 @@ Public Class mFloor
         mBoard(npcPoint.Y, npcPoint.X).ForeColor = Color.FromArgb(45, 45, 45)
         mBoard(npcPoint.Y, npcPoint.X).Text = "$"
 
-        If Not nonRandomFloors.Contains(floorNumber) Then n.buildShopArea(Me)
+        Try
+            If Not nonRandomFloors.Contains(floorNumber) Then n.buildShopArea(Me)
+        Catch ex As Exception
+        End Try
     End Sub
     Sub placeKeyChest()
         Dim ChestP = randPoint()

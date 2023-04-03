@@ -421,6 +421,7 @@
         internal_inventory.Add(NanosilkQipaoP.ITEM_NAME, New NanosilkQipaoP)         '393
         internal_inventory.Add(AcolyteCosplay.ITEM_NAME, New AcolyteCosplay)         '394
         internal_inventory.Add(VialOfSuccubus.ITEM_NAME, New VialOfSuccubus)         '395
+        internal_inventory.Add(BimbovisionGoggles.ITEM_NAME, New BimbovisionGoggles) '396
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -541,7 +542,7 @@
                    Me.item(161), Me.item(299), Me.item(308), Me.item(309),
                    Me.item(310), Me.item(311), Me.item(312), Me.item(313),
                    Me.item(314), Me.item(315), Me.item(316), Me.item(317),
-                   Me.item(318), Me.item(319), Me.item(329)}
+                   Me.item(318), Me.item(319), Me.item(329), Me.item(396)}
 
         invIDorder = New List(Of Integer)
 

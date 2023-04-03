@@ -10,6 +10,7 @@
     snarednpc
     marrissares
     seventailsstage
+    bimbovision
 End Enum
 
 Public Class Dungeon
@@ -152,6 +153,11 @@ Public Class Dungeon
         Else
             Return ""
         End If
+    End Function
+    Public Function getWorldFlag(ByRef f As wFlag) As Integer
+        If world_flags.ContainsKey(f) Then Return world_flags(f)
+
+        Return -1
     End Function
 
     '| - MISC - |

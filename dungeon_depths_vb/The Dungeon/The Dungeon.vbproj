@@ -275,6 +275,7 @@
     <Compile Include="Items\Equipment\Armor\SlutVar\SkimpyClothesG.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\RegalLingerieF.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\CrystalBikini.vb" />
+    <Compile Include="Items\Equipment\Glasses\BimbovisionGoggles.vb" />
     <Compile Include="Items\Equipment\Glasses\CircularGlasses.vb" />
     <Compile Include="Items\Equipment\Glasses\CyberVisorG.vb" />
     <Compile Include="Items\Equipment\Glasses\CyberVisorO.vb" />
