@@ -30,6 +30,9 @@
         setInventory({74, 194, 217, 226, 227})
 
         '|Dialog Variables|
+        pronoun = "she"
+        p_pronoun = "her"
+        r_pronoun = "her"
 
         '|Misc|
         setupMonsterOnSpawn()

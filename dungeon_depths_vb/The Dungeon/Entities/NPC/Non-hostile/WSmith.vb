@@ -201,10 +201,10 @@
         MyBase.buildShopArea(floor)
 
         Dim crates = {New Point(pos.X - 1, pos.Y)}
-        If floor.mBoard(crates(0).Y, crates(0).X).Tag = 0 Then crates(0) = New Point(pos.X, pos.Y - 1)
+        If floor.ptInBounds(crates(0)) AndAlso floor.mBoard(crates(0).Y, crates(0).X).Tag = 0 Then crates(0) = New Point(pos.X, pos.Y - 1)
 
         Dim anvils = {New Point(pos.X + 1, pos.Y)}
-        If floor.mBoard(anvils(0).Y, anvils(0).X).Tag = 0 Then anvils(0) = New Point(pos.X, pos.Y + 1)
+        If floor.ptInBounds(anvils(0)) AndAlso floor.mBoard(anvils(0).Y, anvils(0).X).Tag = 0 Then anvils(0) = New Point(pos.X, pos.Y + 1)
 
         For Each pt In crates
             If floor.ptInBounds(pt) Then floor.mBoard(pt.Y, pt.X).Text = "¡"

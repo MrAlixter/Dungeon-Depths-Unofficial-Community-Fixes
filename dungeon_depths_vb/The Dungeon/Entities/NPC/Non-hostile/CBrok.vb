@@ -180,10 +180,10 @@
         MyBase.buildShopArea(floor)
 
         Dim tables = {New Point(pos.X - 1, pos.Y)}
-        If floor.mBoard(tables(0).Y, tables(0).X).Tag = 0 Then tables(0) = New Point(pos.X, pos.Y - 1)
+        If floor.ptInBounds(tables(0)) AndAlso floor.mBoard(tables(0).Y, tables(0).X).Tag = 0 Then tables(0) = New Point(pos.X, pos.Y - 1)
 
         Dim barrels = {New Point(pos.X + 1, pos.Y)}
-        If floor.mBoard(barrels(0).Y, barrels(0).X).Tag = 0 Then barrels(0) = New Point(pos.X, pos.Y + 1)
+        If floor.ptInBounds(barrels(0)) AndAlso floor.mBoard(barrels(0).Y, barrels(0).X).Tag = 0 Then barrels(0) = New Point(pos.X, pos.Y + 1)
 
         For Each pt In tables
             If floor.ptInBounds(pt) Then floor.mBoard(pt.Y, pt.X).Text = "¿"

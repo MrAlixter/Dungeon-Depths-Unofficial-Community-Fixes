@@ -269,10 +269,10 @@
         MyBase.buildShopArea(floor)
 
         Dim lounge = {New Point(pos.X - 1, pos.Y)}
-        If floor.mBoard(lounge(0).Y, lounge(0).X).Tag = 0 Then lounge(0) = New Point(pos.X, pos.Y - 1)
+        If floor.ptInBounds(lounge(0)) AndAlso floor.mBoard(lounge(0).Y, lounge(0).X).Tag = 0 Then lounge(0) = New Point(pos.X, pos.Y - 1)
 
         Dim tables = {New Point(pos.X + 1, pos.Y)}
-        If floor.mBoard(tables(0).Y, tables(0).X).Tag = 0 Then tables(0) = New Point(pos.X, pos.Y + 1)
+        If floor.ptInBounds(tables(0)) AndAlso floor.mBoard(tables(0).Y, tables(0).X).Tag = 0 Then tables(0) = New Point(pos.X, pos.Y + 1)
 
         For Each pt In lounge
             If floor.ptInBounds(pt) Then floor.mBoard(pt.Y, pt.X).Text = "¦"

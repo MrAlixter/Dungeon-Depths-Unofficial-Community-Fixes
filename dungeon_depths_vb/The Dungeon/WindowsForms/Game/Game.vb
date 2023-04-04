@@ -516,26 +516,26 @@ Public Class Game
 
         For y As Integer = 0 To getViewHeight() - 1
             For x As Integer = 0 To getViewWidth() - 1
-                    Select Case mDun.numCurrFloor
-                        Case 6, 7, 8, 9, 10, 11, 12
-                            g.DrawImage(getForestTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
-                        Case 13
-                            g.DrawImage(getFoggyForestTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
-                        Case 14
-                            g.DrawImage(getHubTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
-                            'Case 15
-                            '    g.DrawImage(getDesertTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
-                        Case 9999, 10000
-                            g.DrawImage(getSpaceTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
-                        Case 91017
-                            g.DrawImage(getLegacyTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
-                        Case 91018
-                            g.DrawImage(getCaveHTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
-                        Case Is > 14
-                            g.DrawImage(getHubTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
-                        Case Else
-                            g.DrawImage(getDungeonTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
-                    End Select
+                Select Case mDun.numCurrFloor
+                    Case 6, 7, 8, 9, 10, 11, 12
+                        g.DrawImage(getForestTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                    Case 13
+                        g.DrawImage(getFoggyForestTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                    Case 14
+                        g.DrawImage(getHubTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                        'Case 15
+                        '    g.DrawImage(getDesertTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                    Case 9999, 10000
+                        g.DrawImage(getSpaceTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                    Case 91017
+                        g.DrawImage(getLegacyTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                    Case 91018
+                        g.DrawImage(getCaveHTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                    Case Is > 14
+                        g.DrawImage(getHubTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                    Case Else
+                        g.DrawImage(getDungeonTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                End Select
             Next
         Next
 

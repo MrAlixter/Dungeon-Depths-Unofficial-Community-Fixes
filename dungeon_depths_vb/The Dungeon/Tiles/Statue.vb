@@ -33,7 +33,7 @@
         isRuby = r
     End Sub
     Sub New(ByVal s As String)
-        Dim buffer = s.Split("*")
+        Dim buffer = s.Split(SaveFile.VALUE_DELIMITER)
 
         pos = New Point(CInt(buffer(0)), CInt(buffer(1)))
         name = buffer(2)

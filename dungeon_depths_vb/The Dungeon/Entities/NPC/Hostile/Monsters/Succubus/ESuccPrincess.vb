@@ -36,6 +36,9 @@
         '|Dialog Variables|
         pref_mode = getPrefMode()
         intro_taunt = getIntroTaunt()
+        pronoun = "she"
+        p_pronoun = "her"
+        r_pronoun = "her"
 
         '|Misc|
         setupMonsterOnSpawn()

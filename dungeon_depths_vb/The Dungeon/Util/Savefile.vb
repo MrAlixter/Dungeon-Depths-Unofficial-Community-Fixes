@@ -534,6 +534,7 @@
         Return STATUE_SEG & VALUE_DELIMITER &
                s.pos.X & VALUE_DELIMITER &
                s.pos.Y & VALUE_DELIMITER &
+               s.name & VALUE_DELIMITER &
                s.desc & VALUE_DELIMITER &
                s.isRuby & SEGMENT_DELIMITER
     End Function

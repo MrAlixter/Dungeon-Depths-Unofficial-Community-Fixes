@@ -2830,6 +2830,7 @@ Public Class Player
         If perks(perk.isspotfused) > -1 Then out += "You can not fuse again for " & perks(perk.isspotfused) & " turns." & DDUtils.RNRN
         If perks(perk.vofmanynames) > -1 Then out += "Your true name is hidden!  " & perks(perk.vofmanynames) & " charges remain." & DDUtils.RNRN
         If perks(perk.cynnstonic) > -1 Then out += "You are under the " & CynnTonic.getEffectTier(Me) & " influence of Cynn's Tonic!  " & perks(perk.cynnstonic) & " charges remain." & DDUtils.RNRN
+        If ongoingTFs.contains(tfind.arachne) Then out += "You are under the influence of Arachne venom." & DDUtils.RNRN
 
         '| -- Curse Indicators -- |
         If perks(perk.slutcurse) > -1 Then out += "Due to a curse, any clothes or armor you wear will become skimpy and revealing." & DDUtils.RNRN

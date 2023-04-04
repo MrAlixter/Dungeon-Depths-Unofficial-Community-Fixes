@@ -20,6 +20,7 @@
         inv.setCount(SthenoSalve.ITEM_NAME, 1)
 
         '|Dialog Variables|
+        intro_taunt = getIntroTaunt()
         title = " "
         pronoun = "she"
         p_pronoun = "her"
@@ -29,6 +30,14 @@
 
     End Sub
 
+    Protected Function getIntroTaunt() As String
+        If Game.player1.perks(perk.blind) > -1 Then Return "You ready yourself, pretending to avert your gaze as Medusa slithers and writhes around you; no doubt looking for an opening.  She gleefully taunts, as the hissing of snakes from all directions becomes almost overwhelming." & DDUtils.RNRN &
+                                                           """I wonder, what sort of pose will you find yourself in when you inevitably falter?  I do prefer some variety in my decor...""" & DDUtils.RNRN &
+                                                           "With a smirk of your own, you prepare for combat."
+
+        Return "You ready yourself, averting your gaze as Medusa slithers and writhes around you; no doubt looking for an opening.  She gleefully taunts, as the hissing of snakes becomes almost overwhelming." & DDUtils.RNRN &
+                """I wonder, what sort of pose will you find yourself in when you inevitably falter?  I do prefer some variety in my decor..."""
+    End Function
     Public Overrides Sub attackCMD(ByRef target As Entity)
         If target.GetType() Is GetType(Player) AndAlso CType(target, Player).perks(perk.blind) < 0 Then
             If Not hasAttackedFlag Then

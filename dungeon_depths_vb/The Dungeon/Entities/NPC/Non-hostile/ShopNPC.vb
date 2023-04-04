@@ -315,7 +315,7 @@ Public MustInherit Class ShopNPC
     Public Overridable Sub toDoll()
         TextEvent.pushNPCDialog("*squeak*")
         Game.picNPC.BackgroundImage = local_img(LocalImgInd.doll)
-        discount = 0.5
+        discount = 0.4
 
         If Game.combat_engaged Then Game.shopNPCFromCombat(Me)
     End Sub

@@ -114,10 +114,10 @@
         MyBase.buildShopArea(floor)
 
         Dim mannequins = {New Point(pos.X - 1, pos.Y)}
-        If floor.mBoard(mannequins(0).Y, mannequins(0).X).Tag = 0 Then mannequins(0) = New Point(pos.X, pos.Y - 1)
+        If floor.ptInBounds(mannequins(0)) AndAlso floor.mBoard(mannequins(0).Y, mannequins(0).X).Tag = 0 Then mannequins(0) = New Point(pos.X, pos.Y - 1)
 
         Dim mannequin2s = {New Point(pos.X + 1, pos.Y)}
-        If floor.mBoard(mannequin2s(0).Y, mannequin2s(0).X).Tag = 0 Then mannequin2s(0) = New Point(pos.X, pos.Y - 1)
+        If floor.ptInBounds(mannequin2s(0)) AndAlso floor.mBoard(mannequin2s(0).Y, mannequin2s(0).X).Tag = 0 Then mannequin2s(0) = New Point(pos.X, pos.Y - 1)
 
         For Each pt In mannequins
             If floor.ptInBounds(pt) Then floor.mBoard(pt.Y, pt.X).Text = "ø"
