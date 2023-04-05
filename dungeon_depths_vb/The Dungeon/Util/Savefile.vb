@@ -724,7 +724,6 @@
         If Not save(start_pos).StartsWith(PLAYER_HEADER_SEG) Then MsgBox(save(start_pos) & " " & PLAYER_HEADER_SEG) : Throw New Exception("Player at line " & start_pos & " is corrupt!")
 
         Dim p As Player = New Player()
-
         p.solFlag = True
 
         p.currState = New State(p)
@@ -834,6 +833,7 @@
         p.inv = inv_tuple.Item1
         Dim thrall_collar = subseg(15).Split(VALUE_SPLIT_DELIMITER)
         CType(p.inv.item(69), ThrallCollar).setFormerLife(thrall_collar(0), New Tuple(Of Integer, Boolean, Boolean)(CInt(thrall_collar(1)), CBool(thrall_collar(2)), CBool(thrall_collar(3))))
+        If System.IO.File.Exists("items\" & Game.sessionID & "_9.itm") Then p.inv.item(SoulBlade.ITEM_NAME).loadSavedItem(Game.sessionID, 9)
         start_pos += 1 + inv_tuple.Item2
 
         If (Game.mDun.numCurrFloor = 4 And Game.mDun.floor_boss(4) = "Ooze Empress") Then
@@ -842,6 +842,7 @@
 
         p.currState.load(p, True)
         If p.perks(perk.tfedbyweapon) > 0 Then p.equippedWeapon = p.currState.equippedWeapon
+        If p.equippedWeapon.getAName.Equals(SoulBlade.ITEM_NAME) Then p.equippedWeapon = p.inv.item(9)
         If p.equippedAcce.getAName.Equals(ThrallCollar.ITEM_NAME) Then p.equippedAcce = p.inv.item(69)
 
         p.turnCt = Game.getTurn
