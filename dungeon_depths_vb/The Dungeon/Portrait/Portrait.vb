@@ -393,7 +393,7 @@ Public Class Portrait
         End Select
     End Sub
     Sub spiderBody()
-        If iArrInd(pInd.tail).Item1 = 2 Then
+        If Not iArrInd(pInd.tail) Is Nothing AndAlso iArrInd(pInd.tail).Item1 = 2 Then
             iArr(pInd.clothesbtm) = CreateFullBodyBMP({iArr(pInd.clothesbtm), imgLib.atrs(pInd.horns).getAt(6)})
         End If
     End Sub

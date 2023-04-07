@@ -118,7 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\Mayue.vb" />
-    <Compile Include="Entities\NPC\Hostile\Monsters\MarissasNeophyte.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\MarissasStudent.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Slime\LeporineOoze.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\TimeJudgeFight.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\TimeTravellerFight.vb" />

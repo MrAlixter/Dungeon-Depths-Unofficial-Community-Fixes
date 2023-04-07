@@ -58,7 +58,7 @@ Public Class Monster
         l.Add(New Tuple(Of mInd, String)(mInd.faerie_hunter, FaerieHunter.BASE_NAME))
         l.Add(New Tuple(Of mInd, String)(mInd.archwitch_recluse, ArchwitchRecluse.BASE_NAME))
         l.Add(New Tuple(Of mInd, String)(mInd.lepo_ooze, LeporineOoze.BASE_NAME))
-        l.Add(New Tuple(Of mInd, String)(mInd.marissa_neop, MarissasNeophyte.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.marissa_neop, MarissasStudent.BASE_NAME))
 
         Return l
     End Function
@@ -168,7 +168,7 @@ Public Class Monster
             Case mInd.faerie_hunter
                 Return New FaerieHunter
             Case mInd.marissa_neop
-                Return New MarissasNeophyte
+                Return New MarissasStudent
         End Select
 
         Return New Monster()
