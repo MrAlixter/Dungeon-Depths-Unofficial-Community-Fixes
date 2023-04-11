@@ -6,8 +6,6 @@
 
         p.prt.haircolor = Color.FromArgb(255, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100)
         p.drawPort()
-
-         p.savePState()
     End Sub
 
     Public Overrides Function getEffectDesc()

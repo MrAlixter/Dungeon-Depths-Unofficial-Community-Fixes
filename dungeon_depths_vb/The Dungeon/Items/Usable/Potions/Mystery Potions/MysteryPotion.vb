@@ -33,6 +33,7 @@
     Overrides Sub use(ByRef p As Player)
         If Not hasBeenUsed Then reveal()
         If Me.getUsable() = False Then Exit Sub
+        p.savePState()
         TextEvent.pushLog("You drink the " & getName())
 
         setEffectList()
@@ -47,6 +48,7 @@
     End Sub
 
     Sub textlessApply(ByRef p As Player)
+        p.savePState()
         setEffectList()
 
         For Each effect In effectList
@@ -60,6 +62,7 @@
     Sub mimicThrow(ByRef p As Player)
         If Not hasBeenUsed Then reveal()
         If Me.getUsable() = False Then Exit Sub
+        p.savePState()
         TextEvent.pushLog("The " & getName() & " shatters!")
 
         setEffectList()

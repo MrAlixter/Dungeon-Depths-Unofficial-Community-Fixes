@@ -170,7 +170,9 @@ Public Class Portrait
 
         Dim hatMask As Image = If(iArrInd(pInd.hat).Item1 = 0, imgLib.atrs(pInd.hat).getAt(armor.hood), imgLib.atrs(pInd.hat).getAt(iArrInd(pInd.hat)))
         If Not hatMask Is Nothing AndAlso Not hatMask.Equals(nullImg) Then
+            iArr(pInd.rearhair) = hoodHairMask(iArr(pInd.rearhair), hatMask, 150, True)
             iArr(pInd.midhair) = hoodHairMask(iArr(pInd.midhair), hatMask)
+            iArr(pInd.fronthair) = hoodHairMask(iArr(pInd.fronthair), hatMask, 150, True)
         End If
 
         If armor.adjust_sleeve_layer And renderMode <> RENDER_MODE.half Then
@@ -185,7 +187,7 @@ Public Class Portrait
     End Sub
 
     '| - MASKING - |
-    Shared Function hoodHairMask(ByRef img As Image, ByRef c_mask As Image, Optional ByVal final_y As Integer = 150) As Bitmap
+    Shared Function hoodHairMask(ByRef img As Image, ByRef c_mask As Image, Optional ByVal final_y As Integer = 150, Optional ByVal frontHairMask As Boolean = False) As Bitmap
         'Assumes that the two images are the same size
         If img Is Nothing OrElse c_mask Is Nothing OrElse Not img.Size.Equals(c_mask.Size) Then Return img
 
@@ -196,7 +198,7 @@ Public Class Portrait
 
         For y = 0 To final_y
             For x = 0 To bmp.Size.Width - 1
-                If b_c_mask.GetPixel(x, y).A > 0 Then
+                If b_c_mask.GetPixel(x, y).A > 0 AndAlso (Not frontHairMask Or b_c_mask.GetPixel(x, y).A = 1) Then
                     bmp.SetPixel(x, y, clear)
                 End If
             Next
@@ -240,7 +242,9 @@ Public Class Portrait
 
     '| - BODY LAYERS - |
     Sub hideEars()
-        If checkNDefFemInd(pInd.midhair, 41) Then
+        If checkNDefFemInd(pInd.midhair, 41) Or
+           (Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing AndAlso Not ent.getPlayer.equippedArmor Is Nothing AndAlso Not ent.getPlayer.equippedArmor.hood Is Nothing AndAlso (checkFemInd(pInd.ears, 2) Or checkMalInd(pInd.ears, 2))) Then
+
             iArr(pInd.ears) = nullImg
             Exit Sub
         End If
@@ -266,6 +270,12 @@ Public Class Portrait
     End Sub
     Sub colorEars(ByVal c As Color)
         Dim recolorFunction = If(Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing AndAlso ent.getPlayer.isPetrified, Function(img, clr) petrificationRecolor(img, clr), Function(img, clr) skinRecolor(img, clr))
+
+        Dim armor = ent.getPlayer().equippedArmor
+        Dim hatMask As Image = If(iArrInd(pInd.hat).Item1 = 0, imgLib.atrs(pInd.hat).getAt(armor.hood), imgLib.atrs(pInd.hat).getAt(iArrInd(pInd.hat)))
+        If Not hatMask Is Nothing AndAlso Not hatMask.Equals(nullImg) Then
+            iArr(pInd.ears) = hoodHairMask(iArr(pInd.ears), hatMask, 150, True)
+        End If
 
         If (Not checkMalInd(pInd.ears, 1) And Not checkFemInd(pInd.ears, 1) And
            Not checkMalInd(pInd.ears, 2) And Not checkFemInd(pInd.ears, 2) And

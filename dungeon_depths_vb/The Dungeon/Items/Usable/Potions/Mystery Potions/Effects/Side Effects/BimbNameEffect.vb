@@ -9,7 +9,6 @@
         p.TextColor = Color.HotPink
 
         p.drawPort()
-        p.savePState()
     End Sub
 
     Public Overrides Function getEffectDesc()

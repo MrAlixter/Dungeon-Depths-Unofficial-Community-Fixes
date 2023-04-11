@@ -62,7 +62,11 @@
         If floor.route(getCaster.pos, floor.stairs).Length > 0 Then results.Add("Stairs", floor.stairs)
 
         For Each s_npc In Game.shop_npc_list
-            If s_npc.pos.X > 0 AndAlso floor.route(getCaster.pos, s_npc.pos).Length > 0 Then results.Add(s_npc.getName, s_npc.pos)
+            Try
+                If s_npc.pos.X > 0 AndAlso floor.route(getCaster.pos, s_npc.pos).Length > 0 Then results.Add(s_npc.getName, s_npc.pos)
+            Catch ex As Exception
+                Console.WriteLine("Error routing path to " & If(s_npc Is Nothing, "UNKNOWN", s_npc.getName))
+            End Try
         Next
 
         Return results

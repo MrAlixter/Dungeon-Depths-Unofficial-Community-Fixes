@@ -43,7 +43,9 @@
         If (p.className.Equals("Magical Girl") Or p.perks(perk.tfedbyweapon) > 0) And Not w Is Nothing AndAlso Not w.GetType.IsSubclassOf(GetType(Wand)) Then
             TextEvent.push("Sighing, you stow away your wand and revert to your base form.")
 
-            p.inv.add(uniform_id, -1)
+            For Each u_id In DDConst.MAG_GIRL_UNIFORM_IDS
+                p.inv.setCount(u_id, 0)
+            Next
 
             p.perks(perk.tfedbyweapon) = -1
 

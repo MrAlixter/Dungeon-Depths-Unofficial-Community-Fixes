@@ -23,6 +23,8 @@
         '|Description|
         setDesc("A ornate sword forged from someone's soul." & DDUtils.RNRN &
                 getStatInformation())
+
+        If System.IO.File.Exists("items\" & Game.sessionID & "_" & id & ".itm") Then loadSavedItem(Game.sessionID, id)
     End Sub
 
     Public Overrides Function getName() As String

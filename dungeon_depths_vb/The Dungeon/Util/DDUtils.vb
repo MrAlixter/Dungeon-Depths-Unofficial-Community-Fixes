@@ -337,6 +337,13 @@
     Shared Function amrOrClth(ByRef p As Player) As String
         Return If(p.equippedArmor.getAName.Contains("Armor"), "armor", "clothing")
     End Function
+    Shared Function isEmpty(ByVal s As String) As Boolean
+        If s Is Nothing Then Return True
+        If s.Equals("") Then Return True
+        If s.Length = 0 Then Return True
+
+        Return False
+    End Function
 
     '|FILE UTILS|
     Shared Function fileExistsWC(ByVal basePath As String, ByVal wildcard As String) As Boolean

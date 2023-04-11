@@ -3,7 +3,7 @@
 
     Public Overrides Sub apply(ByRef p As Player)
         p.ue()
-        p.savePState()
+
         TextEvent.push("Your ass tingles pleasantly...")
         p.drawPort()
     End Sub

@@ -8,7 +8,7 @@
     End Sub
     Public Overrides Sub effect()
         TextEvent.pushLog("Cleanse!  Reverts between 3 and 5 changes.")
-        Dim out = Game.player1.revertToPState(Int(Rnd() * 3) + 3)
+        Dim out = Game.player1.revertToSState(Int(Rnd() * 3) + 3)
         out = Game.lblEvent.Text.Split(vbCrLf)(0) & DDUtils.RNRN & out
         TextEvent.push(out)
     End Sub

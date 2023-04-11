@@ -25,7 +25,6 @@
         End If
 
         p.drawPort()
-        p.savePState()
     End Sub
 
     Public Overrides Function getEffectDesc()

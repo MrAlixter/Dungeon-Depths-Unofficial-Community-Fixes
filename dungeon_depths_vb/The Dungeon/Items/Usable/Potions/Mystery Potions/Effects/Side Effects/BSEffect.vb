@@ -4,7 +4,6 @@
     Public Overrides Sub apply(ByRef p As Player)
         If p.breastSize > 0 Then
             p.bs()
-            p.savePState()
             TextEvent.push("You breasts squeeze uncomfortably...")
         Else
             TextEvent.push("Nothing happens")

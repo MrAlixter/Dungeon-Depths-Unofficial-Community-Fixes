@@ -3,7 +3,7 @@
 
     Public Overrides Sub apply(ByRef p As Player)
         p.prt.setIAInd(pInd.ears, 2, True, False)
-        p.savePState()
+
         p.drawPort()
     End Sub
 

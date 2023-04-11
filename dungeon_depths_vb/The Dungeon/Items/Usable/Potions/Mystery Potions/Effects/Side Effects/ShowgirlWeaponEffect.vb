@@ -10,7 +10,7 @@
         p.inv.add(FantomaWand.ITEM_NAME, 1)
         If Not p.equippedWeapon.getAName.Equals("Fists") Then p.inv.add(p.equippedWeapon.getAName, -1)
         Equipment.equipWeapon(p, FantomaWand.ITEM_NAME)
-        p.savePState()
+
         p.UIupdate()
     End Sub
 

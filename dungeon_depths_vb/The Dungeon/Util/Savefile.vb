@@ -833,7 +833,6 @@
         p.inv = inv_tuple.Item1
         Dim thrall_collar = subseg(15).Split(VALUE_SPLIT_DELIMITER)
         CType(p.inv.item(69), ThrallCollar).setFormerLife(thrall_collar(0), New Tuple(Of Integer, Boolean, Boolean)(CInt(thrall_collar(1)), CBool(thrall_collar(2)), CBool(thrall_collar(3))))
-        If System.IO.File.Exists("items\" & Game.sessionID & "_9.itm") Then p.inv.item(SoulBlade.ITEM_NAME).loadSavedItem(Game.sessionID, 9)
         start_pos += 1 + inv_tuple.Item2
 
         If (Game.mDun.numCurrFloor = 4 And Game.mDun.floor_boss(4) = "Ooze Empress") Then

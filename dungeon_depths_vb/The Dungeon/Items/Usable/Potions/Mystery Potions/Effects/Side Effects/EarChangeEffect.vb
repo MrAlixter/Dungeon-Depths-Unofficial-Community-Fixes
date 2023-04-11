@@ -12,7 +12,6 @@
         p.prt.setIAInd(pInd.ears, r, True, False)
 
         p.drawPort()
-        p.savePState()
     End Sub
 
     Public Overrides Function getEffectDesc()

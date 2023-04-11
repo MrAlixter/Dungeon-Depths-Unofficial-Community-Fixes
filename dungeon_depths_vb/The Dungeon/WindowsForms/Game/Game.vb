@@ -1468,6 +1468,10 @@ Public Class Game
                     TextEvent.choiceText = Nothing
                     TextEvent.yesAction = Nothing
                     TextEvent.noAction = Nothing
+                ElseIf selectionType = "Magic" And player1.selectedSpell.Equals("~-~") Then
+                    player1.selectedSpell = ""
+                ElseIf selectionType = "Spec" And player1.selectedSpecial.Equals("~-~") Then
+                    player1.selectedSpecial = ""
                 ElseIf selectionType = "FaeQueen" Then
                     FaeQueen.playerLeaves()
                 End If
@@ -1511,11 +1515,15 @@ Public Class Game
                 talkKey()
             Case cKeys(cmds.attack)
                 attackKey()
+            Case (cKeys(cmds.spell) Or Keys.Control)
+                ctrlMagicKey()
             Case cKeys(cmds.spell)
                 magicKey()
                 Return True
             Case cKeys(cmds.special)
                 specialKey()
+            Case (cKeys(cmds.special) Or Keys.Control)
+                ctrlSpecialKey()
             Case (cKeys(cmds.wait) Or Keys.Control)
                 waitXKey()
             Case cKeys(cmds.wait)
@@ -1669,6 +1677,13 @@ Public Class Game
         progressTurn()
     End Sub
     Sub selectMagic(ByVal index As Integer)
+        Dim subString As String = lstSelec.Items(index).ToString.Split("-")(1)
+        subString = subString.Split("·")(0)
+        subString = subString.Trim()
+
+        selectMagic(subString)
+    End Sub
+    Sub selectMagic(ByVal s As String)
         turn += 1
         doLblEventOnClose()
         lblCombatEvents.Text = ""
@@ -1680,17 +1695,15 @@ Public Class Game
             Exit Sub
         End If
 
-        Dim subString As String = lstSelec.Items(index).ToString.Split("-")(1)
-        subString = subString.Split("·")(0)
-        subString = subString.Trim()
+        If player1.selectedSpell.Equals("~-~") Then player1.selectedSpell = s
 
         If combat_engaged Then
             Dim m As NPC = getCombatTarget(player1)
 
-            If subString = FlashBolt.SPELL_NAME Or subString = FlashHeal.SPELL_NAME Then
-                Spell.spellCast(m, player1, subString)
+            If s = FlashBolt.SPELL_NAME Or s = FlashHeal.SPELL_NAME Then
+                Spell.spellCast(m, player1, s)
             Else
-                player1.nextCombatAction = Sub(t As Entity) Spell.spellCast(t, player1, subString)
+                player1.nextCombatAction = Sub(t As Entity) Spell.spellCast(t, player1, s)
             End If
 
             queueSetup()
@@ -1699,11 +1712,17 @@ Public Class Game
             'updates the combat banner
             updatePnlCombat(player1, player1.currTarget)
         Else
-            Spell.spellCast(Nothing, player1, subString)
+            Spell.spellCast(Nothing, player1, s)
         End If
-
     End Sub
     Sub selectSpec(ByVal index As Integer)
+        Dim subString As String = lstSelec.Items(index).ToString.Split("-")(1)
+        subString = subString.Split("·")(0)
+        subString = subString.Trim()
+
+        selectSpec(subString)
+    End Sub
+    Sub selectSpec(ByVal s As String)
         turn += 1
         doLblEventOnClose()
         lblCombatEvents.Text = ""
@@ -1711,18 +1730,16 @@ Public Class Game
 
         Dim m As NPC = getCombatTarget(player1)
 
-        Dim subString As String = lstSelec.Items(index).ToString.Split("-")(1)
-        subString = subString.Split("·")(0)
-        subString = subString.Trim()
+        If player1.selectedSpecial.Equals("~-~") Then player1.selectedSpecial = s
 
         If combat_engaged Then
-            If subString = "Flash Strike" Then
-                Special.specPerform(m, player1, subString)
+            If s = "Flash Strike" Then
+                Special.specPerform(m, player1, s)
             Else
-                player1.nextCombatAction = Sub(t As Entity) Special.specPerform(t, player1, subString)
+                player1.nextCombatAction = Sub(t As Entity) Special.specPerform(t, player1, s)
             End If
         Else
-            Special.specPerform(m, player1, subString)
+            Special.specPerform(m, player1, s)
         End If
 
         If cboxSpec.Items.Count = 0 Then
@@ -2453,6 +2470,20 @@ Public Class Game
     End Sub
     '| -- Spells -- |
     Sub magicKey()
+        If Not DDUtils.isEmpty(player1.selectedSpell) And player1.knownSpells.Contains(player1.selectedSpell) Then
+            selectMagic(player1.selectedSpell)
+            Exit Sub
+        End If
+
+        If Settings.active(setting.oldspellspec) Then
+            toPNLSelec("Magic")
+        Else
+            CastDialogBackend.toPNLCast(Nothing, Nothing, player1, getCombatTarget(player1), SpellOrSpec.SPELL)
+        End If
+    End Sub
+    Sub ctrlMagicKey()
+        player1.selectedSpell = "~-~"
+
         If Settings.active(setting.oldspellspec) Then
             toPNLSelec("Magic")
         Else
@@ -2464,6 +2495,20 @@ Public Class Game
     End Sub
     '| -- Specials -- |
     Sub specialKey()
+        If Not DDUtils.isEmpty(player1.selectedSpecial) And player1.knownSpecials.Contains(player1.selectedSpecial) Then
+            selectSpec(player1.selectedSpecial)
+            Exit Sub
+        End If
+
+        If Settings.active(setting.oldspellspec) Then
+            toPNLSelec("Spec")
+        Else
+            CastDialogBackend.toPNLCast(Nothing, Nothing, player1, getCombatTarget(player1), SpellOrSpec.SPECIAL)
+        End If
+    End Sub
+    Sub ctrlSpecialKey()
+        player1.selectedSpecial = "~-~"
+
         If Settings.active(setting.oldspellspec) Then
             toPNLSelec("Spec")
         Else
@@ -2991,9 +3036,11 @@ Public Class Game
                 save("saves/s" & fileNum & ".avex")
                 imagesWorkerArg = Convert.ToInt32(fileNum)
                 imagesWorker.RunWorkerAsync()
+
+                If IO.File.Exists("saves/s" & fileNum & ".ave") Then IO.File.Delete("saves/s" & fileNum & ".ave")
             End If
-                If picStart.Visible Then closesol()
-            End If
+            If picStart.Visible Then closesol()
+        End If
 
         btnS1.Enabled = True
         btnS2.Enabled = True

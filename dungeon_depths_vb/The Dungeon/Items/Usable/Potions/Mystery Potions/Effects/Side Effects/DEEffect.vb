@@ -3,7 +3,7 @@
 
     Public Overrides Sub apply(ByRef p As Player)
         p.de()
-        p.savePState()
+
         TextEvent.push("Your dick tingles pleasantly...")
         p.drawPort()
     End Sub

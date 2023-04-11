@@ -9,8 +9,6 @@
         Else
             Polymorph.giveRNDMName(p)
         End If
-
-       p.savePState()
     End Sub
 
     Public Overrides Function getEffectDesc()

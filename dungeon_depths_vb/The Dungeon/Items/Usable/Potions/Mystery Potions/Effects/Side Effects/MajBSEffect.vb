@@ -5,7 +5,7 @@
         If p.breastSize > 0 Then
             p.bs()
             p.bs()
-            p.savePState()
+
             TextEvent.push("You breasts squeeze painfully . . .")
         Else
             TextEvent.push("Nothing happens")

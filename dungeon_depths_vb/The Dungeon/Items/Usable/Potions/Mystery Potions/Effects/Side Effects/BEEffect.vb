@@ -3,7 +3,7 @@
 
     Public Overrides Sub apply(ByRef p As Player)
         p.be()
-        p.savePState()
+
         TextEvent.push("You breasts tingle plesently...")
         p.drawPort()
     End Sub

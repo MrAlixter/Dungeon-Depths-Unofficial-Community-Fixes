@@ -22,7 +22,7 @@
         Else
             TextEvent.push("Nothing happened!")
         End If
-        p.savePState()
+
         p.drawPort()
     End Sub
 

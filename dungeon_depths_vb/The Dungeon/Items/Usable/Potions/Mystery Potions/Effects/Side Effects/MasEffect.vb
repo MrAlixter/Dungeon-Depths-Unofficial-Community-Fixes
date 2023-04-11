@@ -25,9 +25,9 @@
             p.drawPort()
         Else
             TextEvent.push("Nothing happened!")
-            End If
-            p.savePState()
-            p.drawPort()
+        End If
+
+        p.drawPort()
     End Sub
 
     Public Overrides Function getEffectDesc()
