@@ -1556,7 +1556,7 @@ Public Class mFloor
     End Sub
     Sub cleanPaths()
         For Each tile In mBoard
-            If tile.Text = "x" Then tile.Text = ""
+            If Not tile Is Nothing AndAlso tile.Text = "x" Then tile.Text = ""
         Next
     End Sub
 

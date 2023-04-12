@@ -24,6 +24,6 @@
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer
-        Return Player.calcDamage(p.getATK + a_boost, m.getDEF)
+        Return Player.calcDamage(p.getATK + getABoost(p), m.getDEF)
     End Function
 End Class

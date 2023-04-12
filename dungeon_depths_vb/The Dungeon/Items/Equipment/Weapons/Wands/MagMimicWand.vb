@@ -59,7 +59,7 @@
         Dim d6_1 = Int(Rnd() * 6) + 1
         Dim d6_2 = Int(Rnd() * 6) + 1
 
-        Dim dmg As Integer = a_boost + d6_1 + d6_2
+        Dim dmg As Integer = getABoost(p) + d6_1 + d6_2
 
         m.takeDMG(dmg, p)
 

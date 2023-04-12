@@ -30,14 +30,6 @@
     End Sub
 
     Public Overrides Function getABoost(ByRef p As Player) As Integer
-        If Not Game.mDun Is Nothing AndAlso count > 0 AndAlso Game.mDun.numCurrFloor = 13 And w_mode = mode.weapon Then
-            TextEvent.pushAndLog("The axe shimmers, transforming into a simple flower!")
-            w_mode = mode.flower
-        ElseIf Not Game.mDun Is Nothing AndAlso count > 0 AndAlso Game.mDun.numCurrFloor <> 13 And w_mode = mode.flower Then
-            TextEvent.pushAndLog("The tulip shimmers, transforming into an impressive axe!")
-            w_mode = mode.weapon
-        End If
-
         If w_mode = mode.flower Then
             Return 0
         End If
@@ -46,6 +38,14 @@
     End Function
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer
+        If Not Game.mDun Is Nothing AndAlso count > 0 AndAlso Game.mDun.numCurrFloor = 13 And w_mode = mode.weapon Then
+            TextEvent.pushAndLog("The axe shimmers, transforming into a simple flower!")
+            w_mode = mode.flower
+        ElseIf Not Game.mDun Is Nothing AndAlso count > 0 AndAlso Game.mDun.numCurrFloor <> 13 And w_mode = mode.flower Then
+            TextEvent.pushAndLog("The tulip shimmers, transforming into an impressive axe!")
+            w_mode = mode.weapon
+        End If
+
         If w_mode = mode.flower Then
             Return -1
         End If

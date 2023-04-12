@@ -271,10 +271,12 @@ Public Class Portrait
     Sub colorEars(ByVal c As Color)
         Dim recolorFunction = If(Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing AndAlso ent.getPlayer.isPetrified, Function(img, clr) petrificationRecolor(img, clr), Function(img, clr) skinRecolor(img, clr))
 
-        Dim armor = ent.getPlayer().equippedArmor
-        Dim hatMask As Image = If(iArrInd(pInd.hat).Item1 = 0, imgLib.atrs(pInd.hat).getAt(armor.hood), imgLib.atrs(pInd.hat).getAt(iArrInd(pInd.hat)))
-        If Not hatMask Is Nothing AndAlso Not hatMask.Equals(nullImg) Then
-            iArr(pInd.ears) = hoodHairMask(iArr(pInd.ears), hatMask, 150, True)
+        If Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing Then
+            Dim armor = ent.getPlayer().equippedArmor
+            Dim hatMask As Image = If(iArrInd(pInd.hat).Item1 = 0, imgLib.atrs(pInd.hat).getAt(armor.hood), imgLib.atrs(pInd.hat).getAt(iArrInd(pInd.hat)))
+            If Not hatMask Is Nothing AndAlso Not hatMask.Equals(nullImg) Then
+                iArr(pInd.ears) = hoodHairMask(iArr(pInd.ears), hatMask, 150, True)
+            End If
         End If
 
         If (Not checkMalInd(pInd.ears, 1) And Not checkFemInd(pInd.ears, 1) And
@@ -908,13 +910,13 @@ Public Class Portrait
 
         setBreastImage(p)
 
-        If p.equippedAcce Is Nothing Or (p.equippedAcce.fInd Is Nothing And p.equippedAcce.mInd Is Nothing) Then
+        If p.equippedAcce Is Nothing OrElse (p.equippedAcce.fInd Is Nothing And p.equippedAcce.mInd Is Nothing) Then
             p.equippedAcce = New noAcce()
         Else
             iArrInd(pInd.accessory) = p.equippedAcce.getAccIMG(p)
         End If
 
-        If p.equippedGlasses Is Nothing Or p.equippedGlasses.imgInd Is Nothing Then
+        If p.equippedGlasses Is Nothing OrElse p.equippedGlasses.imgInd Is Nothing Then
             p.equippedGlasses = New noGlasses()
         Else
             If Not p.equippedGlasses.imgInd Is Nothing Then iArrInd(pInd.glasses) = p.equippedGlasses.imgInd Else iArrInd(pInd.glasses) = p.equippedGlasses.imgInd

@@ -660,6 +660,8 @@
                (Not p.prefForm Is Nothing) & SEGMENT_DELIMITER
     End Function
     Protected Shared Function savePlayerLoop(ByRef p As Player) As String
+        p.currState.save(p)
+
         Dim save_loop As String = savePlayerHeaderSegment(p) & vbCrLf
 
         For Each tf In p.ongoingTFs.getTFs
@@ -841,8 +843,9 @@
 
         p.currState.load(p, True)
         If p.perks(perk.tfedbyweapon) > 0 Then p.equippedWeapon = p.currState.equippedWeapon
-        If p.equippedWeapon.getAName.Equals(SoulBlade.ITEM_NAME) Then p.equippedWeapon = p.inv.item(9)
-        If p.equippedAcce.getAName.Equals(ThrallCollar.ITEM_NAME) Then p.equippedAcce = p.inv.item(69)
+        p.equippedWeapon = p.inv.item(p.equippedWeapon.getId)
+        p.equippedArmor = p.inv.item(p.equippedArmor.getId)
+        p.equippedAcce = p.inv.item(p.equippedAcce.getId)
 
         p.turnCt = Game.getTurn
 

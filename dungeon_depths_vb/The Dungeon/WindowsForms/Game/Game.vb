@@ -2976,7 +2976,7 @@ Public Class Game
 
         combat_engaged = False
 
-        Equipment.init()
+        EquipmentDialogBackend.Refresh()
         reader.Close()
 
         'update the display

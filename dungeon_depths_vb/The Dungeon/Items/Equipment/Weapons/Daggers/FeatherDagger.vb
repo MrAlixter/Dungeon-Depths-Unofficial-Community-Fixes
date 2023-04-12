@@ -57,7 +57,7 @@
             If (p.getATK * 2) >= m.getIntHealth Then Return -2
             p.cHit(p.getATK, m)
         Else
-            dmg += (p.getATK) + (Me.a_boost)
+            dmg += (p.getATK) + (Me.getABoost(p))
             If (Player.calcDamage(dmg, m.defense)) >= m.getIntHealth Then Return Player.calcDamage(dmg, m.defense)
             p.hit(Player.calcDamage(dmg, m.defense), m)
         End If
@@ -69,7 +69,7 @@
         ElseIf dmg >= 11 Or getAltCrit(p, m) Then
             Return -2
         End If
-        dmg += (p.getATK) + (Me.a_boost)
+        dmg += (p.getATK) + (Me.getABoost(p))
         Return Player.calcDamage(dmg, m.defense)
     End Function
     Function getAltCrit(ByRef p As Player, ByRef m As Entity) As Boolean

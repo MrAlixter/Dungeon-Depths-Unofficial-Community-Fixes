@@ -32,7 +32,7 @@
         ElseIf dmg >= 10 Then
             Return -2
         End If
-        dmg += (p.attack) + (Me.a_boost)
+        dmg += (p.attack) + (Me.getABoost(p))
         Return Player.calcDamage(dmg, m.defense)
     End Function
 

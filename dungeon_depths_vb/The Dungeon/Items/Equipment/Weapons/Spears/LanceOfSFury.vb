@@ -91,7 +91,7 @@
             Return -2
         End If
 
-        dmg += (p.getATK) + (Me.a_boost)
+        dmg += (p.getATK) + (Me.getABoost(p))
         Return Player.calcDamage(dmg, m.defense)
     End Function
 

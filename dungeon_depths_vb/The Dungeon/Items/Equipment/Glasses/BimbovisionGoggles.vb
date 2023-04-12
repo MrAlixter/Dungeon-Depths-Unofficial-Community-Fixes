@@ -23,6 +23,7 @@
 
         '|Description|
         setDesc("A pair of black glasses etched with a series of runes that enhance one's vision beyond what is probably adviseable." & DDUtils.RNRN &
+                DDUtils.TODO & DDUtils.RNRN &
                 getStatInformation())
     End Sub
 

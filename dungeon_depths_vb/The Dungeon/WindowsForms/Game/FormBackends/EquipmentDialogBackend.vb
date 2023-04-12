@@ -11,6 +11,9 @@
     Private Shared skipInvUpdate = False
 
     Shared Sub New()
+        Refresh()
+    End Sub
+    Shared Sub Refresh()
         init()
     End Sub
     Private Shared Sub init()

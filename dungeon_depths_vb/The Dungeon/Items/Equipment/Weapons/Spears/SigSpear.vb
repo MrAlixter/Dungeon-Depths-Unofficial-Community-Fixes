@@ -30,7 +30,7 @@
             TextEvent.pushLog("You throw the spear across the dungeon at nothing in particular.")
         Else
             TextEvent.pushLog("You throw the spear!")
-            Dim dmg As Integer = 2 * (p.getATK) + (Me.a_boost) + Int(Rnd() * 3 + 1)
+            Dim dmg As Integer = 2 * (p.getATK) + (Me.getABoost(p)) + Int(Rnd() * 3 + 1)
             p.hit(dmg, m)
         End If
     End Sub

@@ -32,6 +32,12 @@
 
     Public Overrides Sub die(ByRef cause As Entity)
         MyBase.die(cause)
+
+        If (Game.currFloor.floorNumber = 13 And Game.player1.perks(perk.faepassangers) = 1 Or Game.player1.perks(perk.faepassangers) = 2 Or Game.player1.perks(perk.faepassangers) = 3) Then
+            TextEvent.pushLog("The faerie turns the fallen Explorer into a scattering of mushrooms!")
+            Exit Sub
+        End If
+
         If MessageBox.Show("Would you like to do the Explorer's body swap?", "Body Swap?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then 'Int(Rnd() * 3) = 0 Then '
             Try
                 bodySwap(Game.player1)

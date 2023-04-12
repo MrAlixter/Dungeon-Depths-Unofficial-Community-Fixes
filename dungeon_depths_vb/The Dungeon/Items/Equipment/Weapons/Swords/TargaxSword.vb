@@ -29,7 +29,7 @@
         If dmg <= 4 Then '+ ((p.lust Mod 20)) Then
             Return -1
         End If
-        dmg += (p.getATK) + (Me.a_boost)
+        dmg += (p.getATK) + (Me.getABoost(p))
         Return Player.calcDamage(dmg, m.defense)
     End Function
 

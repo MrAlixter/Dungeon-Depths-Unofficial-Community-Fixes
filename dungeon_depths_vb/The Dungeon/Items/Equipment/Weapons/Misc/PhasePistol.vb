@@ -38,7 +38,7 @@
         p.inv.add("AAAAAA_Battery", -1)
         TextEvent.pushAndLog("The pistol ejects a smoldering battery shell.  " & p.inv.getCountAt("AAAAAA_Battery") & " shot" & If(p.inv.getCountAt("AAAAAA_Battery") = 1, "", "s") & " left!")
 
-        dmg += (p.getSPD) + (Me.a_boost)
+        dmg += (p.getSPD) + (Me.getABoost(p))
 
         Return Player.calcDamage(dmg, m.getWIL)
     End Function

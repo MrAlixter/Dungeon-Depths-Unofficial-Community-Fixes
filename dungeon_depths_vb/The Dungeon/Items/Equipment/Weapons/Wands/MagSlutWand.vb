@@ -53,7 +53,7 @@
     End Sub
 
     Public Overrides Sub spell(ByRef p As Player, ByRef m As Entity)
-        Dim dmg As Integer = a_boost
+        Dim dmg As Integer = getABoost(p)
         Dim d31 = Int(Rnd() * 5)
         Dim d32 = Int(Rnd() * 5)
 
