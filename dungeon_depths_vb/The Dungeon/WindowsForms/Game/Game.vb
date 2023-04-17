@@ -706,6 +706,11 @@ Public Class Game
         '48 = cb_table
         '49 = mg_mannequin
         '50 = mg_mannequin2
+        '51 = iso_h_wall
+        '52 = iso_h_wallcap()
+        '53 = iso_v_wall()
+        '54 = iso_v_wallcap()
+        '55 = iso_corner()
 
         Select Case tileText
             Case ""
@@ -810,6 +815,18 @@ Public Class Game
                 Return 49
             Case "æ"
                 Return 50
+            Case "═"
+                If tileTag = 0 Then Return 51 Else Return 2
+            Case "╕"
+                If tileTag = 0 Then Return 52 Else Return 2
+            Case "║"
+                If tileTag = 0 Then Return 53 Else Return 2
+            Case "╙"
+                If tileTag = 0 Then Return 54 Else Return 2
+            Case "╔"
+                If tileTag = 0 Then Return 55 Else Return 2
+            Case "╝"
+                If tileTag = 0 Then Return 56 Else Return 2
         End Select
 
         Return 2
@@ -886,6 +903,18 @@ Public Class Game
                 Return mTile.imgLib.getImg(tSet.dungeon, tile.mg_mannequin)
             Case 50
                 Return mTile.imgLib.getImg(tSet.dungeon, tile.mg_mannequin2)
+            Case 51
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.iso_h_wall)
+            Case 52
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.iso_h_wallcap)
+            Case 53
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.iso_v_wall)
+            Case 54
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.iso_v_wallcap)
+            Case 55
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.iso_u_corner)
+            Case 56
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.iso_l_corner)
             Case Else
                 Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
         End Select
@@ -982,6 +1011,18 @@ Public Class Game
                 Return mTile.imgLib.getImg(tSet.forest, tile.mg_mannequin)
             Case 50
                 Return mTile.imgLib.getImg(tSet.forest, tile.mg_mannequin2)
+            Case 51
+                Return mTile.imgLib.getImg(tSet.forest, tile.iso_h_wall)
+            Case 52
+                Return mTile.imgLib.getImg(tSet.forest, tile.iso_h_wallcap)
+            Case 53
+                Return mTile.imgLib.getImg(tSet.forest, tile.iso_v_wall)
+            Case 54
+                Return mTile.imgLib.getImg(tSet.forest, tile.iso_v_wallcap)
+            Case 55
+                Return mTile.imgLib.getImg(tSet.forest, tile.iso_u_corner)
+            Case 56
+                Return mTile.imgLib.getImg(tSet.forest, tile.iso_l_corner)
             Case Else
                 Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
         End Select
@@ -1046,6 +1087,18 @@ Public Class Game
                 Return mTile.imgLib.getImg(tSet.space, tile.mg_mannequin)
             Case 50
                 Return mTile.imgLib.getImg(tSet.space, tile.mg_mannequin2)
+            Case 51
+                Return mTile.imgLib.getImg(tSet.space, tile.iso_h_wall)
+            Case 52
+                Return mTile.imgLib.getImg(tSet.space, tile.iso_h_wallcap)
+            Case 53
+                Return mTile.imgLib.getImg(tSet.space, tile.iso_v_wall)
+            Case 54
+                Return mTile.imgLib.getImg(tSet.space, tile.iso_v_wallcap)
+            Case 55
+                Return mTile.imgLib.getImg(tSet.space, tile.iso_u_corner)
+            Case 56
+                Return mTile.imgLib.getImg(tSet.space, tile.iso_l_corner)
             Case Else
                 Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
         End Select
@@ -1106,6 +1159,18 @@ Public Class Game
                 Return mTile.imgLib.getImg(tSet.legacy, tile.mg_mannequin)
             Case 50
                 Return mTile.imgLib.getImg(tSet.legacy, tile.mg_mannequin2)
+            Case 51
+                Return mTile.imgLib.getImg(tSet.legacy, tile.iso_h_wall)
+            Case 52
+                Return mTile.imgLib.getImg(tSet.legacy, tile.iso_h_wallcap)
+            Case 53
+                Return mTile.imgLib.getImg(tSet.legacy, tile.iso_v_wall)
+            Case 54
+                Return mTile.imgLib.getImg(tSet.legacy, tile.iso_v_wallcap)
+            Case 55
+                Return mTile.imgLib.getImg(tSet.legacy, tile.iso_u_corner)
+            Case 56
+                Return mTile.imgLib.getImg(tSet.legacy, tile.iso_l_corner)
             Case Else
                 Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
         End Select
@@ -1178,6 +1243,18 @@ Public Class Game
                 Return mTile.imgLib.getImg(tSet.fogforest, tile.mg_mannequin)
             Case 50
                 Return mTile.imgLib.getImg(tSet.fogforest, tile.mg_mannequin2)
+            Case 51
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.iso_h_wall)
+            Case 52
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.iso_h_wallcap)
+            Case 53
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.iso_v_wall)
+            Case 54
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.iso_v_wallcap)
+            Case 55
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.iso_u_corner)
+            Case 56
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.iso_l_corner)
             Case Else
                 Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
         End Select
@@ -1254,6 +1331,18 @@ Public Class Game
                 Return mTile.imgLib.getImg(tSet.hub, tile.mg_mannequin)
             Case 50
                 Return mTile.imgLib.getImg(tSet.hub, tile.mg_mannequin2)
+            Case 51
+                Return mTile.imgLib.getImg(tSet.hub, tile.iso_h_wall)
+            Case 52
+                Return mTile.imgLib.getImg(tSet.hub, tile.iso_h_wallcap)
+            Case 53
+                Return mTile.imgLib.getImg(tSet.hub, tile.iso_v_wall)
+            Case 54
+                Return mTile.imgLib.getImg(tSet.hub, tile.iso_v_wallcap)
+            Case 55
+                Return mTile.imgLib.getImg(tSet.hub, tile.iso_u_corner)
+            Case 56
+                Return mTile.imgLib.getImg(tSet.hub, tile.iso_l_corner)
             Case Else
                 Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
         End Select
@@ -1314,6 +1403,18 @@ Public Class Game
                 Return mTile.imgLib.getImg(tSet.desert, tile.mg_mannequin)
             Case 50
                 Return mTile.imgLib.getImg(tSet.desert, tile.mg_mannequin2)
+            Case 51
+                Return mTile.imgLib.getImg(tSet.desert, tile.iso_h_wall)
+            Case 52
+                Return mTile.imgLib.getImg(tSet.desert, tile.iso_h_wallcap)
+            Case 53
+                Return mTile.imgLib.getImg(tSet.desert, tile.iso_v_wall)
+            Case 54
+                Return mTile.imgLib.getImg(tSet.desert, tile.iso_v_wallcap)
+            Case 55
+                Return mTile.imgLib.getImg(tSet.desert, tile.iso_u_corner)
+            Case 56
+                Return mTile.imgLib.getImg(tSet.desert, tile.iso_l_corner)
             Case Else
                 Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
         End Select
@@ -1394,6 +1495,18 @@ Public Class Game
                 Return mTile.imgLib.getImg(tSet.caveh, tile.mg_mannequin)
             Case 50
                 Return mTile.imgLib.getImg(tSet.caveh, tile.mg_mannequin2)
+            Case 51
+                Return mTile.imgLib.getImg(tSet.caveh, tile.iso_h_wall)
+            Case 52
+                Return mTile.imgLib.getImg(tSet.caveh, tile.iso_h_wallcap)
+            Case 53
+                Return mTile.imgLib.getImg(tSet.caveh, tile.iso_v_wall)
+            Case 54
+                Return mTile.imgLib.getImg(tSet.caveh, tile.iso_v_wallcap)
+            Case 55
+                Return mTile.imgLib.getImg(tSet.caveh, tile.iso_u_corner)
+            Case 56
+                Return mTile.imgLib.getImg(tSet.caveh, tile.iso_l_corner)
             Case Else
                 Return mTile.imgLib.getImg(tSet.caveh, tile.wall)
         End Select

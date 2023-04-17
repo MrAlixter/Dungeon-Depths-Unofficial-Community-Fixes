@@ -58,6 +58,12 @@
     extra10
     extra11
     extra12
+    iso_h_wall
+    iso_h_wallcap
+    iso_v_wall
+    iso_v_wallcap
+    iso_u_corner
+    iso_l_corner
 End Enum
 Public Enum tSet
     dungeon

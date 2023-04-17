@@ -110,10 +110,33 @@ Public Class mFloor
                 generateDungeonLevel(floorCode)
         End Select
 
+        fillIsoWalls()
+
         If floorNumber = 7 Then placeFloor7Statues()
     End Sub
 
     '|-Dungeon Floors-|
+    Sub fillIsoWalls()
+        For y = 0 To mBoardHeight - 1
+            For x = 0 To mBoardWidth - 1
+                If mBoard(y, x).Tag = 0 Then
+                    If ((ptInBounds(New Point(x + 1, y + 1)) And ptInBounds(New Point(x + 1, y)) And ptInBounds(New Point(x, y + 1))) AndAlso (mBoard(y + 1, x + 1).Tag <> 0 And mBoard(y + 1, x).Tag = 0 And mBoard(y, x + 1).Tag = 0)) Then
+                        mBoard(y, x).Text = "╔"
+                    ElseIf ((ptInBounds(New Point(x + 1, y + 1)) And ptInBounds(New Point(x + 1, y)) And ptInBounds(New Point(x, y + 1))) AndAlso (mBoard(y + 1, x + 1).Tag <> 0 And mBoard(y + 1, x).Tag <> 0 And mBoard(y, x + 1).Tag <> 0)) Then
+                        mBoard(y, x).Text = "╝"
+                    ElseIf ((ptInBounds(New Point(x + 1, y + 1)) And ptInBounds(New Point(x + 1, y)) And ptInBounds(New Point(x, y + 1))) AndAlso (mBoard(y, x).Tag = 0 And mBoard(y + 1, x + 1).Tag = 0 And mBoard(y + 1, x).Tag <> 0 And (Not ptInBounds(New Point(x + 1, y)) Or mBoard(y, x + 1).Tag = 0))) Then
+                        mBoard(y, x).Text = "╕"
+                    ElseIf ((ptInBounds(New Point(x + 1, y)) And ptInBounds(New Point(x, y + 1))) AndAlso (mBoard(y, x).Tag = 0 And mBoard(y + 1, x).Tag <> 0 And (Not ptInBounds(New Point(x + 1, y)) Or mBoard(y, x + 1).Tag = 0))) Then
+                        mBoard(y, x).Text = "═"
+                    ElseIf ((ptInBounds(New Point(x + 1, y + 1)) And ptInBounds(New Point(x + 1, y)) And ptInBounds(New Point(x, y + 1))) AndAlso (mBoard(y, x).Tag = 0 And mBoard(y + 1, x + 1).Tag = 0 And mBoard(y, x + 1).Tag <> 0 And (Not ptInBounds(New Point(x, y + 1)) Or mBoard(y + 1, x).Tag = 0))) Then
+                        mBoard(y, x).Text = "╙"
+                    ElseIf ((ptInBounds(New Point(x + 1, y)) And ptInBounds(New Point(x, y + 1))) AndAlso (mBoard(y, x).Tag = 0 And mBoard(y, x + 1).Tag <> 0 And (Not ptInBounds(New Point(x, y + 1)) Or mBoard(y + 1, x).Tag = 0))) Then
+                        mBoard(y, x).Text = "║"
+                    End If
+                End If
+            Next
+        Next
+    End Sub
     Sub generateDungeonLevel(ByVal code As String)
         'generateLevel creates the random rooms and corridors of each level
         floorCode = code
@@ -1456,7 +1479,6 @@ Public Class mFloor
         mBoard(c.pos.Y, c.pos.X).ForeColor = Color.FromArgb(45, 45, 45)
         mBoard(c.pos.Y, c.pos.X).Text = "#"
     End Sub
-
 
     '|---UTILITY METHODS---|
     Function randPoint() As Point
