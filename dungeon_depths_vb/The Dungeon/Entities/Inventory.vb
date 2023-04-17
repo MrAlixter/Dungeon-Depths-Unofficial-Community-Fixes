@@ -415,13 +415,20 @@
         internal_inventory.Add(PixieDuster.ITEM_NAME, New PixieDuster)               '388
         internal_inventory.Add(SPCursemark.ITEM_NAME, New SPCursemark)               '389
         internal_inventory.Add(CrackedBrick.ITEM_NAME, New CrackedBrick)             '390
-        'v13.0.0
+        'v12.2.0
         internal_inventory.Add(RingOfTheRabbit.ITEM_NAME, New RingOfTheRabbit)       '391
         internal_inventory.Add(SpaceBun.ITEM_NAME, New SpaceBun)                     '392
         internal_inventory.Add(NanosilkQipaoP.ITEM_NAME, New NanosilkQipaoP)         '393
         internal_inventory.Add(AcolyteCosplay.ITEM_NAME, New AcolyteCosplay)         '394
         internal_inventory.Add(VialOfSuccubus.ITEM_NAME, New VialOfSuccubus)         '395
         internal_inventory.Add(BimbovisionGoggles.ITEM_NAME, New BimbovisionGoggles) '396
+        internal_inventory.Add(TargetingSystem.ITEM_NAME, New TargetingSystem)       '397
+        internal_inventory.Add(CyberValkyrieArmor.ITEM_NAME, New CyberValkyrieArmor) '398
+        internal_inventory.Add(CyberValkyrieSword.ITEM_NAME, New CyberValkyrieSword) '399
+        internal_inventory.Add(UpgradeValkyrieSword.ITEM_NAME, New UpgradeValkyrieSword) '400
+        internal_inventory.Add(HellflamingSword.ITEM_NAME, New HellflamingSword)     '401
+        internal_inventory.Add(BerserkerCursemark.ITEM_NAME, New BerserkerCursemark) '402
+        internal_inventory.Add(SellHellfireBlade.ITEM_NAME, New SellHellfireBlade)   '403
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -452,7 +459,7 @@
                  Me.item(332), Me.item(333), Me.item(335), Me.item(336),
                  Me.item(343), Me.item(345), Me.item(354), Me.item(357),
                  Me.item(363), Me.item(364), Me.item(384), Me.item(393),
-                 Me.item(394)}
+                 Me.item(394), Me.item(398)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -473,7 +480,7 @@
                    Me.item(353), Me.item(362), Me.item(365), Me.item(366),
                    Me.item(367), Me.item(368), Me.item(369), Me.item(370),
                    Me.item(372), Me.item(377), Me.item(381), Me.item(388),
-                   Me.item(390)}
+                   Me.item(390), Me.item(399), Me.item(401)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4), Me.item(65),
                    Me.item(15), Me.item(36), Me.item(37), Me.item(48),
@@ -517,11 +524,12 @@
                 Me.item(327), Me.item(337), Me.item(340), Me.item(342),
                 Me.item(344), Me.item(346), Me.item(349), Me.item(355),
                 Me.item(356), Me.item(361), Me.item(374), Me.item(375),
-                Me.item(376), Me.item(389), Me.item(391)}
+                Me.item(376), Me.item(389), Me.item(391), Me.item(402)}
 
         services = {Me.item(87), Me.item(113), Me.item(114), Me.item(121),
                     Me.item(122), Me.item(124), Me.item(131), Me.item(245),
-                    Me.item(249), Me.item(263), Me.item(359), Me.item(371)}
+                    Me.item(249), Me.item(263), Me.item(359), Me.item(371),
+                    Me.item(400), Me.item(403)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),
@@ -542,7 +550,8 @@
                    Me.item(161), Me.item(299), Me.item(308), Me.item(309),
                    Me.item(310), Me.item(311), Me.item(312), Me.item(313),
                    Me.item(314), Me.item(315), Me.item(316), Me.item(317),
-                   Me.item(318), Me.item(319), Me.item(329), Me.item(396)}
+                   Me.item(318), Me.item(319), Me.item(329), Me.item(396),
+                   Me.item(397)}
 
         invIDorder = New List(Of Integer)
 

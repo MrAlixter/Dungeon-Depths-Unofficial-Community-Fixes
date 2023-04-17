@@ -57,7 +57,7 @@
 
     Public Overrides Function getNextStep(stage As Integer) As Action
         Dim p As Player = Game.player1
-        If p.className.Equals("Valkyrie") Then
+        If p.className.Contains("Valkyrie") Then
             Return AddressOf stopTF
         Else
             Return AddressOf step1

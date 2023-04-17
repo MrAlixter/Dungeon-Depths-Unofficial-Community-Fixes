@@ -28,6 +28,9 @@
             Return getM()
         End If
     End Function
+    Function getAt(ByVal i As Integer, ByVal fem As Boolean, ByVal def As Boolean) As Image
+        Return getAt(New Tuple(Of Integer, Boolean, Boolean)(i, fem, def))
+    End Function
     Function getAt(ByRef ind As Tuple(Of Integer, Boolean, Boolean)) As Image
         If ind Is Nothing Then Return Portrait.nullImg
 

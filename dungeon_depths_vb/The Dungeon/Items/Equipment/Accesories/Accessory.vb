@@ -23,6 +23,7 @@
     Public under_chin As Boolean = False
     Public under_t_clothes As Boolean = False
     Public under_b_clothes As Boolean = False
+    Public under_b_clothes_halfoverride As Boolean = False
     Public hide_mouth As Boolean = False
     Public hide_eyes As Boolean = False
     Public hide_dick As Boolean = False

@@ -140,18 +140,18 @@
             img_index = LocalImgInd.alt4
             Return "Hey!  I'm turning into a tree!  Now, obviously this ain't great, but at least I'm getting wood!  HA!" & DDUtils.RNRN &
                    "That's a little bit of some tree humor, buy some stuff before you leaf and maybe I can get this straighed out before this curse runs its course, eh?"
-        ElseIf Int(Rnd() * 20) = 0 Then
+        ElseIf Int(Rnd() * 20) = 0 And hasMetPlayer Then
             discount = 0.25
             img_index = LocalImgInd.alt3
             Return "*ahem* Apologies, but my dear friend here is currently occupied..." & DDUtils.RNRN &
                    "If it helps speed up your decision, I had him whip up a bit of a surplus beforehand, and I can give you a 25% discount on that.  Please leave the gold for anything you purchase on the counter." & DDUtils.RNRN &
                    "Oh, and by the way, take care not to dawdle or try anything suspicious.  I am always in need of guinea pigs, and I have quite the back-log of expirements I would like to try on a less amiable subject."
-        ElseIf Int(Rnd() * 20) = 1 Then
+        ElseIf Int(Rnd() * 20) = 1 And hasMetPlayer Then
             img_index = LocalImgInd.alt2
             Return "Hey!  I was trying out a new type of cream, aaaaaaaaand, well, turns out there were a couple side effects..." & DDUtils.RNRN &
                    "Don't worry though, I'm pretty sure none of it made it into the stuff for sale.  But hey, if you want any of it, let me know, ok?" & DDUtils.RNRN &
                    "If you're hungry, I've always got something cooking.  So, what can I get you?"
-        ElseIf Int(Rnd() * 20) = 2 Then
+        ElseIf Int(Rnd() * 20) = 2 And hasMetPlayer Then
             img_index = LocalImgInd.alt1
             Return "Say what you will about Marissa, but the lady " & If(p.perks(perk.mrevived) < 0, "had", "has") & " a type for sure..." & DDUtils.RNRN &
                    "Fortunately for me, I've got a deal goin' on with one of the hottest mind controllers you'll find in these parts, and part of my payment was some solid mental defense training.  I'm not even worried about the new body, either.  I've got just the thing to change back me to my old self... when I get bored, that is.  No reason not to enjoy " & If(p.perks(perk.mrevived) < 0, "her student's", "her") & " ""tip"" to its fullest, right?" & DDUtils.RNRN &

@@ -18,7 +18,7 @@
         value = 2695
 
         '|Description|
-        setDesc("A slender red-orange blade that becomes engulfed in a ball of flame once pulled from its jet black scabard." & DDUtils.RNRN &
+        setDesc("A slender red-orange blade that becomes engulfed in a ball of flame once pulled from its jet black scabbard." & DDUtils.RNRN &
                 "This sword will take damage from attacks" & DDUtils.RNRN &
                 getStatInformation())
     End Sub

@@ -332,12 +332,15 @@
         End If
     End Sub
     Shared Sub valkyrieStatusCheck(ByRef p As Player)
-        If p.stamina > 10 AndAlso Game.getTurn Mod (8 + (p.level * p.getWIL() / 2)) = 0 Then
-            p.stamina -= 10
-            TextEvent.pushLog("Your transformation consumes ten stamina!")
+        Dim stamina_cost = 10
+        If p.className.Equals("Mecha Valkyrie") Then stamina_cost = 5
+
+        If p.stamina > stamina_cost AndAlso Game.getTurn Mod (8 + (p.level * p.getWIL() / 2)) = 0 Then
+            p.stamina -= stamina_cost
+            TextEvent.pushLog("Your transformation consumes " & stamina_cost & " stamina!")
         End If
 
-        If p.stamina < 10 Then
+        If p.stamina < stamina_cost Then
             EquipmentDialogBackend.weaponChange(p, "Fists")
             p.perks(perk.tfedbyweapon) = -1
             TextEvent.push("You no longer can keep up your transformation, and revert to your previous form!")
@@ -649,8 +652,8 @@
         Return False
     End Function
     Shared Function hardLightEffect(ByVal dmg As Integer, ByRef p As Player) As Boolean
-        If p.perks(perk.hardlight) > -1 Then
-            If Not p.equippedArmor.getName.Contains("Photon") Then
+        If p.perks(perk.hardlight) > -1 Or p.equippedArmor.getAName.Equals(CyberValkyrieArmor.ITEM_NAME) Then
+            If Not p.equippedArmor.getName.Contains("Photon") And Not p.equippedArmor.getAName.Equals(CyberValkyrieArmor.ITEM_NAME) Then
                 p.perks(perk.hardlight) = -1
                 Return False
             End If

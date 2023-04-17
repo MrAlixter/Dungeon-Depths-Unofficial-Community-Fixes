@@ -649,6 +649,7 @@ Public Class Player
         classes.Add("Targaxian", New Targaxian())
         classes.Add("Unconscious", New Unconcious())
         classes.Add("Valkyrie", New Valkyrie())
+        classes.Add("Mecha Valkyrie", New CyberValkyrie())
         classes.Add("Bunny Girl", New Dancer())
         classes.Add("Barbarian", New Barbarian())
         classes.Add("Warlock", New Warlock())
@@ -777,7 +778,7 @@ Public Class Player
         saveXState(pState)
     End Sub
     Public Sub saveXState(ByRef x_state As State)
-        If Transformation.canBeTFed(Me) And Not perks(perk.succubuscurse) > 0 Then
+        If Not x_state Is Nothing AndAlso Transformation.canBeTFed(Me) And Not perks(perk.succubuscurse) > 0 Then
             x_state.save(Me)
         End If
     End Sub
@@ -1571,7 +1572,7 @@ Public Class Player
         If pClass.name.Equals("Magical Girl") And perks(perk.tfedbyweapon) > 0 Then
             PerkEffects.magicGirlStatusCheck(Me)
         End If
-        If pClass.name.Equals("Valkyrie") And perks(perk.tfedbyweapon) > 0 Then
+        If pClass.name.Contains("Valkyrie") And perks(perk.tfedbyweapon) > 0 Then
             PerkEffects.valkyrieStatusCheck(Me)
         End If
         If perks(perk.tfedbyweapon) < 0 And (perks(perk.tfcausingwand) > -1 Or perks(perk.tfcausingsword) > -1) Then
@@ -2157,7 +2158,7 @@ Public Class Player
 
     'sex change methods
     Public Sub MtF()
-        If perks(perk.polymorphed) > -1 Or pClass.name.Equals("Magical Girl") Or pClass.name.Equals("Valkyrie") Then
+        If perks(perk.polymorphed) > -1 Or pClass.name.Equals("Magical Girl") Or className.Contains("Valkyrie") Then
             TextEvent.pushLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -2169,7 +2170,7 @@ Public Class Player
         If perks(perk.swordpossess) > -1 Then perks(perk.swordpossess) = 0
     End Sub
     Public Sub FtM()
-        If perks(perk.polymorphed) > -1 Or pClass.name.Equals("Magical Girl") Or pClass.name.Equals("Valkyrie") Then
+        If perks(perk.polymorphed) > -1 Or pClass.name.Equals("Magical Girl") Or className.Contains("Valkyrie") Then
             TextEvent.pushLog("Your form prevents you from being altered.")
             Exit Sub
         End If

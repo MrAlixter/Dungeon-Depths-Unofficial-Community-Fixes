@@ -155,11 +155,6 @@ Public Class Portrait
             iArr(pInd.accessory) = CharacterGenerator.picPort.Image
         End If
 
-        If acce.under_b_clothes And renderMode <> RENDER_MODE.half Then
-            iArr(pInd.clothesbtm) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.accessory), iArr(pInd.clothesbtm)})
-            iArr(pInd.accessory) = CharacterGenerator.picPort.Image
-        End If
-
         If acce.hide_mouth Then
             iArr(pInd.mouth) = CharacterGenerator.picPort.Image
         End If
@@ -177,6 +172,11 @@ Public Class Portrait
 
         If armor.adjust_sleeve_layer And renderMode <> RENDER_MODE.half Then
             iArr(pInd.clothes) = topClothesMask(iArr(pInd.clothes), iArr(pInd.clothesbtm), getMaskInitialY(ent.getPlayer.breastSize, armor.compress_breast))
+        End If
+
+        If (acce.under_b_clothes And renderMode <> RENDER_MODE.half) Or acce.under_b_clothes_halfoverride Then
+            iArr(pInd.clothesbtm) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.accessory), iArr(pInd.clothesbtm)})
+            iArr(pInd.accessory) = CharacterGenerator.picPort.Image
         End If
 
         If armor.swap_gen_clothesbtm And renderMode <> RENDER_MODE.half Then
@@ -302,7 +302,7 @@ Public Class Portrait
 
         If Not p.pForm.getOverlayU(p).Item1 = 0 Then iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False) : Exit Sub
 
-        If p.className.Equals("Warrior") Or p.className.Equals("Barbarian") Or p.className.Equals("Paladin") Or p.className.Equals("Amazon") Or p.className.Equals("Valkyrie") Or p.className.Equals("Pirate") Or
+        If p.className.Equals("Warrior") Or p.className.Equals("Barbarian") Or p.className.Equals("Paladin") Or p.className.Equals("Amazon") Or p.className.Contains("Valkyrie") Or p.className.Equals("Pirate") Or
          p.formName.Equals("Tigress") Or p.formName.Equals("Orc") Then
             Select Case p.breastSize
                 Case -1, -2

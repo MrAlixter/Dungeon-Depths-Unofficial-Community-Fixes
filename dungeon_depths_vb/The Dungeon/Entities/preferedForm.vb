@@ -52,6 +52,7 @@
                 skinColor = (Color.FromArgb(255, 105, 80, 70))
         End Select
 
+
         If Int(Rnd() * 2) = 0 Then
             hasFemaleHair = True
         Else
@@ -78,6 +79,20 @@
         End If
 
         earType = Int(Rnd() * 4)
+
+        If Game.player1.formName.Contains("Slime") Or Game.player1.formName.Contains("Goo") Then
+            Select Case Int(Rnd() * 3)
+                Case 1
+                    hairColor = Color.FromArgb(180, 210, 10, 250)
+                    skinColor = Color.FromArgb(230, 220, 110, 235)
+                Case 2
+                    hairColor = Color.FromArgb(180, 250, 160, 220)
+                    skinColor = Color.FromArgb(230, 205, 100, 155)
+                Case Else
+                    hairColor = Color.FromArgb(180, 20, 80, 240)
+                    skinColor = Color.FromArgb(230, 85, 130, 245)
+            End Select
+        End If
     End Sub
 
     Public Function playerMeetsForm(ByRef p As Player)

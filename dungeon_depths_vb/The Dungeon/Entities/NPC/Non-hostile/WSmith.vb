@@ -15,20 +15,20 @@
         isShop = True
 
         '|Inventory|
-        inv.setCount("Spiked_Staff", 1)
-        inv.setCount("Throwing_Knife", 1)
+        inv.setCount(SpikedStaff.ITEM_NAME, 1)
+        inv.setCount(TKnife.ITEM_NAME, 1)
         'Signature weapons
-        inv.setCount("Signature_Spear", 1)
-        inv.setCount("Signature_Staff", 1)
-        inv.setCount("Signature_Dagger", 1)
-        inv.setCount("Signature_Whip", 1)
+        inv.setCount(SigSpear.ITEM_NAME, 1)
+        inv.setCount(SigStaff.ITEM_NAME, 1)
+        inv.setCount(SigDagger.ITEM_NAME, 1)
+        inv.setCount(SigWhip.ITEM_NAME, 1)
         'Flaming weapons
-        inv.setCount("Flaming_Spear", 1)
-        inv.setCount("Flaming_Sword", 1)
+        inv.setCount(FlamingSword.ITEM_NAME, 1)
+        inv.setCount(FlamingSpear.ITEM_NAME, 1)
         'Accursed weapons
-        inv.setCount("Accursed_Blade", 1)
-        inv.setCount("Bewitched_Wand", 1)
-        inv.setCount("Jinxed_Whip", 1)
+        inv.setCount(CursedSword.ITEM_NAME, 1)
+        inv.setCount(BewitchedWand.ITEM_NAME, 1)
+        inv.setCount(JinxedWhip.ITEM_NAME, 1)
 
         '|Stats|
         maxHealth = 99
@@ -67,6 +67,10 @@
     Public Overrides Sub inventoryUpdate()
         If Game.player1.quests(qInd.dfaUpgrade).getComplete Then inv.setCount(UpgradeArmor.ITEM_NAME, 1) Else inv.setCount(UpgradeArmor.ITEM_NAME, 0)
         If Game.player1.perks(perk.irondagger) > 0 Then inv.setCount(IronDagger.ITEM_NAME, 1) Else inv.setCount(IronDagger.ITEM_NAME, 0)
+
+        If Game.mDun.getWorldFlag(wFlag.mechavalkyrie) > 0 Then inv.setCount(UpgradeValkyrieSword.ITEM_NAME, 1) Else inv.setCount(UpgradeValkyrieSword.ITEM_NAME, 0)
+        If Game.mDun.getWorldFlag(wFlag.hellfiresword) > 0 Then inv.setCount(SellHellfireBlade.ITEM_NAME, 1) Else inv.setCount(SellHellfireBlade.ITEM_NAME, 0)
+        If Game.mDun.getWorldFlag(wFlag.berserkercmark) > 0 Then inv.setCount(BerserkerCursemark.ITEM_NAME, 1) Else inv.setCount(BerserkerCursemark.ITEM_NAME, 0)
     End Sub
 
     Public Overrides Sub playerDeath(ByRef p As Player)
@@ -94,6 +98,47 @@
         TextEvent.push(out, AddressOf Game.player1.die)
     End Sub
 
+    '| - WEAPON UPGRADES - |
+    Protected Sub askValkyrieQuestion()
+        Dim reason1 = New Tuple(Of String, Action)("Drain on stamina", AddressOf valkyrieResponse)
+        Dim reason2 = New Tuple(Of String, Action)("Locked equipment", AddressOf valkyrieResponse)
+        Dim reason3 = New Tuple(Of String, Action)("I don't like birds", AddressOf valkyrieResponse)
+
+        TextEvent.pushManySelect("The worst part about being a valkyrie?", reason1, reason2, reason3)
+    End Sub
+    Protected Sub valkyrieResponse()
+        Objective.showNPC(local_img(LocalImgInd.alt3), "The weaponsmith doesn't seem to be listening." & DDUtils.RNRN &
+                                                       """Exactly right, no mechanical eyes.  Armor that doesn't have energy shields.  The total lack of attachment points for anything, much less some sort of tiny cannon." & DDUtils.RNRN &
+                                                       "Lucky for you, I've got some ideas on how to fix that.  Well, as long as you've got the parts.""" & DDUtils.RNRN &
+                                                       "Upgrade_Valkyrie_Sword service is now availible for sale!")
+
+        Game.mDun.world_flags(wFlag.mechavalkyrie) = 1
+    End Sub
+
+    Protected Sub hellfireBlade()
+        Objective.showNPC(local_img(LocalImgInd.alt3), "The weaponsmith gestures, and you toss over the book." & DDUtils.RNRN &
+                                                       """This is a succubus spellbook, right?  Rumor has it that they've worked out a type of flame that burns hotter as... um, well, as you do." & DDUtils.RNRN &
+                                                       "I could probably work that into a better flaming sword, as long as you've got some sort of fuel that's charged with succubus energy.""" & DDUtils.RNRN &
+                                                       "Hellfire_Sword is now availible for sale!")
+
+        Game.mDun.world_flags(wFlag.hellfiresword) = 1
+    End Sub
+
+    Protected Sub berserkerMark()
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(76), """Oh, it'll definitely work alright..."" Cynn says, looking over a scrawled parchment diagram." & DDUtils.RNRN &
+                                                       """It's just that part of it working involves getting rid of your mana reserves.  Soooo, I'm not putting this thing on myself.""" & DDUtils.RNRN &
+                                                       "She hands the diagram to the other redhead, who accepts it back with a sigh." & DDUtils.PAKTC, AddressOf berserkerMark2)
+    End Sub
+
+    Protected Sub berserkerMark2()
+        Objective.showNPC(local_img(LocalImgInd.alt1), """Yeah, that's what I was worried about.  I don't think I want it on me either-""" & DDUtils.RNRN &
+                                                       "Both women jolt slightly as they notice your presence, and after a quick exchange of glances the weaponsmith turns back to you." & DDUtils.RNRN &
+                                                       """Hey, wanderer!  How do you feel about tattoos and ATK points?""" & DDUtils.RNRN &
+                                                       "Berserker_Cursemark is now availible for sale!")
+
+        Game.mDun.world_flags(wFlag.berserkercmark) = 1
+    End Sub
+
     '| - DIALOG - |
     Protected Overrides Function normalDialog(ByRef p As Player)
         If p.quests(qInd.dfaUpgrade).canGet Then
@@ -101,21 +146,69 @@
             Return ""
         End If
 
-        If Int(Rnd() * 2) = 0 Then
+        If p.equippedWeapon.getAName = "Fists" Then
+            img_index = LocalImgInd.alt3
+            Return "Heeeey... buddy..." & DDUtils.RNRN &
+                   "Need something... stabby?  Or with spikes?" & DDUtils.RNRN &
+                   "Let's get you a decent weapon before someone gets hurt."
+        ElseIf hasMetPlayer AndAlso Game.mDun.getWorldFlag(wFlag.mechavalkyrie) < 0 AndAlso p.inv.getCountAt(ValkyrieSword.ITEM_NAME) > 0 AndAlso (p.inv.getCountAt(PhotonBlade.ITEM_NAME) > 0 Or p.inv.getCountAt(PhotonArmor.ITEM_NAME) > 0 Or p.inv.getCountAt(PhotonBikini.ITEM_NAME) > 0) Then
+            'Valkyrie Upgrade
+            img_index = LocalImgInd.alt3
+
+            If Game.shop_npc_engaged Then Game.hideNPCButtons()
+            Game.npc_list.Clear()
+            Game.shop_npc_engaged = False
+
+            TextEvent.lblEventOnClose = AddressOf askValkyrieQuestion
+
+            Return """Hmm..." & DDUtils.RNRN &
+                   "Hey wanderer... what do you think the worst part about being a valkyrie is?""" & DDUtils.RNRN &
+                   "Press any non-command key to continue."
+        ElseIf hasMetPlayer AndAlso Game.mDun.getWorldFlag(wFlag.hellfiresword) < 0 AndAlso p.inv.getCountAt(CSpellbook.ITEM_NAME) > 0 And p.inv.getCountAt(SuccubusGarb.ITEM_NAME) > 0 Then
+            'Hellfire Sword
+            img_index = LocalImgInd.alt3
+
+            If Game.shop_npc_engaged Then Game.hideNPCButtons()
+            Game.npc_list.Clear()
+            Game.shop_npc_engaged = False
+
+            TextEvent.lblEventOnClose = AddressOf hellfireBlade
+
+            Return """Hmm..." & DDUtils.RNRN &
+                   "Hey wanderer... where'd you get that crimson spellbook?""" & DDUtils.RNRN &
+                   "Press any non-command key to continue."
+        ElseIf hasMetPlayer AndAlso p.quests(qInd.darkPact).getComplete AndAlso Game.mDun.getWorldFlag(wFlag.berserkercmark) < 0 Then
+            'Hellfire Sword
+            img_index = LocalImgInd.alt3
+
+            Game.picNPC.Visible = False
+            If Game.shop_npc_engaged Then Game.hideNPCButtons()
+            Game.npc_list.Clear()
+            Game.shop_npc_engaged = False
+
+            Application.DoEvents()
+
+            TextEvent.lblEventOnClose = AddressOf berserkerMark
+
+            Return "As you approach the weaponsmith, you find her conversing with a familiar demon..."
+        ElseIf Int(Rnd() * 2) = 0 Then
             img_index = LocalImgInd.alt1
-            Return "Hey stranger, how's it hanging?" & DDUtils.RNRN &
-                   "I'm still getting everything moved in, but feel free to check out what I've got ready so far.  I should be operating at 100% by the time-" & DDUtils.RNRN &
-                   "Wait... what year is it now?"
-        ElseIf Int(Rnd() * 20) = 1 Then
+            Return "Hey stranger, what can I getcha?" & DDUtils.RNRN &
+                   "I've got swords, and spears, and- um, a box of knives.  Maybe some whips?" & DDUtils.RNRN &
+                   "I make and sell weapons, mostly." & DDUtils.RNRN &
+                   "Let me know if you see anything that catches your eye, ok?" & DDUtils.RNRN &
+                   "While you're browsing, I'll be putting the grind on an axe."
+        ElseIf Int(Rnd() * 20) = 1 And hasMetPlayer Then
             img_index = LocalImgInd.alt2
-            Return "So I was working on smelting down some scrapped weapons and, uh, I think I'm cursed now." & DDUtils.RNRN &
+            Return "So I was working on smelting down some scrapped weapons and- um, I think I'm cursed now." & DDUtils.RNRN &
                    "Let's make this quick so that I can track down an old friend of mine who's pretty good at dealing with this sort of stuff." & DDUtils.RNRN &
                    "Hopefully they're still around somewhere, I'd rather just stay like this than ask that shady dick of a wizard for any help..."
         Else
             img_index = LocalImgInd.normal
-            Return "Hey wanderer, what's going on?" & DDUtils.RNRN &
-                   "I've got enough fire magic to keep a mobile forge burning basically wherever I go.  Lets me keep my hardware fresh and hot off the anvil, ya know?  I can tell you're not just looking for something pointy though. If you want that top-shelf quality I've got a signature series of stabby stuff that's been through an quick enchanting process." & DDUtils.RNRN &
-                   "Let me know what I'm banging out, ok?"
+            Return "Hey wanderer, do you like fire?" & DDUtils.RNRN &
+                   "I'm more of a blacksmith than a mage, but the crackling glow of pyromancy was just too bright to ignore.  It also lets me keep a forge burning anywhere I go, even rookie-tier magic has been pretty handy around the shop." & DDUtils.RNRN &
+                   "'Course on the the other hand, there's- uh, that box of- um, not cursed weapons.  Not cursed and just unusually effective, yeah..." & DDUtils.RNRN &
+                   "Anyways, let me know if you need something banged out!"
         End If
     End Function
     Protected Overrides Function bunnyDialog(ByRef p As Player)

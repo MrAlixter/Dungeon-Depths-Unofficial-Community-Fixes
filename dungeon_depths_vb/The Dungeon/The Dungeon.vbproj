@@ -138,6 +138,7 @@
     <Compile Include="Entities\Player\Classes\needPassages\Cleric.vb" />
     <Compile Include="Entities\Player\Classes\CynnOnahole2.vb" />
     <Compile Include="Entities\Player\Classes\CynnOnahole.vb" />
+    <Compile Include="Entities\Player\Classes\CyberValkyrie.vb" />
     <Compile Include="Entities\Player\Classes\ValkyrieTransform.vb" />
     <Compile Include="Entities\Player\Classes\Necromancer.vb" />
     <Compile Include="Entities\Player\Classes\needPassages\Pirate.vb" />
@@ -203,6 +204,7 @@
     <Compile Include="Entities\Player\Transformations\CowbellTFs\MimicMinoTF.vb" />
     <Compile Include="Entities\Player\Transformations\MaggirlTFs\MagGirlGTF.vb" />
     <Compile Include="Entities\Player\Transformations\MaggirlTFs\MagMimicTF.vb" />
+    <Compile Include="Entities\Player\Transformations\MaggirlTFs\CyberValkyrieTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\CynnTonicTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\BimboMaidTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\SpaceBunTF.vb" />
@@ -220,6 +222,7 @@
     <Compile Include="Entities\Player\Transformations\PreferredFormTF.vb" />
     <Compile Include="Entities\Player\Transformations\FaePrincessTF.vb" />
     <Compile Include="Entities\Player\Transformations\BeeHoneyTF.vb" />
+    <Compile Include="Items\Equipment\Accesories\BerserkerCursemark.vb" />
     <Compile Include="Items\Equipment\Accesories\RingOfTheRabbit.vb" />
     <Compile Include="Items\Equipment\Accesories\SPCursemark.vb" />
     <Compile Include="Items\Equipment\Accesories\FaerieBlossom.vb" />
@@ -266,6 +269,7 @@
     <Compile Include="Items\Equipment\Armor\PlateArmor\MaidArmor.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\PaladinArmor.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\PlatArmor.vb" />
+    <Compile Include="Items\Equipment\Armor\PlateArmor\CyberValkyrieArmor.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\AcolyteCosplay.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\PlantBikini.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\CultistCloak.vb" />
@@ -278,6 +282,7 @@
     <Compile Include="Items\Equipment\Glasses\BimbovisionGoggles.vb" />
     <Compile Include="Items\Equipment\Glasses\CircularGlasses.vb" />
     <Compile Include="Items\Equipment\Glasses\CyberVisorG.vb" />
+    <Compile Include="Items\Equipment\Glasses\TargetingSystem.vb" />
     <Compile Include="Items\Equipment\Glasses\CyberVisorO.vb" />
     <Compile Include="Items\Equipment\Glasses\SwashMagicEPatch.vb" />
     <Compile Include="Items\Equipment\Glasses\MasqueraderMask.vb" />
@@ -298,6 +303,8 @@
     <Compile Include="Items\Equipment\Weapons\Misc\PixieDuster.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\CrackedBrick.vb" />
     <Compile Include="Items\Equipment\Weapons\Staffs\Hyacinth.vb" />
+    <Compile Include="Items\Equipment\Weapons\Swords\CyberValkyrieSword.vb" />
+    <Compile Include="Items\Equipment\Weapons\Swords\HellflamingSword.vb" />
     <Compile Include="Items\Equipment\Weapons\Whips\Rose.vb" />
     <Compile Include="Items\Equipment\Weapons\Axes\Tulip.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\PhaseDrill.vb" />
@@ -325,6 +332,8 @@
     <Compile Include="Items\Services\BasicClassChange.vb" />
     <Compile Include="Items\Services\MGReset.vb" />
     <Compile Include="Items\Services\SWRestoration.vb" />
+    <Compile Include="Items\Services\SellHellfireBlade.vb" />
+    <Compile Include="Items\Services\UpgradeValkyrieSword.vb" />
     <Compile Include="Items\Services\UpgradeArmor.vb" />
     <Compile Include="Items\Usable\CynthiasRemote.vb" />
     <Compile Include="Items\Usable\Food\Acorn.vb" />

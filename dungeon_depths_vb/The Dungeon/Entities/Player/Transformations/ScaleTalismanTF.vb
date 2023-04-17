@@ -129,7 +129,7 @@
 
         Select Case m
             Case Mode.tf
-                p.prt.setIAInd(pInd.eyes, 43, True, True)
+                p.prt.setIAInd(pInd.eyes, 65, True, True)
            Case Mode.heal
                 p.health += 0.25
             Case Mode.mana
@@ -242,7 +242,7 @@
     Overridable Sub step5Effect(ByRef p As Player, ByVal m As Integer)
         Select Case m
             Case Mode.tf
-                p.prt.setIAInd(pInd.mouth, 26, True, True)
+                p.prt.setIAInd(pInd.mouth, 35, True, True)
             Case Mode.heal
                 p.health += 0.25
             Case Mode.mana

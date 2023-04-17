@@ -114,7 +114,7 @@ Public Class FusionDialogBackend
 
             If save.Item2 <> Game.version Or
                 p2.perks(perk.polymorphed) > -1 Or
-                (p2.className.Equals("Magical Girl") Or p2.className.Equals("Valkyrie")) Then Continue For
+                (p2.className.Equals("Magical Girl") Or p2.className.Contains("Valkyrie")) Then Continue For
 
             If p2.getName.Equals(p.getName) Then Continue For
 

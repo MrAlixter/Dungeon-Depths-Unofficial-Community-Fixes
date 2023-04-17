@@ -392,7 +392,7 @@
             TextEvent.push("A magical girl needs her uniform!")
             Return False
         End If
-        If (p.className.Equals("Valkyrie") And p.perks(perk.tfedbyweapon) > 0) AndAlso Not armor.Equals("Valkyrie_Armor") AndAlso p.equippedArmor.fits(p) Then
+        If (p.className.Contains("Valkyrie") And p.perks(perk.tfedbyweapon) > 0) AndAlso Not armor.Contains("Valkyrie_Armor") AndAlso p.equippedArmor.fits(p) Then
             TextEvent.pushLog("Your armor magically re-equips!")
             TextEvent.push("Your armor magically re-equips!")
             Return False

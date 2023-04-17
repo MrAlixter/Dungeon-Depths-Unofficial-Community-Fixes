@@ -84,11 +84,11 @@
 
     '| - DIALOG - |
     Protected Overrides Function normalDialog(ByRef p As Player)
-        If Int(Rnd() * 25) = 0 Then
+        If Int(Rnd() * 25) = 0 And hasMetPlayer Then
             img_index = LocalImgInd.alt1
             Return "Hey, like, have you seen that spooky red guy with a hood?  He TOTALLY put some sorta curse on my wand!" & DDUtils.RNRN &
                    "It's not like I, uh, wanted to get, um, turned all, like, ditzy or whatever..."
-        ElseIf Int(Rnd() * 25) = 0 Then
+        ElseIf Int(Rnd() * 25) = 0 And hasMetPlayer Then
             img_index = LocalImgInd.alt3
             inv.item("Gem_of_Darkness").value -= 0.8 * inv.item("Gem_of_Darkness").value
             Return "Hey kid, how'd you like a quick and easy path to power?  I've got just the rock for you if you don't mind a bit of darkness...."

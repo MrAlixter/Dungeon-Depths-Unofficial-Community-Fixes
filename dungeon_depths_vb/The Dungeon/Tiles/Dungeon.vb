@@ -11,6 +11,9 @@
     marrissares
     seventailsstage
     bimbovision
+    mechavalkyrie
+    hellfiresword
+    berserkercmark
 End Enum
 
 Public Class Dungeon

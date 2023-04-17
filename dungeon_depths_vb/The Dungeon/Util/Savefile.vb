@@ -571,7 +571,8 @@
                npc.p_pronoun & VALUE_DELIMITER &
                npc.r_pronoun & VALUE_DELIMITER &
                npc.isShop & VALUE_DELIMITER &
-               npc.isDead & SEGMENT_DELIMITER
+               npc.isDead & VALUE_DELIMITER &
+               npc.hasMetPlayer & SEGMENT_DELIMITER
     End Function
     Protected Shared Function saveNPCSLoop() As String
         'npcs header segment
@@ -608,6 +609,7 @@
         shop_npc.r_pronoun = subseg(10)
         shop_npc.isShop = CBool(subseg(11))
         shop_npc.isDead = CBool(subseg(12))
+        If UBound(subseg) > 12 Then shop_npc.hasMetPlayer = CBool(subseg(13))
 
         Return shop_npc
     End Function
@@ -843,9 +845,9 @@
 
         p.currState.load(p, True)
         If p.perks(perk.tfedbyweapon) > 0 Then p.equippedWeapon = p.currState.equippedWeapon
-        p.equippedWeapon = p.inv.item(p.equippedWeapon.getId)
-        p.equippedArmor = p.inv.item(p.equippedArmor.getId)
-        p.equippedAcce = p.inv.item(p.equippedAcce.getId)
+        If Not p.equippedWeapon.getAName.Equals("Fists") Then p.equippedWeapon = p.inv.item(p.equippedWeapon.getId)
+        If Not p.equippedArmor.getAName.Equals("Naked") Then p.equippedArmor = p.inv.item(p.equippedArmor.getId)
+        If Not p.equippedAcce.getAName.Equals("Nothing") Then p.equippedAcce = p.inv.item(p.equippedAcce.getId)
 
         p.turnCt = Game.getTurn
 
@@ -940,11 +942,12 @@
     End Function
 
     '| - Portrait Loop - |
-    Protected Shared Function saveImageLayerSegment(ByRef prt As Tuple(Of Integer, Boolean, Boolean)) As String
+    Protected Shared Function saveImageLayerSegment(ByVal i As pInd, ByRef prt As Tuple(Of Integer, Boolean, Boolean)) As String
         Return IMAGE_INDEX_SEG & VALUE_DELIMITER &
                prt.Item1 & VALUE_DELIMITER &
                prt.Item2 & VALUE_DELIMITER &
-               prt.Item3 & SEGMENT_DELIMITER
+               prt.Item3 & VALUE_DELIMITER &
+               i.ToString & SEGMENT_DELIMITER
     End Function
     Protected Shared Function loadImageLayerSegment(ByVal seg As String) As Tuple(Of Integer, Boolean, Boolean)
         seg = seg.Replace(SEGMENT_DELIMITER, "")
@@ -958,8 +961,8 @@
         Dim prt_loop = PORTRAIT_HEADER_SEG & VALUE_DELIMITER &
                        prt.Count & SEGMENT_DELIMITER
 
-        For Each layer In prt
-            prt_loop += vbCrLf & saveImageLayerSegment(layer)
+        For i = 0 To UBound(prt)
+            prt_loop += vbCrLf & saveImageLayerSegment(i, prt(i))
         Next
 
         Return prt_loop & vbCrLf & PORTRAIT_END_SEG & SEGMENT_DELIMITER

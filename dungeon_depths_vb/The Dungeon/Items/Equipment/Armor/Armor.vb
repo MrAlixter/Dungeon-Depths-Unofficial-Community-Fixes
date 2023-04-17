@@ -224,6 +224,7 @@
         If Not p Is Nothing Then
             If p.equippedArmor.getAName.Equals(getAName) Then EquipmentDialogBackend.equipArmor(p, "Naked", False)
             p.UIupdate()
+            p.drawPort()
         End If
     End Sub
 End Class

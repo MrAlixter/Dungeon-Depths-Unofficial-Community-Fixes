@@ -154,14 +154,14 @@
 
     '| - DIALOG - |
     Protected Overrides Function normalDialog(ByRef p As Player)
-        If Int(Rnd() * 20) = 0 And Game.currFloor.floorNumber <> 7 Then
+        If Int(Rnd() * 20) = 0 And Game.currFloor.floorNumber <> 7 And hasMetPlayer Then
             discount = 0.25
             img_index = LocalImgInd.alt4
             Return "Like, hey!  I, like, totally just got back from negot... nagosh... um, trying to work out a deal with that wizard guy, and it like, didn't go too well..." & DDUtils.RNRN &
                    "But hey, now I feel soooo gooood, and I'm even doing a I'm-having-fun sale!  I ran into Food Guy, and don't tell him I said this but he's, like, toootally a cutie..." & DDUtils.RNRN &
                    "Anyway, like, he has that panana... penasi... special food thing that can get me back to my normal self!" & DDUtils.RNRN &
                    "But for now, I'm, like, gonna take a lil' break from being all serious!  Maybe I'll see what else he has for me to put in my mouth... ~🖤"
-        ElseIf Int(Rnd() * 20) = 1 And Game.currFloor.floorNumber <> 7 Then
+        ElseIf Int(Rnd() * 20) = 1 And Game.currFloor.floorNumber <> 7 And hasMetPlayer Then
             img_index = LocalImgInd.alt2
             Return "Hello, valued customer!  Have you perchance seen the Food Vendor around anywhere?" & DDUtils.RNRN &
                    "He appears to have mixed the cream in my usual morning coffee up with some other malarkey and now, as I am sure you can see, I have begun morphing into some sort of bovine." & DDUtils.RNRN &

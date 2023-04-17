@@ -58,6 +58,7 @@ Public MustInherit Class ShopNPC
     '| -- NPC Flags -- |
     Public isShop As Boolean = False
     Public discount As Double = 0
+    Public hasMetPlayer As Boolean = False
 
     '| -- Image Vars -- |
     Protected local_img As Dictionary(Of LocalImgInd, Image)
@@ -200,6 +201,7 @@ Public MustInherit Class ShopNPC
         If Not dialog.Equals("") Then TextEvent.pushNPCDialog(dialog)
 
         '| -- Image Setting -- |
+        If Not hasMetPlayer Then hasMetPlayer = True
         drawPort()
     End Sub
     Public Overridable Sub inventoryUpdate()

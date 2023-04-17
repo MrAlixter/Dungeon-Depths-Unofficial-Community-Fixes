@@ -110,7 +110,7 @@
     End Sub
 
     Overridable Function dropEWeapon(ByRef p As Player) As Boolean
-        If p.className.Equals("Magical Girl") Or p.className.Equals("Valkyrie") Then
+        If p.className.Equals("Magical Girl") Or p.className.Contains("Valkyrie") Then
             EquipmentDialogBackend.weaponChange(p, "Fists")
             Return True
         End If

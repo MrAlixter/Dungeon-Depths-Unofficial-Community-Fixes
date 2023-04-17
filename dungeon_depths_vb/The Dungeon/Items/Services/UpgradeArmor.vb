@@ -31,8 +31,8 @@
             TextEvent.pushNPCDialog("Alright, there we go!  That should do you a little better in the defense department.")
             p.drawPort()
         Else
-            TextEvent.pushNPCDialog("Well, I hate to say it but there isn't much I can do for you there...")
-            p.gold += 2000
+            TextEvent.pushNPCDialog("Hate to say it, but there's not much I can do for you there...")
+            p.gold += value
         End If
 
         count -= 1

@@ -34,9 +34,9 @@
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(128, True, True)
 
         '|Description|
-        setDesc("An etherial armor set crafted for a valiant defender." & DDUtils.RNRN & _
-                             getSizeInformation() & DDUtils.RNRN & getStatInformation() & vbCrLf & _
-                             "Valkyries can not remove this armor.")
+        setDesc("An ethereal armor set crafted for a valiant defender." & DDUtils.RNRN &
+                "Valkyries can not remove this armor." & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 
     Overrides Sub discard()

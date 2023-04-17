@@ -23,6 +23,7 @@
     combatmod
     coserv
     cow
+    cybervalkyrie
     cynndisguise
     cynntonic
     dancer
@@ -208,6 +209,9 @@ Public MustInherit Class Transformation
 
         ElseIf tf = tfind.cow Then
             Return New CowTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.cybervalkyrie Then
+            Return New CyberValkyrieTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.cynntonic Then
             Return New CynnTonicTF(cs, n, tts, wi, cbs, tfd)

@@ -248,7 +248,7 @@
     Private Function getPrefMode() As mode
         Dim r = Int(Rnd() * 5)
 
-        'If (Game.player1.formName.Equals("Angel") Or Game.player1.className.Equals("Valkyrie")) And Not pref_mode = mode.angel Then
+        'If (Game.player1.formName.Equals("Angel") Or Game.player1.className.Contains("Valkyrie")) And Not pref_mode = mode.angel Then
         '    Return mode.angel
         'End If 
 
