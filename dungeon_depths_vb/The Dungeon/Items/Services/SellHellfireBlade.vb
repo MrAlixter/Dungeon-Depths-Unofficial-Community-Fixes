@@ -31,7 +31,7 @@
         Game.shopMenu.Close()
 
         If p.inv.getCountAt(SuccubusGarb.ITEM_NAME) >= 3 AndAlso Not (p.equippedArmor.getAName.Equals(SuccubusGarb.ITEM_NAME) And p.inv.getCountAt(SuccubusGarb.ITEM_NAME) = 3) Then
-            TextEvent.pushNPCDialog("Alright, there we go!")
+            Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(29), "Alright, there we go!")
             TextEvent.pushLog("+1 " & HellflamingSword.ITEM_NAME)
             TextEvent.pushLog("-3 " & SuccubusGarb.ITEM_NAME)
 
@@ -39,11 +39,11 @@
             p.inv.add(HellflamingSword.ITEM_NAME, 1)
             p.UIupdate()
         ElseIf p.equippedArmor.getAName.Equals(SuccubusGarb.ITEM_NAME) And p.inv.getCountAt(SuccubusGarb.ITEM_NAME) = 3 Then
-            TextEvent.pushNPCDialog("You're gonna have to... um... get naked, right?  You're wearing " & SuccubusGarb.ITEM_NAME & " number 3.")
+            Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(31), "You're gonna have to... um... get naked, right?  You're wearing " & SuccubusGarb.ITEM_NAME & " number 3.")
             p.gold += value
         Else
-            TextEvent.pushNPCDialog("Hate to say it, but there's not much I can do for you there..." & DDUtils.RNRN &
-                                    "You're gonna have to fight some more succubi, I guess.")
+            Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(31), "Hate to say it, but there's not much I can do for you there..." & DDUtils.RNRN &
+                                                                 "You're gonna have to fight some more succubi, I guess.")
             p.gold += value
         End If
 

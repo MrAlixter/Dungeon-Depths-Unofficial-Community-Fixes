@@ -20,7 +20,7 @@
         value = 1000
 
         '|Description|
-        setDesc("""If your equipped kit is a litte less... practical... than you'd like, I can get it adjusted to be better protection.""")
+        setDesc("""If your equipped kit is a litte less... practical... than you'd like, I can take a look and see if I can shore anything up.""")
     End Sub
 
     Sub fix()
@@ -28,10 +28,10 @@
         Game.shopMenu.Close()
 
         If Equipment.antiClothingCurse(p) Then
-            TextEvent.pushNPCDialog("Alright, there we go!  That should do you a little better in the defense department.")
+            Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(29), "Alright, there we go!  That should do you a little better in the defense department.")
             p.drawPort()
         Else
-            TextEvent.pushNPCDialog("Hate to say it, but there's not much I can do for you there...")
+            Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(31), "Hate to say it, but there's not much I can do for you there...")
             p.gold += value
         End If
 

@@ -29,7 +29,7 @@
         Game.shopMenu.Close()
 
         If p.inv.getCountAt(ValkyrieSword.ITEM_NAME) > 0 AndAlso Not p.equippedWeapon.getAName.Equals(ValkyrieSword.ITEM_NAME) AndAlso getConsumedPhotonGear(p) <> "" Then
-            TextEvent.pushNPCDialog("Alright, there we go!")
+            Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(29), "Alright, there we go!")
             TextEvent.pushLog("+1 " & CyberValkyrieSword.ITEM_NAME)
             TextEvent.pushLog("-1 " & ValkyrieSword.ITEM_NAME)
             TextEvent.pushLog("-1 " & getConsumedPhotonGear(p))
@@ -39,11 +39,11 @@
             p.inv.add(CyberValkyrieSword.ITEM_NAME, 1)
             p.UIupdate()
         ElseIf p.equippedWeapon.getAName.Equals(ValkyrieSword.ITEM_NAME) Then
-            TextEvent.pushNPCDialog("You're gonna have to put that thing down for me to work on it, right?")
+            Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(31), "You're gonna have to put that thing down for me to work on it, right?")
             p.gold += value
         Else
-            TextEvent.pushNPCDialog("Hate to say it, but there's not much I can do for you there..." & DDUtils.RNRN &
-                                    "You might need to unequip some gear if you've got any of the photon parts equipped.")
+            Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(31), "Hate to say it, but there's not much I can do for you there..." & DDUtils.RNRN &
+                                                                 "You might need to unequip some gear if you've got any of the photon parts equipped.")
             p.gold += value
         End If
 

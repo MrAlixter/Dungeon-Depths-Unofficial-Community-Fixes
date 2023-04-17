@@ -114,7 +114,6 @@
 
         Game.mDun.world_flags(wFlag.mechavalkyrie) = 1
     End Sub
-
     Protected Sub hellfireBlade()
         Objective.showNPC(local_img(LocalImgInd.alt3), "The weaponsmith gestures, and you toss over the book." & DDUtils.RNRN &
                                                        """This is a succubus spellbook, right?  Rumor has it that they've worked out a type of flame that burns hotter as... um, well, as you do." & DDUtils.RNRN &
@@ -123,13 +122,11 @@
 
         Game.mDun.world_flags(wFlag.hellfiresword) = 1
     End Sub
-
     Protected Sub berserkerMark()
         Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(76), """Oh, it'll definitely work alright..."" Cynn says, looking over a scrawled parchment diagram." & DDUtils.RNRN &
                                                        """It's just that part of it working involves getting rid of your mana reserves.  Soooo, I'm not putting this thing on myself.""" & DDUtils.RNRN &
                                                        "She hands the diagram to the other redhead, who accepts it back with a sigh." & DDUtils.PAKTC, AddressOf berserkerMark2)
     End Sub
-
     Protected Sub berserkerMark2()
         Objective.showNPC(local_img(LocalImgInd.alt1), """Yeah, that's what I was worried about.  I don't think I want it on me either-""" & DDUtils.RNRN &
                                                        "Both women jolt slightly as they notice your presence, and after a quick exchange of glances the weaponsmith turns back to you." & DDUtils.RNRN &
@@ -140,6 +137,46 @@
     End Sub
 
     '| - DIALOG - |
+    Protected Function normDialogValkyrieUpgrade(ByRef p As Player) As String
+        img_index = LocalImgInd.alt3
+
+        If Game.shop_npc_engaged Then Game.hideNPCButtons()
+        Game.npc_list.Clear()
+        Game.shop_npc_engaged = False
+
+        TextEvent.lblEventOnClose = AddressOf askValkyrieQuestion
+
+        Return """Hmm..." & DDUtils.RNRN &
+               "Hey wanderer... what do you think the worst part about being a valkyrie is?""" & DDUtils.RNRN &
+               "Press any non-command key to continue."
+    End Function
+    Protected Function normDialogHellfireBlade(ByRef p As Player) As String
+        img_index = LocalImgInd.alt3
+
+        If Game.shop_npc_engaged Then Game.hideNPCButtons()
+        Game.npc_list.Clear()
+        Game.shop_npc_engaged = False
+
+        TextEvent.lblEventOnClose = AddressOf hellfireBlade
+
+        Return """Hmm..." & DDUtils.RNRN &
+               "Hey wanderer... where'd you get that crimson spellbook?""" & DDUtils.RNRN &
+               "Press any non-command key to continue."
+    End Function
+    Protected Function normDialogBerserkerMark(ByRef p As Player) As String
+        img_index = LocalImgInd.alt3
+
+        Game.picNPC.Visible = False
+        If Game.shop_npc_engaged Then Game.hideNPCButtons()
+        Game.npc_list.Clear()
+        Game.shop_npc_engaged = False
+
+        Application.DoEvents()
+
+        TextEvent.lblEventOnClose = AddressOf berserkerMark
+
+        Return "As you approach the weaponsmith, you find her conversing with a familiar demon..."
+    End Function
     Protected Overrides Function normalDialog(ByRef p As Player)
         If p.quests(qInd.dfaUpgrade).canGet Then
             p.quests(qInd.dfaUpgrade).init()
@@ -152,45 +189,11 @@
                    "Need something... stabby?  Or with spikes?" & DDUtils.RNRN &
                    "Let's get you a decent weapon before someone gets hurt."
         ElseIf hasMetPlayer AndAlso Game.mDun.getWorldFlag(wFlag.mechavalkyrie) < 0 AndAlso p.inv.getCountAt(ValkyrieSword.ITEM_NAME) > 0 AndAlso (p.inv.getCountAt(PhotonBlade.ITEM_NAME) > 0 Or p.inv.getCountAt(PhotonArmor.ITEM_NAME) > 0 Or p.inv.getCountAt(PhotonBikini.ITEM_NAME) > 0) Then
-            'Valkyrie Upgrade
-            img_index = LocalImgInd.alt3
-
-            If Game.shop_npc_engaged Then Game.hideNPCButtons()
-            Game.npc_list.Clear()
-            Game.shop_npc_engaged = False
-
-            TextEvent.lblEventOnClose = AddressOf askValkyrieQuestion
-
-            Return """Hmm..." & DDUtils.RNRN &
-                   "Hey wanderer... what do you think the worst part about being a valkyrie is?""" & DDUtils.RNRN &
-                   "Press any non-command key to continue."
+            Return normDialogValkyrieUpgrade(p)
         ElseIf hasMetPlayer AndAlso Game.mDun.getWorldFlag(wFlag.hellfiresword) < 0 AndAlso p.inv.getCountAt(CSpellbook.ITEM_NAME) > 0 And p.inv.getCountAt(SuccubusGarb.ITEM_NAME) > 0 Then
-            'Hellfire Sword
-            img_index = LocalImgInd.alt3
-
-            If Game.shop_npc_engaged Then Game.hideNPCButtons()
-            Game.npc_list.Clear()
-            Game.shop_npc_engaged = False
-
-            TextEvent.lblEventOnClose = AddressOf hellfireBlade
-
-            Return """Hmm..." & DDUtils.RNRN &
-                   "Hey wanderer... where'd you get that crimson spellbook?""" & DDUtils.RNRN &
-                   "Press any non-command key to continue."
+            Return normDialogHellfireBlade(p)
         ElseIf hasMetPlayer AndAlso p.quests(qInd.darkPact).getComplete AndAlso Game.mDun.getWorldFlag(wFlag.berserkercmark) < 0 Then
-            'Hellfire Sword
-            img_index = LocalImgInd.alt3
-
-            Game.picNPC.Visible = False
-            If Game.shop_npc_engaged Then Game.hideNPCButtons()
-            Game.npc_list.Clear()
-            Game.shop_npc_engaged = False
-
-            Application.DoEvents()
-
-            TextEvent.lblEventOnClose = AddressOf berserkerMark
-
-            Return "As you approach the weaponsmith, you find her conversing with a familiar demon..."
+            Return normDialogBerserkerMark(p)
         ElseIf Int(Rnd() * 2) = 0 Then
             img_index = LocalImgInd.alt1
             Return "Hey stranger, what can I getcha?" & DDUtils.RNRN &
