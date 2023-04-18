@@ -1,7 +1,7 @@
 ﻿Public Class DFStickOfGum
-    Inherits Food
+    Inherits StickOfGum
 
-    Public Const ITEM_NAME As String = "Dragonfruit_S._of_Gum"
+    Public Shadows Const ITEM_NAME As String = "Dragonfruit_S._of_Gum"
 
     Sub New()
         '|ID Info|

@@ -954,11 +954,14 @@ Public Class mFloor
         Randomize()
         Dim numStatues As Integer = Int((Rnd() * 5) + 6)
         For i = 0 To numStatues
-            Dim x = Int((Rnd() * 4) + 4)
-            Dim y = Int((Rnd() * 15) + 3)
-            Dim tr As New Monster()
-            tr.pos = New Point(x, y)
-            statueList.Add(New Statue(tr))
+            Dim x = Int((Rnd() * 5) + 3)
+            Dim y = Int((Rnd() * 15) + 7)
+
+            If mBoard(y, x).Text = "" Then
+                Dim tr As New Monster()
+                tr.pos = New Point(x, y)
+                statueList.Add(New Statue(tr))
+            End If
         Next
     End Sub
     'floor 91018

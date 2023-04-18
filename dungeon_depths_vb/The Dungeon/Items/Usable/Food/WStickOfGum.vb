@@ -1,7 +1,7 @@
 ﻿Public Class WStickOfGum
-    Inherits Food
+    Inherits StickOfGum
 
-    Public Const ITEM_NAME As String = "Melon_Stick_of_Gum"
+    Public Shadows Const ITEM_NAME As String = "Melon_Stick_of_Gum"
 
     Sub New()
         '|ID Info|
@@ -23,15 +23,8 @@
                 "+10 Stamina")
     End Sub
 
-    Overrides Sub effect(ByRef p As Player)
-        If p.perks(perk.bimbotf) = -1 Then
-            TextEvent.push("Chewing the gum causes a dizzy calm wash to over you.")
-            p.ongoingTFs.add(New WBimboTF(2, 5, 0.25, True))
-            p.perks(perk.bimbotf) = 0
-        ElseIf p.className.Equals("Bimbo") Then
-            TextEvent.push("Chewing the gum make your head feel warm and fuzzy and stuff. You like, totally, love this gum!")
-        Else
-            TextEvent.push("Chewing the gum make your head feel warm and fuzzy.")
-        End If
+    Public Overrides Sub tfEffect(ByRef p As Player)
+        p.ongoingTFs.add(New WBimboTF(2, 5, 0.25, True))
+        p.perks(perk.bimbotf) = 0
     End Sub
 End Class

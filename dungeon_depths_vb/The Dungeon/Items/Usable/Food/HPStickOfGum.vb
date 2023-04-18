@@ -1,7 +1,7 @@
 ﻿Public Class HPStickOfGum
-    Inherits Food
+    Inherits StickOfGum
 
-    Public Const ITEM_NAME As String = "Charged_Gum_(HP)"
+    Public Shadows Const ITEM_NAME As String = "Charged_Gum_(HP)"
 
     Sub New()
         '|ID Info|
@@ -22,19 +22,16 @@
                 "+10 Stamina")
     End Sub
 
-    Overrides Sub effect(ByRef p As Player)
-        If p.className.Equals("Bimbo") Then
-            Dim phHealth = p.health
-            p.health += 85 / p.getMaxHealth
-            If p.health > 1 Then p.health = 1
-            TextEvent.push("Chewing the gum make your head feel warm and fuzzy and stuff. You like, totally, love this gum!" & DDUtils.RNRN &
-                           "+" & CInt((p.health - phHealth) * p.getMaxHealth) & " health!")
-            TextEvent.pushLog("You eat the " & getName())
-        ElseIf p.perks(perk.bimbotf) = -1 Then
-            TextEvent.push("Chewing the gum causes a dizzy calm wash to over you.")
-            p.ongoingTFs.add(New HPBimboTF(2, 5, 0.25, True))
-            p.perks(perk.bimbotf) = 0
-        End If
+    Public Overrides Sub tfEffect(ByRef p As Player)
+        p.ongoingTFs.add(New HPBimboTF(2, 5, 0.25, True))
+        p.perks(perk.bimbotf) = 0
+    End Sub
+    Public Overrides Sub bimboEffect(ByRef p As Player)
+        Dim phHealth = p.health
+        p.health += 85 / p.getMaxHealth
+        If p.health > 1 Then p.health = 1
+        Game.lstLog.Items.RemoveAt(Game.lstLog.Items.Count - 1)
+        TextEvent.pushLog("You eat the " & getName() & ", +" & CInt((p.health - phHealth) * p.getMaxHealth) & " health!")
     End Sub
 
     Public Overrides Function getDesc() As Object

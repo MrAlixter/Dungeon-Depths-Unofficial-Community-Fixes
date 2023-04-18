@@ -1,7 +1,7 @@
 ﻿Public Class GAStickOfGum
-    Inherits Food
+    Inherits StickOfGum
 
-    Public Const ITEM_NAME As String = "G._Apple_Stick_of_Gum"
+    Public Shadows Const ITEM_NAME As String = "G._Apple_Stick_of_Gum"
 
     Sub New()
         '|ID Info|
@@ -23,7 +23,7 @@
     End Sub
 
     Overrides Sub effect(ByRef p As Player)
-        If (p.perks(perk.bimbotf) = -1 And Not p.className.Equals("Bimbo") And Not p.className.Equals("Princess")) Then
+        If (p.perks(perk.bimbotf) = -1 And Not p.className.Contains("Bimbo") And Not p.className.Equals("Princess")) Then
             TextEvent.push("Chewing the gum sends a tingly shock through your mouth.  You hear a far-off giggle ring through the air...")
             p.ongoingTFs.add(New GABimboTF(2, 5, 0.25, True))
             p.perks(perk.bimbotf) = 0

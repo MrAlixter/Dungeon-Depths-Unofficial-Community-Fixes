@@ -21,9 +21,24 @@
     End Sub
 
     Public Overrides Sub use(ByRef p As Player)
-        TextEvent.push("Drinking the pink contents of the vial causes a dizzy calm wash to over you.")
-        p.ongoingTFs.Add(New BimboPlusTF(2, 5, 0.25, True))
-        p.perks(perk.bimbotf) = 0
+        TextEvent.pushAndLog("Drinking the pink contents of the vial causes a dizzy calm wash to over you...")
+
+        If p.className.Equals("Bimbo++") Then
+            p.addXP(100)
+            p.addLust(20)
+            TextEvent.pushLog("+100 XP, +20 Lust")
+        ElseIf p.className.Contains("Bimbo") Then
+            p.changeClass("Bimbo++")
+            p.prt.setIAInd(pInd.eyes, 34, True, True)
+            If p.inv.getCountAt("Small_Glasses") < 1 Then p.inv.add("Small_Glasses", 1)
+            EquipmentDialogBackend.equipGlasses(p, "Small_Glasses")
+
+            p.drawPort()
+        Else
+            p.ongoingTFs.add(New BimboPlusTF(2, 5, 0.25, True))
+            p.perks(perk.bimbotf) = 0
+        End If
+
         count -= 1
     End Sub
 End Class
