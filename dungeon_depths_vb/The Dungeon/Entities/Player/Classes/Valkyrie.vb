@@ -14,9 +14,10 @@
             Game.cboxSpec.SelectedIndex = 0
         End If
 
+        If Game.player1.knownSpecials.Contains("Helix Slash") Then TextEvent.pushLog("Helix Slash special forgotten!")
+
         Do While Game.player1.knownSpecials.Contains("Helix Slash")
             Game.player1.knownSpecials.Remove("Helix Slash")
-            TextEvent.pushLog("Helix Slash special forgotten!")
         Loop
     End Sub
 
