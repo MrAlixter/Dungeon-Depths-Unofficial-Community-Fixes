@@ -642,7 +642,13 @@ Public Class Game
                         If indY = 0 And indX = 0 Then viewArray(y, x) = 4
                     End If
                 Else
-                    viewArray(y, x) = 0
+                    If player1.pos.X + indX = -1 AndAlso currFloor.ptInBounds(New Point(0, player1.pos.Y + indY)) AndAlso currFloor.mBoard(player1.pos.Y + indY, 0).Tag <> 0 Then
+                        viewArray(y, x) = 53
+                    ElseIf player1.pos.X + indX = -1 AndAlso currFloor.ptInBounds(New Point(0, player1.pos.Y + indY)) AndAlso currFloor.mBoard(player1.pos.Y + indY, 0).Text = "═" Then
+                        viewArray(y, x) = 55
+                    Else
+                        viewArray(y, x) = 0
+                    End If
                 End If
 
                 x += 1
@@ -707,10 +713,10 @@ Public Class Game
         '49 = mg_mannequin
         '50 = mg_mannequin2
         '51 = iso_h_wall
-        '52 = iso_h_wallcap()
-        '53 = iso_v_wall()
-        '54 = iso_v_wallcap()
-        '55 = iso_corner()
+        '52 = iso_h_wallcap
+        '53 = iso_v_wall
+        '54 = iso_v_wallcap
+        '55 = iso_corner
 
         Select Case tileText
             Case ""

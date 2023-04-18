@@ -122,14 +122,14 @@ Public Class mFloor
                 If mBoard(y, x).Tag = 0 Then
                     If ((ptInBounds(New Point(x + 1, y + 1)) And ptInBounds(New Point(x + 1, y)) And ptInBounds(New Point(x, y + 1))) AndAlso (mBoard(y + 1, x + 1).Tag <> 0 And mBoard(y + 1, x).Tag = 0 And mBoard(y, x + 1).Tag = 0)) Then
                         mBoard(y, x).Text = "╔"
-                    ElseIf ((ptInBounds(New Point(x + 1, y + 1)) And ptInBounds(New Point(x + 1, y)) And ptInBounds(New Point(x, y + 1))) AndAlso (mBoard(y + 1, x + 1).Tag <> 0 And mBoard(y + 1, x).Tag <> 0 And mBoard(y, x + 1).Tag <> 0)) Then
+                    ElseIf ((ptInBounds(New Point(x - 1, y - 1)) And ptInBounds(New Point(x + 1, y)) And ptInBounds(New Point(x, y - 1)) And ptInBounds(New Point(x + 1, y - 1)) And ptInBounds(New Point(x, y + 1))) AndAlso (mBoard(y, x).Tag = 0 And mBoard(y - 1, x - 1).Tag = 0 And mBoard(y - 1, x).Tag = 0 And (mBoard(y - 1, x + 1).Tag <> 0 Or mBoard(y, x + 1).Tag <> 0) And mBoard(y + 1, x).Tag <> 0)) Then
                         mBoard(y, x).Text = "╝"
-                    ElseIf ((ptInBounds(New Point(x + 1, y + 1)) And ptInBounds(New Point(x + 1, y)) And ptInBounds(New Point(x, y + 1))) AndAlso (mBoard(y, x).Tag = 0 And mBoard(y + 1, x + 1).Tag = 0 And mBoard(y + 1, x).Tag <> 0 And (Not ptInBounds(New Point(x + 1, y)) Or mBoard(y, x + 1).Tag = 0))) Then
+                    ElseIf ((ptInBounds(New Point(x + 1, y + 1)) And ptInBounds(New Point(x + 1, y)) And ptInBounds(New Point(x - 1, y)) And ptInBounds(New Point(x, y + 1))) AndAlso (mBoard(y, x).Tag = 0 And mBoard(y + 1, x + 1).Tag = 0 And mBoard(y + 1, x).Tag <> 0 And (Not ptInBounds(New Point(x + 1, y)) Or mBoard(y, x + 1).Tag = 0) And mBoard(y, x - 1).Tag = 0)) Then
                         mBoard(y, x).Text = "╕"
-                    ElseIf ((ptInBounds(New Point(x + 1, y)) And ptInBounds(New Point(x, y + 1))) AndAlso (mBoard(y, x).Tag = 0 And mBoard(y + 1, x).Tag <> 0 And (Not ptInBounds(New Point(x + 1, y)) Or mBoard(y, x + 1).Tag = 0))) Then
-                        mBoard(y, x).Text = "═"
-                    ElseIf ((ptInBounds(New Point(x + 1, y + 1)) And ptInBounds(New Point(x + 1, y)) And ptInBounds(New Point(x, y + 1))) AndAlso (mBoard(y, x).Tag = 0 And mBoard(y + 1, x + 1).Tag = 0 And mBoard(y, x + 1).Tag <> 0 And (Not ptInBounds(New Point(x, y + 1)) Or mBoard(y + 1, x).Tag = 0))) Then
+                    ElseIf ((ptInBounds(New Point(x + 1, y + 1)) And ptInBounds(New Point(x, y + 1)) And ptInBounds(New Point(x, y - 1)) And ptInBounds(New Point(x + 1, y))) AndAlso (mBoard(y, x).Tag = 0 And mBoard(y + 1, x + 1).Tag = 0 And mBoard(y, x + 1).Tag <> 0 And (Not ptInBounds(New Point(x, y + 1)) Or mBoard(y + 1, x).Tag = 0) And mBoard(y - 1, x).Tag = 0)) Then
                         mBoard(y, x).Text = "╙"
+                    ElseIf ((ptInBounds(New Point(x + 1, y)) And ptInBounds(New Point(x, y + 1))) AndAlso (mBoard(y, x).Tag = 0 And mBoard(y + 1, x).Tag <> 0)) Then
+                        mBoard(y, x).Text = "═"
                     ElseIf ((ptInBounds(New Point(x + 1, y)) And ptInBounds(New Point(x, y + 1))) AndAlso (mBoard(y, x).Tag = 0 And mBoard(y, x + 1).Tag <> 0 And (Not ptInBounds(New Point(x, y + 1)) Or mBoard(y + 1, x).Tag = 0))) Then
                         mBoard(y, x).Text = "║"
                     End If
@@ -937,13 +937,13 @@ Public Class mFloor
             Next
         Next
 
-        For y = 0 To 25
+        For y = 1 To 25
             For x = 3 To 7
                 mBoard(y, x).Tag = 2
             Next
         Next
         p.pos = New Point(5, 25)
-        stairs = New Point(5, 2)
+        stairs = New Point(5, 3)
         If floorNumber = 5 Then genMedusaStatues()
         If floorNumber = 91018 Then genFVendFire()
         'beatBoss = True
@@ -954,7 +954,7 @@ Public Class mFloor
         Randomize()
         Dim numStatues As Integer = Int((Rnd() * 5) + 6)
         For i = 0 To numStatues
-            Dim x = Int((Rnd() * 4) + 3)
+            Dim x = Int((Rnd() * 4) + 4)
             Dim y = Int((Rnd() * 15) + 3)
             Dim tr As New Monster()
             tr.pos = New Point(x, y)
@@ -975,7 +975,8 @@ Public Class mFloor
 
     '|-Space Floor-|
     Sub genSpaceFloor()
-        Dim floorLayout As String() = {"____________#####____________",
+        Dim floorLayout As String() = {"_____________________________",
+                                       "____________#####____________",
                                        "___________#######___________",
                                        "___________###%###___________",
                                        "___________#######___________",
@@ -991,7 +992,7 @@ Public Class mFloor
                                        "_____________#@#_____________",
                                        "_____________###_____________"}
 
-        If mBoardHeight < 15 Then mBoardHeight = 15
+        If mBoardHeight < 16 Then mBoardHeight = 16
         If mBoardWidth < 30 Then mBoardWidth = 30
 
         ReDim mBoard(mBoardHeight, mBoardWidth)
@@ -1001,7 +1002,7 @@ Public Class mFloor
             Next
         Next
 
-        For y = 0 To 14
+        For y = 0 To UBound(floorLayout)
             Dim line = floorLayout(y).ToCharArray
             For x = 0 To UBound(line)
                 If Not line(x) = "_"c Then mBoard(y, x).Tag = 2
@@ -1269,7 +1270,8 @@ Public Class mFloor
 
     '|-Legacy Floor-|
     Sub genLegacyFloor()
-        Dim floorLayout As String() = {"_############################",
+        Dim floorLayout As String() = {"_____________________________",
+                                       "_############################",
                                        "____####____________#@#_____#",
                                        "____####____________###_____#",
                                        "____####____________________#",
@@ -1292,7 +1294,7 @@ Public Class mFloor
         If mBoardHeight < 20 Then mBoardHeight = 20
         If mBoardWidth < 30 Then mBoardWidth = 30
 
-        For y = 0 To 18
+        For y = 0 To 19
             Dim line = floorLayout(y).ToCharArray
             For x = 0 To UBound(line)
                 If Not line(x) = "_"c Then mBoard(y, x).Tag = 1
