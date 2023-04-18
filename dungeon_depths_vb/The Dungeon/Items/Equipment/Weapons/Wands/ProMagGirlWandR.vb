@@ -14,6 +14,8 @@
         droppable = False
         rando_inv_allowed = False
         uniform_id = 211
+        taughtSpells = ProMagGirlRTF.getTaughtSpells
+        taughtSpecials = ProMagGirlRTF.getTaughtSpecials
 
         '|Stats|
         a_boost = 33

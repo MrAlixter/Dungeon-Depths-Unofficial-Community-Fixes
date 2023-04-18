@@ -18,6 +18,9 @@ Public Class MagGirlTF
 
     Protected MG_IND As mgind = mgind.magicalgirl
 
+    Public Shared learnedSpells() As String = {}
+    Public Shared learnedSpecials() As String = {}
+
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
         tf_name = TF_IND
@@ -60,9 +63,21 @@ Public Class MagGirlTF
         step2()
     End Sub
 
+    Public Shared Function getTaughtSpells() As String()
+        Return {"Heartblast Starcannon"}
+    End Function
+    Public Shared Function getTaughtSpecials() As String()
+        Return {}
+    End Function
     Overridable Sub setSpells(ByRef p As Player)
-        p.learnSpell("Heartblast Starcannon")
+        For Each s In getTaughtSpells()
+            p.learnSpell(s)
+        Next
+        For Each s In getTaughtSpecials()
+            p.learnSpecial(s)
+        Next
     End Sub
+
     Overridable Sub tfBody(ByRef p As Player)
         p.breastSize = 2
 

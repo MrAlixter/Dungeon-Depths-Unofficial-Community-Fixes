@@ -80,8 +80,9 @@
     End Sub
 
     Public Overrides Function canGet() As Boolean
-        'MsgBox((Not getActive()) & " " & (Game.mDun.floors.ContainsKey(9999)) & " " & (Not getComplete()) & " " & ((Int(Rnd() * 100) = 0) Or Game.noRNG))
-        Return Not getActive() And Game.mDun.floors.ContainsKey(9999) And Not getComplete() And ((Int(Rnd() * 100) = 0) Or Settings.active(setting.norng))
+        Dim r = Int(Rnd() * 500)
+        'MsgBox((Not getActive()) & " " & (Game.mDun.floors.ContainsKey(9999)) & " " & (Not getComplete()) & " " & ((r = 0) Or Settings.active(setting.norng)))
+        Return Not getActive() AndAlso Game.mDun.floors.ContainsKey(9999) AndAlso Not getComplete() AndAlso ((r = 0) Or Settings.active(setting.norng))
     End Function
 End Class
 

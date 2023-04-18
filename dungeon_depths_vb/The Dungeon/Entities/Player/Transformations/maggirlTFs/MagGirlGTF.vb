@@ -16,9 +16,16 @@
         next_step = getNextStep(cs)
     End Sub
 
-    Public Overrides Sub setSpells(ByRef p As Player)
-        MyBase.setSpells(p)
-        p.learnSpell("Death Cutter")
+    Public Overloads Shared Function getTaughtSpells() As String()
+        Return {"Heartblast Starcannon", "Death Cutter"}
+    End Function
+    Overrides Sub setSpells(ByRef p As Player)
+        For Each s In getTaughtSpells()
+            p.learnSpell(s)
+        Next
+        For Each s In getTaughtSpecials()
+            p.learnSpecial(s)
+        Next
     End Sub
 
     Overrides Sub tfBody(ByRef p As Player)

@@ -13,6 +13,8 @@
         usable = False
         droppable = False
         rando_inv_allowed = False
+        taughtSpells = ProMagGirlTF.getTaughtSpells
+        taughtSpecials = ProMagGirlTF.getTaughtSpecials
 
         '|Stats|
         count = 0

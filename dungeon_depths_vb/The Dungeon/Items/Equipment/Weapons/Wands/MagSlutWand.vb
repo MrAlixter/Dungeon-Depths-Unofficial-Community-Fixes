@@ -12,6 +12,8 @@
         '|Item Flags|
         usable = False
         cursed = True
+        taughtSpells = MagSlutTF.getTaughtSpells
+        taughtSpecials = MagSlutTF.getTaughtSpecials
 
         '|Stats|
         count = 0
@@ -38,17 +40,33 @@
         End If
     End Sub
     Public Overloads Overrides Sub onUnequip(ByRef p As Player, ByRef w As Weapon)
-        If (p.className.Equals("Magical Slut") Or p.perks(perk.tfedbyweapon) > 0) And (w Is Nothing OrElse Not w.GetType.IsSubclassOf(GetType(Wand))) Then
+        If (p.className.Equals("Magical Slut") Or p.perks(perk.tfedbyweapon) > 0) And (w Is Nothing OrElse Not w.GetType.IsSubclassOf(GetType(Wand))) And p.perks(perk.tfcausingwand) = id Then
             TextEvent.pushAndLog("Sighing, you stow away your wand and revert to your base form.")
 
-            For Each u_id In DDConst.MAG_GIRL_UNIFORM_IDS
-                p.inv.setCount(u_id, 0)
+            p.inv.setCount(uniform_id, 0)
+
+            For Each s In taughtSpells
+                p.forgetSpell(s)
+            Next
+
+            For Each s In taughtSpecials
+                If Game.cboxSpec.SelectedItem = s Then
+                    Game.cboxSpec.Items.Insert(0, "-- Select --")
+                    Game.cboxSpec.SelectedIndex = 0
+                End If
+
+                Do While Game.player1.knownSpecials.Contains(s)
+                    Game.player1.knownSpecials.Remove(s)
+                    TextEvent.pushLog(s & " special forgotten!")
+                Loop
             Next
 
             p.perks(perk.tfedbyweapon) = -1
 
             p.formStates(stateInd.magGState).save(p)
             p.revertToPState()
+        ElseIf (p.className.Equals("Magical Slut") Or p.perks(perk.tfedbyweapon) > 0) And Not w Is Nothing AndAlso Not w.GetType.IsSubclassOf(GetType(Wand)) Then
+            CType(p.inv.item(p.perks(perk.tfcausingwand)), MagGirlWand).onUnequip(p, w)
         End If
     End Sub
 

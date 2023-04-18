@@ -11,6 +11,8 @@
 
         '|Item Flags|
         usable = False
+        taughtSpells = MagGirlDTF.getTaughtSpells
+        taughtSpecials = MagGirlDTF.getTaughtSpecials
 
         '|Stats|
         count = 0

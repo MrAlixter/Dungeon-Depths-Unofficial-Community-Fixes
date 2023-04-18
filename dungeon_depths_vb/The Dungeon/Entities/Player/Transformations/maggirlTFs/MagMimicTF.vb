@@ -53,8 +53,19 @@
         p.textColor = Color.MediumPurple
     End Sub
 
+    Public Overloads Shared Function getTaughtSpells() As String()
+        Return {"Tentacle Crushcannon"}
+    End Function
+    Public Overloads Shared Function getTaughtSpecials() As String()
+        Return {}
+    End Function
     Overrides Sub setSpells(ByRef p As Player)
-        p.learnSpell("Tentacle Crushcannon")
+        For Each s In getTaughtSpells()
+            p.learnSpell(s)
+        Next
+        For Each s In getTaughtSpecials()
+            p.learnSpecial(s)
+        Next
     End Sub
 
     Public Overrides Sub fullTF(ByRef p As Player)

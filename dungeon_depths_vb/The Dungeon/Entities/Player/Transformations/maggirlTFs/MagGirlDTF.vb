@@ -16,9 +16,19 @@
         next_step = getNextStep(cs)
     End Sub
 
-    Public Overrides Sub setSpells(ByRef p As Player)
-        p.learnSpecial("Inferno Aura")
-        p.learnSpell("Heartbreak Supernova")
+    Public Overloads Shared Function getTaughtSpells() As String()
+        Return {"Heartbreak Supernova"}
+    End Function
+    Public Overloads Shared Function getTaughtSpecials() As String()
+        Return {"Inferno Aura"}
+    End Function
+    Overrides Sub setSpells(ByRef p As Player)
+        For Each s In getTaughtSpells()
+            p.learnSpell(s)
+        Next
+        For Each s In getTaughtSpecials()
+            p.learnSpecial(s)
+        Next
     End Sub
 
     Overrides Sub tfBody(ByRef p As Player)
