@@ -14,8 +14,4 @@
 
         If Not Game.lstLog.Items.Contains("You feel like you're leveling up faster...") Then TextEvent.pushLog("You feel like you're leveling up faster...")
     End Sub
-
-    Public Overrides Sub deLVL(level As Integer, ByRef p As Player)
-        If p.breastSize > 0 Then p.bs()
-    End Sub
 End Class
