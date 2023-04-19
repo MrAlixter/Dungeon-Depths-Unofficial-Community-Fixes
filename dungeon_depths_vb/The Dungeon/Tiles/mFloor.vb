@@ -122,7 +122,7 @@ Public Class mFloor
                 If mBoard(y, x).Tag = 0 Then
                     If ((ptInBounds(New Point(x + 1, y + 1)) And ptInBounds(New Point(x + 1, y)) And ptInBounds(New Point(x, y + 1))) AndAlso (mBoard(y + 1, x + 1).Tag <> 0 And mBoard(y + 1, x).Tag = 0 And mBoard(y, x + 1).Tag = 0)) Then
                         mBoard(y, x).Text = "╔"
-                    ElseIf ((ptInBounds(New Point(x - 1, y - 1)) And ptInBounds(New Point(x + 1, y)) And ptInBounds(New Point(x, y - 1)) And ptInBounds(New Point(x + 1, y - 1)) And ptInBounds(New Point(x, y + 1))) AndAlso (mBoard(y, x).Tag = 0 And mBoard(y - 1, x - 1).Tag = 0 And mBoard(y - 1, x).Tag = 0 And (mBoard(y - 1, x + 1).Tag <> 0 Or mBoard(y, x + 1).Tag <> 0) And mBoard(y + 1, x).Tag <> 0)) Then
+                    ElseIf ((ptInBounds(New Point(x - 1, y - 1)) And ptInBounds(New Point(x + 1, y)) And ptInBounds(New Point(x, y - 1)) And ptInBounds(New Point(x + 1, y - 1)) And ptInBounds(New Point(x, y + 1))) AndAlso (mBoard(y, x).Tag = 0 And mBoard(y - 1, x).Tag = 0 And (mBoard(y - 1, x + 1).Tag <> 0 Or mBoard(y, x + 1).Tag <> 0) And mBoard(y + 1, x).Tag <> 0)) Then
                         mBoard(y, x).Text = "╝"
                     ElseIf ((ptInBounds(New Point(x + 1, y + 1)) And ptInBounds(New Point(x + 1, y)) And ptInBounds(New Point(x - 1, y)) And ptInBounds(New Point(x, y + 1))) AndAlso (mBoard(y, x).Tag = 0 And mBoard(y + 1, x + 1).Tag = 0 And mBoard(y + 1, x).Tag <> 0 And (Not ptInBounds(New Point(x + 1, y)) Or mBoard(y, x + 1).Tag = 0) And mBoard(y, x - 1).Tag = 0)) Then
                         mBoard(y, x).Text = "╕"
