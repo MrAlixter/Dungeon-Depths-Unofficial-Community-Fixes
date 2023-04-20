@@ -17,9 +17,11 @@
             Dim dmg As Integer = (p.attack + p.aBuff) * p.pClass.a * p.pForm.a * 0.65
             dmg += Int(Rnd() * 2 * ((p.attack + p.aBuff) * p.pClass.a * p.pForm.a * 0.65 * 0.05)) -
                 ((p.attack + p.aBuff) * p.pClass.a * p.pForm.a * 0.65 * 0.05)
-            TextEvent.pushAndLog("You hit your opponent for " & dmg & " damage!")
-            m.takeDMG(dmg, p)
+
+            getUser.hit(dmg, getTarget)
+
             If i <> 0 Then p.stamina -= 4
+
             If MyBase.getTarget.isDead Then Exit For
         Next
 

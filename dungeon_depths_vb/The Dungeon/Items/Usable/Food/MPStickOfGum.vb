@@ -30,8 +30,6 @@
         Dim pMana = p.mana
         p.mana += 30
         If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
-        Game.lstLog.Items.RemoveAt(Game.lstLog.Items.Count - 1)
-        TextEvent.pushLog("You eat the " & getName() & ", +" & CInt(p.mana - pMana) & " mana!")
     End Sub
 
     Public Overrides Function getDesc() As Object

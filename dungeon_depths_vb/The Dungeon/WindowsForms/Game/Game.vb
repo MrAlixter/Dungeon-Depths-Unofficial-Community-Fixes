@@ -2408,7 +2408,8 @@ Public Class Game
             ElseIf mDun.numCurrFloor = 9 Then
                 mDun.floorDown()
                 mDun.setFloor(currFloor)
-                TextEvent.push("It looks like while there was once a formidable gate covering the stairway, something has left it rather... well, destroyed.  Glancing back at the smoldering gash in the landscape, " & If(player1.inv.getCountAt("Fox_Statue") > 0, "you fail to notice the slight gleam in the eyes of the fox statue tucked away in your bag.  Even as the flames blaze on above you, you decend to the next floor with chills at the thought of what could have left such a scar...", "you head down to the next floor with chills despite the inferno raging around you..."), AddressOf initializeBoard)
+                TextEvent.push("It looks like while there was once a formidable gate covering the stairway, something has left it rather... well, destroyed." & DDUtils.RNRN &
+                               "Glancing back at the smoldering gash in the landscape, " & If(player1.inv.getCountAt("Fox_Statue") > 0, "you fail to notice the slight gleam in the eyes of the fox statue tucked away in your bag.  Even as the flames blaze on above you, you decend to the next floor with chills at the thought of what could have left such a scar...", "you head down to the next floor with chills despite the inferno raging around you..."), AddressOf initializeBoard)
                 Exit Sub
             End If
 
@@ -3107,11 +3108,15 @@ Public Class Game
         picStart.Visible = False
         picLoadBar.Visible = False
 
-        TextEvent.push("Game successfully loaded!")
+        lstLog.Items.Clear()
+        TextEvent.pushLog("Game successfully loaded!")
+        TextEvent.pushLog("You are " & player1.name & ", a " & player1.pForm.name & " " & player1.pClass.name)
+
         player1.drawPort()
 
         updateLoadbar(99)
         boardWorker.CancelAsync()
+
 
         drawBoard()
     End Sub

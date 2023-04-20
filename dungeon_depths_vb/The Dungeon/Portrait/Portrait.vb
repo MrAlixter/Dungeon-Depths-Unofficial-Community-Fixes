@@ -142,6 +142,7 @@ Public Class Portrait
 
         Dim acce = ent.getPlayer().equippedAcce
         Dim armor = ent.getPlayer().equippedArmor
+        Dim glasses = ent.getPlayer().equippedGlasses
 
         If acce.under_t_clothes Then
             iArr(pInd.clothes) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.face), iArr(pInd.accessory), iArr(pInd.clothes)})
@@ -183,6 +184,11 @@ Public Class Portrait
             Dim t = iArr(pInd.clothesbtm).Clone
             iArr(pInd.clothesbtm) = iArr(pInd.genitalia).Clone
             iArr(pInd.genitalia) = t
+        End If
+
+        If Not acce.under_chin AndAlso Not acce.under_t_clothes AndAlso Not acce.under_b_clothes AndAlso Not acce.under_b_clothes_halfoverride AndAlso glasses.over_acce Then
+            iArr(pInd.accessory) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.accessory), iArr(pInd.glasses)})
+            iArr(pInd.glasses) = CharacterGenerator.picPort.Image
         End If
     End Sub
 

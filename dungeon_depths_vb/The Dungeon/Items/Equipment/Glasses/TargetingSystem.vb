@@ -13,6 +13,7 @@
         usable = False
         droppable = False
         rando_inv_allowed = False
+        over_acce = True
 
         '|Stats| 
         w_boost = 15

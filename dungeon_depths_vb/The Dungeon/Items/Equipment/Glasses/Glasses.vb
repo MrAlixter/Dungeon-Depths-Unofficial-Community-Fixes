@@ -19,6 +19,8 @@
 
     Public imgInd As Tuple(Of Integer, Boolean, Boolean)
 
+    Public over_acce As Boolean = False
+
     Public Overrides Sub discard()
         If cursed And Not owner Is Nothing AndAlso owner.equippedAcce.getAName.Equals(getAName) Then
             TextEvent.push("You are unable to drop your equipped equipment.")

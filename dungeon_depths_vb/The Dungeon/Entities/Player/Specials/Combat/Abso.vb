@@ -15,8 +15,13 @@
 
         p.health = Math.Min(1, p.health + (rcv / p.getMaxHealth))
 
-        TextEvent.pushAndLog("Absorption!  You hit " & getTarget.getNameWithTitle & " for " & dmg & " damage and heal yourself for " & rcv & " HP!")
-        m.takeDMG(dmg, p)
+        Dim t_took_dmg = m.takeDMG(dmg, p)
+
+        If t_took_dmg And Not m.isDead Then
+            TextEvent.pushAndLog(CStr("Absorption!  You hit " & getTarget.getNameWithTitle & " for " & dmg & " damage and heal yourself for " & rcv & " HP!"))
+        ElseIf t_took_dmg Then
+            TextEvent.push3rdLastLog(CStr("Absorption!  You hit " & getTarget.getNameWithTitle & " for " & dmg & " damage and heal yourself for " & rcv & " HP!"))
+        End If
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

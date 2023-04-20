@@ -15,8 +15,7 @@
             '"critical" hit
             dmg *= MyBase.getTarget.stunct + 2
             dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, dmg + d31 + d32)
-            TextEvent.pushAndLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!  Oof, what a throw!"))
-            MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
+            getCaster.hit(dmg, getTarget, "  Oof, what a throw!")
         Else
             'non critical hit
             dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, dmg + d31 + d32)
@@ -24,12 +23,10 @@
             If Int(Rnd() * 2) = 0 Then
                 MyBase.getTarget.isStunned = True
                 MyBase.getTarget.stunct = 3
-                TextEvent.pushAndLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!  They are stunned by the spell!"))
+                getCaster.hit(dmg, getTarget, "  They are stunned by the spell!")
             Else
-                TextEvent.pushAndLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
+                getCaster.hit(dmg, getTarget)
             End If
-
-            MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
         End If
     End Sub
 

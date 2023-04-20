@@ -25,8 +25,7 @@
 
         Dim pturns = Int(Rnd() * 5) + 3
         p.petrify(Color.LightGray, pturns)
-        TextEvent.pushLog(CStr("You petrify yourself for " & pturns - 1 & " turns!"))
-        TextEvent.pushCombat(CStr("You petrify yourself for " & pturns - 1 & " turns!"))
+        TextEvent.pushAndLog(CStr("You petrify yourself for " & pturns - 1 & " turns!"))
     End Sub
 
     Public Overrides Function getcost() As Integer

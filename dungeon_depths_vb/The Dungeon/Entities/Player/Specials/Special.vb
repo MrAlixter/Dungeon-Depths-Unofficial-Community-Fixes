@@ -124,12 +124,26 @@
     Function getTarget() As NPC
         Return target
     End Function
+    Function getName() As String
+        Return name
+    End Function
     Public Overridable Function getDesc(ByRef c As Player, ByRef t As NPC)
         Return "Description not added."
     End Function
     Sub redefineCandT(ByRef u As Player, ByRef t As NPC)
         user = u
         target = t
+    End Sub
+
+    Public Shared Sub specHit(spec As String, dmg As Integer, user As Player, target As NPC, Optional postfix As String = "")
+        Dim t_took_dmg = target.takeDMG(dmg, user)
+
+        If t_took_dmg And Not target.isDead Then
+            TextEvent.push(CStr(spec & "!" & DDUtils.RNRN & "You hit " & target.getNameWithTitle() & " for " & DDUtils.formatBigNumber(dmg) & " damage!" & postfix))
+            TextEvent.pushLog(CStr(spec & "!  You hit " & target.getNameWithTitle() & " for " & DDUtils.formatBigNumber(dmg) & " damage!" & postfix))
+        ElseIf t_took_dmg Then
+            TextEvent.push3rdLastLog(CStr(spec & "!  You hit " & target.getNameWithTitle() & " for " & DDUtils.formatBigNumber(dmg) & " damage!" & postfix))
+        End If
     End Sub
 
     Shared Sub specPerform(ByRef t As NPC, ByRef u As Player, ByVal s As String)

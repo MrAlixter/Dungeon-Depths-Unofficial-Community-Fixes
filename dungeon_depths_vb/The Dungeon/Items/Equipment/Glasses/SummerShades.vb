@@ -12,6 +12,7 @@
         '|Item Flags|
         usable = False
         rando_inv_allowed = False
+        over_acce = True
 
         '|Stats|
         count = 0

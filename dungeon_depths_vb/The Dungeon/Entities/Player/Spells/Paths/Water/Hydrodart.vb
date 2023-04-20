@@ -13,8 +13,7 @@
 
         'non critical hit
         dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, dmg)
-        TextEvent.pushAndLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
-        MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
+        getCaster.hit(dmg, getTarget)
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

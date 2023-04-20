@@ -15,8 +15,7 @@
         Else
             'non critical hit
             dmg = MyBase.getUser.getSpellDamage(MyBase.getTarget, dmg + d31 + d32)
-            TextEvent.pushAndLog(CStr("Megaton Punch!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
-            MyBase.getTarget.takeDMG(dmg, MyBase.getUser)
+            specHit(getName, dmg, getUser, getTarget)
         End If
     End Sub
 

@@ -13,14 +13,12 @@
         If d51 = d52 And d52 = 2 Then
             'critical hit
             dmg = getCaster.getSpellDamage(getTarget, 2 * (dmg + d51 + d52))
-            TextEvent.pushAndLog(CStr("Critical hit!  You hit the " & getTarget.name & " for " & dmg & " damage!"))
-            getTarget.takeDMG(dmg, getCaster)
+            getCaster.hit(dmg, getTarget, "  Critical hit!", "cut")
         Else
             'non critical hit
             dmg = getCaster.getSpellDamage(getTarget, dmg + d51 + d52)
             If getTarget.getHealth > 0.1 Then dmg = Math.Min(dmg, getTarget.getIntHealth - 1)
-            TextEvent.pushAndLog(CStr("You hit the " & getTarget.name & " for " & dmg & " damage!"))
-            getTarget.takeDMG(dmg, getCaster)
+            getCaster.hit(dmg, getTarget, "cut")
         End If
     End Sub
     Public Overrides Sub backfire()

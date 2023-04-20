@@ -9,13 +9,15 @@
     Public Overrides Sub effect()
         For i = 0 To Int(Rnd() * 3) + 2
             If getCaster.mana < 5 Then Exit For
+
             'non critical hit
             Dim dmg As Integer = 35
             Dim d31 = Int(Rnd() * 3)
             dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, dmg + d31)
-            TextEvent.pushAndLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
-            MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
+            getCaster.hit(dmg, getTarget, "", "burn")
+
             If i <> 0 Then getCaster.mana -= 5
+
             If MyBase.getTarget.isDead Then Exit For
         Next
     End Sub

@@ -17,9 +17,7 @@
 
             getCaster.addLust(-getCaster.getLust / 2)
 
-            TextEvent.pushAndLog(CStr("You burn the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
-
-            MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
+            getCaster.hit(dmg, getTarget, "", "burn")
         End If
     End Sub
 

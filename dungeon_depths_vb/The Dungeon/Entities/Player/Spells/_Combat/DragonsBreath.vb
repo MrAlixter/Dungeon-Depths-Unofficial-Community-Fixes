@@ -13,13 +13,11 @@
         If d31 = d32 And d31 = 3 Then
             'critical hit
             dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, 1.75 * (dmg + d31 + d32))
-            TextEvent.pushAndLog(CStr("Critical hit! You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
-            MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
+            getCaster.hit(dmg, getTarget, "  Critical hit!", "scorch")
         Else
             'non critical hit
             dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, dmg + d31 + d32)
-            TextEvent.pushAndLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
-            MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
+            getCaster.hit(dmg, getTarget, "scorch")
         End If
     End Sub
 

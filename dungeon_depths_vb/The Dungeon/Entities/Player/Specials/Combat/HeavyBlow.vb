@@ -14,10 +14,8 @@
         If spdBuff < 0 Then spdBuff = 0
 
         Dim dmg As Integer = p.getATK + (p.getATK * (spdBuff / m.getSPD))
-        TextEvent.pushLog("Heavy Blow!")
-        TextEvent.pushCombat("Heavy Blow!" & vbCrLf & "You hit your opponent for " & dmg & " damage!")
+        specHit(getName, dmg, getUser, getTarget)
 
-        m.takeDMG(dmg, p)
         If Not m.isStunned Then
             m.isStunned = True
             m.stunct = 0

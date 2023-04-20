@@ -11,8 +11,7 @@
         Dim m = MyBase.getTarget
 
         Dim dmg As Integer = (p.attack + p.aBuff) * p.pClass.a * p.pForm.a * 1.95
-        TextEvent.pushAndLog("Focused Roundhouse!" & vbCrLf & "You kick your opponent for " & dmg & " damage!")
-        m.takeDMG(dmg, p)
+        getUser.hit(dmg, getTarget, "", "kick")
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

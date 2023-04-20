@@ -15,13 +15,11 @@
         If Int(Rnd() * 6) = 0 Then
             'critical hit
             dmg = Entity.calcDamage((dmg) * 2, m.getDEF)
-            TextEvent.pushAndLog(CStr("Flash Strike - Critical Hit!  You hit the " & m.name & " for " & dmg & " damage!"))
-            MyBase.getTarget.takeDMG(dmg, p)
+            specHit(getName, dmg, getUser, getTarget, "  Critical Hit!")
         Else
             'non critical hit
             dmg = Entity.calcDamage(dmg, m.getDEF)
-            TextEvent.pushAndLog(CStr("Flash Strike!  You hit the " & m.name & " for " & dmg & " damage!"))
-            MyBase.getTarget.takeDMG(dmg, p)
+            specHit(getName, dmg, getUser, getTarget)
         End If
     End Sub
 

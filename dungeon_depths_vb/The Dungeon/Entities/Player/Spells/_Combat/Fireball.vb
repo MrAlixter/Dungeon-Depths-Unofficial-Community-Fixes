@@ -15,8 +15,7 @@
         Else
             'non critical hit
             dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, dmg + d31 + d32)
-            TextEvent.pushAndLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
-            MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
+            getCaster.hit(dmg, getTarget, "", "burn")
         End If
     End Sub
 

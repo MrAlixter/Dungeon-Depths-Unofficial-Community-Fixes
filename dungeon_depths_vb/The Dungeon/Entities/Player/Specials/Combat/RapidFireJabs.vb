@@ -10,16 +10,17 @@
 
         Dim p = MyBase.getUser
         Dim m = MyBase.getTarget
-        TextEvent.pushLog("Rapid Fire Jabs!")
-        TextEvent.pushCombat("Rapid Fire Jabs!")
+        TextEvent.pushAndLog("Rapid Fire Jabs!")
 
         For i = 0 To Int(Rnd() * 3) + 2
             Dim dmg As Integer = p.getATK()
             dmg += Int(Rnd() * 2 * (p.getATK() * 0.05)) - (p.getATK() * 0.05)
-            TextEvent.pushAndLog("You hit your opponent for " & dmg & " damage!")
-            m.takeDMG(dmg, p)
+
+            getUser.hit(dmg, getTarget)
+
             If i <> 0 Then p.stamina -= 6
-            If MyBase.getTarget.isDead Then Exit For
+
+            If getTarget.isDead Then Exit For
         Next
     End Sub
 

@@ -14,10 +14,15 @@
         p.mana = 0
 
         dmg = p.getSpellDamage(m, dmg)
-        TextEvent.pushLog("Aura Cannon!  You fire a beam that hits the " & getTarget.getName & " for " & dmg & " damage!")
-        TextEvent.pushCombat("Aura Cannon!" & vbCrLf & "You focus all of your internal energy into your hands, using it to fire a beam at your opponent.  The blast hits them for " & dmg & " damage!")
 
-        MyBase.getTarget.takeDMG(dmg, MyBase.getUser)
+        Dim t_took_dmg = m.takeDMG(dmg, p)
+
+        If t_took_dmg And Not m.isDead Then
+            TextEvent.pushLog("Aura Cannon!  You fire a beam that hits " & getTarget.getNameWithTitle & " for " & dmg & " damage!")
+            TextEvent.pushCombat("Aura Cannon!" & DDUtils.RNRN & "You focus all of your internal energy into your hands, and fire a beam at your opponent.  The blast hits " & m.pronoun & " for " & dmg & " damage!")
+        ElseIf t_took_dmg Then
+            TextEvent.push3rdLastLog(CStr("Aura Cannon!  You fire a beam that hits " & getTarget.getNameWithTitle & " for " & dmg & " damage!"))
+        End If
     End Sub
 
     Public Overrides Function getCost() As Integer

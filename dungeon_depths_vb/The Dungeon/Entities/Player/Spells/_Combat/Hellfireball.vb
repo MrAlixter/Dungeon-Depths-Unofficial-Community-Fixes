@@ -19,8 +19,7 @@
             lReduction = MyBase.getCaster.getLust / 2
             MyBase.getCaster.addLust(-lReduction)
 
-            TextEvent.pushAndLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!  -" & lReduction & " Lust..."))
-            MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
+            getCaster.hit(dmg, getTarget, "  -" & lReduction & " Lust.", "burn")
         End If
     End Sub
 

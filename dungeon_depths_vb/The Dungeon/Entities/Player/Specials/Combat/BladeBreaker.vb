@@ -11,14 +11,24 @@
        
         If 1 = 0 Then
             'critical hit
-            TextEvent.pushAndLog(CStr("Blade Breaker - Critical Hit!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage, greatly reducing their attack!"))
-            MyBase.getTarget.takeDMG(dmg, MyBase.getUser)
-            MyBase.getTarget.attack = Math.Max(1, MyBase.getTarget.attack * 0.69)
+            Dim t_took_dmg = getTarget.takeDMG(dmg, getUser)
+            getTarget.attack = Math.Max(1, MyBase.getTarget.attack * 0.69)
+
+            If t_took_dmg And Not getTarget.isDead Then
+                TextEvent.pushAndLog(CStr("Blade Breaker - Critical Hit!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage, greatly reducing their attack!"))
+            ElseIf t_took_dmg Then
+                TextEvent.push3rdLastLog(CStr("Blade Breaker - Critical Hit!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage, greatly reducing their attack!"))
+            End If
         Else
             'non critical hit
-            TextEvent.pushAndLog(CStr("Blade Breaker!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage, reducing their attack!"))
-            MyBase.getTarget.takeDMG(dmg, MyBase.getUser)
-            MyBase.getTarget.attack = Math.Max(1, MyBase.getTarget.attack * 0.85)
+            Dim t_took_dmg = getTarget.takeDMG(dmg, getUser)
+            getTarget.attack = Math.Max(1, MyBase.getTarget.attack * 0.85)
+
+            If t_took_dmg And Not getTarget.isDead Then
+                TextEvent.pushAndLog(CStr("Blade Breaker!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage, reducing their attack!"))
+            ElseIf t_took_dmg Then
+                TextEvent.push3rdLastLog(CStr("Blade Breaker!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage, reducing their attack!"))
+            End If
         End If
     End Sub
 

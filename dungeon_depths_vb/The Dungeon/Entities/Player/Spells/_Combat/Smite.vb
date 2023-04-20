@@ -13,13 +13,11 @@
         If MyBase.getTarget.GetType Is GetType(ESuccubus) Or MyBase.getTarget.GetType.IsSubclassOf(GetType(ESuccubus)) Or MyBase.getTarget.GetType Is GetType(EnthDem) Then
             'critical hit
             dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, dmg + d31 + d32) * 4
-            TextEvent.pushAndLog(CStr("Critical Hit!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
-            MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
+            getCaster.hit(dmg, getTarget, "  Critical Hit!", "shock")
         Else
             'non critical hit
             dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, dmg + d31 + d32)
-            TextEvent.pushAndLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
-            MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
+            getCaster.hit(dmg, getTarget, "", "zap")
         End If
     End Sub
 

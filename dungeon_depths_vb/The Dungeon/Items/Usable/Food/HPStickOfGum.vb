@@ -30,8 +30,6 @@
         Dim phHealth = p.health
         p.health += 85 / p.getMaxHealth
         If p.health > 1 Then p.health = 1
-        Game.lstLog.Items.RemoveAt(Game.lstLog.Items.Count - 1)
-        TextEvent.pushLog("You eat the " & getName() & ", +" & CInt((p.health - phHealth) * p.getMaxHealth) & " health!")
     End Sub
 
     Public Overrides Function getDesc() As Object

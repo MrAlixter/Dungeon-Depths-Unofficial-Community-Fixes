@@ -35,7 +35,5 @@
 
     Public Overrides Sub bimboEffect(ByRef p As Player)
         p.addXP(1000)
-        Game.lstLog.Items.RemoveAt(Game.lstLog.Items.Count - 1)
-        TextEvent.pushLog("You eat the " & getName() & ", +1000 XP")
     End Sub
 End Class

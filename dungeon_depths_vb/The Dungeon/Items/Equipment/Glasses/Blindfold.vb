@@ -11,6 +11,7 @@
 
         '|Item Flags|
         usable = False
+        over_acce = True
 
         '|Stats|
         m_boost = 2

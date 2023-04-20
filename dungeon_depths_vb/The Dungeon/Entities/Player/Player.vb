@@ -923,13 +923,13 @@ Public Class Player
     Public Sub miss(target As NPC)
         TextEvent.pushAndLog(CStr("You miss " & target.getNameWithTitle() & "!"))
     End Sub
-    Public Sub hit(dmg As Integer, target As NPC)
+    Public Sub hit(dmg As Integer, target As NPC, Optional postfix As String = "", Optional verb As String = "hit")
         Dim t_took_dmg = target.takeDMG(dmg, Me)
 
         If t_took_dmg And Not target.isDead Then
-            TextEvent.pushAndLog(CStr("You hit " & target.getNameWithTitle() & " for " & DDUtils.formatBigNumber(dmg) & " damage!"))
+            TextEvent.pushAndLog(CStr("You " & verb & " " & target.getNameWithTitle() & " for " & DDUtils.formatBigNumber(dmg) & " damage!" & postfix))
         ElseIf t_took_dmg Then
-            TextEvent.push3rdLastLog(CStr("You hit " & target.getNameWithTitle() & " for " & DDUtils.formatBigNumber(dmg) & " damage!"))
+            TextEvent.push3rdLastLog(CStr("You " & verb & " " & target.getNameWithTitle() & " for " & DDUtils.formatBigNumber(dmg) & " damage!" & postfix))
         End If
     End Sub
     Public Sub cHit(dmg As Integer, target As NPC)
