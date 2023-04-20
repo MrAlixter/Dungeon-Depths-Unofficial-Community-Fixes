@@ -11,6 +11,8 @@
         Dim m = MyBase.getTarget
 
         Dim dmg As Integer = p.getATK * 2.0
+        dmg = Entity.calcDamage(dmg, getTarget.defense)
+
         Dim rcv As Integer = (dmg / 4) / p.getMaxHealth
 
         p.health += rcv

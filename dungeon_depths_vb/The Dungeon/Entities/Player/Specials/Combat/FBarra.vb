@@ -18,6 +18,8 @@
             dmg += Int(Rnd() * 2 * ((p.attack + p.aBuff) * p.pClass.a * p.pForm.a * 0.65 * 0.05)) -
                 ((p.attack + p.aBuff) * p.pClass.a * p.pForm.a * 0.65 * 0.05)
 
+            dmg = Entity.calcDamage(dmg, m.defense)
+
             getUser.hit(dmg, getTarget)
 
             If i <> 0 Then p.stamina -= 4

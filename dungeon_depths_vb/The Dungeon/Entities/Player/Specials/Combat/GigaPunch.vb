@@ -11,6 +11,8 @@
         Dim d31 = Int(Rnd() * 7)
         Dim d32 = Int(Rnd() * 7)
 
+        dmg = Entity.calcDamage(dmg, getTarget.defense)
+
         If 1 = 0 Then
             'critical hit
         Else

@@ -16,6 +16,8 @@
             Dim dmg As Integer = p.getATK()
             dmg += Int(Rnd() * 2 * (p.getATK() * 0.05)) - (p.getATK() * 0.05)
 
+            dmg = Entity.calcDamage(dmg, m.defense)
+
             getUser.hit(dmg, getTarget)
 
             If i <> 0 Then p.stamina -= 6

@@ -15,6 +15,7 @@
         Else
             'non critical hit
             dmg = MyBase.getUser.getSpellDamage(MyBase.getTarget, dmg + d31 + d32)
+            dmg = Entity.calcDamage(dmg, getTarget.defense)
             specHit(getName, dmg, getUser, getTarget)
         End If
     End Sub

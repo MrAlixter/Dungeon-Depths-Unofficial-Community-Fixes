@@ -11,6 +11,8 @@
         Dim m = MyBase.getTarget
 
         Dim dmg As Integer = (p.attack + p.aBuff) * p.pClass.a * p.pForm.a * 1.95
+        dmg = Entity.calcDamage(dmg, getTarget.defense)
+
         getUser.hit(dmg, getTarget, "", "kick")
     End Sub
 

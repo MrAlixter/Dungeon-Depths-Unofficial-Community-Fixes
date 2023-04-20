@@ -8,7 +8,8 @@
     End Sub
     Public Overrides Sub effect()
         Dim dmg As Integer = Math.Max(MyBase.getUser.getATK - 15, 1)
-       
+        dmg = Entity.calcDamage(dmg, getTarget.defense)
+
         If 1 = 0 Then
             'critical hit
             Dim t_took_dmg = getTarget.takeDMG(dmg, getUser)

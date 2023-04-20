@@ -112,7 +112,7 @@
     Public Shared Function calcDamage(atk As Integer, def As Integer) As Integer
         If atk <= 0 Then Return 1
         If def <= 0 Then Return atk
-        Return atk * (atk / (atk + def))
+        Return Math.Max(atk * (atk / (atk + def)), 1)
     End Function
     Public Overridable Function getSpellDamage(ByRef target As Entity, ByVal dmg As Integer) As Integer
         'target.takeDMG(calcDamage(dmg * (will / 10), target.getWIL), Me)

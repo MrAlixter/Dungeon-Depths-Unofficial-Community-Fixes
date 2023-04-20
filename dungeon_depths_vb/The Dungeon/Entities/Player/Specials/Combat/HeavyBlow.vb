@@ -14,6 +14,8 @@
         If spdBuff < 0 Then spdBuff = 0
 
         Dim dmg As Integer = p.getATK + (p.getATK * (spdBuff / m.getSPD))
+        dmg = Entity.calcDamage(dmg, m.defense)
+
         specHit(getName, dmg, getUser, getTarget)
 
         If Not m.isStunned Then
