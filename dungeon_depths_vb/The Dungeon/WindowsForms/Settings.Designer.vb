@@ -36,8 +36,14 @@ Partial Class Settings
         Me.btnAdv = New System.Windows.Forms.Button()
         Me.tabAdvSettings = New System.Windows.Forms.TabControl()
         Me.tabSpawnRates = New System.Windows.Forms.TabPage()
+        Me.tabIsoMaps = New System.Windows.Forms.TabPage()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.picSampleIsotile = New System.Windows.Forms.PictureBox()
+        Me.chkMakeIso = New System.Windows.Forms.CheckBox()
         Me.chkBimboNames = New System.Windows.Forms.CheckBox()
         Me.tabAdvSettings.SuspendLayout()
+        Me.tabIsoMaps.SuspendLayout()
+        CType(Me.picSampleIsotile, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnSettingsOK
@@ -205,6 +211,7 @@ Partial Class Settings
         'tabAdvSettings
         '
         Me.tabAdvSettings.Controls.Add(Me.tabSpawnRates)
+        Me.tabAdvSettings.Controls.Add(Me.tabIsoMaps)
         Me.tabAdvSettings.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tabAdvSettings.Location = New System.Drawing.Point(281, 33)
         Me.tabAdvSettings.Name = "tabAdvSettings"
@@ -224,6 +231,56 @@ Partial Class Settings
         Me.tabSpawnRates.Size = New System.Drawing.Size(462, 397)
         Me.tabSpawnRates.TabIndex = 0
         Me.tabSpawnRates.Text = "Monster Spawn Rates"
+        '
+        'tabIsoMaps
+        '
+        Me.tabIsoMaps.BackColor = System.Drawing.Color.Black
+        Me.tabIsoMaps.Controls.Add(Me.Label2)
+        Me.tabIsoMaps.Controls.Add(Me.picSampleIsotile)
+        Me.tabIsoMaps.Controls.Add(Me.chkMakeIso)
+        Me.tabIsoMaps.ForeColor = System.Drawing.Color.White
+        Me.tabIsoMaps.Location = New System.Drawing.Point(4, 24)
+        Me.tabIsoMaps.Name = "tabIsoMaps"
+        Me.tabIsoMaps.Size = New System.Drawing.Size(462, 397)
+        Me.tabIsoMaps.TabIndex = 1
+        Me.tabIsoMaps.Text = "Isometric Maps"
+        '
+        'Label2
+        '
+        Me.Label2.BackColor = System.Drawing.Color.Black
+        Me.Label2.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.ForeColor = System.Drawing.Color.White
+        Me.Label2.Location = New System.Drawing.Point(4, 275)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(454, 121)
+        Me.Label2.TabIndex = 33
+        Me.Label2.Text = resources.GetString("Label2.Text")
+        '
+        'picSampleIsotile
+        '
+        Me.picSampleIsotile.BackgroundImage = CType(resources.GetObject("picSampleIsotile.BackgroundImage"), System.Drawing.Image)
+        Me.picSampleIsotile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.picSampleIsotile.Location = New System.Drawing.Point(74, 37)
+        Me.picSampleIsotile.Name = "picSampleIsotile"
+        Me.picSampleIsotile.Size = New System.Drawing.Size(320, 230)
+        Me.picSampleIsotile.TabIndex = 23
+        Me.picSampleIsotile.TabStop = False
+        '
+        'chkMakeIso
+        '
+        Me.chkMakeIso.FlatAppearance.BorderColor = System.Drawing.Color.Black
+        Me.chkMakeIso.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black
+        Me.chkMakeIso.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black
+        Me.chkMakeIso.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black
+        Me.chkMakeIso.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkMakeIso.ForeColor = System.Drawing.Color.White
+        Me.chkMakeIso.Location = New System.Drawing.Point(18, 11)
+        Me.chkMakeIso.Name = "chkMakeIso"
+        Me.chkMakeIso.Size = New System.Drawing.Size(431, 21)
+        Me.chkMakeIso.TabIndex = 22
+        Me.chkMakeIso.Text = "Support Isometric Tilesets"
+        Me.chkMakeIso.UseVisualStyleBackColor = True
         '
         'chkBimboNames
         '
@@ -265,6 +322,8 @@ Partial Class Settings
         Me.Name = "Settings"
         Me.Text = "Settings"
         Me.tabAdvSettings.ResumeLayout(False)
+        Me.tabIsoMaps.ResumeLayout(False)
+        CType(Me.picSampleIsotile, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -283,4 +342,8 @@ Partial Class Settings
     Friend WithEvents tabAdvSettings As System.Windows.Forms.TabControl
     Friend WithEvents tabSpawnRates As System.Windows.Forms.TabPage
     Friend WithEvents chkBimboNames As System.Windows.Forms.CheckBox
+    Friend WithEvents tabIsoMaps As System.Windows.Forms.TabPage
+    Friend WithEvents chkMakeIso As System.Windows.Forms.CheckBox
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents picSampleIsotile As System.Windows.Forms.PictureBox
 End Class

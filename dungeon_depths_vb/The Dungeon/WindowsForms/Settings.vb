@@ -7,6 +7,7 @@
     enemiesoverwritess
     bimbonames
     textcolors
+    isotiles
 End Enum
 
 Public Class Settings
@@ -34,6 +35,7 @@ Public Class Settings
         initialSettings.Add(setting.enemiesoverwritess, True)
         initialSettings.Add(setting.bimbonames, True)
         initialSettings.Add(setting.textcolors, False)
+        initialSettings.Add(setting.isotiles, False)
 
         monsterSpawns = New Dictionary(Of mInd, Integer)
     End Sub
@@ -48,6 +50,7 @@ Public Class Settings
         settingMap.Add(setting.enemiesoverwritess, chkEoverSS)
         settingMap.Add(setting.bimbonames, chkBimboNames)
         settingMap.Add(setting.textcolors, chkTextColor)
+        settingMap.Add(setting.isotiles, chkMakeIso)
     End Sub
 
     '| - SAVE/LOAD SETTINGS FILE - |

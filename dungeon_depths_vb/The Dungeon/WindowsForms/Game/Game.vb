@@ -642,9 +642,9 @@ Public Class Game
                         If indY = 0 And indX = 0 Then viewArray(y, x) = 4
                     End If
                 Else
-                    If player1.pos.X + indX = -1 AndAlso currFloor.ptInBounds(New Point(0, player1.pos.Y + indY)) AndAlso currFloor.mBoard(player1.pos.Y + indY, 0).Tag <> 0 Then
+                    If Settings.active(setting.isotiles) AndAlso player1.pos.X + indX = -1 AndAlso currFloor.ptInBounds(New Point(0, player1.pos.Y + indY)) AndAlso currFloor.mBoard(player1.pos.Y + indY, 0).Tag <> 0 Then
                         viewArray(y, x) = 53
-                    ElseIf player1.pos.X + indX = -1 AndAlso currFloor.ptInBounds(New Point(0, player1.pos.Y + indY)) AndAlso currFloor.mBoard(player1.pos.Y + indY, 0).Text = "═" Then
+                    ElseIf Settings.active(setting.isotiles) AndAlso player1.pos.X + indX = -1 AndAlso currFloor.ptInBounds(New Point(0, player1.pos.Y + indY)) AndAlso currFloor.mBoard(player1.pos.Y + indY, 0).Text = "═" Then
                         viewArray(y, x) = 55
                     Else
                         viewArray(y, x) = 0

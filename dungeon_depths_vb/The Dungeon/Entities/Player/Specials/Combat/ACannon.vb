@@ -19,7 +19,7 @@
 
         If t_took_dmg And Not m.isDead Then
             TextEvent.pushLog("Aura Cannon!  You fire a beam that hits " & getTarget.getNameWithTitle & " for " & dmg & " damage!")
-            TextEvent.pushCombat("Aura Cannon!" & DDUtils.RNRN & "You focus all of your internal energy into your hands, and fire a beam at your opponent.  The blast hits " & m.pronoun & " for " & dmg & " damage!")
+            TextEvent.pushCombat("Aura Cannon!" & DDUtils.RNRN & "You focus all of your internal energy into your hands, and fire a beam at your opponent.  The blast hits " & m.r_pronoun & " for " & dmg & " damage!")
         ElseIf t_took_dmg Then
             TextEvent.push3rdLastLog(CStr("Aura Cannon!  You fire a beam that hits " & getTarget.getNameWithTitle & " for " & dmg & " damage!"))
         End If

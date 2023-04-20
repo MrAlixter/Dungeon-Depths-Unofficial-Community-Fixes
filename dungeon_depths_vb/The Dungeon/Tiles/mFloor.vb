@@ -110,7 +110,7 @@ Public Class mFloor
                 generateDungeonLevel(floorCode)
         End Select
 
-        fillIsoWalls()
+        If Settings.active(setting.isotiles) Then fillIsoWalls()
 
         If floorNumber = 7 Then placeFloor7Statues()
     End Sub
