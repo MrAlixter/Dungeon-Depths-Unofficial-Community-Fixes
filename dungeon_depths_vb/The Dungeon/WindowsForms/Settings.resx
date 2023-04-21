@@ -137,7 +137,7 @@
 </value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
-    <value>This setting will enable support for isometric tilesets.  At this time, the default sets treat the iso tiles the same as walls.
+    <value>This setting will enable support for isometric tilesets.  Currently, this setting has no visible effect without manual changes to the default tilesets.
 
 This setting adds addtional checks to generation and tile rendering, and may reduce performance.
 
