@@ -118,16 +118,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\Mayue.vb" />
-    <Compile Include="Entities\NPC\Hostile\Monsters\MarissasStudent.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\Witches\MarissasStudent.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Slime\LeporineOoze.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\TimeJudgeFight.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\TimeTravellerFight.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Faefolk\NamestealerFaerie.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Faefolk\FaerieEnemy.vb" />
-    <Compile Include="Entities\NPC\Hostile\Monsters\Bovinomancer.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\Witches\Bovinomancer.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\FaerieHunter.vb" />
-    <Compile Include="Entities\NPC\Hostile\Monsters\LesserGorgon.vb" />
-    <Compile Include="Entities\NPC\Hostile\Monsters\ManySquirrels.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\Gorgons\LesserGorgon.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\Masses\ManySquirrels.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\PlayerGhosts\DefaultGhost.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Slime\OozeKnight.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Thrall\EnthConjurer.vb" />
@@ -499,17 +499,17 @@
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\Marissa.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\Medusa.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\TarFoodVend.vb" />
-    <Compile Include="Entities\NPC\Hostile\Monsters\ArchwitchRecluse.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\Witches\ArchwitchRecluse.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Spider\ArachHunt.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Thrall\EnrSorc.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Thrall\EnthDem.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Thrall\EnthSorc.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Slime\GooGirlMonster.vb" />
-    <Compile Include="Entities\NPC\Hostile\Monsters\Alraune.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\Plantfolk\Alraune.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Thrall\MesThrall.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Mimic\Mimic.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\PlayerGhosts\PlayerGhost.vb" />
-    <Compile Include="Entities\NPC\Hostile\Monsters\FFElemental.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\Elementals\FFElemental.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Slime\SlimeMonster.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Spider\SpiderMonster.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\OEmpress.vb" />

@@ -274,6 +274,13 @@
             TextEvent.pushLog("...but nothing else happens.")
         End If
     End Sub
+    Shared Sub pinkMist(ByRef p As Player)
+        If Game.currFloor.mBoard(p.pos.Y, p.pos.X).Tag = 3 Then
+            If p.perks(perk.pinkmist) < 500 And Game.turn Mod 4 = 0 Then p.perks(perk.pinkmist) += 1
+        Else
+            p.perks(perk.pinkmist) -= 1
+        End If
+    End Sub
 
     '|TRANSFORMATION TRIGGERS|
     Shared Sub targaxSwordTF(ByRef p As Player)

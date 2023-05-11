@@ -64,8 +64,14 @@
         local_img.Add(LocalImgInd.catgirl, ShopNPC.gbl_img.atrs(0).getAt(89))
         local_img.Add(LocalImgInd.trilobite, ShopNPC.gbl_img.atrs(0).getAt(96))
         local_img.Add(LocalImgInd.beegirl, ShopNPC.gbl_img.atrs(0).getAt(148))
+        local_img.Add(LocalImgInd.alt1, ShopNPC.gbl_img.atrs(0).getAt(140))
     End Sub
 
+    Public Overrides Sub encounter()
+        floor10Adjustment()
+
+        MyBase.encounter()
+    End Sub
     Public Overrides Sub inventoryUpdate()
         If Game.mDun.numCurrFloor < 2 Then
             inv.setCount("Scale_Armor", 1)
@@ -100,7 +106,6 @@
             Return False
         End If
     End Function
-
     Public Overrides Sub playerDeath(ByRef p As Player)
         Game.fromCombat()
         p.petrify(Color.Goldenrod, 9999)
@@ -116,8 +121,26 @@
         p.changeClass("Trophy")
     End Sub
 
+    '| - FLOOR 10 - |
+    Sub floor10Adjustment()
+        If Game.currFloor.pinkMist Then
+            img_index = 0
+        End If
+    End Sub
+
     '| - DIALOG - |
     Protected Overrides Function normalDialog(ByRef p As Player)
+        If Game.currFloor.pinkMist Then
+            img_index = LocalImgInd.alt1
+
+            gold = 1000
+
+            Return "Like, hey..." & DDUtils.RNRN &
+                   "What's... um..." & DDUtils.RNRN &
+                   "I'm, so, like... um..." & DDUtils.RNRN &
+                   "Do you want to buy stuff?"
+        End If
+
         If Game.player1.quests(qInd.helpWanted).canGet Then
             Game.player1.quests(qInd.helpWanted).init()
             Return ""
@@ -177,6 +200,10 @@
     End Function
 
     Public Overrides Function postPurchaseDialog(ByRef p As Player) As Object
+        If Game.currFloor.pinkMist Then
+            Return "Like- um, thanks..."
+        End If
+
         Return "Thank you for your patronage!"
     End Function
 

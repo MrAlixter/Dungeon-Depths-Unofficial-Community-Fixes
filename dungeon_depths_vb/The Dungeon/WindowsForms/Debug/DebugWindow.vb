@@ -264,7 +264,7 @@ Public Class Debug_Window
                     map.SetPixel(boardX + 1, boardY + 1, Color.Red)
                 ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "|") Or (Game.currFloor.mBoard(boardY, boardX).Text = "-") Then 'Barrier
                     map.SetPixel(boardX + 1, boardY + 1, Color.DarkRed)
-                ElseIf (Game.currFloor.mBoard(boardY, boardX).Tag = 2) Or (DDConst.ALWAYS_REDRAWN_CHARS.Contains(Game.currFloor.mBoard(boardY, boardX).Text) AndAlso Not {"═", "╕", "║", "╙", "╔", "╝"}.Contains(Game.currFloor.mBoard(boardY, boardX).Text)) Then 'Seen
+                ElseIf (Game.currFloor.mBoard(boardY, boardX).Tag = 2) Or (Game.currFloor.mBoard(boardY, boardX).Tag = 3) Or (DDConst.ALWAYS_REDRAWN_CHARS.Contains(Game.currFloor.mBoard(boardY, boardX).Text) AndAlso Not {"═", "╕", "║", "╙", "╔", "╝"}.Contains(Game.currFloor.mBoard(boardY, boardX).Text)) Then 'Seen
                     map.SetPixel(boardX + 1, boardY + 1, Color.White)
                 ElseIf (Game.currFloor.mBoard(boardY, boardX).Tag = 1) Then 'Unseen
                     map.SetPixel(boardX + 1, boardY + 1, Color.Gray)

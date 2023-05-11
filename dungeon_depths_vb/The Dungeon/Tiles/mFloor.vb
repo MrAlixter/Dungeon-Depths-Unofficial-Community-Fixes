@@ -19,6 +19,7 @@ Public Class mFloor
 
     Public bossDialog As Boolean = False
     Public beatBoss As Boolean = False
+    Public pinkMist As Boolean = False
 
     Public sessions As Dictionary(Of Integer, Session) = New Dictionary(Of Integer, Session)
 
@@ -56,6 +57,8 @@ Public Class mFloor
 
         placeNPCs(Game.shop_npc_list, getPossibleNPCs)
         If updateLoadbar Then Game.updateLoadbar(70)
+
+        If pinkMist Then deployPinkMist()
 
         If updateLoadbar Then
             Game.updateLoadbar(99)
@@ -98,6 +101,8 @@ Public Class mFloor
                 generateForestLevel(floorCode)
             Case 9
                 genFloor9()
+                'Case 10
+                '    genFloor10(floorCode)
             Case 13
                 genFloor13()
             Case 9999
@@ -749,17 +754,17 @@ Public Class mFloor
     'floor 9
     Sub genFloor9()
         Dim floorLayout As String() = {"___________________________________##✢*##___________",
-                                       "___________________________________#✢*✢*#___________",
-                                       "___________________________________*%⇨⇦#✢___________",
-                                       "___________________________________##><##___________",
-                                       "___________________________________##>⇦✢*___________",
-                                       "___________________________________##⇨<*#___________",
-                                       "___________________________________##><##___________",
-                                       "___________________________________#✢>⇦*#___________",
-                                       "___________________________________#*><##___________",
-                                       "___________________________________##⇨<##___________",
-                                       "_____________________##____________##><##___________",
-                                       "___________________#####___________#*⇨<#✢___________",
+                                       "___________#####___________________#✢*✢*#___________",
+                                       "__________#######_______#__________*%⇨⇦#✢___________",
+                                       "__________################_________##><##___________",
+                                       "__________#######_______#__________##>⇦✢*___________",
+                                       "__________#######__________________##⇨<*#___________",
+                                       "__________#######__________________##><##___________",
+                                       "___________#####___________________#✢>⇦*#___________",
+                                       "_____________#_____________________#*><##___________",
+                                       "_____________#_____________________##⇨<##___________",
+                                       "_____________#_______##____________##><##___________",
+                                       "_____________#_____#####___________#*⇨<#✢___________",
                                        "_____________###########___________##>⇦##___________",
                                        "___________________#####___________##><*#___________",
                                        "____________________###____________##⇨⇦##___________",
@@ -821,6 +826,62 @@ Public Class mFloor
 
         placeChest(floorCode, Int(Rnd() * 3) + 4)
         placeTraps()
+    End Sub
+    'floor 10
+    Sub genFloor10(ByVal floorCode As String)
+        If mBoardHeight < 14 Then mBoardHeight = 14
+        If mBoardWidth < 14 Then mBoardWidth = 14
+
+        generateForestLevel(floorCode)
+
+        Game.player1.pos = New Point(2, 2)
+
+        Dim gen_tiles = {New Point(1, 2), New Point(2, 2),
+                         New Point(1, 3), New Point(2, 3)}
+
+        connectPoints(Game.player1.pos, randPoint)
+        connectPoints(Game.player1.pos, randPoint)
+        connectPoints(Game.player1.pos, randPoint)
+        connectPoints(Game.player1.pos, randPoint)
+        connectPoints(Game.player1.pos, randPoint)
+
+        stairs = New Point(mBoardWidth - 5, mBoardHeight - 5)
+
+        placeChest(floorCode)
+        If floorNumber > 2 Then placeTraps()
+
+        verifyNoDisconectedChunks(Game.player1)
+
+        placeNPCs(Game.shop_npc_list, getPossibleNPCs)
+
+        For Each npc In getPossibleNPCs()
+            Dim break = 0
+            While gen_tiles.Contains(Game.shop_npc_list(npc).pos)
+                Game.shop_npc_list(npc).pos = randPoint()
+                break += 1
+                If break > 10 Then Game.shop_npc_list(npc).pos = New Point(-1, -1)
+            End While
+        Next
+        For Each t In gen_tiles
+            mBoard(t.Y, t.X).Tag = 13
+        Next
+
+        If Not Game.hteach.isDead Then
+            Game.hteach.pos = New Point(1, 2)
+        End If
+
+        deployPinkMist()
+    End Sub
+    Sub deployPinkMist()
+        For y = 0 To mBoardHeight - 1
+            For x = 0 To mBoardWidth - 1
+                If mBoard(y, x).Tag = 13 Then
+                    mBoard(y, x).Tag = 2
+                ElseIf mBoard(y, x).Tag > 0 Then
+                    mBoard(y, x).Tag = 3
+                End If
+            Next
+        Next
     End Sub
     'floor 13
     Sub genFloor13()
@@ -1444,7 +1505,8 @@ Public Class mFloor
             placed.Add(npcInd)
         Next
 
-        If Game.player1.cursed And Game.cbrok.pos.X = -1 And Not Game.cbrok.isDead Then addNPC(Game.cbrok, randPoint)
+        If Game.player1.cursed AndAlso Game.cbrok.pos.X = -1 And Not Game.cbrok.isDead Then addNPC(Game.cbrok, randPoint)
+        If Not Game.currFloor Is Nothing AndAlso Game.currFloor.pinkMist AndAlso Game.shopkeeper.pos.X = -1 And Not Game.shopkeeper.isDead Then addNPC(Game.shopkeeper, randPoint)
 
         For i = 0 To npc_list.Count - 1
             npcPositions.Add(npc_list(i).pos)
@@ -1457,6 +1519,8 @@ Public Class mFloor
             Return {ShopNPCInd.shopkeeper, ShopNPCInd.shadywizard, ShopNPCInd.hypnoteach, ShopNPCInd.foodvendor, ShopNPCInd.cursebroker}
         ElseIf floorNumber = 7 Then
             Return {ShopNPCInd.hypnoteach}
+        ElseIf floorNumber = 10 Then
+            Return {ShopNPCInd.shopkeeper, ShopNPCInd.hypnoteach, ShopNPCInd.weaponsmith, ShopNPCInd.cursebroker, ShopNPCInd.maskmaggirl}
         ElseIf floorNumber = 13 Then
             Return {ShopNPCInd.foodvendor, ShopNPCInd.cursebroker}
         Else

@@ -516,6 +516,9 @@ Public Class Game
 
         For y As Integer = 0 To getViewHeight() - 1
             For x As Integer = 0 To getViewWidth() - 1
+                Dim use_pink_mist = viewArray(y, x) >= DDConst.PINK_MIST_OFFSET
+                If use_pink_mist Then viewArray(y, x) -= DDConst.PINK_MIST_OFFSET
+
                 Select Case mDun.numCurrFloor
                     Case 6, 7, 8, 9, 10, 11, 12
                         g.DrawImage(getForestTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
@@ -536,6 +539,8 @@ Public Class Game
                     Case Else
                         g.DrawImage(getDungeonTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
                 End Select
+
+                If use_pink_mist Then g.DrawImage(picPinkMist.BackgroundImage, x_size * x, y_size * y, x_size, y_size)
             Next
         Next
 
@@ -607,7 +612,7 @@ Public Class Game
 
                     viewArray(y, x) = tileTag
 
-                    If tileTag = 2 Or DDConst.ALWAYS_REDRAWN_CHARS.Contains(tileText) Then
+                    If tileTag = 2 Or tileTag = 3 Or DDConst.ALWAYS_REDRAWN_CHARS.Contains(tileText) Then
                         'get the tile to display
                         viewArray(y, x) = getTileToDisplay(player1.pos.X + indX, player1.pos.Y + indY, tileText, tileTag)
 
@@ -618,6 +623,8 @@ Public Class Game
                     If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "@" Then
                         If indY = 0 And indX = 0 Then viewArray(y, x) = 4
                     End If
+
+                    If tileTag = 3 Then viewArray(y, x) += DDConst.PINK_MIST_OFFSET
                 ElseIf mDun.numCurrFloor = 13 AndAlso (player1.pos.Y + indY >= currFloor.mBoardHeight Or player1.pos.Y + indY < 0) And (player1.pos.X + indX >= 0 And player1.pos.X + indX < currFloor.mBoardWidth) Then
                     Dim y_offset = 0
                     If player1.pos.Y + indY < 0 Then
@@ -630,7 +637,7 @@ Public Class Game
                     Dim tileTag As Integer = currFloor.mBoard(y_offset, player1.pos.X + indX).Tag
 
                     viewArray(y, x) = tileTag
-                    If tileTag = 2 Or DDConst.ALWAYS_REDRAWN_CHARS.Contains(tileText) Then
+                    If tileTag = 2 Or tileTag = 3 Or DDConst.ALWAYS_REDRAWN_CHARS.Contains(tileText) Then
                         'get the tile to display
                         viewArray(y, x) = getTileToDisplay(player1.pos.X + indX, y_offset, tileText, tileTag)
 
@@ -641,6 +648,8 @@ Public Class Game
                     If currFloor.mBoard(y_offset, player1.pos.X + indX).Text = "@" Then
                         If indY = 0 And indX = 0 Then viewArray(y, x) = 4
                     End If
+
+                    If tileTag = 3 Then viewArray(y, x) += DDConst.PINK_MIST_OFFSET
                 Else
                     If Settings.active(setting.isotiles) AndAlso player1.pos.X + indX = -1 AndAlso currFloor.ptInBounds(New Point(0, player1.pos.Y + indY)) AndAlso currFloor.mBoard(player1.pos.Y + indY, 0).Tag <> 0 Then
                         viewArray(y, x) = 53
@@ -716,7 +725,9 @@ Public Class Game
         '52 = iso_h_wallcap
         '53 = iso_v_wall
         '54 = iso_v_wallcap
-        '55 = iso_corner
+        '55 = iso_u_corner
+        '56 = iso_l_corner
+        '57 = pink mist
 
         Select Case tileText
             Case ""

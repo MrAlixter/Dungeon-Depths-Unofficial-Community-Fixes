@@ -105,6 +105,7 @@
     slimeregenplus  '103
     esper           '104
     spacebun        '105
+    pinkmist        '106
 End Enum
 Public Enum stateInd
     goddState
