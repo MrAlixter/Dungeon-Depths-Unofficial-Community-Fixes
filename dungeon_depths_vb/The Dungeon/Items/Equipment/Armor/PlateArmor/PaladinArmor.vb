@@ -14,6 +14,7 @@ Public Class PaladinArmor
         usable = False
         compress_breast = True
         adjust_sleeve_layer = False
+        slut_var_ind = 404
 
         '|Stats|
         m_boost = 10
@@ -40,4 +41,15 @@ Public Class PaladinArmor
                 getSizeInformation() & DDUtils.RNRN &
                 getStatInformation())
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f13
+                Return 3
+            Case LootTable.bracket.f14fXX
+                Return 3
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
 End Class

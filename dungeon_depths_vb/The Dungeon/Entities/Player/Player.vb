@@ -726,6 +726,8 @@ Public Class Player
         forms.Add("Bee Girl", New BeeGirl())
         forms.Add("Blow-Up Cynn", New BlowUpCynn())
         forms.Add("Faerie (B)", New FaeBimbo())
+        forms.Add("Demon", New Demon())
+        forms.Add("Daemon", New Daemon())
     End Sub
     Private Sub initPolymorphs()
         'compile list of polymorphs
@@ -1359,6 +1361,10 @@ Public Class Player
                 TextEvent.push("You starve to death!")
             ElseIf source.getName.Equals("Fire") Then
                 TextEvent.push("You burn to death!")
+            ElseIf source.getName.Equals(BewitchedRations.ITEM_NAME) Then
+                DeathEffects.bewitchedRation(Me)
+                setHealth(0.25)
+                Exit Sub
             ElseIf source.GetType.IsSubclassOf(GetType(ShopNPC)) Then
                 CType(source, ShopNPC).playerDeath(Me)
                 setHealth(0.25)
@@ -1391,6 +1397,7 @@ Public Class Player
         Dim m = Math.Max(CInt(7.8152 * Math.Exp(-0.011 * getWIL())), 1)
         If Game.getTurn <> turnCt And mana < getMaxMana() And Game.getTurn Mod m = 0 And Not perks(perk.cmark) > -1 Then
             Dim mregen = Math.Max(Int(getMaxMana() / 15), 1)
+            If equippedAcce.getAName.Equals(TidemageTattoo.ITEM_NAME) AndAlso equippedArmor.getAName.Contains("Bikini") Then mregen *= 1.4
             mana += mregen
         End If
 
@@ -1557,6 +1564,10 @@ Public Class Player
         If perks(perk.cynnstonic) > -1 Then
             If Game.turn Mod 5 = 0 Then perks(perk.cynnstonic) -= 1
         End If
+        'dark pact p1
+        If perks(perk.canmeetcyn) > 0 And Not (formName.Equals("Succubus") Or formName.Equals("Demon") Or formName.Equals("Daemon")) Then
+            perks(perk.canmeetcyn) = -1
+        End If
 
         '|TRANSFORMATION TRIGGERS|
         'targax sword tf
@@ -1671,13 +1682,22 @@ Public Class Player
 
         Game.lblXP.Text = DDUtils.statBar(xp, nextLevelXp, Game.lblXP)
 
-        If Game.lblLevel.Text <> "Level = " & DDUtils.formatBigNumber(level) Then Game.lblLevel.Text = "Level = " & DDUtils.formatBigNumber(level)
-        If Game.lblATK.Text <> "ATK = " & DDUtils.formatBigNumber(getATK()) Then Game.lblATK.Text = "ATK = " & DDUtils.formatBigNumber(getATK())
-        If Game.lblDEF.Text <> "DEF = " & DDUtils.formatBigNumber(getDEF()) Then Game.lblDEF.Text = "DEF = " & DDUtils.formatBigNumber(getDEF())
-        If Game.lblSPD.Text <> "SPD = " & DDUtils.formatBigNumber(getSPD()) Then Game.lblSPD.Text = "SPD = " & DDUtils.formatBigNumber(getSPD())
-        If Game.lblWIL.Text <> "WILL = " & DDUtils.formatBigNumber(getWIL()) Then Game.lblWIL.Text = "WILL = " & DDUtils.formatBigNumber(getWIL())
-        If Game.lblLust.Text <> "LUST = " & DDUtils.formatBigNumber(getLust()) Then Game.lblLust.Text = "LUST = " & DDUtils.formatBigNumber(getLust())
-        If Game.lblGold.Text <> "GOLD = " & DDUtils.formatBigNumber(gold) Then Game.lblGold.Text = "GOLD = " & DDUtils.formatBigNumber(gold)
+        Dim formatted_lvl_text = DDConst.STATNAME_LEVEL & " = " & DDUtils.formatBigNumber(level)
+        Dim formatted_atk_text = DDConst.STATNAME_ATK & " = " & DDUtils.formatBigNumber(getATK())
+        Dim formatted_def_text = DDConst.STATNAME_DEF & " = " & DDUtils.formatBigNumber(getDEF())
+        Dim formatted_spd_text = DDConst.STATNAME_SPD & " = " & DDUtils.formatBigNumber(getSPD())
+        Dim formatted_wil_text = DDConst.STATNAME_WILL & " = " & DDUtils.formatBigNumber(getWIL())
+        Dim formatted_lus_text = DDConst.STATNAME_LUST & " = " & DDUtils.formatBigNumber(getLust())
+        Dim formatted_gld_text = DDConst.STATNAME_GOLD & " = " & DDUtils.formatBigNumber(gold)
+
+
+        If Not Game.lblLevel.Text.Equals(formatted_lvl_text) Then Game.lblLevel.Text = formatted_lvl_text
+        If Not Game.lblATK.Text.Equals(formatted_atk_text) Then Game.lblATK.Text = formatted_atk_text
+        If Not Game.lblDEF.Text.Equals(formatted_def_text) Then Game.lblDEF.Text = formatted_def_text
+        If Not Game.lblSPD.Text.Equals(formatted_spd_text) Then Game.lblSPD.Text = formatted_spd_text
+        If Not Game.lblWIL.Text.Equals(formatted_wil_text) Then Game.lblWIL.Text = formatted_wil_text
+        If Not Game.lblLust.Text.Equals(formatted_lus_text) Then Game.lblLust.Text = formatted_lus_text
+        If Not Game.lblGold.Text.Equals(formatted_gld_text) Then Game.lblGold.Text = formatted_gld_text
 
         If do_inv Then
             inv.invIDorder.Clear()
@@ -1768,7 +1788,7 @@ Public Class Player
         Select Case True
             Case isPetrified
                 player_image = getStatueTileImage()
-            Case formName.Equals("Archdemoness")
+            Case formName.Equals("Archdemoness"), formName.Equals("Demon"), formName.Equals("Daemon")
                 player_image = getDemonTileImage()
             Case formName.Equals("Succubus")
                 player_image = getSuccubusTileImage()
@@ -2132,11 +2152,11 @@ Public Class Player
 
         Game.picPortrait.Update()
 
-        currState.save(Me)
+        If Not currState Is Nothing Then currState.save(Me)
 
         If Settings.active(setting.textcolors) Then Game.lblEvent.ForeColor = textColor
         Game.lblNameTitle.ForeColor = textColor
-        setPlayerImage()
+        If Not solFlag Then setPlayerImage()
     End Sub
     Public Sub changeHairColor(ByVal c As Color, Optional forceOpacity As Boolean = False)
         If forceOpacity Then
@@ -2520,6 +2540,34 @@ Public Class Player
     End Function
 
     '|GETTER/SETTER METHODS|
+    Public Function getGreatestStatname() As String
+        Dim modded_maxhealth As Integer = maxHealth / 10
+        Dim modded_maxmana = maxMana / 5
+
+        If modded_maxhealth > modded_maxmana And modded_maxhealth > attack And modded_maxhealth > defense And modded_maxhealth > speed And modded_maxhealth > will Then
+            Return DDConst.STATNAME_HP
+        ElseIf modded_maxmana > modded_maxhealth And modded_maxmana > attack And modded_maxmana > defense And modded_maxmana > speed And modded_maxmana > will Then
+            Return DDConst.STATNAME_MP
+        ElseIf attack > modded_maxhealth And attack > modded_maxmana And attack > defense And attack > speed And attack > will Then
+            Return DDConst.STATNAME_ATK
+        ElseIf defense > modded_maxhealth And defense > modded_maxmana And defense > attack And defense > speed And defense > will Then
+            Return DDConst.STATNAME_DEF
+        ElseIf speed > modded_maxhealth And speed > modded_maxmana And speed > attack And speed > defense And speed > will Then
+            Return DDConst.STATNAME_SPD
+        ElseIf will > modded_maxhealth And will > modded_maxmana And will > attack And will > defense And will > speed Then
+            Return DDConst.STATNAME_WILL
+        End If
+
+        If (attack + speed) > (defense + modded_maxhealth) And (attack + speed) > (will + modded_maxmana) Then
+            Return DDConst.STATNAME_ATK
+        ElseIf (defense + modded_maxhealth) > (attack + speed) And (defense + modded_maxhealth) > (will + modded_maxmana) Then
+            Return DDConst.STATNAME_DEF
+        ElseIf (will + modded_maxmana) > (attack + speed) And (will + modded_maxmana) > (defense + modded_maxhealth) Then
+            Return DDConst.STATNAME_WILL
+        End If
+
+        Return DDConst.STATNAME_HP
+    End Function
     Overrides Function getMaxHealth() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Or equippedAcce Is Nothing Then Return CInt(maxHealth * pForm.h * pForm.h) + hBuff
         Return CInt((maxHealth + hBuff) * pClass.h * pForm.h) + equippedArmor.getHBoost(Me) + equippedWeapon.getHBoost(Me) + equippedAcce.getHBoost(Me) + equippedGlasses.getHBoost(Me)
@@ -2870,7 +2918,8 @@ Public Class Player
     '|LEVELING| 
     Public Sub addXP(ByVal i As Integer)
         If className.Contains("Bimbo") Then i *= 2
-     
+        If equippedArmor.getAName.Equals(SportBra.ITEM_NAME) Then i *= 1.2
+
         xp += i
 
         If perks(perk.odxpgained) > -1 Then perks(perk.odxpgained) += i
@@ -2878,6 +2927,13 @@ Public Class Player
         If xp >= nextLevelXp Then levelUp()
     End Sub
     Public Sub levelUp()
+        If equippedAcce.getAName.Equals(CynnsBimboMark.ITEM_NAME) Then
+            TextEvent.pushAndLog("Your tattoo glows, and you can feel your experience being siphoned away...")
+            xp = 0
+            Exit Sub
+        End If
+
+
         level += 1
 
         xp -= nextLevelXp

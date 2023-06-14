@@ -60,6 +60,7 @@
         local_img.Add(LocalImgInd.catgirl, ShopNPC.gbl_img.atrs(0).getAt(92))
         local_img.Add(LocalImgInd.trilobite, ShopNPC.gbl_img.atrs(0).getAt(96))
         local_img.Add(LocalImgInd.beegirl, ShopNPC.gbl_img.atrs(0).getAt(148))
+        local_img.Add(LocalImgInd.bimbo, ShopNPC.gbl_img.atrs(0).getAt(155))
         local_img.Add(LocalImgInd.alt1, ShopNPC.gbl_img.atrs(0).getAt(15))
         local_img.Add(LocalImgInd.alt2, ShopNPC.gbl_img.atrs(0).getAt(16))
         local_img.Add(LocalImgInd.alt3, ShopNPC.gbl_img.atrs(0).getAt(23))
@@ -150,7 +151,7 @@
             img_index = LocalImgInd.alt2
             Return "Hey!  I was trying out a new type of cream, aaaaaaaaand, well, turns out there were a couple side effects..." & DDUtils.RNRN &
                    "Don't worry though, I'm pretty sure none of it made it into the stuff for sale.  But hey, if you want any of it, let me know, ok?" & DDUtils.RNRN &
-                   "If you're hungry, I've always got something cooking.  So, what can I get you?"
+                   "If you're hungry, I've always got something cooking.  So, what can I getcha?"
         ElseIf Int(Rnd() * 20) = 2 And hasMetPlayer Then
             img_index = LocalImgInd.alt1
             Return "Say what you will about Marissa, but the lady " & If(p.perks(perk.mrevived) < 0, "had", "has") & " a type for sure..." & DDUtils.RNRN &
@@ -159,8 +160,8 @@
         Else
             img_index = LocalImgInd.normal
             Return "Welcome!  If you're hungry, I've always got something cooking." & DDUtils.RNRN &
-                   "Not just food, by the way.  I've done a fair bit of playin' around with magic ingredients, and even if I can't use magic myself I can still work wonders with the right recipe." & DDUtils.RNRN &
-                   "So, what can I get ya?"
+                   "Not just food, by the way.  I've played around a fair bit with magic ingredients, so even as not-a-mage I can still work wonders with the right recipe." & DDUtils.RNRN &
+                   "So, what can I getcha?"
         End If
     End Function
     Protected Overrides Function frogDialog(ByRef p As Player)
@@ -193,6 +194,10 @@
     Protected Overrides Function beegirlDialog(ByRef p As Player)
         Return "Bzz, h o n e y..."
     End Function
+    Protected Overrides Function bimboDialog(ByRef p As Player)
+        Return "Welcome!  If you're hungry, I've always got something cooking." & DDUtils.RNRN &
+               "It's all- like- super tasty, so what can I getcha?"
+    End Function
 
     Protected Overrides Function normalFightDialog(ByRef p As Player)
         Return "Looks like someone ordered... a knuckle sandwich!" & DDUtils.RNRN &
@@ -218,6 +223,9 @@
     End Function
     Protected Overrides Function beegirlFightDialog(ByRef p As Player)
         Return "ZBZBZBZB!"
+    End Function
+    Protected Overrides Function bimboFightDialog(ByRef p As Player)
+        Return bunnyFightDialog(p)
     End Function
 
     Protected Overrides Function normalSpellDialog(ByRef p As Player)
@@ -245,9 +253,15 @@
     Protected Overrides Function beegirlSpellDialog(ByRef p As Player)
         Return beegirlFightDialog(p)
     End Function
+    Protected Overrides Function bimboSpellDialog(ByRef p As Player)
+        Return bunnySpellDialog(p)
+    End Function
 
-    Public Overrides Function postPurchaseDialog(ByRef p As Player) As Object
-        Return "Anything else I can get ya?"
+    Protected Overrides Function normalPostPurchaseDialog(ByRef p As Player) As String
+        Return "Anything else I can getcha?"
+    End Function
+    Protected Overrides Function bimboPostPurchaseDialog(ByRef p As Player) As String
+        Return "Anything else I can getcha?"
     End Function
 
     '| - MISC - |

@@ -8,14 +8,14 @@
         '|ID Info|
         setName(ITEM_NAME)
         id = 36
-        tier = 2
+        tier = 3
 
         '|Item Flags|
         usable = True
 
         '|Stats|
         count = 0
-        value = 300
+        value = 1660
 
         '|Description|
         setDesc("A shiny mirror that could bounce a spell back at its caster.")

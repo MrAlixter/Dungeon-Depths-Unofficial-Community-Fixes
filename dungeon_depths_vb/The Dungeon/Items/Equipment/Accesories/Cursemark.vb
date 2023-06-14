@@ -62,7 +62,7 @@
         Return (((p.attack + p.aBuff) * p.pForm.a * p.pClass.a) + p.equippedArmor.getABoost(p) + p.equippedWeapon.getABoost(p)) / 2
     End Function
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         Return "A glowing pink tattoo that displays one's status as under the effect of demonic magic." & DDUtils.RNRN &
                "Negates attack while increasing Max MP and WILL" & vbCrLf &
                "Raises minimum lust based on availible MP" & vbCrLf &

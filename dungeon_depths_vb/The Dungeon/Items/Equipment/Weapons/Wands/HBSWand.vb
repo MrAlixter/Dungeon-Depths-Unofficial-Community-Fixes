@@ -16,7 +16,7 @@
 
         '|Stats|
         count = 0
-        value = 10000
+        value = 4888
         w_boost = 10
 
         '|Description|

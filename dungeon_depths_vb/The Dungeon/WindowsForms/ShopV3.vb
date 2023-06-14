@@ -11,6 +11,8 @@ Public Class ShopV3
     Private Const P_PRICE_LENGTH As Integer = 7
     Private Const S_PRICE_LENGTH As Integer = 8
 
+    Public Shared current_value As Integer
+
     Dim sk As ShopNPC = Game.active_shop_npc
     Dim skInventory As List(Of String) = Nothing
 
@@ -52,7 +54,7 @@ Public Class ShopV3
         formattedInventory.Add("-USEABLES:")
         Array.Sort(inv.getUseable)
         For Each itm In inv.getUseable
-            If itm.getCount > 0 Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
+            If itm.getCount > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
         Next
         If formattedInventory(formattedInventory.Count - 1).Equals("-USEABLES:") Then formattedInventory.Remove("-USEABLES:") Else formattedInventory.Add("")
 
@@ -60,7 +62,7 @@ Public Class ShopV3
         formattedInventory.Add("-POTIONS:")
         Array.Sort(inv.getPotions)
         For Each itm In inv.getPotions
-            If itm.getCount > 0 Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
+            If itm.getCount > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
         Next
         If formattedInventory(formattedInventory.Count - 1).Equals("-POTIONS:") Then formattedInventory.Remove("-POTIONS:") Else formattedInventory.Add("")
 
@@ -68,7 +70,7 @@ Public Class ShopV3
         formattedInventory.Add("-FOOD:")
         Array.Sort(inv.getFood)
         For Each itm In inv.getFood
-            If itm.getCount > 0 Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
+            If itm.getCount > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
         Next
         If formattedInventory(formattedInventory.Count - 1).Equals("-FOOD:") Then formattedInventory.Remove("-FOOD:") Else formattedInventory.Add("")
 
@@ -76,7 +78,7 @@ Public Class ShopV3
         formattedInventory.Add("-ARMOR:")
         Array.Sort(inv.getArmors.Item2)
         For Each itm In inv.getArmors.Item2
-            If itm.getCount > 0 Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
+            If itm.getCount > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
         Next
         If formattedInventory(formattedInventory.Count - 1).Equals("-ARMOR:") Then formattedInventory.Remove("-ARMOR:") Else formattedInventory.Add("")
 
@@ -84,7 +86,7 @@ Public Class ShopV3
         formattedInventory.Add("-WEAPONS:")
         Array.Sort(inv.getWeapons.Item2)
         For Each itm In inv.getWeapons.Item2
-            If itm.getCount > 0 Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
+            If itm.getCount > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
         Next
         If formattedInventory(formattedInventory.Count - 1).Equals("-WEAPONS:") Then formattedInventory.Remove("-WEAPONS:") Else formattedInventory.Add("")
 
@@ -92,7 +94,7 @@ Public Class ShopV3
         formattedInventory.Add("-ACCESSORIES:")
         Array.Sort(inv.getAccesories.Item2)
         For Each itm In inv.getAccesories.Item2
-            If itm.getCount > 0 Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
+            If itm.getCount > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
         Next
         If formattedInventory(formattedInventory.Count - 1).Equals("-ACCESSORIES:") Then formattedInventory.Remove("-ACCESSORIES:") Else formattedInventory.Add("")
 
@@ -100,7 +102,7 @@ Public Class ShopV3
         formattedInventory.Add("-GLASSES:")
         Array.Sort(inv.getGlasses.Item2)
         For Each itm In inv.getGlasses.Item2
-            If itm.getCount > 0 Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
+            If itm.getCount > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
         Next
         If formattedInventory(formattedInventory.Count - 1).Equals("-GLASSES:") Then formattedInventory.Remove("-GLASSES:") Else formattedInventory.Add("")
 
@@ -108,7 +110,7 @@ Public Class ShopV3
         formattedInventory.Add("-SERVICES:")
         Array.Sort(inv.getServices)
         For Each itm In inv.getServices
-            If itm.getCount > 0 Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
+            If itm.getCount > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
         Next
         If formattedInventory(formattedInventory.Count - 1).Equals("-SERVICES:") Then formattedInventory.Remove("-SERVICES:") Else formattedInventory.Add("")
 
@@ -116,7 +118,7 @@ Public Class ShopV3
         formattedInventory.Add("-MISC:")
         Array.Sort(inv.getMisc)
         For Each itm In inv.getMisc
-            If itm.getCount > 0 And itm.getId <> 43 Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
+            If itm.getCount > 0 And itm.list_in_shop And itm.getId <> 43 Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
         Next
         If formattedInventory(formattedInventory.Count - 1).Equals("-MISC:") Then formattedInventory.Remove("-MISC:") Else formattedInventory.Add("")
 
@@ -166,7 +168,7 @@ Public Class ShopV3
 
         Dim item As Item = p.inv.item(ind)
 
-        txtDesc.Text = item.getDesc
+        txtDesc.Text = item.getDescription
     End Sub
     Private Sub btnInspect_Click(sender As Object, e As EventArgs) Handles btnInspect.Click
         Dim name As String = Nothing
@@ -190,6 +192,9 @@ Public Class ShopV3
             Next
         End If
 
+    End Sub
+    Private Sub number_ValueChanged(sender As Object, e As EventArgs) Handles number.ValueChanged
+        current_value = number.Value
     End Sub
 
     '| - TEXT FORMATTING - |

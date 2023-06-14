@@ -38,7 +38,7 @@
                 getStatInformation())
     End Sub
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         Return "A shimmering soft white sweater.  When worn by someone with wings, an enchantment becomes active and boosts all stats." & DDUtils.RNRN &
                 If(playerHasWings(owner), "You have wings!" & DDUtils.RNRN, "") &
                 getSizeInformation() & DDUtils.RNRN &

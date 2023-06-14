@@ -240,6 +240,8 @@
             t.toTrilobite()
         ElseIf s = "Bee-Girl" Then
             t.toBeeGirl()
+        ElseIf s = "Bimbo" Then
+            t.toBimbo()
         End If
     End Sub
 

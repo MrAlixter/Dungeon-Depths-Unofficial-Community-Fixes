@@ -28,6 +28,24 @@
 
         TextEvent.push("Added one of every new item in v12.X.X!")
 
+        'printList()
+
         count -= 1
+    End Sub
+
+    Public Sub printList()
+        Dim writer As IO.StreamWriter
+        IO.File.Delete("ECON.CSV")
+        writer = IO.File.CreateText("ECON.CSV")
+
+        writer.WriteLine("Name,ID,Tier,Value")
+
+        For i = 0 To (Game.player1.inv.count - 1)
+            Dim itm = Game.player1.inv.item(i)
+            writer.WriteLine(itm.getAName & "," & itm.getId & ",TIER:" & itm.getTier(Game.currFloor.floorNumber) & "," & itm.value)
+        Next
+
+        writer.Flush()
+        writer.Close()
     End Sub
 End Class

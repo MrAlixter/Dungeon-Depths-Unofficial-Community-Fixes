@@ -14,7 +14,7 @@
 
         '|Stats|
         count = 0
-        value = 250
+        value = 592
         setCalories(50)
 
         '|Description|

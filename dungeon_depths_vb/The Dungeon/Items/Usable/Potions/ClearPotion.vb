@@ -14,7 +14,7 @@
 
         '|Stats|
         count = 0
-        value = 100
+        value = 280
 
         '|Description|
         setDesc("Something tells you that this might just be water.  A quick sip confirms this, though you can also taste the tell-tale flavor of filtering.")

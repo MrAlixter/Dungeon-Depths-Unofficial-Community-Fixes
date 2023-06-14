@@ -73,7 +73,7 @@
         Return buff + (p.equippedArmor.m_boost * 1.2)
     End Function
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         Return "A high class necktie that improves agility and speed.  While it seems ordinary enough at a glance, every once and a while it sparks suspiciously." & DDUtils.RNRN & _
                        "Medium chance to dodge oncoming attacks" & vbCrLf &
                        "Increases Max Mana and ATK if equipped by a Bunny Girl" & DDUtils.RNRN &

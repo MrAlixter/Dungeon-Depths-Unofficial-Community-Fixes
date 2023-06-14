@@ -20,6 +20,21 @@
         setDesc("A better, rarer mana potion.")
     End Sub
 
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f1f2
+                Return Nothing
+            Case LootTable.bracket.f10f12
+                Return 2
+            Case LootTable.bracket.f13
+                Return 2
+            Case LootTable.bracket.f14fXX
+                Return 2
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
+
     Overrides Sub use(ByRef p As Player)
         TextEvent.pushLog("You drink the " & getName())
         Dim phMana = p.mana

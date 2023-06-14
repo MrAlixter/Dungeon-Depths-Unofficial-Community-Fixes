@@ -50,6 +50,7 @@
         local_img.Add(LocalImgInd.catgirl, ShopNPC.gbl_img.atrs(0).getAt(95))
         local_img.Add(LocalImgInd.trilobite, ShopNPC.gbl_img.atrs(0).getAt(96))
         local_img.Add(LocalImgInd.beegirl, ShopNPC.gbl_img.atrs(0).getAt(148))
+        local_img.Add(LocalImgInd.bimbo, ShopNPC.gbl_img.atrs(0).getAt(159))
         local_img.Add(LocalImgInd.alt1, ShopNPC.gbl_img.atrs(0).getAt(46))
         local_img.Add(LocalImgInd.alt2, ShopNPC.gbl_img.atrs(0).getAt(47))
         local_img.Add(LocalImgInd.alt3, ShopNPC.gbl_img.atrs(0).getAt(59))
@@ -104,9 +105,15 @@
             Return "Hey, if I were to roll out a ""Gem Of Spiders"" do you think you'd take the plunge into eight-legged glory?  Well, I've got the next best thing in the meantime!"
         End If
     End Function
+    Protected Overrides Function bimboDialog(ByRef p As Player)
+        Return "Hey, cutie!  What can I getcha?"
+    End Function
 
-    Public Overrides Function postPurchaseDialog(ByRef p As Player) As Object
-        Return "Anything else I can get ya?"
+    Protected Overrides Function normalPostPurchaseDialog(ByRef p As Player) As String
+        Return "Anything else I can getcha?"
+    End Function
+    Protected Overrides Function bimboPostPurchaseDialog(ByRef p As Player) As String
+        Return "Anything else I can getcha?"
     End Function
 
     '| - MISC - |

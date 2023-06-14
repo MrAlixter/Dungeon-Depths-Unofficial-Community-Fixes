@@ -33,7 +33,7 @@
         If p.getLust > 15 Then Return True Else Return False
     End Function
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         Return "A simple gag that prevents its wearer from speaking or casting spells, sealed by a spell that prevents removal by those who are aroused." & DDUtils.RNRN &
                If(getCursed(Game.player1), "You are currently unable to remove this gag...", "You could remove this gag once equipped.") & DDUtils.RNRN &
                getStatInformation()

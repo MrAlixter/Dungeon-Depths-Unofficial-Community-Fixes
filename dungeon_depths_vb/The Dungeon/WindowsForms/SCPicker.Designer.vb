@@ -29,12 +29,14 @@ Partial Class SCPicker
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
+        Me.picMisc = New System.Windows.Forms.PictureBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picMisc, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PictureBox1
@@ -91,12 +93,23 @@ Partial Class SCPicker
         Me.PictureBox6.TabIndex = 24
         Me.PictureBox6.TabStop = False
         '
+        'picMisc
+        '
+        Me.picMisc.BackColor = System.Drawing.Color.Black
+        Me.picMisc.BackgroundImage = CType(resources.GetObject("picMisc.BackgroundImage"), System.Drawing.Image)
+        Me.picMisc.Location = New System.Drawing.Point(252, 12)
+        Me.picMisc.Name = "picMisc"
+        Me.picMisc.Size = New System.Drawing.Size(34, 64)
+        Me.picMisc.TabIndex = 25
+        Me.picMisc.TabStop = False
+        '
         'SCPicker
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.Black
-        Me.ClientSize = New System.Drawing.Size(260, 88)
+        Me.ClientSize = New System.Drawing.Size(300, 88)
         Me.ControlBox = False
+        Me.Controls.Add(Me.picMisc)
         Me.Controls.Add(Me.PictureBox6)
         Me.Controls.Add(Me.PictureBox5)
         Me.Controls.Add(Me.PictureBox4)
@@ -113,6 +126,7 @@ Partial Class SCPicker
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picMisc, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -122,4 +136,5 @@ Partial Class SCPicker
     Friend WithEvents PictureBox4 As System.Windows.Forms.PictureBox
     Friend WithEvents PictureBox5 As System.Windows.Forms.PictureBox
     Friend WithEvents PictureBox6 As System.Windows.Forms.PictureBox
+    Friend WithEvents picMisc As System.Windows.Forms.PictureBox
 End Class

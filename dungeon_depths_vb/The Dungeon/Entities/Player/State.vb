@@ -293,4 +293,8 @@
         haircolor = hc
         skincolor = sc
     End Sub
+
+    Public Sub setIArrInd(ByVal ind As pInd, ByVal i As Integer, ByVal fem As Boolean, ByVal def As Boolean)
+        iArrInd(ind) = New Tuple(Of Integer, Boolean, Boolean)(i, fem, def)
+    End Sub
 End Class

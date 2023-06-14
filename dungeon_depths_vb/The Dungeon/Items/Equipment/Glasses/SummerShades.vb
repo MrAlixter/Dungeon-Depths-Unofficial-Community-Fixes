@@ -34,7 +34,7 @@
         Return If(p.equippedArmor.getAName.Contains("Bikini"), p.equippedArmor.getDBoost(p) * 2, 0)
     End Function
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         Return "A pair of shiny black glasses in a sleek yellow frame." & DDUtils.RNRN &
                 "Triples the defense of any bikinis that its wielder is wearing." & DDUtils.RNRN &
                 getStatInformation()

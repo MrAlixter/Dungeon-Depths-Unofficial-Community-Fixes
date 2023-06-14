@@ -21,6 +21,13 @@
         setDesc("A plain wooden board covered in letters and occult symbols, and a small planchette with a hole in its center.  Some folks say that it can be used to commune with the dead, but other folks say that the first group of folks are full of it.")
     End Sub
 
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
+
     Overrides Sub use(ByRef p As Player)
         count -= 1
 

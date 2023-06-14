@@ -42,7 +42,7 @@
         If DDUtils.fileExistsWC("items\", "*_" & id & ".itm") And soul_name = "" Then loadSavedItem(DDUtils.getSessionID(DDUtils.getPathUsingWC("items\", "*_" & id & ".itm")), id)
     End Sub
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         Return "A pair of soft, black stockings with a small " & Trim(Player.getColor(h_color)) & " ribbon." & DDUtils.RNRN &
                getStatInformation()
     End Function

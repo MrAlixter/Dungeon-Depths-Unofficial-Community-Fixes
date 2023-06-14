@@ -57,6 +57,7 @@
         local_img.Add(LocalImgInd.catgirl, ShopNPC.gbl_img.atrs(0).getAt(90))
         local_img.Add(LocalImgInd.trilobite, ShopNPC.gbl_img.atrs(0).getAt(96))
         local_img.Add(LocalImgInd.beegirl, ShopNPC.gbl_img.atrs(0).getAt(148))
+        local_img.Add(LocalImgInd.bimbo, ShopNPC.gbl_img.atrs(0).getAt(154))
         local_img.Add(LocalImgInd.alt1, ShopNPC.gbl_img.atrs(0).getAt(10))
     End Sub
 
@@ -176,6 +177,13 @@
     Protected Overrides Function beegirlDialog(ByRef p As Player)
         Return "Ehehehe... Bzz Bzz Bzz..."
     End Function
+    Protected Overrides Function bimboDialog(ByRef p As Player)
+        If use_secret_inv Then
+            Return "OMG, you gotta check out my special inventory!  You'd, like, totally look hot in one of these bikinis."
+        Else
+            Return "Jiggle... jiggle... jiggle..."
+        End If
+    End Function
 
     Protected Overrides Function normalFightDialog(ByRef p As Player)
         Return "Alright, get ready to fight.  This ain't gonna go well for you."
@@ -194,6 +202,9 @@
     End Function
     Protected Overrides Function catgirlFightDialog(ByRef p As Player)
         Return normalFightDialog(p)
+    End Function
+    Protected Overrides Function bimboFightDialog(ByRef p As Player)
+        Return bunnyFightDialog(p)
     End Function
 
     Protected Overrides Function normalSpellDialog(ByRef p As Player)
@@ -215,8 +226,11 @@
         Return normalSpellDialog(p)
     End Function
 
-    Public Overrides Function postPurchaseDialog(ByRef p As Player) As Object
+    Protected Overrides Function normalPostPurchaseDialog(ByRef p As Player) As String
         Return "See ya around..."
+    End Function
+    Protected Overrides Function bimboPostPurchaseDialog(ByRef p As Player) As String
+        Return "*giggle*  See ya around..."
     End Function
 
       '| - MISC - |

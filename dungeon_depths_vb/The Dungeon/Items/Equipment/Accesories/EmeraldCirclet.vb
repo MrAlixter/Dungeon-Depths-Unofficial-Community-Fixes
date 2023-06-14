@@ -16,7 +16,7 @@
         m_boost = 10
         s_boost = 10
         count = 0
-        value = 1100
+        value = 477
 
         '|Image Index|
         fInd = New Tuple(Of Integer, Boolean, Boolean)(10, False, True)

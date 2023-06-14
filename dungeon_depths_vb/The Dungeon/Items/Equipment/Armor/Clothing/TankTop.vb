@@ -11,11 +11,12 @@
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
+        compress_breast = True
+        slut_var_ind = 47
 
         '|Stats|
-        MyBase.d_boost = 1
-        MyBase.s_boost = 5
+        d_boost = 1
+        s_boost = 5
         count = 0
         value = 400
 
@@ -38,8 +39,13 @@
     End Sub
 
     Public Overrides Function getTier(floor_num As Integer) As Integer
-        If Not LootTable.getBracket(floor_num) = LootTable.bracket.f1f2 Then Return Nothing
-
-        Return MyBase.getTier(floor_num)
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f1f2
+                Return MyBase.getTier(floor_num)
+            Case LootTable.bracket.misc
+                Return MyBase.getTier(floor_num)
+            Case Else
+                Return Nothing
+        End Select
     End Function
 End Class

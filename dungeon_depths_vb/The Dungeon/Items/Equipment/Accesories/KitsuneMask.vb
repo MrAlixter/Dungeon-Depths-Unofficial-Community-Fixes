@@ -15,7 +15,7 @@
 
         '|Stats|
         count = 0
-        value = 777
+        value = 1554
         m_boost = 15
         s_boost = 20
         w_boost = 15
@@ -32,6 +32,18 @@
                 " Gives legends new life...""" & DDUtils.RNRN &
                 getStatInformation())
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f1f2
+                Return Nothing
+            Case LootTable.bracket.f14fXX
+                Return Nothing
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
+
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
         p.perks(perk.blind) = 1

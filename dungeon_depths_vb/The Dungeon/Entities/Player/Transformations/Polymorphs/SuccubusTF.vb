@@ -30,7 +30,7 @@
             p.MtF()
             out += "Your body becomes daintier, and you are soon fully female.  "
         End If
-        p.prt.haircolor = Color.FromArgb(255, 155, 0, 0)
+        p.prt.haircolor = DemonTF.getDemonHairColor(p.prt.haircolor)
         p.prt.skincolor = Color.FromArgb(255, 255, 105, 180)
         p.prt.setIAInd(pInd.rearhair, 9, True, True)
         If p.breastSize < 2 Then p.breastSize = 2

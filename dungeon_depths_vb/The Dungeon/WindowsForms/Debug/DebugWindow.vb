@@ -382,7 +382,7 @@ Public Class Debug_Window
         boxItems.Items.Clear()
         Dim p_inv = Game.player1.inv
         For i = 0 To p_inv.upperBound
-            itemsList.Add(p_inv.getKeyByID(i))
+            If p_inv.item(i).list_in_debug Then itemsList.Add(p_inv.getKeyByID(i))
         Next
         itemsList.Sort()
         For i = 0 To itemsList.Count - 1
@@ -536,8 +536,16 @@ Public Class Debug_Window
         picPreview.Image = Portrait.CreateBMP(Game.player1.prt.iArr)
     End Sub
 
+    Private Sub boxInventoryFilter_KeyPress(sender As Object, e As KeyPressEventArgs) Handles boxInventoryFilter.KeyPress
+        If e.KeyChar = " " Then e.KeyChar = "_"
+    End Sub
+
     Private Sub boxInventoryFilter_TextChanged(sender As Object, e As EventArgs) Handles boxInventoryFilter.TextChanged
         inventoryFilterUpdate()
+    End Sub
+
+    Private Sub boxItemsFilter_KeyPress(sender As Object, e As KeyPressEventArgs) Handles boxItemsFilter.KeyPress
+        If e.KeyChar = " " Then e.KeyChar = "_"
     End Sub
 
     Private Sub boxItemsFilter_TextChanged(sender As Object, e As EventArgs) Handles boxItemsFilter.TextChanged

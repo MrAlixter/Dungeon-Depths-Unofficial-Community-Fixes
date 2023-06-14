@@ -15,7 +15,7 @@
 
         '|Stats|
         count = 0
-        value = 1000
+        value = 1122
 
         '|Description|
 

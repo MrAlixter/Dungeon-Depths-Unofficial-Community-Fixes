@@ -38,4 +38,15 @@
         setDesc("A snazzy robe that identifies its wearer as a high ranking follower of Uvona, Goddess of Fugue.  The goddess's power is woven into its very fabric, amplifying its wearer's own magic ability." & DDUtils.RNRN &
                               getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f13
+                Return 3
+            Case LootTable.bracket.f14fXX
+                Return 3
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
 End Class

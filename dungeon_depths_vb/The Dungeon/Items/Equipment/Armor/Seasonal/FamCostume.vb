@@ -53,7 +53,7 @@
         Return If(p.className.Equals("Bunny Girl"), 13, 0)
     End Function
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         Return "A skimpy black bunny suit worn by those who aren't afraid of the dark." & DDUtils.RNRN &
                 "When worn by a bunny girl, improves speed and will" & DDUtils.RNRN &
                  getSizeInformation() & DDUtils.RNRN & getStatInformation()

@@ -22,6 +22,19 @@
                 "+10 Stamina")
     End Sub
 
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f10f12
+                Return 1
+            Case LootTable.bracket.f13
+                Return 1
+            Case LootTable.bracket.f14fXX
+                Return 1
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
+
     Public Overrides Sub tfEffect(ByRef p As Player)
         p.ongoingTFs.add(New HPBimboTF(2, 5, 0.25, True))
         p.perks(perk.bimbotf) = 0
@@ -32,7 +45,7 @@
         If p.health > 1 Then p.health = 1
     End Sub
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         Return "An ordinary looking piece of gum that smells faintly of a health potion." & DDUtils.RNRN &
                If(Game.player1.className.Equals("Bimbo"), "+85 Health", "Restores health if used by a bimbo") & vbCrLf &
                "+10 Stamina"

@@ -16,7 +16,7 @@
 
         '|Stats|
         count = 0
-        value = 5000
+        value = 4888
 
         '|Description|
         setDesc("A slender crimson wand that bristles with restorative energy." & DDUtils.RNRN &

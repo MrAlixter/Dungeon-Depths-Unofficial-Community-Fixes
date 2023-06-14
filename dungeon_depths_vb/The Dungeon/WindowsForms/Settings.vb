@@ -8,6 +8,7 @@
     bimbonames
     textcolors
     isotiles
+    oldloot
 End Enum
 
 Public Class Settings
@@ -36,6 +37,7 @@ Public Class Settings
         initialSettings.Add(setting.bimbonames, True)
         initialSettings.Add(setting.textcolors, False)
         initialSettings.Add(setting.isotiles, False)
+        initialSettings.Add(setting.oldloot, False)
 
         monsterSpawns = New Dictionary(Of mInd, Integer)
     End Sub
@@ -51,6 +53,7 @@ Public Class Settings
         settingMap.Add(setting.bimbonames, chkBimboNames)
         settingMap.Add(setting.textcolors, chkTextColor)
         settingMap.Add(setting.isotiles, chkMakeIso)
+        settingMap.Add(setting.oldloot, chkOldLoot)
     End Sub
 
     '| - SAVE/LOAD SETTINGS FILE - |
@@ -93,7 +96,7 @@ Public Class Settings
             ssize = r.ReadLine
             Game.screenSize = ssize
             For Each setting In settingMap
-                setting.Value.Checked = r.ReadLine
+                If Not r.EndOfStream Then setting.Value.Checked = r.ReadLine
             Next
         End Using
 

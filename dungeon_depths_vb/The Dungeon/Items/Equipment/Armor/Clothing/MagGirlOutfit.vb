@@ -19,7 +19,6 @@
         '|Stats|
         d_boost = 10
         count = 0
-        value = 100
 
         '|Image Index|
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(60, False, True)

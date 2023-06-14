@@ -75,6 +75,18 @@
                            """Hmm, maybe you'd make a better cow...""")
             MyBase.attackCMD(target)
             Exit Sub
+        ElseIf target.getPlayer.className.Equals("Bimbo") And health > 0.1 Then
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " casts ""Curse of the Slut... but it backfires!""")
+            TextEvent.push(DDUtils.capitalizeFirst(getNameWithTitle) & "'s spell errupts into a crackling explosion of crimson energy." & DDUtils.RNRN &
+                           "Your foe's clothing stretches as " & p_pronoun & " chest and ass swell, before the fabric tears under the strain of " & p_pronoun & " newly endowed assets." & DDUtils.RNRN &
+                           """LIKE... WHAT?!"" " & pronoun & " shrieks, ""WHAT THE HELL DID YOU DO TO ME!?""")
+            health = 0.1
+            form = "Bimbo"
+            Exit Sub
+        ElseIf target.getPlayer.className.Equals("Bimbo") And health <= 0.1 Then
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " casts ""Curse of the Slut... but it backfires!""")
+            takeDMG(getIntHealth, Me)
+            Exit Sub
         End If
 
         If target.getPlayer.perks(perk.succubuscurse) = -1 Then

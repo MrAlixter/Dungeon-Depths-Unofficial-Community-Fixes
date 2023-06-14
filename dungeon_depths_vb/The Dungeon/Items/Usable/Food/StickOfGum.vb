@@ -2,6 +2,7 @@
     Inherits Food
 
     Public Const ITEM_NAME As String = "Stick_of_Gum"
+    Dim use_gum_tier As Boolean = False
 
     Sub New()
         '|ID Info|
@@ -11,6 +12,8 @@
 
         '|Item Flags|
         usable = True
+        onSell = AddressOf npcTF
+        use_gum_tier = True
 
         '|Stats|
         count = 0
@@ -18,10 +21,16 @@
         setCalories(10)
 
         '|Description|
-
         setDesc("An ordinary looking piece of gum with a faint chemical smell." & DDUtils.RNRN &
                 "+10 Stamina")
 
+    End Sub
+
+    Sub npcTF()
+        If ShopV3.current_value >= 50 And Not Game.active_shop_npc.form.Equals("Bimbo") Then
+            TextEvent.pushLog("As the " & Game.active_shop_npc.getNameWithTitle() & " accepts the pile of gum, the air crackles with pink energy...")
+            Game.active_shop_npc.toBimbo()
+        End If
     End Sub
 
     Overrides Sub effect(ByRef p As Player)
@@ -48,4 +57,21 @@
     Overridable Sub bimboPPEffect(ByRef p As Player)
         bimboEffect(p)
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        If use_gum_tier Then Return MyBase.getTier(floor_num)
+
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f1f2
+                Return 1
+            Case LootTable.bracket.f3f5
+                Return 1
+            Case LootTable.bracket.f6f9
+                Return 1
+            Case LootTable.bracket.misc
+                Return MyBase.getTier(floor_num)
+            Case Else
+                Return Nothing
+        End Select
+    End Function
 End Class

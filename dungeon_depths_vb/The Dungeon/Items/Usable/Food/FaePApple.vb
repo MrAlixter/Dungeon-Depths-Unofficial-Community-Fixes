@@ -52,7 +52,7 @@
         End If
     End Sub
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         Return "An ""normal"" purple apple with sinister aura that seems in line with what you'd expect of fruit." &
                 If(soul_name = "", "", DDUtils.RNRN & "+" & getCalories() & " Stamina")
     End Function

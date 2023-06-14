@@ -18,12 +18,27 @@
         MyBase.m_boost = 7
         MyBase.a_boost = 22
         count = 0
-        value = 1000
+        value = 1168
 
         '|Description|
         setDesc("A blazing sword used by a winged protector." & DDUtils.RNRN &
                        getStatInformation())
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f6f9
+                Return 4
+            Case LootTable.bracket.f10f12
+                Return Nothing
+            Case LootTable.bracket.f13
+                Return Nothing
+            Case LootTable.bracket.f14fXX
+                Return Nothing
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
 
     Public Overrides Sub onEquip(ByRef p As Player)
         If Not p.className.Equals("Valkyrie") And Not p.perks(perk.tfedbyweapon) > 0 Then

@@ -58,7 +58,7 @@
         local_img.Add(LocalImgInd.catgirl, ShopNPC.gbl_img.atrs(0).getAt(94))
         local_img.Add(LocalImgInd.trilobite, ShopNPC.gbl_img.atrs(0).getAt(96))
         local_img.Add(LocalImgInd.beegirl, ShopNPC.gbl_img.atrs(0).getAt(148))
-
+        local_img.Add(LocalImgInd.bimbo, ShopNPC.gbl_img.atrs(0).getAt(157))
         local_img.Add(LocalImgInd.alt1, ShopNPC.gbl_img.atrs(0).getAt(29))
         local_img.Add(LocalImgInd.alt2, ShopNPC.gbl_img.atrs(0).getAt(30))
         local_img.Add(LocalImgInd.alt3, ShopNPC.gbl_img.atrs(0).getAt(31))
@@ -237,6 +237,11 @@
     Protected Overrides Function beegirlDialog(ByRef p As Player)
         Return "..."
     End Function
+    Protected Overrides Function bimboDialog(ByRef p As Player)
+        Return "*giggle*" & DDUtils.RNRN &
+               "Hey, um, let me know what you, like, ya know..." & DDUtils.RNRN &
+               "Let me know if anyone that catches your eye, ok?"
+    End Function
 
     Protected Overrides Function normalFightDialog(ByRef p As Player)
         Return "Unless you're packing some serious magic, probably not your best move..."
@@ -261,6 +266,9 @@
     End Function
     Protected Overrides Function beegirlFightDialog(ByRef p As Player)
         Return "!!!"
+    End Function
+    Protected Overrides Function bimboFightDialog(ByRef p As Player)
+        Return bunnyFightDialog(p)
     End Function
 
     Protected Overrides Function normalSpellDialog(ByRef p As Player)
@@ -287,9 +295,15 @@
     Protected Overrides Function beegirlSpellDialog(ByRef p As Player)
         Return "!!!"
     End Function
+    Protected Overrides Function bimboSpellDialog(ByRef p As Player)
+        Return bunnySpellDialog(p)
+    End Function
 
-    Public Overrides Function postPurchaseDialog(ByRef p As Player) As Object
+    Protected Overrides Function normalPostPurchaseDialog(ByRef p As Player) As String
         Return "Stay safe, yeah?"
+    End Function
+    Protected Overrides Function bimboPostPurchaseDialog(ByRef p As Player) As String
+        Return "Um... be careful, ok?"
     End Function
 
     '| - MISC - |

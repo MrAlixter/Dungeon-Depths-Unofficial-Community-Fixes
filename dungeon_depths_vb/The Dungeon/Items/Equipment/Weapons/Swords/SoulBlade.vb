@@ -65,7 +65,7 @@
         End Try
     End Sub
 
-    Public Overrides Function getDesc()
+    Public Overrides Function getDescription()
         Return "A ornate crystalline sword forged from " & If(soul_name = "", "someone", soul_name) & "'s soul.  Occasionally it pulses with an unnatural light..." & DDUtils.RNRN &
                getStatInformation()
     End Function

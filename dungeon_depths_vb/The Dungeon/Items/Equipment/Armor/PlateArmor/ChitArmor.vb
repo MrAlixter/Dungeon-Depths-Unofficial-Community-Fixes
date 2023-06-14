@@ -19,7 +19,7 @@
         d_boost = 15
         s_boost = 10
         count = 0
-        value = 346
+        value = 1346
 
         '|Image Index|
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(17, False, True)

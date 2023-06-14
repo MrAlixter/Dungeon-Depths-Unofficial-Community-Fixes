@@ -44,7 +44,7 @@
         p.prt.setIAInd(pInd.hat, 0, True, False)
         p.prt.setIAInd(pInd.wings, 2, True, False)
 
-        p.prt.changeHairColor(Color.FromArgb(255, 64, 0, 128))
+        p.prt.changeHairColor(DemonTF.getDemonHairColor(p.prt.haircolor))
 
         'transformation description push
         p.TextColor = Color.HotPink

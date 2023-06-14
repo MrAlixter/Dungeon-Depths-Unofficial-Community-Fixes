@@ -171,8 +171,9 @@
         writer.Flush()
         writer.Close()
 
-        Dim out As String = "As you collapse to your knees, unable to keep fighting, " & first_name & " takes notice and begins floating towards you with an spectral glow." & DDUtils.RNRN &
-                            """Sorry, but you're my second chance..."""
+        Dim out As String = "As you collapse to your knees, the ghost of " & first_name & " begins floating towards you with an spectral glow." & DDUtils.RNRN &
+                            """Sorry, but you're my second chance..."" " & If(sex_bool, "she", "he") & " mutters softly, before phasing into your body.  Your perspective skews as the " & redefineClassName(class_name) & " takes control and forces you out, turning you into a disembodied spirit yourself." & DDUtils.RNRN &
+                            "You've been possessed by " & first_name & " the " & class_name & "!"
         despawn("p-death")
 
         p.name = first_name

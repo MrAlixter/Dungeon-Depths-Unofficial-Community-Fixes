@@ -21,6 +21,13 @@
         setDesc("A dodgy-looking potion.")
     End Sub
 
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
+
     Public Overrides Sub setEffectList()
         MyBase.setEffectList()
         Dim mainEffects As List(Of PEffect) = New List(Of PEffect)

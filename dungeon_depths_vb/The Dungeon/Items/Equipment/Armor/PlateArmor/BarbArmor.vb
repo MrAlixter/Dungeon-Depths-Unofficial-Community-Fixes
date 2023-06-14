@@ -42,6 +42,17 @@ Public Class BarbArmor
 
         '|Description|
         setDesc("While this ""armor"" may not provide the same defense as other sets, it greatly improves offensive options." & DDUtils.RNRN &
-                                      getSizeInformation() & DDUtils.RNRN & getStatInformation())
+                getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f13
+                Return 3
+            Case LootTable.bracket.f14fXX
+                Return 3
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
 End Class

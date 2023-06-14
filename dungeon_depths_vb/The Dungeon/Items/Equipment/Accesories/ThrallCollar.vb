@@ -21,7 +21,7 @@
 
         '|Stats|
         count = 0
-        value = 200
+        value = 344
 
         '|Image Index|
         fInd = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)

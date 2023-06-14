@@ -126,6 +126,7 @@
         Game.updateLoadbar(65)
 
         Try
+            Game.player1.isDead = False
             Game.player1 = loadPlayerLoop(lines, cursor)
         Catch ex As Exception
             DDError.saveFileFatalError()
@@ -346,7 +347,8 @@
                          f.chestList.Count & VALUE_DELIMITER &
                          f.statueList.Count & VALUE_DELIMITER &
                          f.trapList.Count & VALUE_DELIMITER &
-                         f.npcPositions.Count & SEGMENT_DELIMITER
+                         f.npcPositions.Count & VALUE_DELIMITER &
+                         f.pinkMist & SEGMENT_DELIMITER
 
         For y = 0 To f.mBoardHeight - 1
             For x = 0 To f.mBoardWidth - 1
@@ -408,6 +410,7 @@
         floor.playerPosition = playerPosition
         floor.bossDialog = bossDialog
         floor.beatBoss = beatBoss
+        If Game.version > 13 Then floor.pinkMist = CBool(subseg(16))
 
         start_pos += 1
         For y = 0 To mBoardHeight - 1

@@ -17,13 +17,31 @@
         value = 1000
 
         '|Description|
-        setDesc("A strange looking crystal reported to fuse two beings upon shattering." & DDUtils.RNRN & _
+        setDesc("A strange looking crystal reported to fuse two beings upon shattering." & DDUtils.RNRN &
                 "Disclaimers:" & vbCrLf &
-                "Only saves of the current version can be fused." & vbCrLf &
-                "Players that can not be transformed can not fuse." & vbCrLf &
-                "Players with the same name can not fuse.")
+                "- Only saves of the current version can be fused." & vbCrLf &
+                "- Players that can not be transformed can not fuse." & vbCrLf &
+                "- Players with the same name can not fuse.")
 
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f3f5
+                Return 4
+            Case LootTable.bracket.f6f9
+                Return 4
+            Case LootTable.bracket.f10f12
+                Return 4
+            Case LootTable.bracket.f13
+                Return 4
+            Case LootTable.bracket.f14fXX
+                Return 4
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
+
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
 

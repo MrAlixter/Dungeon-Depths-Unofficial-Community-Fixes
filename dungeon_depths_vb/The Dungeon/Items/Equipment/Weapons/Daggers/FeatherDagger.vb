@@ -26,7 +26,7 @@
                 getStatInformation())
     End Sub
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         Return "A small, nearly weightless blade with the pattern of a feather engraved along its length." & DDUtils.RNRN &
                "When attacking, the user hits twice." & DDUtils.RNRN &
                "Critical hit rate increases the faster you are than your foe." & DDUtils.RNRN &

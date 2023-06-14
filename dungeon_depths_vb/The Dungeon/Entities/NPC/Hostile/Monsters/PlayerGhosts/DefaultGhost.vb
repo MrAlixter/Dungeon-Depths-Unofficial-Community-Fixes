@@ -14,10 +14,10 @@
         'stats
         health = 1.0
         maxHealth = 100
-        attack = 25
-        mana = 25
-        defense = 25
-        speed = 25
+        attack = 20
+        mana = 20
+        defense = 10
+        speed = 20
         will = 25
 
         'portrait

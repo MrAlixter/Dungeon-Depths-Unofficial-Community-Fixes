@@ -429,6 +429,17 @@
         internal_inventory.Add(HellflamingSword.ITEM_NAME, New HellflamingSword)     '401
         internal_inventory.Add(BerserkerCursemark.ITEM_NAME, New BerserkerCursemark) '402
         internal_inventory.Add(SellHellfireBlade.ITEM_NAME, New SellHellfireBlade)   '403
+        internal_inventory.Add(PaladinBikini.ITEM_NAME, New PaladinBikini)           '404
+        internal_inventory.Add(SpiralBikini.ITEM_NAME, New SpiralBikini)             '405
+        internal_inventory.Add(DubiousRations.ITEM_NAME, New DubiousRations)         '406
+        internal_inventory.Add(SafeRations.ITEM_NAME, New SafeRations)               '407
+        internal_inventory.Add(BewitchedRations.ITEM_NAME, New BewitchedRations)     '408
+        internal_inventory.Add(MarissasRation.ITEM_NAME, New MarissasRation)         '409
+        internal_inventory.Add(ShimmeringHairbrush.ITEM_NAME, New ShimmeringHairbrush) '410
+        internal_inventory.Add(TidemageTattoo.ITEM_NAME, New TidemageTattoo)         '411
+        internal_inventory.Add(RunecursedDagger.ITEM_NAME, New RunecursedDagger)     '412
+        internal_inventory.Add(DarkplateBikini.ITEM_NAME, New DarkplateBikini)       '413
+        internal_inventory.Add(CynnsBimboMark.ITEM_NAME, New CynnsBimboMark)         '414
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -459,7 +470,8 @@
                  Me.item(332), Me.item(333), Me.item(335), Me.item(336),
                  Me.item(343), Me.item(345), Me.item(354), Me.item(357),
                  Me.item(363), Me.item(364), Me.item(384), Me.item(393),
-                 Me.item(394), Me.item(398)}
+                 Me.item(394), Me.item(398), Me.item(404), Me.item(405),
+                 Me.item(413)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -480,7 +492,7 @@
                    Me.item(353), Me.item(362), Me.item(365), Me.item(366),
                    Me.item(367), Me.item(368), Me.item(369), Me.item(370),
                    Me.item(372), Me.item(377), Me.item(381), Me.item(388),
-                   Me.item(390), Me.item(399), Me.item(401)}
+                   Me.item(390), Me.item(399), Me.item(401), Me.item(412)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4), Me.item(65),
                    Me.item(15), Me.item(36), Me.item(37), Me.item(48),
@@ -500,7 +512,7 @@
                    Me.item(327), Me.item(328), Me.item(330), Me.item(338),
                    Me.item(344), Me.item(350), Me.item(362), Me.item(373),
                    Me.item(375), Me.item(379), Me.item(380), Me.item(387),
-                   Me.item(388), Me.item(390), Me.item(395)}
+                   Me.item(388), Me.item(390), Me.item(395), Me.item(410)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32),
                 Me.item(33), Me.item(34), Me.item(35), Me.item(44),
@@ -511,7 +523,8 @@
                 Me.item(269), Me.item(270), Me.item(272), Me.item(291),
                 Me.item(295), Me.item(296), Me.item(334), Me.item(341),
                 Me.item(347), Me.item(358), Me.item(360), Me.item(385),
-                Me.item(386), Me.item(392)}
+                Me.item(386), Me.item(392), Me.item(406), Me.item(407),
+                Me.item(408), Me.item(409)}
 
         acce = {New noAcce(),
                 Me.item(66), Me.item(67), Me.item(68), Me.item(69),
@@ -524,7 +537,8 @@
                 Me.item(327), Me.item(337), Me.item(340), Me.item(342),
                 Me.item(344), Me.item(346), Me.item(349), Me.item(355),
                 Me.item(356), Me.item(361), Me.item(374), Me.item(375),
-                Me.item(376), Me.item(389), Me.item(391), Me.item(402)}
+                Me.item(376), Me.item(389), Me.item(391), Me.item(402),
+                Me.item(411), Me.item(414)}
 
         services = {Me.item(87), Me.item(113), Me.item(114), Me.item(121),
                     Me.item(122), Me.item(124), Me.item(131), Me.item(245),

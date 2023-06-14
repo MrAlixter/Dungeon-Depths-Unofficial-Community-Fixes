@@ -105,6 +105,7 @@ Public Class Game
     Dim selectionType As String = ""
     Protected Friend selectionList As Dictionary(Of String, Action) = Nothing
     Dim maxSelectionPages As Integer = 0
+    Dim selectItemSize As Integer = -1
 
     '| - STARTUP - |
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -190,11 +191,8 @@ Public Class Game
     Sub newGame()
         If combat_engaged Or shop_npc_engaged Then Exit Sub
 
+        '| -- Pre-new-game Clean Up -- |
         cleanupPanels()
-
-        player1 = New Player()
-
-        'newGame prepares the application at the start of a new game
         combat_engaged = False
         btnS.Visible = False
         btnL.Visible = False
@@ -202,12 +200,18 @@ Public Class Game
         btnSettings.Visible = False
         btnAbout.Visible = False
 
+        '| -- Player Set Up -- |
+        player1 = New Player()
+        player1.solFlag = True
+
         Dim chargen As New CharacterGenerator
         If Settings.active(setting.noimg) Then
             chargen.picPort.Visible = False
             chargen.pnlBody.Visible = False
         End If
         chargen.ShowDialog()
+
+        player1.solFlag = False
         If chargen.quit_early Then
             btnS.Visible = True
             btnL.Visible = True
@@ -216,15 +220,17 @@ Public Class Game
             btnAbout.Visible = True
             Exit Sub
         End If
+
         chargen.Dispose()
 
-        updatable_queue.add(player1, player1.getSPD)
-
+        '| -- Dungeon Set Up -- |
         If Not mDun Is Nothing Then
             TextEvent.pushYesNo("Use the existing dungeon?", AddressOf useOldDungeon, AddressOf makeNewDungeon)
         Else
             makeNewDungeon()
         End If
+
+        updatable_queue.add(player1, player1.getSPD)
     End Sub
 
     '| - DUNGEON SETUP - |
@@ -2052,6 +2058,11 @@ Public Class Game
     Sub toPNLSelec(ByVal mode As String)
         selecting = True
         pnlSelection.BringToFront()
+        If selectItemSize < 0 Then
+            If lstSelec.Items.Count < 1 Then lstSelec.Items.Add("test")
+            selectItemSize = lstSelec.GetItemRectangle(0).Size.Height * 1.090909
+            If lstSelec.Size.Height < (selectItemSize * DDConst.SELECT_INDS.Length) * 1.03 Then lstSelec.Size = New Size(lstSelec.Size.Width, (selectItemSize * DDConst.SELECT_INDS.Length) * 1.03)
+        End If
         lstSelec.Items.Clear()
         lstSelec.Tag = 0
         lstInventory.Focus()
@@ -2075,8 +2086,6 @@ Public Class Game
             Case "EnemyTF"
                 lblWhat.Text = "Polymorph to what?"
                 fillLstSelec(player1.enemPolyForms)
-            Case "EnemyTF"
-
             Case "Food"
                 lblWhat.Text = "Eat what?"
                 fillLstSelecItem(player1.inv.getFood.ToList)
@@ -2138,7 +2147,7 @@ Public Class Game
                 lblWhat.Text = TextEvent.choiceText
                 lstSelec.Items.Add("a - Yes") 'cKeys(19).ToString.ToLower & " - Yes")
                 lstSelec.Items.Add("b - No") 'cKeys(20).ToString.ToLower & " - No")
-                maxPages = 1
+                maxSelectionPages = 1
         End Select
 
         lblInstruc.Text = "Type the seletion's" & vbCrLf &
@@ -2860,8 +2869,8 @@ Public Class Game
     '| -- Self Inspect -- |
     Sub selfinpKey()
         If turn < 2 Then Exit Sub
-        TextEvent.pushLog(player1.description)
         toDesc()
+        TextEvent.pushLog(player1.description)
     End Sub
     Sub toDesc()
         If combat_engaged Then
@@ -3204,6 +3213,7 @@ Public Class Game
     End Sub
     Sub toSOL()
         fromCombat()
+        cleanupPanels()
 
         If picStart.Visible = True Then pnlSaveLoad.Location = New Point(208, pnlSaveLoad.Location.Y) Else pnlSaveLoad.Location = New Point(63, pnlSaveLoad.Location.Y)
         pnlSaveLoad.Visible = True
@@ -3739,8 +3749,8 @@ Public Class Game
     End Sub
     Private Sub btnEXM_Click(sender As Object, e As EventArgs) Handles btnEXM.Click
         If Not TextEvent.lblEventOnClose Is Nothing Then Exit Sub
-        TextEvent.pushLog(player1.description)
         toDesc()
+        TextEvent.pushLog(player1.description)
     End Sub
     Private Sub btnIns_Click(sender As Object, e As EventArgs) Handles btnIns.Click
         doLblEventOnClose()

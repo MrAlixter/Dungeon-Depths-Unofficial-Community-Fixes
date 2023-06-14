@@ -18,7 +18,7 @@
         a_boost = 33
         w_boost = 10
         count = 0
-        value = 10
+        value = 364
 
         '|Description|
         setDesc("A tar-black whip of opaque slime dripping off of the consumed shaft of a wand.  Two small ""ears"" spring up just above the handle..." & DDUtils.RNRN &

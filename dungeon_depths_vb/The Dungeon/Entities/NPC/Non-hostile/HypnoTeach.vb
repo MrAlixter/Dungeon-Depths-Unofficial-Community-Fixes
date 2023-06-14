@@ -34,6 +34,8 @@
         inv.setCount("Learn_'Focus_Up'", 1)
         inv.setCount("Basic_Class_Change", 1)
         inv.setCount("Advanced_Class_Change", 1)
+        'Pluckable
+        inv.setCount(SpiralBikini.ITEM_NAME, 1)
 
         '|Stats|
         maxHealth = 9999
@@ -63,12 +65,14 @@
         local_img.Add(LocalImgInd.catgirl, ShopNPC.gbl_img.atrs(0).getAt(91))
         local_img.Add(LocalImgInd.trilobite, ShopNPC.gbl_img.atrs(0).getAt(96))
         local_img.Add(LocalImgInd.beegirl, ShopNPC.gbl_img.atrs(0).getAt(148))
+        local_img.Add(LocalImgInd.bimbo, ShopNPC.gbl_img.atrs(0).getAt(156))
         local_img.Add(LocalImgInd.alt1, ShopNPC.gbl_img.atrs(0).getAt(21))
         local_img.Add(LocalImgInd.alt2, ShopNPC.gbl_img.atrs(0).getAt(22))
         local_img.Add(LocalImgInd.alt3, ShopNPC.gbl_img.atrs(0).getAt(102))
         local_img.Add(LocalImgInd.alt4, ShopNPC.gbl_img.atrs(0).getAt(24))
         local_img.Add(LocalImgInd.alt5, ShopNPC.gbl_img.atrs(0).getAt(74))
         local_img.Add(LocalImgInd.alt6, ShopNPC.gbl_img.atrs(0).getAt(138))
+        local_img.Add(LocalImgInd.alt7, ShopNPC.gbl_img.atrs(0).getAt(161))
     End Sub
 
     Public Overrides Sub encounter()
@@ -96,6 +100,8 @@
 
         If form.Equals("Arachne") Then
             img_index = LocalImgInd.alt5
+        ElseIf img_index = LocalImgInd.bimbo Then
+            img_index = LocalImgInd.alt7
         Else
             img_index = LocalImgInd.alt1
         End If
@@ -107,7 +113,14 @@
     End Sub
     Public Sub back()
         img_index = preHypnoID
-        TextEvent.pushNPCDialog("So, anything else?")
+
+        If img_index = LocalImgInd.bimbo Then
+            TextEvent.pushNPCDialog("The hyptnotist slides off her jacket with a giggle." & DDUtils.RNRN &
+                                    """So, anything else?""")
+        Else
+            TextEvent.pushNPCDialog("So, anything else?")
+        End If
+
         Game.picNPC.BackgroundImage = local_img(img_index)
         Game.showNPCButtons()
         Game.player1.canMoveFlag = False
@@ -212,7 +225,7 @@
         Return "CROAK!"
     End Function
     Protected Overrides Function bunnyDialog(ByRef p As Player)
-        Return "HI!" & DDUtils.RNRN &
+        Return "Hi!" & DDUtils.RNRN &
                "I, like, don't know if it would be smart for me to try to hypno... hypotho... um, do my thing to you right now... but I totally have some tapes you can use!"
     End Function
     Protected Overrides Function princessDialog(ByRef p As Player)
@@ -236,6 +249,10 @@
     End Function
     Protected Overrides Function beegirlDialog(ByRef p As Player)
         Return "BZZZ!"
+    End Function
+    Protected Overrides Function bimboDialog(ByRef p As Player)
+        Return "Hi!" & DDUtils.RNRN &
+               "I, like, don't know if it would be smart for me to try to hypno... hypotho... um, do my thing to you right now... but let's give it a try!"
     End Function
 
     Public Overrides Function toFight() As String
@@ -263,6 +280,9 @@
     End Function
     Protected Overrides Function catgirlFightDialog(ByRef p As Player)
         Return "~Oooh~, you want to play?"
+    End Function
+    Protected Overrides Function bimboFightDialog(ByRef p As Player)
+        Return bunnyFightDialog(p)
     End Function
 
     Public Overrides Function hitBySpell() As String
@@ -292,9 +312,15 @@
     Protected Overrides Function catgirlSpellDialog(ByRef p As Player)
         Return "~Oooh~, you want to play?"
     End Function
+    Protected Overrides Function bimboSpellDialog(ByRef p As Player)
+        Return bunnySpellDialog(p)
+    End Function
 
-    Public Overrides Function postPurchaseDialog(ByRef p As Player) As Object
+    Protected Overrides Function normalPostPurchaseDialog(ByRef p As Player) As String
         Return "Would you like anything else?"
+    End Function
+    Protected Overrides Function bimboPostPurchaseDialog(ByRef p As Player) As String
+        Return "D'you wanna- like- buy more stuff?"
     End Function
 
     '| - MISC - |

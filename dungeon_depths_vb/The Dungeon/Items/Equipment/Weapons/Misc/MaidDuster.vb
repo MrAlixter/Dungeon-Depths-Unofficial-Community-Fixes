@@ -16,14 +16,14 @@
         a_boost = 5
         s_boost = 10
         count = 0
-        value = 375
+        value = 752
 
         '|Description|
         setDesc("A grey feather duster that looks like you could use it for cleaning." & DDUtils.RNRN &
                 getStatInformation())
     End Sub
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         Return "A grey feather duster that looks like you could use it for cleaning." & DDUtils.RNRN &
                 getStatInformation()
     End Function

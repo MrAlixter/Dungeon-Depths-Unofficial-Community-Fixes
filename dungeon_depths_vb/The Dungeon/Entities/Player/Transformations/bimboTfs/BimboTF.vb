@@ -117,7 +117,7 @@
             If p.equippedArmor.getSlutVarInd = -1 Then
                 If p.inv.item("Skimpy_Clothes").count < 1 Then p.inv.add("Skimpy_Clothes", 1)
                 EquipmentDialogBackend.armorChange(p, "Skimpy_Clothes")
-            Else
+            ElseIf p.equippedArmor.getAntiSlutInd = -1 Then
                 Equipment.clothingCurse1(p)
             End If
         End If
@@ -171,11 +171,34 @@
         p.prt.setIAInd(pInd.mouth, 17, True, True)
         'Clothes Change
         If Not p.equippedArmor.getName.Equals("Naked") Then
-            If p.equippedArmor.getSlutVarInd = -1 Then
-                p.inv.add("Very_Skimpy_Clothes", 1)
-                EquipmentDialogBackend.armorChange(p, "Very_Skimpy_Clothes")
+            If Game.shop_npc_engaged And Game.active_shop_npc.npc_index = ShopNPCInd.hypnoteach And Game.hteach.form.Equals("Bimbo") Then
+                Dim statname = p.getGreatestStatname
+                Dim tf_outfit = VSkimpyClothes.ITEM_NAME
+                If statname = DDConst.STATNAME_HP Then
+                    tf_outfit = CowArmor.ITEM_NAME
+                ElseIf statname = DDConst.STATNAME_MP Then
+                    tf_outfit = WitchCosplay.ITEM_NAME
+                ElseIf statname = DDConst.STATNAME_ATK Then
+                    tf_outfit = BrawlerCosplay.ITEM_NAME
+                ElseIf statname = DDConst.STATNAME_DEF Then
+                    tf_outfit = PaladinBikini.ITEM_NAME
+                ElseIf statname = DDConst.STATNAME_SPD Then
+                    tf_outfit = AmaAttire.ITEM_NAME
+                ElseIf statname = DDConst.STATNAME_WILL Then
+                    tf_outfit = AcolyteCosplay.ITEM_NAME
+                End If
+
+                If p.inv.getCountAt(tf_outfit) < 1 Then p.inv.add(tf_outfit, 1)
+                EquipmentDialogBackend.armorChange(p, tf_outfit)
+
+                out = ""
             Else
-                Equipment.clothingCurse1(p)
+                If p.equippedArmor.getSlutVarInd = -1 Then
+                    If p.inv.getCountAt(VSkimpyClothes.ITEM_NAME) < 1 Then p.inv.add(VSkimpyClothes.ITEM_NAME, 1)
+                    EquipmentDialogBackend.armorChange(p, VSkimpyClothes.ITEM_NAME)
+                ElseIf p.equippedArmor.getAntiSlutInd = -1 Then
+                    Equipment.clothingCurse1(p)
+                End If
             End If
         End If
         'Hair Change
@@ -184,12 +207,13 @@
         p.prt.setIAInd(pInd.midhair, 26, True, True)
         p.prt.setIAInd(pInd.fronthair, 24, True, True)
 
-
-
         p.lust += 50
 
         stopTF()
-        s2WrapUp(p, out)
+
+        p.changeClass("Bimbo")
+        p.textColor = Color.FromArgb(255, 255, 235, 240)
+        p.perks(perk.bimbotf) = -1
     End Sub
     Sub chickenTf(ByRef p As Player)
         Dim cRed = Color.FromArgb(255, 215, 0, 4)

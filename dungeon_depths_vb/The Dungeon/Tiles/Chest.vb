@@ -9,6 +9,7 @@ End Enum
 Public Class Chest
     Public contents As Inventory
     Public pos As Point
+    Dim cached_lt_bracket As LootTable.bracket = -1
     Public tiers() As List(Of Item) = {Nothing, New List(Of Item), New List(Of Item), New List(Of Item), New List(Of Item)}
 
     '|CONSTRUCTORS|
@@ -159,4 +160,9 @@ Public Class Chest
         'adds a quantity "c" to inventory slot "i"
         contents.add(i, c)
     End Sub
+    Public Function getCachedLootTableBracket(ByVal floor_num As Integer, Optional ByVal refresh As Boolean = False) As LootTable.bracket
+        If refresh Then cached_lt_bracket = LootTable.getBracket(floor_num)
+
+        Return cached_lt_bracket
+    End Function
 End Class

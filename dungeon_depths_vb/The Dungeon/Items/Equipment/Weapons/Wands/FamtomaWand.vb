@@ -24,7 +24,7 @@
 
         '|Stats|
         count = 0
-        value = 1
+        value = 4888
 
         '|Description|
         setDesc("A slender black wand, capped with a band of white.  It bristles with chaotic energy, and Fantoma promises that the last of its three-act show is sure to leave your foes in stitches.")

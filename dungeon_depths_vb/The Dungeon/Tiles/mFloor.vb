@@ -1419,15 +1419,20 @@ Public Class mFloor
     End Function
     Sub placeChest(ByVal code As String, Optional ByVal numChests As Integer = 0)
         'Fill Chest Tier List
-        For i = cTier.tier1 To DDConst.BASE_CHEST.tiers.Count - 1
-            DDConst.BASE_CHEST.tiers(i).Clear()
-        Next
-        For i = 0 To DDConst.BASE_CHEST.contents.upperBound
-            Dim c_item = DDConst.BASE_CHEST.contents.item(i)
-            If c_item.getTier(floorNumber) <> Nothing And Not c_item.npc_drop_only Then
-                DDConst.BASE_CHEST.tiers(c_item.getTier(floorNumber)).Add(c_item)
-            End If
-        Next
+        If DDConst.BASE_CHEST.getCachedLootTableBracket(floorNumber) <> LootTable.getBracket(floorNumber) Then
+            For i = cTier.tier1 To DDConst.BASE_CHEST.tiers.Count - 1
+                DDConst.BASE_CHEST.tiers(i).Clear()
+            Next
+
+            For i = 0 To DDConst.BASE_CHEST.contents.upperBound
+                Dim c_item = DDConst.BASE_CHEST.contents.item(i)
+                If c_item.getTier(floorNumber) <> Nothing And Not c_item.npc_drop_only Then
+                    DDConst.BASE_CHEST.tiers(c_item.getTier(floorNumber)).Add(c_item)
+                End If
+            Next
+
+            DDConst.BASE_CHEST.getCachedLootTableBracket(floorNumber, True)
+        End If
 
         Randomize(code.GetHashCode)
         'Dim numChests As Integer = CInt(Int(Rnd() * 8) + 3) * Int((mBoardWidth / 30) + (mBoardHeight / 30) / 2)

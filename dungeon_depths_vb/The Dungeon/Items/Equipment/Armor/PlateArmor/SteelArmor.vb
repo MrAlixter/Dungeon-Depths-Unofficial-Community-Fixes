@@ -33,7 +33,18 @@
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(105, True, True)
 
         '|Description|
-        setDesc("A basic armor set forged from steel." & DDUtils.RNRN & _
-                              getSizeInformation() & DDUtils.RNRN & getStatInformation())
+        setDesc("A basic armor set forged from steel." & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f1f2
+                Return 3
+            Case LootTable.bracket.f3f5
+                Return 2
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
 End Class

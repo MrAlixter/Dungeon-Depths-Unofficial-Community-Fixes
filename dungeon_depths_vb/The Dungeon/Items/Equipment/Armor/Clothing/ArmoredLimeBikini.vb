@@ -47,7 +47,7 @@
                 getStatInformation())
     End Sub
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         Return "A combat-ready bright green swimsuit." & DDUtils.RNRN &
                 "Using this item zips/unzips it" & DDUtils.RNRN &
                 getSizeInformation() & DDUtils.RNRN &

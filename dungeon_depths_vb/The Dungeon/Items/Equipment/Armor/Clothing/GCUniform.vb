@@ -54,7 +54,7 @@
         End If
     End Function
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         Return "A special set of clothes equipped through the gynoid conversion process.  While it doesn't do much by itself, if one has a network of circuitry on hand its fabric collects ambient mana and improves reaction time." & DDUtils.RNRN &
                "If worn by someone who is robotic, buff their Max MP and SPD" & DDUtils.RNRN &
                getSizeInformation() & DDUtils.RNRN &

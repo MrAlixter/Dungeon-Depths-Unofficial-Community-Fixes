@@ -1,12 +1,28 @@
 ﻿Public Class LootTable
-    Protected Friend Enum bracket
+    Public Enum bracket
         misc
         f1f2
         f3f5
         f6f9
         f10f12
         f13
+        f14fXX
     End Enum
+
+    '| -- Loot Table Template -- |
+
+    'Public Overrides Function getTier(floor_num As Integer) As Integer
+    '    Select Case LootTable.getBracket(floor_num)
+    '        Case LootTable.bracket.f1f2
+    '        Case LootTable.bracket.f3f5
+    '        Case LootTable.bracket.f6f9
+    '        Case LootTable.bracket.f10f12
+    '        Case LootTable.bracket.f13
+    '        Case LootTable.bracket.f14fXX
+    '        Case Else
+    '            Return MyBase.getTier(floor_num)
+    '    End Select
+    'End Function
 
     Private Shared loot_table(,) As Integer
 
@@ -25,6 +41,8 @@
     End Sub
 
     Protected Friend Shared Function getBracket(ByVal floor_num As Integer) As bracket
+        If Settings.active(setting.oldloot) Then Return bracket.misc
+
         Select Case floor_num
             Case 1, 2
                 Return bracket.f1f2
@@ -37,11 +55,7 @@
             Case 13
                 Return bracket.f13
             Case Else
-                Return bracket.misc
+                Return bracket.f14fXX
         End Select
     End Function
-
-    'Public Shared Function calcTier(ByVal floor_num As Integer)
-
-    'End Function
 End Class

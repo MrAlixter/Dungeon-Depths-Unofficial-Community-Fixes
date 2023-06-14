@@ -28,4 +28,17 @@
         setDesc("While on the surface, this seems to be but an ornate ring crafted from extremely precious materials, closer inspection reveals that the inside of its band is inscribed with a blessing of the Uvona, Goddess of Fugue." & DDUtils.RNRN &
                 getStatInformation())
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f10f12
+                Return 3
+            Case LootTable.bracket.f13
+                Return 3
+            Case LootTable.bracket.f14fXX
+                Return 3
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
 End Class

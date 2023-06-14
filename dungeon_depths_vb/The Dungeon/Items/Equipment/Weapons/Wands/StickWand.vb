@@ -15,7 +15,7 @@
 
         '|Stats|
         count = 0
-        value = 1
+        value = 20
 
         '|Description|
         setDesc("A tiny twig.  It doesn't seem like a very good weapon.")

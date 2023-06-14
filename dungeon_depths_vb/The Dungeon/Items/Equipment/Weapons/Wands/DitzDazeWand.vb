@@ -16,7 +16,7 @@
 
         '|Stats|
         count = 0
-        value = 1
+        value = 4888
         w_boost = -20
 
         '|Description|

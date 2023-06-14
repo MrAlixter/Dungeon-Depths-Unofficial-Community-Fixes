@@ -53,7 +53,7 @@
         Return MyBase.attack(p, m)
     End Function
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         If w_mode = mode.flower Then
             Return "A small purple flower with an iconic petal shape.  Pretty, but not much of a weapon..."
         End If

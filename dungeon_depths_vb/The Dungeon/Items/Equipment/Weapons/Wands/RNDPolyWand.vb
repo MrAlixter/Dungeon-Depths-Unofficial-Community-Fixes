@@ -30,7 +30,7 @@
 
         '|Stats|
         count = 0
-        value = 1
+        value = 4888
 
         '|Description|
         setDesc("A slender cyan wand that bristles with volatile energy." & DDUtils.RNRN &

@@ -35,7 +35,7 @@ Public Class Portrait
     Public Const NUM_IMG_LAYERS As Integer = 26
     Protected Friend Shared STARTING_INDEX() As Integer = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0} 'the starting indexes of each catagory
 
-    Dim ent As Entity
+    Public ent As Entity
 
     Public iArr(NUM_IMG_LAYERS) As Bitmap
     Public iArrInd(NUM_IMG_LAYERS) As Tuple(Of Integer, Boolean, Boolean)
@@ -804,6 +804,19 @@ Public Class Portrait
         Next
 
         Return False
+    End Function
+    Public Function Clone() As Portrait
+        Dim prt As Portrait = New Portrait(sexBool, ent)
+
+        prt.iArr = iArr.Clone
+        prt.iArrInd = iArrInd.Clone
+
+        prt.haircolor = haircolor
+        prt.skincolor = skincolor
+
+        prt.renderMode = renderMode
+
+        Return prt
     End Function
 
     'hairRecolor changes the color of an image, assumed to be of the same base color as the player's hair 

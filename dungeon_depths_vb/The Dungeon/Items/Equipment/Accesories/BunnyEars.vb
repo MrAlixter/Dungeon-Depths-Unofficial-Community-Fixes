@@ -87,7 +87,7 @@
         Return p.getLust * 0.33
     End Function
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         Return "A black headband with a pair of white rabbit ears that would go well with .  While it seems ordinary enough at a glance, every once and a while it sparks suspiciously." & DDUtils.RNRN &
                 "Dodge Effect" & DDUtils.RNRN &
                 "If equipped by a Bunny Girl:" & vbCrLf &

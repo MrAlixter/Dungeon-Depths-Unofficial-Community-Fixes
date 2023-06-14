@@ -18,7 +18,7 @@
 
         '|Stats|
         count = 0
-        value = 0
+        value = 69
 
         '|Image Index|
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(25, False, True)

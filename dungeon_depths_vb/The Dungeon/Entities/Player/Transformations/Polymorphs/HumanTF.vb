@@ -24,6 +24,40 @@
         change(p)
     End Sub
 
+    Shared Sub change(ByRef p As Player, ByRef s As State, Optional ByVal changeForm As Boolean = True)
+        If changeForm Then s.pForm = New Human()
+
+        'color tfs
+        s.haircolor = Color.FromArgb(255, p.prt.haircolor.R, p.prt.haircolor.G, p.prt.haircolor.B)
+        s.skincolor = getSkinColor(p)
+
+        'face tf
+        If p.prt.iArrInd(pInd.eyes).Item3 Then s.setIArrInd(pInd.eyes, 0, p.sex.Equals("Female"), False)
+        If p.prt.iArrInd(pInd.nose).Item3 Then s.setIArrInd(pInd.eyes, 0, p.sex.Equals("Female"), False)
+        s.setIArrInd(pInd.ears, 0, p.sex.Equals("Female"), False)
+
+        'hair tf
+        If p.prt.iArrInd(pInd.rearhair).Item3 Or p.prt.iArrInd(pInd.midhair).Item3 Or p.prt.iArrInd(pInd.fronthair).Item3 Then
+            Randomize()
+            r = Int(Rnd() * 7)
+            s.setIArrInd(pInd.rearhair, r, p.sex.Equals("Female"), False)
+            s.setIArrInd(pInd.midhair, r, p.sex.Equals("Female"), False)
+            r = Int(Rnd() * 8) + 1
+            s.setIArrInd(pInd.fronthair, r, p.sex.Equals("Female"), False)
+        End If
+
+        'body tf
+        If p.breastSize > 3 Then s.breastSize = 3
+        If p.dickSize > 2 Then s.dickSize = 2
+        If p.buttSize > 3 Then s.buttSize = 3
+
+        s.setIArrInd(pInd.horns, 0, True, False)
+        s.setIArrInd(pInd.tail, 0, True, False)
+        s.setIArrInd(pInd.wings, 0, True, False)
+
+        'transformation description push
+        s.textColor = Color.White
+    End Sub
     Shared Sub change(ByRef p As Player, Optional ByVal changeForm As Boolean = True)
         If changeForm Then p.changeForm("Human")
 

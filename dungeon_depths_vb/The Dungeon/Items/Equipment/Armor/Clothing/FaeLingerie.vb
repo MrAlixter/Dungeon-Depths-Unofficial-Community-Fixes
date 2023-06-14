@@ -64,7 +64,7 @@
         Return 2
     End Function
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         Return "A slinky set of underwear, radiating with magical energy.  Stitched into the bustier is the name """ & soul_name & """..." & DDUtils.RNRN &
                 getSizeInformation() & DDUtils.RNRN &
                 getStatInformation()

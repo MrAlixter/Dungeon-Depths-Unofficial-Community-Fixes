@@ -39,4 +39,17 @@ Public Class AmaAttire
         setDesc("Apparel that aptly accentuates all an Amazon's adventageous attributes amazingly.  Alliteration!" & DDUtils.RNRN &
                                       getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f6f9
+                Return 3
+            Case LootTable.bracket.f10f12
+                Return 3
+            Case LootTable.bracket.f13
+                Return 3
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
 End Class

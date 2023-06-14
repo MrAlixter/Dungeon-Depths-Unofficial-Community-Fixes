@@ -15,11 +15,28 @@
 
         '|Stats|
         count = 0
-        value = 250
+        value = 2248
 
         '|Description|
         setDesc("A glass vial filled to the brim with a brilliant golden elixir.  A small label with a crude drawing of a smiling gorgon states that it should be used ""for mistakes""...")
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f1f2
+                Return Nothing
+            Case LootTable.bracket.f6f9
+                Return Nothing
+            Case LootTable.bracket.f10f12
+                Return 3
+            Case LootTable.bracket.f13
+                Return 3
+            Case LootTable.bracket.f14fXX
+                Return 3
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
 
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub

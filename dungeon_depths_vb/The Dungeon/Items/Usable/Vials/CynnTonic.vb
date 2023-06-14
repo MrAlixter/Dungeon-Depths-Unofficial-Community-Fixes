@@ -28,7 +28,7 @@
                 "[Cannot be used if the player's form is not stable]")
     End Sub
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         Return "A glass vial filled to the brim with a brilliant scarlet elixir.  A small label with a crude drawing of a grinning demoness states that it should be used ""for a good time""..." & DDUtils.RNRN &
                 "Increases the XP of all defeated enemies for a limited time.  Drink Cynn's Tonic responsibly..." & DDUtils.RNRN &
                 If(Transformation.canBeTFed(Game.player1), "[Cannot be used if the player's form is not stable]", "Your form is not stable, and the vial doesn't seem to want to open...")

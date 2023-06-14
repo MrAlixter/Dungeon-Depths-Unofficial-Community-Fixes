@@ -14,6 +14,7 @@
         droppable = False
         rando_inv_allowed = False
         over_acce = True
+        list_in_debug = False
 
         '|Stats|    
         count = 0

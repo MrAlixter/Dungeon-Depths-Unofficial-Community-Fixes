@@ -24,7 +24,7 @@
         p.prt.setIAInd(pInd.hat, 0, True, False)
         p.prt.setIAInd(pInd.wings, 2, True, False)
         p.prt.setIAInd(pInd.horns, 3, True, False)
-        p.prt.haircolor = Color.FromArgb(255, 155, 0, 0)
+        p.prt.haircolor = DemonTF.getDemonHairColor(p.prt.haircolor)
         p.prt.skincolor = Color.FromArgb(255, 255, 105, 180)
 
         p.drawPort()
@@ -60,6 +60,22 @@
         p.formStates(stateInd.succDisgState).initFlag = True
         p.formStates(stateInd.succDisgState).save(p)
     End Sub
+    Shared Sub createDisguise(ByRef p As Player, ByRef s As State)
+        If s.initFlag Then Exit Sub
+
+        For i = 0 To Portrait.NUM_IMG_LAYERS
+            s.setIArrInd(i, Portrait.STARTING_INDEX(i), p.prt.sexBool, False)
+        Next
+
+        HumanTF.change(p, s)
+
+        s.setIArrInd(pInd.face, 0, True, False)
+        s.setIArrInd(pInd.nose, 0, True, False)
+        s.setIArrInd(pInd.eyes, 12, True, True)
+        s.setIArrInd(pInd.eyebrows, 0, True, False)
+
+        s.initFlag = True
+    End Sub
 
     Public Shared Sub step1alt()
         Dim dptf As DarkPactTF = New DarkPactTF
@@ -74,9 +90,39 @@
         p.prt.setIAInd(pInd.hat, 0, True, False)
         p.prt.setIAInd(pInd.wings, 2, True, False)
         p.prt.setIAInd(pInd.horns, 3, True, False)
-        p.prt.haircolor = Color.FromArgb(255, 155, 0, 0)
+        p.prt.haircolor = DemonTF.getDemonHairColor(p.prt.haircolor)
         p.prt.skincolor = Color.FromArgb(255, 255, 105, 180)
 
         p.learnSpell("Cynn's Disguise")
+    End Sub
+
+    Public Shared Sub learnCynnsDisguise(ByRef p As Player)
+        If p.formStates(stateInd.succDisgState) Is Nothing Then p.formStates(stateInd.succDisgState) = New State(p)
+        createDisguise(p, p.formStates(stateInd.succDisgState))
+
+        p.learnSpell("Cynn's Disguise")
+    End Sub
+
+    Public Shared Sub step1bimbo(ByRef p As Player)
+
+        HumanTF.change(p)
+        p.changeClass("Bimbo")
+
+        p.prt.haircolor = DemonTF.getDemonHairColor(p.prt.haircolor)
+        p.prt.changeHairColor(DDUtils.cShift(p.prt.haircolor, Color.White, 50))
+
+        If p.sex = "Male" Then
+            p.MtF()
+        End If
+
+        If p.breastSize < 2 Then p.breastSize = 2
+        p.prt.setIAInd(pInd.face, 0, True, False)
+        p.prt.setIAInd(pInd.nose, 0, True, False)
+        p.prt.setIAInd(pInd.eyes, 26, True, True)
+        p.prt.setIAInd(pInd.mouth, 6, True, True)  'mouth
+        p.prt.setIAInd(pInd.eyebrows, 0, True, False)
+        p.prt.setIAInd(pInd.rearhair, 18, True, True)  'rearhair1
+        p.prt.setIAInd(pInd.midhair, 9, True, False)  'rearhair2
+        p.prt.setIAInd(pInd.fronthair, 19, True, True) 'fronthair
     End Sub
 End Class

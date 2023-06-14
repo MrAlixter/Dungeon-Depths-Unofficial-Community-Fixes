@@ -29,9 +29,12 @@
         p.addLust(-25)
     End Sub
 
-    Public Overrides Function getTier(ByVal floor_num As Integer) As Integer
-        If DDDateTime.isSummer Then Return 2
-
-        Return Nothing
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f13
+                Return Nothing
+            Case Else
+                If DDDateTime.isSummer Then Return 2 Else Return Nothing
+        End Select
     End Function
 End Class

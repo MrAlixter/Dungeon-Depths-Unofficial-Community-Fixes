@@ -18,7 +18,7 @@
         '|Stats|
         h_boost = 15
         count = 0
-        value = 0
+        value = 138
 
         '|Image Index|
         bsize2 = New Tuple(Of Integer, Boolean, Boolean)(177, True, True)

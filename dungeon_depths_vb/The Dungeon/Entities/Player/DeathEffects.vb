@@ -56,4 +56,51 @@
 
         TextEvent.pushYesNo("Start a new game?", AddressOf Game.newGame, AddressOf Game.formReset)
     End Sub
+    Shared Sub bewitchedRation(ByRef p As Player)
+        If p.equippedAcce.getAName.Equals(CynnsBimboMark.ITEM_NAME) Then
+            p.changeClass("Onahole")
+
+            Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(150), "With a blinding flash of light, your perspective skews and you find yourself flopping inanimately to the floor.  A familiar figure looms over your new shape." & DDUtils.RNRN &
+                                                                  """Yeah, that wasn't gonna work twice...""" & DDUtils.RNRN &
+                                                                  "Cynn struts off, leaving you transformed and helpless; little more than an artificial vagina." & DDUtils.RNRN &
+                                                                  """Next time, maybe take me up on my offer.""" & DDUtils.RNRN &
+                                                                  "GAME OVER!", AddressOf Game.player1.die)
+            p.drawPort()
+            Exit Sub
+        End If
+
+        If Not p.formName = "Demon" Then
+            p.prt.changeSkinColor(Color.FromArgb(255, 214, 106, 106))
+            p.prt.changeHairColor(DemonTF.getDemonHairColor(p.prt.haircolor))
+            p.changeForm("Demon")
+        End If
+
+        If p.prt.iArrInd(pInd.eyes).Item2 Then
+            p.prt.setIAInd(pInd.eyes, 66, True, True)
+        Else
+            p.prt.setIAInd(pInd.eyes, 19, False, True)
+        End If
+
+        If p.breastSize > 0 Then p.breastSize = 2
+        If p.breastSize < 1 Then p.breastSize = 0
+
+        p.changeClass("Rogue")
+        p.inv.add(p.equippedArmor.getAName, -1)
+        p.inv.add(DarkplateBikini.ITEM_NAME, 1)
+        EquipmentDialogBackend.equipArmor(p, DarkplateBikini.ITEM_NAME, False)
+
+        p.inv.add(p.equippedWeapon.getAName, -1)
+        p.inv.add(RunecursedDagger.ITEM_NAME, 1)
+        EquipmentDialogBackend.equipWeapon(p, RunecursedDagger.ITEM_NAME, False)
+
+        TextEvent.push("You collapse into a smoldering pile, as your body and equipment morph around you." & DDUtils.RNRN &
+                       "A cackling voice rings out in your mind, as you feel yourself falling into a trance-like state." & DDUtils.RNRN &
+                       """AH, A NEW MINION TO PLAY WITH?  I HAVE SUCH DELIGHTFUL PLANS FOR-""" & DDUtils.RNRN &
+                       "As suddenly as it began, though, the voice falls silent mid-sentence.  You heft one of the runed daggers that you now seem to be holding." & DDUtils.RNRN &
+                       "Hmm...  what a strange enchantment...")
+
+        p.perks(perk.canmeetcyn) = 3
+
+        p.drawPort()
+    End Sub
 End Class

@@ -17,7 +17,7 @@
         h_boost = 20
         w_boost = -1
         count = 0
-        value = 434
+        value = 834
 
         '|Image Index|
         fInd = New Tuple(Of Integer, Boolean, Boolean)(17, True, True)
@@ -27,6 +27,15 @@
         setDesc("A large metal bell attached to a pink collar that rings hypnotically with its wearer's gait." & DDUtils.RNRN &
                 getStatInformation())
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f1f2
+                Return Nothing
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
 
     Overrides Sub onEquip(ByRef p As Player)
         p.health += 40 / p.getMaxHealth

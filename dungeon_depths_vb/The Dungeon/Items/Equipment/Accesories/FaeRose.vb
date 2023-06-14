@@ -45,7 +45,7 @@
         End If
     End Sub
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         Return "A tiny " & Trim(Player.getColor(h_color)) & " flower, radiating with magical energy..." & DDUtils.RNRN &
                getStatInformation()
     End Function

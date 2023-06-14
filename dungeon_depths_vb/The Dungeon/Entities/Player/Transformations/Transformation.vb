@@ -28,6 +28,7 @@
     cynntonic
     dancer
     darkpact
+    demon
     demonbimbo
     demonmino
     dragonpolymorph
@@ -224,6 +225,9 @@ Public MustInherit Class Transformation
 
         ElseIf tf = tfind.darkpact Then
             Return New DarkPactTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.demon Then
+            Return New DemonTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.demonbimbo Then
             Return New DemBimboTF(cs, n, tts, wi, cbs, tfd)

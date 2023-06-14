@@ -41,6 +41,7 @@ Partial Class Settings
         Me.picSampleIsotile = New System.Windows.Forms.PictureBox()
         Me.chkMakeIso = New System.Windows.Forms.CheckBox()
         Me.chkBimboNames = New System.Windows.Forms.CheckBox()
+        Me.chkOldLoot = New System.Windows.Forms.CheckBox()
         Me.tabAdvSettings.SuspendLayout()
         Me.tabIsoMaps.SuspendLayout()
         CType(Me.picSampleIsotile, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -51,7 +52,7 @@ Partial Class Settings
         Me.btnSettingsOK.BackgroundImage = CType(resources.GetObject("btnSettingsOK.BackgroundImage"), System.Drawing.Image)
         Me.btnSettingsOK.Font = New System.Drawing.Font("Consolas", 8.150944!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSettingsOK.ForeColor = System.Drawing.Color.White
-        Me.btnSettingsOK.Location = New System.Drawing.Point(185, 475)
+        Me.btnSettingsOK.Location = New System.Drawing.Point(185, 525)
         Me.btnSettingsOK.Name = "btnSettingsOK"
         Me.btnSettingsOK.Size = New System.Drawing.Size(75, 30)
         Me.btnSettingsOK.TabIndex = 0
@@ -90,6 +91,7 @@ Partial Class Settings
         Me.chkNoImg.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black
         Me.chkNoImg.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black
         Me.chkNoImg.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black
+        Me.chkNoImg.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chkNoImg.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkNoImg.ForeColor = System.Drawing.Color.White
         Me.chkNoImg.Location = New System.Drawing.Point(17, 78)
@@ -105,6 +107,7 @@ Partial Class Settings
         Me.chkAlwaysUnwilling.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black
         Me.chkAlwaysUnwilling.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black
         Me.chkAlwaysUnwilling.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black
+        Me.chkAlwaysUnwilling.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chkAlwaysUnwilling.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkAlwaysUnwilling.ForeColor = System.Drawing.Color.White
         Me.chkAlwaysUnwilling.Location = New System.Drawing.Point(16, 107)
@@ -121,6 +124,7 @@ Partial Class Settings
         Me.chkNoRNG.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black
         Me.chkNoRNG.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black
         Me.chkNoRNG.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black
+        Me.chkNoRNG.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chkNoRNG.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkNoRNG.ForeColor = System.Drawing.Color.White
         Me.chkNoRNG.Location = New System.Drawing.Point(16, 174)
@@ -138,6 +142,7 @@ Partial Class Settings
         Me.chkOldSpellSpec.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black
         Me.chkOldSpellSpec.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black
         Me.chkOldSpellSpec.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black
+        Me.chkOldSpellSpec.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chkOldSpellSpec.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkOldSpellSpec.ForeColor = System.Drawing.Color.White
         Me.chkOldSpellSpec.Location = New System.Drawing.Point(16, 226)
@@ -155,6 +160,7 @@ Partial Class Settings
         Me.chkStartWithBooks.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black
         Me.chkStartWithBooks.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black
         Me.chkStartWithBooks.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black
+        Me.chkStartWithBooks.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chkStartWithBooks.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkStartWithBooks.ForeColor = System.Drawing.Color.White
         Me.chkStartWithBooks.Location = New System.Drawing.Point(17, 278)
@@ -172,6 +178,7 @@ Partial Class Settings
         Me.chkEoverSS.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black
         Me.chkEoverSS.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black
         Me.chkEoverSS.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black
+        Me.chkEoverSS.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chkEoverSS.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkEoverSS.ForeColor = System.Drawing.Color.White
         Me.chkEoverSS.Location = New System.Drawing.Point(17, 329)
@@ -187,6 +194,7 @@ Partial Class Settings
         Me.chkTextColor.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black
         Me.chkTextColor.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black
         Me.chkTextColor.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black
+        Me.chkTextColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chkTextColor.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkTextColor.ForeColor = System.Drawing.Color.White
         Me.chkTextColor.Location = New System.Drawing.Point(17, 385)
@@ -201,7 +209,7 @@ Partial Class Settings
         Me.btnAdv.BackgroundImage = CType(resources.GetObject("btnAdv.BackgroundImage"), System.Drawing.Image)
         Me.btnAdv.Font = New System.Drawing.Font("Consolas", 8.150944!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAdv.ForeColor = System.Drawing.Color.White
-        Me.btnAdv.Location = New System.Drawing.Point(66, 475)
+        Me.btnAdv.Location = New System.Drawing.Point(66, 525)
         Me.btnAdv.Name = "btnAdv"
         Me.btnAdv.Size = New System.Drawing.Size(113, 30)
         Me.btnAdv.TabIndex = 29
@@ -216,7 +224,7 @@ Partial Class Settings
         Me.tabAdvSettings.Location = New System.Drawing.Point(281, 33)
         Me.tabAdvSettings.Name = "tabAdvSettings"
         Me.tabAdvSettings.SelectedIndex = 0
-        Me.tabAdvSettings.Size = New System.Drawing.Size(470, 425)
+        Me.tabAdvSettings.Size = New System.Drawing.Size(470, 475)
         Me.tabAdvSettings.TabIndex = 31
         '
         'tabSpawnRates
@@ -228,7 +236,7 @@ Partial Class Settings
         Me.tabSpawnRates.Location = New System.Drawing.Point(4, 24)
         Me.tabSpawnRates.Name = "tabSpawnRates"
         Me.tabSpawnRates.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabSpawnRates.Size = New System.Drawing.Size(462, 397)
+        Me.tabSpawnRates.Size = New System.Drawing.Size(462, 447)
         Me.tabSpawnRates.TabIndex = 0
         Me.tabSpawnRates.Text = "Monster Spawn Rates"
         '
@@ -290,6 +298,7 @@ Partial Class Settings
         Me.chkBimboNames.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black
         Me.chkBimboNames.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black
         Me.chkBimboNames.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black
+        Me.chkBimboNames.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chkBimboNames.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkBimboNames.ForeColor = System.Drawing.Color.White
         Me.chkBimboNames.Location = New System.Drawing.Point(16, 430)
@@ -299,12 +308,29 @@ Partial Class Settings
         Me.chkBimboNames.Text = "No experimental name changes"
         Me.chkBimboNames.UseVisualStyleBackColor = True
         '
+        'chkOldLoot
+        '
+        Me.chkOldLoot.FlatAppearance.BorderColor = System.Drawing.Color.Black
+        Me.chkOldLoot.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black
+        Me.chkOldLoot.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black
+        Me.chkOldLoot.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black
+        Me.chkOldLoot.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.chkOldLoot.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkOldLoot.ForeColor = System.Drawing.Color.White
+        Me.chkOldLoot.Location = New System.Drawing.Point(16, 471)
+        Me.chkOldLoot.Name = "chkOldLoot"
+        Me.chkOldLoot.Size = New System.Drawing.Size(251, 39)
+        Me.chkOldLoot.TabIndex = 33
+        Me.chkOldLoot.Text = "Use old loot tables"
+        Me.chkOldLoot.UseVisualStyleBackColor = True
+        '
         'Settings
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.Black
-        Me.ClientSize = New System.Drawing.Size(272, 512)
+        Me.ClientSize = New System.Drawing.Size(272, 562)
         Me.ControlBox = False
+        Me.Controls.Add(Me.chkOldLoot)
         Me.Controls.Add(Me.chkBimboNames)
         Me.Controls.Add(Me.tabAdvSettings)
         Me.Controls.Add(Me.btnAdv)
@@ -346,4 +372,5 @@ Partial Class Settings
     Friend WithEvents chkMakeIso As System.Windows.Forms.CheckBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents picSampleIsotile As System.Windows.Forms.PictureBox
+    Friend WithEvents chkOldLoot As System.Windows.Forms.CheckBox
 End Class

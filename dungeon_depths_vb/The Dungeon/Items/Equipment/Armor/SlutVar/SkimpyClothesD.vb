@@ -15,7 +15,7 @@
 
         '|Stats|
         count = 0
-        value = 0
+        value = 69
 
         '|Image Index|
         bsize1 = New Tuple(Of Integer, Boolean, Boolean)(310, True, True)
@@ -37,6 +37,8 @@
     End Sub
 
     Public Overrides Function getAntiSlutInd() As Object
+        If owner Is Nothing Then Return -1
+
         Select Case owner.sState.iArrInd(pInd.clothes).Item1
             Case 0
                 Return 184

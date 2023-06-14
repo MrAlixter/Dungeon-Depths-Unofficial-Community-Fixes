@@ -14,7 +14,7 @@
 
         p.stamina += calories
         If p.stamina > 100 Then p.stamina = 100
-        Effect(p)
+        effect(p)
         count -= 1
     End Sub
     Overridable Sub effect(ByRef p As Player)

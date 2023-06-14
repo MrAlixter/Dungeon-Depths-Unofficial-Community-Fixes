@@ -26,6 +26,19 @@
                 getStatInformation())
     End Sub
 
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f6f9
+                Return 3
+            Case LootTable.bracket.f10f12
+                Return 3
+            Case LootTable.bracket.f14fXX
+                Return 3
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
+
     Public Overrides Sub onEquip(ByRef p As Player)
         If Not p.className.Equals("Archdemoness") Then
             Dim archdemonessTF = New ArchDemonessTF(1, 0, 0, False)

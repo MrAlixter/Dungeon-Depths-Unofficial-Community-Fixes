@@ -32,6 +32,8 @@
                 i *= 13
             Case "Friendship"
                 i *= 17
+            Case "Makeover"
+                i *= 19
         End Select
 
         Game.player1.perks(perk.faewishesmade) = i
@@ -55,6 +57,8 @@
                 Return i Mod 13 = 0
             Case "Friendship"
                 Return i Mod 17 = 0
+            Case "Makeover"
+                Return i Mod 19 = 0
         End Select
 
         Return False
@@ -69,6 +73,7 @@
         Dim skills = New Tuple(Of String, Action)("Skills", AddressOf FaeOfWishes.skills)
         Dim stronger = New Tuple(Of String, Action)("Strength", AddressOf FaeOfWishes.stronger)
         Dim friendship = New Tuple(Of String, Action)("Friendship", AddressOf FaeOfWishes.friendship)
+        Dim makeover = New Tuple(Of String, Action)("Makeover", AddressOf FaeOfWishes.makeover)
 
         wishes.Add(heal)
         wishes.Add(restoration)
@@ -77,6 +82,7 @@
         If Not madeWish("Skills") Then wishes.Add(skills)
         If Not madeWish("Strength") Then wishes.Add(stronger)
         If Not madeWish("Friendship") Then wishes.Add(friendship)
+        wishes.Add(makeover)
 
         TextEvent.pushManySelect("Wish for what?", wishes)
     End Sub
@@ -169,5 +175,14 @@
                                                               "That's what Miss Cynn says, at least...""" & DDUtils.RNRN &
                                                               "+1 " & LanceOfSFury.ITEM_NAME)
         If Not madeWish("Friendship") Then storeWishes("Friendship")
+    End Sub
+    Shared Sub makeover()
+        Dim gen = New RestyleCharacterGenerator
+        gen.ShowDialog()
+
+        gen.Dispose()
+        Game.player1.drawPort()
+
+        TextEvent.pushLog("""Hey, yeah!  Let's give you a makeover!""")
     End Sub
 End Class

@@ -15,7 +15,7 @@
 
         '|Stats|
         count = 0
-        value = 1
+        value = 2
 
         '|Description|
         setDesc("A small glass bottle filled with an translucent golden ichor that gives off a subtle glow.")

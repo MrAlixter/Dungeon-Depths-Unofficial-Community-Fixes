@@ -87,7 +87,7 @@
         Return p.equippedArmor.w_boost * 1.5
     End Function
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         Return "While on the surface, this seems to be but an ornate ring crafted from extremely precious materials, closer inspection reveals that the inside of its band is inscribed with a blessing of Amaraphne, Goddess of Love and Lust." & DDUtils.RNRN &
                        "Can be ""used"" to convert equipped armor to the corresponding slut variant" & vbCrLf &
                        "Increases DEF based on equipped armor" & vbCrLf &

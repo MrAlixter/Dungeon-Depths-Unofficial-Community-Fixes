@@ -14,7 +14,7 @@
 
         '|Stats|
         count = 0
-        value = 777
+        value = 670
 
         '|Description|
         setDesc("A small paper tag with instructions to apply it to your equipment." & DDUtils.RNRN &

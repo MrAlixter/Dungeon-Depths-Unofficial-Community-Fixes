@@ -47,6 +47,7 @@
         local_img.Add(LocalImgInd.catgirl, ShopNPC.gbl_img.atrs(0).getAt(93))
         local_img.Add(LocalImgInd.trilobite, ShopNPC.gbl_img.atrs(0).getAt(96))
         local_img.Add(LocalImgInd.beegirl, ShopNPC.gbl_img.atrs(0).getAt(148))
+        local_img.Add(LocalImgInd.bimbo, ShopNPC.gbl_img.atrs(0).getAt(158))
         local_img.Add(LocalImgInd.alt1, ShopNPC.gbl_img.atrs(0).getAt(36))
         local_img.Add(LocalImgInd.alt2, ShopNPC.gbl_img.atrs(0).getAt(37))
     End Sub
@@ -170,9 +171,32 @@
     Protected Overrides Function catgirlDialog(ByRef p As Player)
         Return "Meow indeed..."
     End Function
+    Protected Overrides Function bimboDialog(ByRef p As Player)
 
-    Public Overrides Function postPurchaseDialog(ByRef p As Player) As Object
+        If p.perks(perk.faecurse) > 1 Then
+            img_index = LocalImgInd.bimbo
+            Return "Ah, so you've spu- um- made one of the faefolk mad?" & DDUtils.RNRN &
+                   "A weird choice... but not nec- ness- um... maybe not a dumb one?  Totally better to make 'em angry than to give up your name." & DDUtils.RNRN &
+                   "Of course, to move forward you'll need to talk to the Fae Queen now.  That curse seems made solely to p- like, make fun of her, so you should keep your name secret.  Maybe her Namestealers can help?" & DDUtils.RNRN &
+                   "Hmm, I think, uh, someone... somewhere... you should get a iron collar?  Iron is, like, super-effective to the fae..."
+        ElseIf p.cursed Then
+            img_index = LocalImgInd.bimbo
+            Return "Ooooh, you're cursed now?" & DDUtils.RNRN &
+                   "*giggle*" & DDUtils.RNRN &
+                   "That's, like, totally a t-tragedy.  If you want I can take care of that for you..."
+        End If
+
+        img_index = LocalImgInd.bimbo
+        Return "What did you get yourself into this time?  Nothing?" & DDUtils.RNRN &
+               "*giggle*" & DDUtils.RNRN &
+               "Per- uh... maybe there's some sorta curse out there for you..."
+    End Function
+
+    Protected Overrides Function normalPostPurchaseDialog(ByRef p As Player) As String
         Return "Come back soon..."
+    End Function
+    Protected Overrides Function bimboPostPurchaseDialog(ByRef p As Player) As String
+        Return "Come back soon, cutie..."
     End Function
 
     '| - MISC - |

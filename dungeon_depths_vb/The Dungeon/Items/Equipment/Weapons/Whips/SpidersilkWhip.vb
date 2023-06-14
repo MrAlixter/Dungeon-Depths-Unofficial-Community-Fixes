@@ -16,7 +16,7 @@
         '|Stats| 
         a_boost = 25
         count = 0
-        value = 900
+        value = 928
 
         '|Description|
         setDesc("A white silk whip that critically hits more often than a standard sword." & DDUtils.RNRN &

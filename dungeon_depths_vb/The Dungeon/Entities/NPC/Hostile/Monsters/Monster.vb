@@ -30,6 +30,7 @@
     faerie_hunter
     archwitch_recluse
     marissa_neop
+    bewitched_ration
 End Enum
 
 Public Class Monster
@@ -169,6 +170,10 @@ Public Class Monster
                 Return New FaerieHunter
             Case mInd.marissa_neop
                 Return New MarissasStudent
+            Case mInd.bewitched_ration
+                Dim m = New Monster
+                m.name = BewitchedRations.ITEM_NAME
+                Return m
         End Select
 
         Return New Monster()
@@ -214,7 +219,7 @@ Public Class Monster
             DDUtils.append(tier, mInd.less_gorgon)
         End If
 
-        If IO.File.Exists("gho.sts") And Not mFloor.nonRandomFloors.Contains(floorInd) Then
+        If IO.File.Exists("gho.sts") And Not mFloor.nonRandomFloors.Contains(floorInd) And Int(Rnd() * 2) = 0 Then
             DDUtils.append(tier, mInd.player_ghost)
         End If
 

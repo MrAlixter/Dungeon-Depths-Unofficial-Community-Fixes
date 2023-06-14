@@ -39,6 +39,20 @@
         p.ongoingTFs.Add(New VialOfslimetf(p.perks(perk.slimetf)))
         p.update()
         count -= 1
-
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f1f2
+                Return 1
+            Case LootTable.bracket.f3f5
+                Return 1
+            Case LootTable.bracket.f6f9
+                Return 1
+            Case LootTable.bracket.misc
+                Return MyBase.getTier(floor_num)
+            Case Else
+                Return Nothing
+        End Select
+    End Function
 End Class

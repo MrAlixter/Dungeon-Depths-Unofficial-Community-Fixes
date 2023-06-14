@@ -170,7 +170,7 @@
         Game.player1.drawPort()
     End Sub
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         If current_mode = mode.bimbo Then
             Return "An impressive spear made of a brilliant platinum alloy.  It glows with a shimmering cerise aura as your hand approaches, and it almost feels as though you are being judged.  Once in your grip, sparkly runes dance along its length." & DDUtils.RNRN &
                    "This was the favored weapon of Tia, Human Bimbo." & DDUtils.RNRN &

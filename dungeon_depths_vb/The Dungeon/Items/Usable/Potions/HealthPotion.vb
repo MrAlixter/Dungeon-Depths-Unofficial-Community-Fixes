@@ -36,4 +36,13 @@
         TextEvent.push("You drink the " & getName() & ".  +" & CInt((p.health - phHealth) * p.getMaxHealth) & " health!")
         count -= 1
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f13
+                Return Nothing
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
 End Class

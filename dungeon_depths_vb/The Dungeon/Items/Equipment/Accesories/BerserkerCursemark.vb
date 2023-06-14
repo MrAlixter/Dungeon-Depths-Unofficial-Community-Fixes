@@ -49,7 +49,7 @@
         Return -1 * (((p.maxMana + p.mBuff) * p.pForm.m * p.pClass.m) + p.equippedArmor.getMBoost(p) + p.equippedWeapon.getMBoost(p))
     End Function
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         Return "A series of tattooed glyphs that shimmer with aggressive magic." & DDUtils.RNRN &
                "Negates Max MP while increasing ATK." & DDUtils.RNRN &
                getStatInformation()

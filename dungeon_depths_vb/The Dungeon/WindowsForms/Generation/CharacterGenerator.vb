@@ -35,13 +35,14 @@
         'set the player's image, name, and class
         setPlayerPortrait(Game.player1)
         Game.player1.setName(sanitizeName(txtName.Text))
-        Game.player1.setClassLoadout(cboxClass.Text)
 
         'if selected, save a preset using the currently selected images
         If chkSavePreset.Checked And Not quit_early Then
             Dim preset = New PCPreset()
             preset.save(cboxClass.Text)
         End If
+
+        Game.player1.setClassLoadout(cboxClass.Text)
     End Sub
     Private Sub cboxClass_TextChanged(sender As Object, e As EventArgs) Handles cboxClass.TextChanged
         'if an unrecognized class is selected, default to the first valid one we can find
@@ -162,7 +163,7 @@
     Private Sub btnSC_Click(sender As Object, e As EventArgs) Handles btnSC.Click
         Dim cd As New SCPicker
         cd.ShowDialog()
-        changeSC(cd.sc)
+        If Not cd.sc.A < 255 Then changeSC(cd.sc)
         cd.Dispose()
         btnBody_Click(sender, e)
     End Sub

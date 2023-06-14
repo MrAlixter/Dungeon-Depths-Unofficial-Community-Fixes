@@ -16,7 +16,7 @@
 
         '|Stats|
         count = 0
-        value = 100
+        value = 888
         setCalories(33)
 
         '|Description|

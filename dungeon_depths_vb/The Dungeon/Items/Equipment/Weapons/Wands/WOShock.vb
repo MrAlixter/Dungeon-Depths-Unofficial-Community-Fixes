@@ -15,7 +15,7 @@
 
         '|Stats|
         count = 0
-        value = 1000
+        value = 922
 
         '|Description|
         setDesc("A slender black wand charged with an almost electric energy.  Frogs may want to steer clear of its bearer...")

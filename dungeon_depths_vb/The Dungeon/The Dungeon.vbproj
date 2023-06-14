@@ -150,7 +150,9 @@
     <Compile Include="Entities\Player\Classes\WSmithThong1.vb" />
     <Compile Include="Entities\Player\Forms\needsPassages\BeeGirl.vb" />
     <Compile Include="Entities\Player\Forms\needsPassages\BlowUpCynn.vb" />
+    <Compile Include="Entities\Player\Forms\needsPassages\Daemon.vb" />
     <Compile Include="Entities\Player\Forms\needsPassages\FaeBimbo.vb" />
+    <Compile Include="Entities\Player\Forms\needsPassages\Demon.vb" />
     <Compile Include="Entities\Player\Forms\needsPassages\Unicorn.vb" />
     <Compile Include="Entities\Player\Forms\needsPassages\Orc.vb" />
     <Compile Include="Entities\Player\Forms\needsPassages\Cow.vb" />
@@ -207,6 +209,7 @@
     <Compile Include="Entities\Player\Transformations\MaggirlTFs\CyberValkyrieTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\CynnTonicTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\BimboMaidTF.vb" />
+    <Compile Include="Entities\Player\Transformations\OneStepTFs\DemonTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\SpaceBunTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\HumanTF.vb" />
     <Compile Include="Entities\Player\Transformations\ScaleTalismanTF.vb" />
@@ -222,6 +225,8 @@
     <Compile Include="Entities\Player\Transformations\PreferredFormTF.vb" />
     <Compile Include="Entities\Player\Transformations\FaePrincessTF.vb" />
     <Compile Include="Entities\Player\Transformations\BeeHoneyTF.vb" />
+    <Compile Include="Items\Equipment\Accesories\CynnsBimboMark.vb" />
+    <Compile Include="Items\Equipment\Accesories\TidemageTattoo.vb" />
     <Compile Include="Items\Equipment\Accesories\BerserkerCursemark.vb" />
     <Compile Include="Items\Equipment\Accesories\RingOfTheRabbit.vb" />
     <Compile Include="Items\Equipment\Accesories\SPCursemark.vb" />
@@ -246,6 +251,7 @@
     <Compile Include="Items\Equipment\Accesories\MOTOx.vb" />
     <Compile Include="Items\Equipment\Accesories\HallowedTalisman.vb" />
     <Compile Include="Items\Equipment\Accesories\Ballgag.vb" />
+    <Compile Include="Items\Equipment\Armor\Clothing\SpiralBikini.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\NanosilkQipaoP.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\BunnySuitS.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\CommonClothes9.vb" />
@@ -271,8 +277,10 @@
     <Compile Include="Items\Equipment\Armor\PlateArmor\PlatArmor.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\CyberValkyrieArmor.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\AcolyteCosplay.vb" />
+    <Compile Include="Items\Equipment\Armor\SlutVar\DarkplateBikini.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\PlantBikini.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\CultistCloak.vb" />
+    <Compile Include="Items\Equipment\Armor\SlutVar\PaladinBikini.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\PlatAdornment.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\GShowgirlOutfit.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\SkimpyClothesF.vb" />
@@ -299,6 +307,7 @@
     <Compile Include="Items\Equipment\Glasses\SummerShades.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\IronDagger.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\FeatherDagger.vb" />
+    <Compile Include="Items\Equipment\Weapons\Daggers\RunecursedDagger.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\VipersFang.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\PixieDuster.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\CrackedBrick.vb" />
@@ -337,6 +346,10 @@
     <Compile Include="Items\Services\UpgradeArmor.vb" />
     <Compile Include="Items\Usable\CynthiasRemote.vb" />
     <Compile Include="Items\Usable\Food\Acorn.vb" />
+    <Compile Include="Items\Usable\Food\MarissasRation.vb" />
+    <Compile Include="Items\Usable\Food\BewitchedRation.vb" />
+    <Compile Include="Items\Usable\Food\SafeRations.vb" />
+    <Compile Include="Items\Usable\Food\DubiousRations.vb" />
     <Compile Include="Items\Usable\Food\EyeOfTheBeholder.vb" />
     <Compile Include="Items\Usable\Food\Orange.vb" />
     <Compile Include="Items\Usable\Food\GAStickOfGum.vb" />
@@ -344,6 +357,7 @@
     <Compile Include="Items\Usable\Food\MPStickOfGum.vb" />
     <Compile Include="Items\Usable\Food\HPStickOfGum.vb" />
     <Compile Include="Items\Usable\Food\SpaceBun.vb" />
+    <Compile Include="Items\Usable\ShimmeringHairbrush.vb" />
     <Compile Include="Items\Usable\Manuals\Manual.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Rare Potions\HealthPotionHB.vb" />
     <Compile Include="Items\Usable\Potions\Lepanacea.vb" />
@@ -967,6 +981,12 @@
     <Compile Include="WindowsForms\Game\FormBackends\SnareDialogBackend.vb" />
     <Compile Include="WindowsForms\Game\FormBackends\CastDialogBackend.vb" />
     <Compile Include="WindowsForms\Game\FormBackends\SpellSpecDescBackend.vb" />
+    <Compile Include="WindowsForms\Generation\RestyleCharacterGenerator.Designer.vb">
+      <DependentUpon>RestyleCharacterGenerator.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsForms\Generation\RestyleCharacterGenerator.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WindowsForms\Generation\CharacterGenerator.Designer.vb">
       <DependentUpon>CharacterGenerator.vb</DependentUpon>
     </Compile>
@@ -1120,7 +1140,7 @@
     <Compile Include="Items\Equipment\Weapons\Swords\SoulBlade.vb" />
     <Compile Include="Items\Usable\Charms\SpeedCharm.vb" />
     <Compile Include="Items\Usable\Spellbooks\Spellbook.vb" />
-    <Compile Include="Items\Equipment\Armor\Clothing\SportBra.vb" />
+    <Compile Include="Items\Equipment\Armor\SlutVar\SportBra.vb" />
     <Compile Include="Items\Equipment\Weapons\Staffs\Staff.vb" />
     <Compile Include="Entities\Player\State.vb" />
     <Compile Include="Tiles\Statue.vb" />
@@ -1148,6 +1168,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsForms\ClothingTester.resx">
       <DependentUpon>ClothingTester.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsForms\Generation\RestyleCharacterGenerator.resx">
+      <DependentUpon>RestyleCharacterGenerator.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsForms\Generation\CharacterGenerator.resx">
       <DependentUpon>CharacterGenerator.vb</DependentUpon>

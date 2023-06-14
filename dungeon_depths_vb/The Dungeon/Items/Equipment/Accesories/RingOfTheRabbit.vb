@@ -15,7 +15,7 @@
         '|Stats|
         s_boost = 5
         count = 0
-        value = 2000
+        value = 2023
 
         '|Image Index|
         fInd = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
@@ -26,4 +26,13 @@
                 "When the wearer dodges, restores 40% of their maximum health." & DDUtils.RNRN &
                 getStatInformation())
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f1f2
+                Return 4
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
 End Class

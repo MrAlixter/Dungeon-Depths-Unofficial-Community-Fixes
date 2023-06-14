@@ -29,4 +29,13 @@
             PrincessTF.step1()
         End If
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f13
+                Return 2
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
 End Class

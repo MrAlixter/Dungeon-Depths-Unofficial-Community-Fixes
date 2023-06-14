@@ -47,6 +47,7 @@ Public MustInherit Class ShopNPC
         catgirl
         trilobite
         beegirl
+        bimbo
     End Enum
 
     '| -- Identification Vars -- |
@@ -139,7 +140,7 @@ Public MustInherit Class ShopNPC
         Game.hideNPCButtons()
 
         'reset the npc image index
-        If img_index > 4 And Not Game.picNPC.BackgroundImage.Equals(ShopNPC.gbl_img.atrs(0).getAt(9)) And Not img_index = LocalImgInd.arachne And Not img_index = LocalImgInd.catgirl Then img_index = LocalImgInd.normal
+        If img_index > 4 And Not Game.picNPC.BackgroundImage.Equals(ShopNPC.gbl_img.atrs(0).getAt(9)) And Not img_index = LocalImgInd.arachne And Not img_index = LocalImgInd.catgirl And Not img_index = LocalImgInd.bimbo Then img_index = LocalImgInd.normal
     End Sub
 
     Public Overridable Sub encounter()
@@ -194,6 +195,8 @@ Public MustInherit Class ShopNPC
                 dialog = trilobiteDialog(p)
             Case LocalImgInd.beegirl
                 dialog = beegirlDialog(p)
+            Case LocalImgInd.bimbo
+                dialog = bimboDialog(p)
             Case Else
                 dialog = normalDialog(p)
         End Select
@@ -229,6 +232,8 @@ Public MustInherit Class ShopNPC
                 Return trilobiteDialog(p)
             Case LocalImgInd.beegirl
                 Return beegirlFightDialog(p)
+            Case LocalImgInd.bimbo
+                Return bimboFightDialog(p)
             Case Else
                 Return normalFightDialog(p)
         End Select
@@ -262,6 +267,8 @@ Public MustInherit Class ShopNPC
             Case LocalImgInd.beegirl
                 Game.toCombat(Me)
                 Return beegirlSpellDialog(p)
+            Case LocalImgInd.bimbo
+                Return bimboSpellDialog(p)
             Case Else
                 Game.toCombat(Me)
                 Return normalSpellDialog(p)
@@ -299,6 +306,16 @@ Public MustInherit Class ShopNPC
         tfStatUpdate()
 
         If Game.combat_engaged Then Game.shopNPCFromCombat(Me)
+    End Sub
+    Public Overridable Sub toBimbo()
+        tfCt = 1
+        tfEnd = 9999999
+
+        toFemale("bimbo")
+        form = "Bimbo"
+
+        img_index = LocalImgInd.bimbo
+        tfStatUpdate()
     End Sub
     Public Overridable Sub toPrincess()
         tfEnd = 15
@@ -385,6 +402,9 @@ Public MustInherit Class ShopNPC
     Protected Overridable Function beegirlDialog(ByRef p As Player)
         Return "Bzz.  Bzzz."
     End Function
+    Protected Overridable Function bimboDialog(ByRef p As Player)
+        Return "Hi!"
+    End Function
 
     Protected Overridable Function normalFightDialog(ByRef p As Player)
         Return "Have at you!"
@@ -415,6 +435,9 @@ Public MustInherit Class ShopNPC
     End Function
     Protected Overridable Function beegirlFightDialog(ByRef p As Player)
         Return "BZZ! BZZBZZBZZ!"
+    End Function
+    Protected Overridable Function bimboFightDialog(ByRef p As Player)
+        Return "OMG!  You're so mean!"
     End Function
 
     Protected Overridable Function normalSpellDialog(ByRef p As Player)
@@ -447,8 +470,11 @@ Public MustInherit Class ShopNPC
     Protected Overridable Function beegirlSpellDialog(ByRef p As Player)
         Return "BZZ! BZZBZZBZZ!"
     End Function
+    Protected Overridable Function bimboSpellDialog(ByRef p As Player)
+        Return "Like, what was that?"
+    End Function
 
-    Public Overridable Function postPurchaseDialog(ByRef p As Player)
+    Public Overridable Function postPurchaseDialog(ByRef p As Player) As String
         Select Case img_index
             Case LocalImgInd.frog
                 Return frogPostPurchaseDialog(p)
@@ -468,6 +494,8 @@ Public MustInherit Class ShopNPC
                 Return trilobitePostPurchaseDialog(p)
             Case LocalImgInd.beegirl
                 Return beegirlPostPurchaseDialog(p)
+            Case LocalImgInd.bimbo
+                Return bimboPostPurchaseDialog(p)
             Case Else
                 Return normalPostPurchaseDialog(p)
         End Select
@@ -501,6 +529,9 @@ Public MustInherit Class ShopNPC
     End Function
     Protected Overridable Function beegirlPostPurchaseDialog(ByRef p As Player) As String
         Return "Bzz..."
+    End Function
+    Protected Overridable Function bimboPostPurchaseDialog(ByRef p As Player) As String
+        Return "Thanks for- um, like... shopping?"
     End Function
 
     '| -- SAVE / LOAD -- |

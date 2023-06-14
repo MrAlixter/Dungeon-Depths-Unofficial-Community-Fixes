@@ -32,7 +32,7 @@
         End If
     End Function
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         Return "A shiny blade small enough to be concealed and drawn at will.  The blade may not be particularly sharp, the quality of iron contained within makes it very effective against fae-type enemies." & DDUtils.RNRN &
                "When attacking, the user hits twice." & DDUtils.RNRN &
                getStatInformation()

@@ -24,6 +24,19 @@
                 getStatInformation())
     End Sub
 
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f1f2
+                Return 2
+            Case LootTable.bracket.f3f5
+                Return 1
+            Case LootTable.bracket.f6f9
+                Return 1
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
+
     Overridable Sub wThrow(ByRef p As Player, ByRef m As Entity)
         If m Is Nothing Then
             TextEvent.push("You throw the knife across the dungeon at nothing in particular.")

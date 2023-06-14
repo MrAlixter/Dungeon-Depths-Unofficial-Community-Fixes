@@ -720,6 +720,8 @@
         Return False
     End Function
     Shared Function reflectDamage(ByVal dmg As Integer, ByVal ratio As Double, ByRef currTarget As Entity, ByRef p As Player)
+        If currTarget Is Nothing Then Return False
+
         If dmg > 0 And dmg < p.getIntHealth Then
             TextEvent.pushAndLog("Your opponent takes " & CInt(dmg * ratio) & " from their attack!")
             currTarget.takeDMG(CInt(dmg * ratio), p)
@@ -729,6 +731,8 @@
         Return False
     End Function
     Shared Function reflectDamage2(ByVal dmg As Integer, ByVal ratio As Double, ByRef currTarget As Entity, ByRef p As Player, ByVal crit As Boolean)
+        If currTarget Is Nothing Then Return False
+
         If dmg > 0 And dmg < p.getIntHealth Then
             If crit Then p.takeUnconditionalCritDMG(dmg, currTarget) Else p.takeUnconditionalDMG(dmg, currTarget)
 

@@ -57,7 +57,7 @@
         Return Nothing
     End Function
 
-    Public Overrides Function getDesc() As Object
+    Public Overrides Function getDescription() As Object
         Return "A staff of arcane coral used by a sect of mages that spend a lot of time at the beach." & DDUtils.RNRN &
                 "Becomes more powerful if its wielder is wearing a bikini." & vbCrLf &
                 "Grants access to the ""Aquageyser"" spell" & DDUtils.RNRN &

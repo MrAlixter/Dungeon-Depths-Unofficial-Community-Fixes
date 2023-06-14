@@ -25,6 +25,18 @@
         setDesc("A cloth band capable of blocking out one's vision completely." & DDUtils.RNRN &
                 getStatInformation())
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f1f2
+                Return 3
+            Case LootTable.bracket.f3f5
+                Return 3
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
+
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
         p.perks(perk.blind) = 1

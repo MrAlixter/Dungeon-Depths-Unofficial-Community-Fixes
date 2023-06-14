@@ -21,7 +21,6 @@
         s_boost = 20
         m_boost = 40
         count = 0
-        value = 100
 
         '|Image Index|
         bsize0 = New Tuple(Of Integer, Boolean, Boolean)(288, True, True)

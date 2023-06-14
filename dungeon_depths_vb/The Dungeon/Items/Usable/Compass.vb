@@ -40,4 +40,13 @@
         Game.drawBoard()
         count -= 1
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f13
+                Return Nothing
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
 End Class

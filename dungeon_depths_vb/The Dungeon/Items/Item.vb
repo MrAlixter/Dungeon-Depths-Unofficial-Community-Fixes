@@ -25,6 +25,8 @@
     Public rando_inv_allowed = True
     Public can_be_stolen As Boolean = True
     Public only_drop_one As Boolean = False
+    Public list_in_shop As Boolean = True
+    Public list_in_debug As Boolean = True
 
     Public saleLim As Integer = 999
     Public onSell As Action = Nothing
@@ -48,9 +50,6 @@
     Sub setName(ByVal s As String)
         name = s
     End Sub
-    Public Overridable Function getDesc()
-        Return description
-    End Function
     Sub setDesc(ByVal s As String)
         description = s
     End Sub
@@ -60,7 +59,7 @@
     Public Function getId()
         Return id
     End Function
-    Public Function getDescription()
+    Public Overridable Function getDescription()
         Return description
     End Function
     Function getCount()
@@ -112,13 +111,12 @@
     End Sub
 
     '| -- Misc. -- |
-    Public Sub examine()
+    Public Overridable Sub examine()
         If durability > 99 Then
-            TextEvent.push(getDesc())
+            TextEvent.push(getDescription())
         Else
-            TextEvent.push(getDesc() & DDUtils.RNRN & "Durability: " & durability & " (Breaks at 0)")
+            TextEvent.push(getDescription() & DDUtils.RNRN & "Durability: " & durability & " (Breaks at 0)")
         End If
-
     End Sub
     Public Overridable Sub toSavedItem(ByRef ent As Entity)
         Dim output = CStr(

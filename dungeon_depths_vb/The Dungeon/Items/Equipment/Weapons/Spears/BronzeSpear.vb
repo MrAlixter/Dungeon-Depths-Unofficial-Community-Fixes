@@ -23,4 +23,13 @@
                 "Can be thrown using the ""Use"" button." & DDUtils.RNRN &
                 getStatInformation())
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Select Case LootTable.getBracket(floor_num)
+            Case LootTable.bracket.f1f2
+                Return 2
+            Case Else
+                Return MyBase.getTier(floor_num)
+        End Select
+    End Function
 End Class
