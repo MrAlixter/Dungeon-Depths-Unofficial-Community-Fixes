@@ -12,7 +12,7 @@
     Public Overrides Sub init()
         MyBase.init()
 
-        TextEvent.pushNPCDialog("""Hey " & If(Game.player1.sex.Equals("Male"), "guy", "you") & ", do you mind doing me a favor?  I've been scouting ahead and I can give my menu a good ol' overhaul if I can deal with some of the bigger mosters that are roaming around." & DDUtils.RNRN &
+        TextEvent.pushNPCDialog("""Hey " & If(Game.player1.sex.Equals("Male"), "guy", "you") & ", do ya mind doing me a favor?  I've been scouting ahead and I can give my menu a good ol' overhaul if I can deal with some of the bigger mosters that are roaming around." & DDUtils.RNRN &
                                 "There's a sword that the guy on floor 2 used to carry around that's wicked sharp, buuuut also pretty evil.  Get it, and bring it over." & DDUtils.RNRN &
                                 "Trust me, I've got the psychic chops to handle its... well... psychic chops.""" & DDUtils.RNRN &
                                 "Quest ""Breaking an Egg"" acquired!")

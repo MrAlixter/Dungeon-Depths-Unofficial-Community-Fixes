@@ -197,8 +197,7 @@
         attack = 77
         defense = 77
         speed = 777
-        tfCt = 1
-        tfEnd = 3
+        perks(npc_perk.tfdur) = 3
 
         Game.updatePnlCombat(Game.player1, Me)
     End Sub
@@ -229,8 +228,7 @@
         attack = 100
         defense = 777
         speed = 77
-        tfCt = 1
-        tfEnd = 5
+        perks(npc_perk.tfdur) = 5
 
         Game.updatePnlCombat(Game.player1, Me)
     End Sub
@@ -269,8 +267,7 @@
         attack = 66
         defense = 77
         speed = 77777
-        tfCt = 1
-        tfEnd = 7
+        perks(npc_perk.tfdur) = 7
 
         Game.updatePnlCombat(Game.player1, Me)
     End Sub

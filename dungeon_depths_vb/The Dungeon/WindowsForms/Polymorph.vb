@@ -127,7 +127,7 @@
             t.defense *= 0.2
             t.speed *= 0.7
             t.will *= 0.2
-            t.tfEnd = 5
+            t.perks(npc_perk.tfdur) = 5
 
         ElseIf s = "Sheep" Then                 'Even Debuff
             t.maxHealth *= 0.5
@@ -135,7 +135,7 @@
             t.defense *= 0.5
             t.speed *= 0.5
             t.will *= 0.5
-            t.tfEnd = 6
+            t.perks(npc_perk.tfdur) = 6
 
         ElseIf s = "Princess" Then              '+WIL Debuff
             t.maxHealth *= 0.33
@@ -143,7 +143,7 @@
             t.defense *= 0.33
             t.speed *= 0.33
             t.will *= 1.0
-            t.tfEnd = 6
+            t.perks(npc_perk.tfdur) = 6
 
         ElseIf s = "Cat-Girl" Then              '+WIL/SPD Debuff
             t.maxHealth *= 0.33
@@ -151,7 +151,7 @@
             t.defense *= 0.33
             t.speed *= 0.33
             t.will *= 1.0
-            t.tfEnd = 6
+            t.perks(npc_perk.tfdur) = 6
 
         ElseIf s = "Bunny" Then                 '+SPD Debuff
             t.maxHealth *= 0.33
@@ -159,7 +159,7 @@
             t.defense *= 0.33
             t.speed *= 1.0
             t.will *= 0.33
-            t.tfEnd = 6
+            t.perks(npc_perk.tfdur) = 6
 
         ElseIf s = "Cow" Then                   '+HP Debuff
             t.maxHealth *= 1.0
@@ -167,7 +167,7 @@
             t.defense *= 0.33
             t.speed *= 0.33
             t.will *= 0.33
-            t.tfEnd = 6
+            t.perks(npc_perk.tfdur) = 6
 
         ElseIf s = "Trilobite" Then             '+DEF Debuff
             t.maxHealth *= 0.33
@@ -175,7 +175,7 @@
             t.defense *= 1.0
             t.speed *= 0.33
             t.will *= 0.33
-            t.tfEnd = 6
+            t.perks(npc_perk.tfdur) = 6
 
         ElseIf s = "Amnesiac" Then              'Even Debuff
             t.maxHealth *= 0.33
@@ -183,8 +183,8 @@
             t.defense *= 0.33
             t.speed *= 0.33
             t.will *= 0.33
-            t.stunct = 1
-            t.tfEnd = 3
+            t.perks(npc_perk.stun) = 1
+            t.perks(npc_perk.tfdur) = 3
 
         ElseIf s = "Slime​" Then                 '+DEF Buff
             t.maxHealth *= 0.5
@@ -192,7 +192,7 @@
             t.defense *= 2.5
             t.speed *= 0.9
             t.will *= 1.0
-            t.tfEnd = 2
+            t.perks(npc_perk.tfdur) = 2
 
         ElseIf s = "Succubus​" Then              '+ATK/WIL Buff
             t.maxHealth *= 2.0
@@ -200,7 +200,7 @@
             t.defense *= 0.75
             t.speed *= 1.5
             t.will *= 1.25
-            t.tfEnd = 2
+            t.perks(npc_perk.tfdur) = 2
 
         ElseIf s = "Dragon​" Then                '+HP/ATK/DEF Buff
             t.maxHealth *= 1.5
@@ -208,7 +208,7 @@
             t.defense *= 2.0
             t.speed *= 0.5
             t.will *= 1.25
-            t.tfEnd = 2
+            t.perks(npc_perk.tfdur) = 2
 
         ElseIf s = "Bee-Girl" Then              '+WIL/SPD Debuff
             t.maxHealth *= 0.5
@@ -216,12 +216,11 @@
             t.defense *= 1.5
             t.speed *= 3.0
             t.will *= 0.33
-            t.tfEnd = 6
+            t.perks(npc_perk.tfdur) = 6
         Else
             Exit Sub
         End If
 
-        t.tfCt = 1
         t.form = s
     End Sub
     'npc transform method

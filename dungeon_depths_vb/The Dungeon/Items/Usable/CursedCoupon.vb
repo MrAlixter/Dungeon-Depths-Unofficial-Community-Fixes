@@ -24,8 +24,7 @@
 
         If Game.combat_engaged And Not p.currTarget Is Nothing Then
             'regular effecth
-            p.currTarget.isStunned = True
-            p.currTarget.stunct = 2
+            p.currTarget.perks(npc_perk.stun) = 2
             TextEvent.pushLog("With a poof, " & p.currTarget.getName & " becomes an inflated version of themselves!")
             TextEvent.pushCombat("With a poof " & p.currTarget.getName & " becomes an inflated version of themselves!")
         ElseIf Game.shop_npc_engaged And Not Game.active_shop_npc Is Nothing Then

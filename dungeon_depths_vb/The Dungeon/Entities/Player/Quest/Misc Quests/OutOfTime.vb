@@ -186,7 +186,7 @@ Friend Class OutOfTimeS3
         showNPC(ShopNPC.gbl_img.atrs(0).getAt(84), "Hmmm.  You intend to violate time law intentionally?  Have you fully considered the weight of travelling into the future?", AddressOf q1yesq2)
     End Sub
     Public Sub q1noq2no()
-        showNPC(ShopNPC.gbl_img.atrs(0).getAt(83), "Well then, I see no reason to hold you here any further.  You are free to go, " & If(Game.player1.sex.Equals("Male"), "sir", "ma'am") & "...", AddressOf cleanup)
+        showNPC(ShopNPC.gbl_img.atrs(0).getAt(83), "Well then, I see no reason to hold you here any further.  You are free to go, " & If(Game.player1.sex.Equals("Male"), "sir", If(Game.player1.sex.Equals("Female"), "ma'am", "past-dweller")) & "...", AddressOf cleanup)
     End Sub
 
     Public Sub q1yesq2()

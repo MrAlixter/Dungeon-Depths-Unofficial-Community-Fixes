@@ -35,8 +35,7 @@
             TextEvent.push(CStr("As the grenade goes off, you find yourself caught in its icy blast.  You are frozen for 4 turns!"))
         Else
             'regular effect
-            p.currTarget.isStunned = True
-            p.currTarget.stunct = 2
+            p.currTarget.perks(npc_perk.stun) = 2
             TextEvent.pushLog("The grenade freezes " & p.currTarget.getName & " solid for 3 turns!")
             TextEvent.pushCombat("The grenade freezes " & p.currTarget.getName & " solid for 3 turns!")
         End If

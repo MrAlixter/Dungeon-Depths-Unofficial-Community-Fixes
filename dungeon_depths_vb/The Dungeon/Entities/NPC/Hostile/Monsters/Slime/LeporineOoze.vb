@@ -49,7 +49,7 @@
         If Not currTarget Is Nothing Then attackCMD(currTarget)
     End Sub
     Public Overrides Sub attackCMD(ByRef target As Entity)
-        If (Int(Rnd() * 4) = 0 And getHealth() > 0.1 And Not charged) Or isStunned Then
+        If (Int(Rnd() * 4) = 0 And getHealth() > 0.1 And Not charged) Or perks(npc_perk.stun) >= 0 Then
             Dim dmg = getIntHealth() / 10
 
             TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle()) & "'s entire body pulses, throwing off a layer of slime!")
@@ -60,8 +60,8 @@
             Exit Sub
         End If
 
-        If tfCt > 0 Then
-            tfCt = 0
+        If perks(npc_perk.tfdur) >= 0 Then
+            perks(npc_perk.tfdur) = -1
             revert()
             Exit Sub
         End If
@@ -102,7 +102,7 @@
     End Sub
 
     Public Overloads Sub attackCMD(ByRef target As Entity, ByVal checkStun As Boolean)
-        If isStunned And checkStun Then
+        If perks(npc_perk.stun) >= 0 And checkStun Then
             TextEvent.push(DDUtils.capitalizeFirst(getNameWithTitle) & " is stunned!")
             Exit Sub
         End If

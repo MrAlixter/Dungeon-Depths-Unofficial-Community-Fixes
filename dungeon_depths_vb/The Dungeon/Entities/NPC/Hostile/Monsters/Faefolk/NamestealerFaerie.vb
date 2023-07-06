@@ -40,7 +40,7 @@
 
             Return """Oh!  How about we swap?  I'll be the " & oldform & ", and you'll be the Faerie!  That's perfect! ~♥"" " & pronoun & " exclaims, flying around you in a tight spiral of twinkly dust." & DDUtils.RNRN &
              "The fairy cackles as her spell begins its work, the world seeming to rise up around you as you dwindle in height and " & pronoun & " grows larger and larger.  With a sparkly shimmer, her wings vanish into mist as you suddenly find yourself flitting upwards on a pair of your own." & DDUtils.RNRN &
-             """Hey, big- er, little " & If(p.sex.Equals("Male"), "guy", "gal") & ", you look way better from up here!"""
+             """Hey, big- er, little " & If(p.sex.Equals("Male"), "guy", If(p.sex.Equals("Female"), "gal", "pal")) & ", you look way better from up here!"""
         Else
             p.name = Polymorph.rndBimName(p)
             p.UIupdate()
@@ -75,7 +75,7 @@
     End Sub
 
     Public Overrides Function shouldCastSpell(ByRef p As Player) As Boolean
-        Return tfCt < 1 And Game.turn Mod 2 = 0
+        Return perks(npc_perk.tfdur) < 1 And Game.turn Mod 2 = 0
     End Function
 
     Public Overrides Sub castSpell(ByRef p As Player)

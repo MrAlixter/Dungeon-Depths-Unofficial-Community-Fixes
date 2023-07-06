@@ -179,7 +179,7 @@ Friend Class DarkPactStep2
         Game.picNPC.BackgroundImage = ShopNPC.gbl_img.atrs(0).getAt(77)
         Game.picNPC.Visible = True
 
-        TextEvent.pushNPCDialog("Alright, great, you found a crystal!  It doesn't look like this one's been activated yet, so I'll get that going...", AddressOf completeDialogStep2)
+        TextEvent.pushNPCDialog("Yep, that'd be one of the right ones!  Doesn't look like this one's been activated yet, so I'll get that going...", AddressOf completeDialogStep2)
 
         Game.player1.addXP(1000)
 
@@ -189,7 +189,7 @@ Friend Class DarkPactStep2
     Private Sub completeDialogStep2()
         Game.picNPC.Visible = False
 
-        TextEvent.push("Cynn places a hand on the crystal, and she is quickly engulfed in a crackling red aura.  As the crystal begins glowing a sinister purple, Cynn bursts into a jet black flame and reverts to her demonic form.  She glances over at you, and gestures for you to come over." & DDUtils.RNRN &
+        TextEvent.push("Cynn places a hand on the stone, and is quickly engulfed in a crackling red aura.  As the crystal begins glowing with sinister light, Cynn reverts to her demonic form with a burst of black flame.  She glances over at you, and gestures for you to come over." & DDUtils.RNRN &
                        "She grabs your hand, and with a surge of energy and a blinding flash the crystal returns to a dormant state." & DDUtils.RNRN &
                        "Your abdomen is now marked with a glowing red glyph!", AddressOf completeDialogStep3)
 
@@ -200,7 +200,8 @@ Friend Class DarkPactStep2
     End Sub
 
     Private Sub completeDialogStep3()
-        showNPC(ShopNPC.gbl_img.atrs(0).getAt(76), "Alright, now all you gotta do is activate that bad boy by killing a bunch of stuff or getting real horny and you'll be a full demon.  If you're getting cold feet, now's the last chance you have to back out because after this, you'll be on the dark side and it isn't exactly easy to cross back over...")
+        showNPC(ShopNPC.gbl_img.atrs(0).getAt(76), "Alright, now all you gotta do is activate that bad boy by killing a bunch of stuff or getting real horny and you'll be a full demon." & DDUtils.RNRN &
+                                                   "If you're getting cold feet, now's the last chance you have to back out because after this, you'll be on the dark side and it isn't exactly easy to cross back over...")
 
         Game.player1.perks(perk.cynnsq1ct2) = 0
     End Sub

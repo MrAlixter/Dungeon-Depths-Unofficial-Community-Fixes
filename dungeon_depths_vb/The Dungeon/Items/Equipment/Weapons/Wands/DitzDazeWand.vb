@@ -41,8 +41,7 @@
 
     Public Overrides Sub spell(ByRef p As Player, ByRef m As Entity)
         If Not m.getNPC() Is Nothing Then
-            m.getNPC.isStunned = True
-            m.getNPC.stunct = 3
+            m.getNPC.perks(npc_perk.stun) = 3
         ElseIf Game.combat_engaged Then
             Game.fromCombat()
         End If

@@ -15,9 +15,15 @@
         Dim refP = "guy"
         Dim title = "Mister"
 
-        If Game.player1.prt.sexBool Then
+        If Game.player1.sex = "Female" Then
             refP = "gal"
             title = "Miss"
+        ElseIf Game.player1.sex = "Male" Then
+            refP = "guy"
+            title = "Mister"
+        Else
+            refP = "pal"
+            title = "um, you"
         End If
 
         Game.player1.perks(perk.meetfae1) = 1

@@ -31,8 +31,7 @@
         Dim mp As NPC = m.getNPC
 
         If Not mp Is Nothing AndAlso Int(Rnd() * 3) = 0 Then
-            mp.isStunned = True
-            mp.stunct = 0
+            mp.perks(npc_perk.stun) = 0
             TextEvent.pushEventBox("Your attack stuns" & mp.title & m.name & "!")
         End If
         Return dmg

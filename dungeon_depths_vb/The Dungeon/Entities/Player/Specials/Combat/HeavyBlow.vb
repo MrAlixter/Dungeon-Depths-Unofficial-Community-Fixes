@@ -18,9 +18,8 @@
 
         specHit(getName, dmg, getUser, getTarget)
 
-        If Not m.isStunned Then
-            m.isStunned = True
-            m.stunct = 0
+        If Not m.perks(npc_perk.stun) < 0 Then
+            m.perks(npc_perk.stun) = 0
         End If
     End Sub
 

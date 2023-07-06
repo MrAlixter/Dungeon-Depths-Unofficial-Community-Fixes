@@ -10,8 +10,7 @@
     End Sub
     Public Overrides Sub effect()
         If Game.combat_engaged Then
-            MyBase.getTarget.isStunned = True
-            MyBase.getTarget.stunct = 0
+            getTarget.perks(npc_perk.stun) = 0
             TextEvent.pushAndLog("Fotia's Piercing Gaze!  " & Trim(getTarget.title & " " & getTarget.getName) & " is stunned for 1 turn.")
         Else
             Dim goUp = True

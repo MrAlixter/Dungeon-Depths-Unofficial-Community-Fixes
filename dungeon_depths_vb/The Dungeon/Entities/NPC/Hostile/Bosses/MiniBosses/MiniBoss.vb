@@ -22,7 +22,7 @@
         End Select
     End Function
     Public Overrides Sub attackCMD(ByRef target As Entity)
-        If isStunned Then
+        If perks(npc_perk.stun) >= 0 Then
             TextEvent.push(DDUtils.capitalizeFirst(getNameWithTitle) & " is stunned!")
             Exit Sub
         End If
@@ -30,7 +30,7 @@
         MyBase.attackCMD(target)
     End Sub
     Public Overloads Sub attackCMD(ByRef target As Entity, ByVal checkStun As Boolean)
-        If isStunned And checkStun Then
+        If perks(npc_perk.stun) >= 0 And checkStun Then
             TextEvent.push(DDUtils.capitalizeFirst(getNameWithTitle) & " is stunned!")
             Exit Sub
         End If

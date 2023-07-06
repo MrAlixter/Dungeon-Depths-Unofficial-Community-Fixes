@@ -14,6 +14,8 @@
     mechavalkyrie
     hellfiresword
     berserkercmark
+    wsgumgun
+    wsgumgrenade
 End Enum
 
 Public Class Dungeon

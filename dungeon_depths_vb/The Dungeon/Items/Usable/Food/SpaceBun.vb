@@ -21,9 +21,9 @@ Public Class SpaceBun
         setCalories(50)
 
         '|Description|
-        setDesc("A strange pink pastry in a clear plastic wrapper." & DDUtils.RNRN &
+        setDesc("A strange pink pastry in a clear plastic wrapper.  A small label warns against 𝓃𝑜𝓉 eating too many of them too fast." & DDUtils.RNRN &
+                "... It does seem as though someone has edited the disclaimer, though." & DDUtils.RNRN &
                 "+50 Stamina")
-
     End Sub
 
     Public Overrides Sub effect(ByRef p As Player)

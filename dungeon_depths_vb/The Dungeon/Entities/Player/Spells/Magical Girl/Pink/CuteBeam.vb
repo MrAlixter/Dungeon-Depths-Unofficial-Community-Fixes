@@ -24,8 +24,7 @@
     End Sub
 
     Sub targetPlushTF()
-        MyBase.getTarget.tfCt = 1
-        MyBase.getTarget.tfEnd = 7
+        getTarget.perks(npc_perk.tfdur) = 7
         MyBase.getTarget.form = "Plush"
         MyBase.getTarget.attack = 0
         MyBase.getTarget.defense *= 1.25

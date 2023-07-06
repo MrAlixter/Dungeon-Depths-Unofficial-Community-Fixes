@@ -26,10 +26,14 @@
 
     Overrides Sub wThrow(ByRef p As Player, ByRef m As Entity)
         If m Is Nothing Then
-            TextEvent.push("You throw the spear across the dungeon at nothing in particular.")
-            TextEvent.pushLog("You throw the spear across the dungeon at nothing in particular.")
+            TextEvent.pushAndLog("You throw the spear across the dungeon at nothing in particular.")
         Else
-            TextEvent.pushLog("You throw the spear!")
+            If m.getNPC() Is Nothing Then
+                TextEvent.pushAndLog("You throw the " & getName.Replace("_", " ") & "!")
+            Else
+                TextEvent.pushAndLog("You throw the " & getName.Replace("_", " ") & " at " & m.getNPC.getNameWithTitle & "!")
+            End If
+
             Dim dmg As Integer = 2 * (p.getATK) + (Me.getABoost(p)) + Int(Rnd() * 3 + 1)
             p.hit(dmg, m)
         End If

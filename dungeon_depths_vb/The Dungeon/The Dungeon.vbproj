@@ -309,6 +309,7 @@
     <Compile Include="Items\Equipment\Weapons\Daggers\FeatherDagger.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\RunecursedDagger.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\VipersFang.vb" />
+    <Compile Include="Items\Equipment\Weapons\Misc\GumGun20mm.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\PixieDuster.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\CrackedBrick.vb" />
     <Compile Include="Items\Equipment\Weapons\Staffs\Hyacinth.vb" />
@@ -344,6 +345,7 @@
     <Compile Include="Items\Services\SellHellfireBlade.vb" />
     <Compile Include="Items\Services\UpgradeValkyrieSword.vb" />
     <Compile Include="Items\Services\UpgradeArmor.vb" />
+    <Compile Include="Items\Usable\GumGrenade.vb" />
     <Compile Include="Items\Usable\CynthiasRemote.vb" />
     <Compile Include="Items\Usable\Food\Acorn.vb" />
     <Compile Include="Items\Usable\Food\MarissasRation.vb" />

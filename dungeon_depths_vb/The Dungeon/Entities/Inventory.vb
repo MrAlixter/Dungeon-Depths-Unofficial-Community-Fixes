@@ -180,7 +180,7 @@
         internal_inventory.Add(SigStaff.ITEM_NAME, New SigStaff)                     '159
         internal_inventory.Add(SpikedStaff.ITEM_NAME, New SpikedStaff)               '160
         internal_inventory.Add(Blindfold.ITEM_NAME, New Blindfold)                   '161
-        internal_inventory.Add(TKnife.ITEM_NAME, New TKnife)                         '162
+        internal_inventory.Add(ThrowingKnife.ITEM_NAME, New ThrowingKnife)                         '162
         internal_inventory.Add(SigDagger.ITEM_NAME, New SigDagger)                   '163
         internal_inventory.Add(StealthGear.ITEM_NAME, New StealthGear)               '164
         internal_inventory.Add(MShank.ITEM_NAME, New MShank)                         '165
@@ -440,6 +440,8 @@
         internal_inventory.Add(RunecursedDagger.ITEM_NAME, New RunecursedDagger)     '412
         internal_inventory.Add(DarkplateBikini.ITEM_NAME, New DarkplateBikini)       '413
         internal_inventory.Add(CynnsBimboMark.ITEM_NAME, New CynnsBimboMark)         '414
+        internal_inventory.Add(GumGun20mm.ITEM_NAME, New GumGun20mm)                 '415
+        internal_inventory.Add(GumGrenade.ITEM_NAME, New GumGrenade)                 '416
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -492,7 +494,8 @@
                    Me.item(353), Me.item(362), Me.item(365), Me.item(366),
                    Me.item(367), Me.item(368), Me.item(369), Me.item(370),
                    Me.item(372), Me.item(377), Me.item(381), Me.item(388),
-                   Me.item(390), Me.item(399), Me.item(401), Me.item(412)}
+                   Me.item(390), Me.item(399), Me.item(401), Me.item(412),
+                   Me.item(415)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4), Me.item(65),
                    Me.item(15), Me.item(36), Me.item(37), Me.item(48),
@@ -512,7 +515,8 @@
                    Me.item(327), Me.item(328), Me.item(330), Me.item(338),
                    Me.item(344), Me.item(350), Me.item(362), Me.item(373),
                    Me.item(375), Me.item(379), Me.item(380), Me.item(387),
-                   Me.item(388), Me.item(390), Me.item(395), Me.item(410)}
+                   Me.item(388), Me.item(390), Me.item(395), Me.item(410),
+                   Me.item(416)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32),
                 Me.item(33), Me.item(34), Me.item(35), Me.item(44),

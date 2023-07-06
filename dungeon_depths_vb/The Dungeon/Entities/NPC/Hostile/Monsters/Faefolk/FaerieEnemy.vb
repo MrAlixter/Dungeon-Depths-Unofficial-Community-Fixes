@@ -86,7 +86,7 @@
 
         Return """Oh!  Someone big like you would make a sweet garden!  That's perfect! ~♥"" " & pronoun & " exclaims, flying around you in a tight spiral of twinkly dust." & DDUtils.RNRN &
                "Minty green leaves begin sprouting from your hair, and a small white flower blooms out from the new flora.  You reach up to touch your now-verdant locks, and the faerie bursts into another fit of giggles before drifting back into the woods." & DDUtils.RNRN &
-               """Hey, big " & If(p.sex.Equals("Male"), "guy", "gal") & ", you look better already!  Don't forget to water yourself, ok?"""
+               """Hey, big " & If(p.sex.Equals("Male"), "guy", If(p.sex.Equals("Female"), "gal", "pal")) & ", you look better already!  Don't forget to water yourself, ok?"""
     End Function
 
     Public Overridable Function shouldCastSpell(ByRef p As Player) As Boolean

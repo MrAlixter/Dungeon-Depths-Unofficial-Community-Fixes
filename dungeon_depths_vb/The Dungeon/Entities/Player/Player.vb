@@ -106,6 +106,7 @@
     esper           '104
     spacebun        '105
     pinkmist        '106
+    dubrations      '107
 End Enum
 Public Enum stateInd
     goddState
@@ -558,7 +559,7 @@ Public Class Player
             pState = New State(Me)
             Equipment.accChange(Me, "Phase_Deflector")
             Game.lblEvent.Visible = False
-
+            Game.compOOT = True
             gold = 0
 
         ElseIf s = "Cynn's Ally" Then
@@ -566,6 +567,7 @@ Public Class Player
 
             DarkPactTF.step1ally(Me)
             quests(qInd.darkPact).completeEntireQuest()
+            Game.compDP = True
 
             inv.add(BronzeSpear.ITEM_NAME, 1)
             inv.add(CynnsMark.ITEM_NAME, 1)
@@ -573,6 +575,21 @@ Public Class Player
             equippedAcce = inv.item(CynnsMark.ITEM_NAME)
             equippedAcce.onEquip(Me)
             equippedWeapon = inv.item(BronzeSpear.ITEM_NAME)
+
+        ElseIf s = "Mecha-Warrior" Then
+            pClass = classes("Warrior")
+            pForm = forms("Combat Unit")
+
+            prt.setIAInd(pInd.wings, 11, True, False)
+
+            inv.add(StickOfGum.ITEM_NAME, 25)
+            inv.add(DFStickOfGum.ITEM_NAME, 5)
+            inv.add(TargetingSystem.ITEM_NAME, 1)
+            inv.add(GumGun20mm.ITEM_NAME, 1)
+            inv.add(GumGrenade.ITEM_NAME, 5)
+
+            equippedWeapon = inv.item(GumGun20mm.ITEM_NAME)
+            equippedGlasses = inv.item(TargetingSystem.ITEM_NAME)
 
         ElseIf s = "Evil Mage" Then
             pClass = classes("Mage")
@@ -672,6 +689,7 @@ Public Class Player
         classes.Add("Pirate", New Pirate())
         classes.Add("Cynn Onahole", New CynnOnahole())
         classes.Add("Onahole", New CynnOnahole2())
+        classes.Add("Mecha-Warrior", New Warrior())
     End Sub
     Private Shared Sub initForms()
         'Creates the form dictionary
@@ -939,8 +957,7 @@ Public Class Player
         Dim t_took_dmg = target.takeDMG(dmg * 2, Me)
 
         If t_took_dmg And Not target.isDead Then
-            target.isStunned = True
-            target.stunct = 0
+            target.perks(npc_perk.stun) = 0
             TextEvent.pushAndLog(CStr("You hit " & target.getNameWithTitle() & " for " & DDUtils.formatBigNumber(dmg * 2) & " damage!  Critical hit!"))
         ElseIf t_took_dmg Then
             TextEvent.push3rdLastLog(CStr("You hit " & target.getNameWithTitle() & " for " & DDUtils.formatBigNumber(dmg * 2) & " damage!  Critical hit!"))
@@ -2183,7 +2200,7 @@ Public Class Player
             TextEvent.pushLog("Your form prevents you from being altered.")
             Exit Sub
         End If
-        sex = "Female"
+        If sex = "Male" Then sex = "Female"
         breastSize = Math.Max(1, breastSize)
         buttSize = Math.Max(1, buttSize)
         dickSize = -1
@@ -2195,7 +2212,7 @@ Public Class Player
             TextEvent.pushLog("Your form prevents you from being altered.")
             Exit Sub
         End If
-        sex = "Male"
+        If sex = "Female" Then sex = "Male"
         breastSize = -1
         buttSize = -1
         dickSize = Math.Max(1, dickSize)

@@ -185,6 +185,10 @@
             p.FtM()
         ElseIf p.sex = "Male" And sex_bool Then
             p.MtF()
+        ElseIf Not sex_bool Then
+            p.FtM()
+        ElseIf sex_bool Then
+            p.MtF()
         End If
 
         TextEvent.push(out, AddressOf p.drawPort)

@@ -11,9 +11,9 @@
         Dim d31 = Int(Rnd() * 3)
         Dim d32 = Int(Rnd() * 3)
 
-        If MyBase.getTarget.isStunned = True Then
+        If getTarget.perks(npc_perk.stun) >= 0 Then
             '"critical" hit
-            dmg *= MyBase.getTarget.stunct + 2
+            dmg *= getTarget.perks(npc_perk.stun) + 2
             dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, dmg + d31 + d32)
             getCaster.hit(dmg, getTarget, "  Oof, what a throw!")
         Else
@@ -21,8 +21,7 @@
             dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, dmg + d31 + d32)
             'should target be stunned?
             If Int(Rnd() * 2) = 0 Then
-                MyBase.getTarget.isStunned = True
-                MyBase.getTarget.stunct = 3
+                getTarget.perks(npc_perk.stun) = 3
                 getCaster.hit(dmg, getTarget, "  They are stunned by the spell!")
             Else
                 getCaster.hit(dmg, getTarget)

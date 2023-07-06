@@ -203,13 +203,13 @@ Public Class FanPhanStep1
     End Sub
     Private Shared Sub pose()
         Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(127), "You strike a sexy pose, and flash the audience your own grin." & DDUtils.RNRN &
-                          """Aww, isn't " & If(Game.player1.sex.Equals("Male"), "he", "she") & " just a treat?""" & DDUtils.RNRN &
+                          """Aww, " & If(Game.player1.sex.Equals("Male"), "isn't he", If(Game.player1.sex.Equals("Female"), "isn't she", "aren't they")) & " just a treat?""" & DDUtils.RNRN &
                           "Fantoma's praise seems genuine, and it seems like that was exactly what she was hoping you would do." & DDUtils.PAKTC, AddressOf FanPhanStep2.step2Wand)
         Game.player1.quests(qInd.fanPhan).completeCurrOjb()
     End Sub
     Private Shared Sub noPose()
         Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(127), "You strike a sexy pose, and flash the audience your own grin." & DDUtils.RNRN &
-                          """Aww, isn't " & If(Game.player1.sex.Equals("Male"), "he", "she") & " just a treat?""" & DDUtils.RNRN &
+                          """Aww, " & If(Game.player1.sex.Equals("Male"), "isn't he", If(Game.player1.sex.Equals("Female"), "isn't she", "aren't they")) & " just a treat?""" & DDUtils.RNRN &
                           "Despite your outward confidence, you feel dazed, and foggy.  You weren't planning to do a pose, right?" & DDUtils.PAKTC, AddressOf FanPhanStep2.step2Wand)
         Game.player1.wBuff -= 5
         Game.player1.mana /= 3

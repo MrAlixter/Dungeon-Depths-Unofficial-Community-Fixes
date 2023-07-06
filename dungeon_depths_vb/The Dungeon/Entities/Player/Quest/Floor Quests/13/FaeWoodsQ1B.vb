@@ -85,9 +85,13 @@
     Private Sub faeIntroduction()
         Dim refP = "guy"
 
-        If Game.player1.prt.sexBool Then
+        If Game.player1.sex = "Female" Then
             refP = "gal"
             passangerBool = True
+        ElseIf Game.player1.sex = "Male" Then
+            refP = "guy"
+        Else
+            refP = "person"
         End If
 
         Game.player1.perks(perk.meetfae1) = 1

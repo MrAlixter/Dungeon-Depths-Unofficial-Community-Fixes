@@ -25,8 +25,7 @@
     End Sub
     Public Overrides Sub backfire()
         TextEvent.pushAndLog("The blade whizzes past your foe, leaving them stunned for 1 turn!")
-        getTarget.isStunned = True
-        getTarget.stunct = 0
+        getTarget.perks(npc_perk.stun) = 0
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

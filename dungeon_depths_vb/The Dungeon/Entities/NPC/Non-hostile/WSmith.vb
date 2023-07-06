@@ -16,7 +16,7 @@
 
         '|Inventory|
         inv.setCount(SpikedStaff.ITEM_NAME, 1)
-        inv.setCount(TKnife.ITEM_NAME, 1)
+        inv.setCount(ThrowingKnife.ITEM_NAME, 1)
         'Signature weapons
         inv.setCount(SigSpear.ITEM_NAME, 1)
         inv.setCount(SigStaff.ITEM_NAME, 1)
@@ -71,6 +71,8 @@
         If Game.mDun.getWorldFlag(wFlag.mechavalkyrie) > 0 Then inv.setCount(UpgradeValkyrieSword.ITEM_NAME, 1) Else inv.setCount(UpgradeValkyrieSword.ITEM_NAME, 0)
         If Game.mDun.getWorldFlag(wFlag.hellfiresword) > 0 Then inv.setCount(SellHellfireBlade.ITEM_NAME, 1) Else inv.setCount(SellHellfireBlade.ITEM_NAME, 0)
         If Game.mDun.getWorldFlag(wFlag.berserkercmark) > 0 Then inv.setCount(BerserkerCursemark.ITEM_NAME, 1) Else inv.setCount(BerserkerCursemark.ITEM_NAME, 0)
+        If Game.mDun.getWorldFlag(wFlag.wsgumgun) > 0 Then inv.setCount(GumGun20mm.ITEM_NAME, 1) Else inv.setCount(GumGun20mm.ITEM_NAME, 0)
+        If Game.mDun.getWorldFlag(wFlag.wsgumgrenade) > 0 Then inv.setCount(GumGrenade.ITEM_NAME, 1) Else inv.setCount(GumGrenade.ITEM_NAME, 0)
     End Sub
 
     Public Overrides Sub playerDeath(ByRef p As Player)
@@ -113,6 +115,7 @@
                                                        "Upgrade_Valkyrie_Sword service is now availible for sale!")
 
         Game.mDun.world_flags(wFlag.mechavalkyrie) = 1
+        If Game.mDun.world_flags(wFlag.mechavalkyrie) > 0 And Game.mDun.world_flags(wFlag.wsgumgun) > 0 And Game.mDun.world_flags(wFlag.wsgumgrenade) > 0 Then Game.compWSMecha = True
     End Sub
     Protected Sub hellfireBlade()
         Objective.showNPC(local_img(LocalImgInd.alt3), "The weaponsmith gestures, and you toss over the book." & DDUtils.RNRN &
@@ -134,6 +137,41 @@
                                                        "Berserker_Cursemark is now availible for sale!")
 
         Game.mDun.world_flags(wFlag.berserkercmark) = 1
+    End Sub
+    Protected Sub gumGun20mm1()
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(17), """...and that's the long and short of it."" says the other woman, looking over some sort of slender machine." & DDUtils.RNRN &
+                                                             """I agree that we've got the prototype in working order, but with how much effort we're putting into each projectile I don't know that there's a future for this product.  Keeping that last shell together may as well have taken twice thrice the mana it would have to vaporize the target outright, and the required magnetic surface puts a major limit on what materials you have to work with.""" & DDUtils.RNRN &
+                                                             "She gives you a small wave, before sighing deeply." & DDUtils.RNRN &
+                                                             """It's a good idea- great, even- but we might have to shelve it for the time being.""" & DDUtils.PAKTC, AddressOf gumGun20mm2)
+    End Sub
+    Protected Sub gumGun20mm2()
+        Objective.showNPC(local_img(LocalImgInd.alt1), """Yeah...""" & DDUtils.RNRN &
+                                                       "The weaponsmith turns to greet you, before a flash of inspiration washes over her." & DDUtils.RNRN &
+                                                       """Hey, wait... what do you think would happen if we stuck a thing of gum in there?""" & DDUtils.RNRN &
+                                                       GumGun20mm.ITEM_NAME & " is now availible for sale!")
+
+        Game.mDun.world_flags(wFlag.wsgumgun) = 1
+        If Game.mDun.world_flags(wFlag.mechavalkyrie) > 0 And Game.mDun.world_flags(wFlag.wsgumgun) > 0 And Game.mDun.world_flags(wFlag.wsgumgrenade) > 0 Then Game.compWSMecha = True
+    End Sub
+    Protected Sub gumGrenade1()
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(77), "Two other figures follow her out of the mist." & DDUtils.RNRN &
+                                                             """Yeah, this is- like, a little more what I was thinkin' when you said you were working on a 'Gum Weapon'..."" says one, tossing an arm over the other's shoulder." & DDUtils.RNRN &
+                                                             """Cynnnnnnn..."" whines the other, ""You totally said you weren't gonna push the button.""" & DDUtils.RNRN &
+                                                             """*giggle* I say a lotta things.""" & DDUtils.PAKTC, AddressOf gumGrenade2)
+    End Sub
+    Protected Sub gumGrenade2()
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(156), """Well, now we- like, uh- now we know it works...""" & DDUtils.RNRN &
+                                                              """The first part, yeah..."" giggles Cynn, ""...but now we gotta see if it wears off...""" & DDUtils.RNRN &
+                                                              "The woman with the glasses turns back to you and the weapon smith, as she leans into an unconsciously seductive pose." & DDUtils.RNRN &
+                                                              """Oh, um- what about you two?  Looks like you maybe got out of the way?""" & DDUtils.PAKTC, AddressOf gumGrenade3)
+    End Sub
+    Protected Sub gumGrenade3()
+        Objective.showNPC(local_img(LocalImgInd.bimbo), """I'm- uh, fine..."" the weaponsmith says with a ditzy grin, ""Yea- it, like, probably didn't get me afterall...""" & DDUtils.RNRN &
+                                                        GumGrenade.ITEM_NAME & " is now availible for sale!")
+
+        Game.mDun.world_flags(wFlag.wsgumgrenade) = 1
+        If Game.mDun.world_flags(wFlag.mechavalkyrie) > 0 And Game.mDun.world_flags(wFlag.wsgumgun) > 0 And Game.mDun.world_flags(wFlag.wsgumgrenade) > 0 Then Game.compWSMecha = True
+        img_index = LocalImgInd.bimbo
     End Sub
 
     '| - DIALOG - |
@@ -177,6 +215,34 @@
 
         Return "As you approach the weaponsmith, you find her conversing with a familiar demon..."
     End Function
+    Protected Function normDialogGumGun20mm(ByRef p As Player) As String
+        img_index = LocalImgInd.alt3
+
+        Game.picNPC.Visible = False
+        If Game.shop_npc_engaged Then Game.hideNPCButtons()
+        Game.npc_list.Clear()
+        Game.shop_npc_engaged = False
+
+        Application.DoEvents()
+
+        TextEvent.lblEventOnClose = AddressOf gumGun20mm1
+
+        Return "As you approach the weaponsmith, you find her conversing with someone else..."
+    End Function
+    Protected Function normDialogGumGrenade(ByRef p As Player) As String
+        img_index = LocalImgInd.alt3
+
+        Game.picNPC.Visible = False
+        If Game.shop_npc_engaged Then Game.hideNPCButtons()
+        Game.npc_list.Clear()
+        Game.shop_npc_engaged = False
+
+        Application.DoEvents()
+
+        TextEvent.lblEventOnClose = AddressOf gumGrenade1
+
+        Return "You pause as you approach the weaponsmith, who stumbles away from a thick cloud of- um, something pink..."
+    End Function
     Protected Overrides Function normalDialog(ByRef p As Player)
         If p.quests(qInd.dfaUpgrade).canGet Then
             p.quests(qInd.dfaUpgrade).init()
@@ -194,6 +260,10 @@
             Return normDialogHellfireBlade(p)
         ElseIf hasMetPlayer AndAlso p.quests(qInd.darkPact).getComplete AndAlso Game.mDun.getWorldFlag(wFlag.berserkercmark) < 0 Then
             Return normDialogBerserkerMark(p)
+        ElseIf hasMetPlayer AndAlso Game.mDun.getWorldFlag(wFlag.wsgumgun) < 0 AndAlso Not Game.hteach.isDead AndAlso (p.inv.getCountAt(StickOfGum.ITEM_NAME) > 5 Or p.inv.getCountAt(CStickOfGum.ITEM_NAME) > 5 Or p.inv.getCountAt(MStickOfGum.ITEM_NAME) > 5 Or p.inv.getCountAt(BBStickOfGum.ITEM_NAME) > 5 Or p.inv.getCountAt(WStickOfGum.ITEM_NAME) > 5 Or p.inv.getCountAt(DFStickOfGum.ITEM_NAME) > 5 Or p.inv.getCountAt(GoldenGum.ITEM_NAME) > 5 Or p.inv.getCountAt(GAStickOfGum.ITEM_NAME) > 5 Or p.inv.getCountAt(HPStickOfGum.ITEM_NAME) > 5 Or p.inv.getCountAt(MPStickOfGum.ITEM_NAME) > 5) Then
+            Return normDialogGumGun20mm(p)
+        ElseIf hasMetPlayer AndAlso Game.mDun.getWorldFlag(wFlag.wsgumgun) > -1 AndAlso Game.mDun.getWorldFlag(wFlag.wsgumgrenade) < 0 AndAlso Not Game.hteach.isDead AndAlso (p.inv.getCountAt(StickOfGum.ITEM_NAME) > 5 Or p.inv.getCountAt(CStickOfGum.ITEM_NAME) > 5 Or p.inv.getCountAt(MStickOfGum.ITEM_NAME) > 5 Or p.inv.getCountAt(BBStickOfGum.ITEM_NAME) > 5 Or p.inv.getCountAt(WStickOfGum.ITEM_NAME) > 5 Or p.inv.getCountAt(DFStickOfGum.ITEM_NAME) > 5 Or p.inv.getCountAt(GoldenGum.ITEM_NAME) > 5 Or p.inv.getCountAt(GAStickOfGum.ITEM_NAME) > 5 Or p.inv.getCountAt(HPStickOfGum.ITEM_NAME) > 5 Or p.inv.getCountAt(MPStickOfGum.ITEM_NAME) > 5) Then
+            Return normDialogGumGrenade(p)
         ElseIf Int(Rnd() * 2) = 0 Then
             img_index = LocalImgInd.alt1
             Return "Hey stranger, what can I getcha?" & DDUtils.RNRN &

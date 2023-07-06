@@ -30,7 +30,7 @@
     End Sub
 
     Public Overrides Function getUsable() As Boolean
-        Return Game.combat_engaged And Not Game.player1 Is Nothing And Not Game.player1.currTarget Is Nothing AndAlso (Not Game.player1.equippedAcce.getAName.Equals(ITEM_NAME) And Game.player1.currTarget.getSName.Contains("Fae") And Not Game.player1.currTarget.debuffed)
+        Return Game.combat_engaged And Not Game.player1 Is Nothing And Not Game.player1.currTarget Is Nothing AndAlso (Not Game.player1.equippedAcce.getAName.Equals(ITEM_NAME) And Game.player1.currTarget.getSName.Contains("Fae") And Not Game.player1.currTarget.perks(npc_perk.debuffed) > 0)
     End Function
 
     Public Overrides Sub use(ByRef p As Player)
@@ -45,7 +45,7 @@
             p.currTarget.speed /= 10
             p.currTarget.will /= 10
 
-            p.currTarget.debuffed = True
+            p.currTarget.perks(npc_perk.debuffed) = 1
             TextEvent.pushAndLog("You clamp the collar around the neck of " & p.currTarget.getNameWithTitle & "!")
             If TypeOf p.currTarget Is FaeQueen Then TextEvent.pushAndLog("""W-what the hell is this?!?"" " & p.currTarget.getNameWithTitle & " exclaims, clearly rattled...")
         Else

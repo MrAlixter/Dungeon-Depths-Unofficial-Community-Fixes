@@ -36,7 +36,9 @@
         'assign a random sex
         Randomize()
         Dim r = Int(Rnd() * 2)
-        If r = 0 Then p.sex = "Female" Else p.sex = "Male"
+        If (p.sex = "Male" Or p.sex = "Female") Then
+            If r = 0 Then p.sex = "Female" Else p.sex = "Male"
+        End If
 
         'assign random stats
         p.health = 1.0

@@ -264,6 +264,46 @@
 
         stopTF()
     End Sub
+    Shared Sub polymorphTf(ByRef p As Player, ByVal duration As Integer)
+        p.savePState()
+
+        p.setName(Polymorph.bimboizeName(p.getName))
+
+        'Body Change
+        If p.sex = "Male" Then p.MtF()
+        If p.breastSize < 3 Then
+            p.breastSize = 3
+        ElseIf p.breastSize < 7 Then
+            p.breastSize += 1
+        End If
+
+        'Face Change
+        If p.prt.checkNDefFemInd(pInd.ears, 6) Then p.prt.setIAInd(pInd.ears, 0, True, True)
+        p.prt.setIAInd(pInd.cloak, 0, True, False)
+        p.prt.setIAInd(pInd.hat, 0, True, False)
+        p.prt.setIAInd(pInd.eyes, 8, True, True)
+        p.prt.setIAInd(pInd.mouth, 27, True, True)
+
+        'Clothes Change
+        If Not p.equippedArmor.getName.Equals("Naked") Then
+            If p.equippedArmor.getSlutVarInd = -1 Then
+                If p.inv.getCountAt(SkimpyClothes.ITEM_NAME) < 1 Then p.inv.add(SkimpyClothes.ITEM_NAME, 1)
+                EquipmentDialogBackend.armorChange(p, SkimpyClothes.ITEM_NAME)
+            ElseIf p.equippedArmor.getAntiSlutInd = -1 Then
+                Equipment.clothingCurse1(p)
+            End If
+        End If
+
+        'Hair Change
+        p.prt.haircolor = Color.FromArgb(255, 250, 250, 205)
+
+        p.lust += 50
+
+        p.changeClass("Bimbo")
+        p.textColor = Color.FromArgb(255, 255, 235, 240)
+        p.perks(perk.bimbotf) = -1
+        p.perks(perk.polymorphed) = duration
+    End Sub
 
     Public Overrides Sub stopTF()
         MyBase.stopTF()

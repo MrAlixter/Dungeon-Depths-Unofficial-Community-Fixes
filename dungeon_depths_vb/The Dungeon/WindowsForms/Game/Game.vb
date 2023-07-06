@@ -59,6 +59,7 @@ Public Class Game
     Public screenSize As String
     Public compOOT As Boolean
     Public compDP As Boolean
+    Public compWSMecha As Boolean
     Public stealEverything As Boolean  'not added yet
 
     '| -- Player(s) -- |
@@ -126,6 +127,8 @@ Public Class Game
             picDescPort.Visible = False
         End If
 
+        CharacterGenerator.loadLoadouts()
+
         pnlCombat.Location = New Point(115, pnlCombat.Location.Y)
         pnlDescription.Location = New Point(115, pnlDescription.Location.Y)
         pnlSaveLoad.Location = New Point(208, pnlSaveLoad.Location.Y)
@@ -160,6 +163,17 @@ Public Class Game
         Special.init()
 
         eventDialogBox = New EventBox(txtPNLEvents, pnlEvent)
+    End Sub
+    Private Sub Game_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        If Not compOOT And Not compDP And Not compWSMecha Then Exit Sub
+
+        Dim w As StreamWriter
+        File.Delete("loadout.ave")
+        w = File.CreateText("loadout.ave")
+        If compOOT Then w.WriteLine("Time Cop")
+        If compDP Then w.WriteLine("Cynn's Ally")
+        If compWSMecha Then w.WriteLine("Mecha-Warrior")
+        w.Close()
     End Sub
     Sub createConfigs()
         Dim w As StreamWriter
@@ -2885,6 +2899,8 @@ Public Class Game
             If Settings.active(setting.textcolors) Then txtPlayerDesc.ForeColor = player1.textColor
             txtPlayerDesc.Text = player1.genDescription
 
+            btnEditGender.Location = New Point(Math.Min(txtPlayerDesc.Location.X + (TextRenderer.MeasureText(("You are " & player1.name & ", a "), txtPlayerDesc.Font).Width) - If(screenSize = "Fit-to-Screen", btnEditGender.Size.Width, 0), txtPlayerDesc.Location.X + txtPlayerDesc.Size.Width - btnEditGender.Size.Width), btnEditGender.Location.Y)
+
             Dim pImg = player1.prt.oneLayerImgCheck(player1.formName, player1.className)
             If player1.prt.oneLayerImgCheck(player1.formName, player1.className) Is Nothing Then
                 pImg = player1.prt.drawFull()
@@ -3809,6 +3825,11 @@ Public Class Game
         Dim ab1 As About = New About
         ab1.ShowDialog()
         ab1.Dispose()
+    End Sub
+    Private Sub btnEditGender_Click(sender As Object, e As EventArgs) Handles btnEditGender.Click
+        Dim ibox As String = DDUtils.sanitizeString(InputBox("Enter " & player1.name & "'s gender:"))
+        player1.sex = If(ibox.Length < 1, player1.sex, ibox)
+        toDesc()
     End Sub
 
     '| - UI TOOLSTRIP - |

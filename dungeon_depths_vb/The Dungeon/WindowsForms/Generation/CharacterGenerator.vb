@@ -34,7 +34,7 @@
     Private Sub CharacterGenerator_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         'set the player's image, name, and class
         setPlayerPortrait(Game.player1)
-        Game.player1.setName(sanitizeName(txtName.Text))
+        Game.player1.setName(DDUtils.sanitizeString(txtName.Text))
 
         'if selected, save a preset using the currently selected images
         If chkSavePreset.Checked And Not quit_early Then
@@ -756,18 +756,25 @@
 
         'add the classes unlocked by special events
         If DDDateTime.isHallow Then cbox.Items.Add("Witch")
+
         If Game.compOOT Then cbox.Items.Add("Time Cop")
         If Game.compDP Then cbox.Items.Add("Cynn's Ally")
+        If Game.compWSMecha Then cbox.Items.Add("Mecha-Warrior")
 
         'select a class at random
         cbox.Text = cbox.Items(Int(Rnd() * cbox.Items.Count))
     End Sub
-    Private Function sanitizeName(ByRef name As String) As String
-        name = name.Replace("*", "")
-        name = name.Replace("~", "")
-        name = name.Replace("@", "")
-        name = name.Replace(":", "")
-
-        Return name
-    End Function
+    Public Shared Sub loadLoadouts()
+        If IO.File.Exists("loadout.ave") Then
+            Using r As System.IO.StreamReader = IO.File.OpenText("loadout.ave")
+                Dim lines As List(Of String) = r.ReadToEnd().Replace(vbCrLf, SaveFile.SEGMENT_DELIMITER).Split(SaveFile.SEGMENT_DELIMITER).ToList
+                For Each line In lines
+                    line = line.Replace(SaveFile.SEGMENT_DELIMITER, "")
+                Next
+                If lines.Contains("Time Cop") Then Game.compOOT = True
+                If lines.Contains("Cynn's Ally") Then Game.compDP = True
+                If lines.Contains("Mecha-Warrior") Then Game.compWSMecha = True
+            End Using
+        End If
+    End Sub
 End Class

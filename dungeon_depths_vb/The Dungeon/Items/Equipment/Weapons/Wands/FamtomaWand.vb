@@ -38,8 +38,7 @@
                 current_mode = mode.disappear
             Case mode.disappear
                 If Not m.getNPC() Is Nothing Then
-                    m.getNPC.isStunned = True
-                    m.getNPC.stunct = 0
+                    m.getNPC.perks(npc_perk.stun) = 0
                 ElseIf Game.combat_engaged Then
                     Game.fromCombat()
                 End If

@@ -56,8 +56,8 @@
     End Sub
 
     Public Overrides Sub reactToTF()
-        If tfCt > 0 Then
-            tfCt = 0
+        If perks(npc_perk.tfdur) >= 0 Then
+            perks(npc_perk.tfdur) = -1
             revert()
 
             TextEvent.push("A rippling aura surrounds the time traveler..." & DDUtils.RNRN &

@@ -8,8 +8,7 @@
     End Sub
     Public Overrides Sub effect()
         If Game.combat_engaged Then
-            MyBase.getTarget.isStunned = True
-            MyBase.getTarget.stunct = 2
+            getTarget.perks(npc_perk.stun) = 2
             TextEvent.pushAndLog("Charm!  " & Trim(getTarget.title & " " & getTarget.getName) & " is stunned for 3 turns.")
         Else
             getUser.addLust(15)

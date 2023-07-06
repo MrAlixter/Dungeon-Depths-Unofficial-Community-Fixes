@@ -188,11 +188,13 @@ Friend Class FaeWoodsQ2AS2
 
     Private Shared Sub carriage1()
         Dim refP = "guy"
-        Dim title = "Mister"
 
-        If Game.player1.prt.sexBool Then
+        If Game.player1.sex = "Female" Then
             refP = "gal"
-            title = "Miss"
+        ElseIf Game.player1.sex = "Male" Then
+            refP = "guy"
+        Else
+            refP = "pal"
         End If
 
         Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(62), "Welcome to the Fae Woods, big " & refP & ".  Don't worry, I'm still going to take you where you need to go, but you and I are gonna make a little gold along the way...", AddressOf carriage2)

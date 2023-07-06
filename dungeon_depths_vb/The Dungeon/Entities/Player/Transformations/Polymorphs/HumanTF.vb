@@ -32,18 +32,18 @@
         s.skincolor = getSkinColor(p)
 
         'face tf
-        If p.prt.iArrInd(pInd.eyes).Item3 Then s.setIArrInd(pInd.eyes, 0, p.sex.Equals("Female"), False)
-        If p.prt.iArrInd(pInd.nose).Item3 Then s.setIArrInd(pInd.eyes, 0, p.sex.Equals("Female"), False)
-        s.setIArrInd(pInd.ears, 0, p.sex.Equals("Female"), False)
+        If p.prt.iArrInd(pInd.eyes).Item3 Then s.setIArrInd(pInd.eyes, 0, Not p.sex.Equals("Male"), False)
+        If p.prt.iArrInd(pInd.nose).Item3 Then s.setIArrInd(pInd.eyes, 0, Not p.sex.Equals("Male"), False)
+        s.setIArrInd(pInd.ears, 0, Not p.sex.Equals("Male"), False)
 
         'hair tf
         If p.prt.iArrInd(pInd.rearhair).Item3 Or p.prt.iArrInd(pInd.midhair).Item3 Or p.prt.iArrInd(pInd.fronthair).Item3 Then
             Randomize()
             r = Int(Rnd() * 7)
-            s.setIArrInd(pInd.rearhair, r, p.sex.Equals("Female"), False)
-            s.setIArrInd(pInd.midhair, r, p.sex.Equals("Female"), False)
+            s.setIArrInd(pInd.rearhair, r, Not p.sex.Equals("Male"), False)
+            s.setIArrInd(pInd.midhair, r, Not p.sex.Equals("Male"), False)
             r = Int(Rnd() * 8) + 1
-            s.setIArrInd(pInd.fronthair, r, p.sex.Equals("Female"), False)
+            s.setIArrInd(pInd.fronthair, r, Not p.sex.Equals("Male"), False)
         End If
 
         'body tf
@@ -66,18 +66,18 @@
         p.prt.changeSkinColor(getSkinColor(p))
 
         'face tf
-        If p.prt.iArrInd(pInd.eyes).Item3 Then p.prt.setIAInd(pInd.eyes, 0, p.sex.Equals("Female"), False)
-        If p.prt.iArrInd(pInd.nose).Item3 Then p.prt.setIAInd(pInd.eyes, 0, p.sex.Equals("Female"), False)
-        p.prt.setIAInd(pInd.ears, 0, p.sex.Equals("Female"), False)
+        If p.prt.iArrInd(pInd.eyes).Item3 Then p.prt.setIAInd(pInd.eyes, 0, Not p.sex.Equals("Male"), False)
+        If p.prt.iArrInd(pInd.nose).Item3 Then p.prt.setIAInd(pInd.eyes, 0, Not p.sex.Equals("Male"), False)
+        p.prt.setIAInd(pInd.ears, 0, Not p.sex.Equals("Male"), False)
 
         'hair tf
         If p.prt.iArrInd(pInd.rearhair).Item3 Or p.prt.iArrInd(pInd.midhair).Item3 Or p.prt.iArrInd(pInd.fronthair).Item3 Then
             Randomize()
             r = Int(Rnd() * 7)
-            p.prt.setIAInd(pInd.rearhair, r, p.sex.Equals("Female"), False)
-            p.prt.setIAInd(pInd.midhair, r, p.sex.Equals("Female"), False)
+            p.prt.setIAInd(pInd.rearhair, r, Not p.sex.Equals("Male"), False)
+            p.prt.setIAInd(pInd.midhair, r, Not p.sex.Equals("Male"), False)
             r = Int(Rnd() * 8) + 1
-            p.prt.setIAInd(pInd.fronthair, r, p.sex.Equals("Female"), False)
+            p.prt.setIAInd(pInd.fronthair, r, Not p.sex.Equals("Male"), False)
         End If
 
         'body tf

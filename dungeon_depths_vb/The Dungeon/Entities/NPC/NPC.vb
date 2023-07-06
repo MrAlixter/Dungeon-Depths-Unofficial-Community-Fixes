@@ -13,13 +13,21 @@
 
 '|Misc|
 
+Public Enum npc_perk
+    tfdur
+    stun
+    firstturn
+    debuffed
+    poison
+    burn
+End Enum
 Public Class NPC
     Inherits Entity
-    'transformation variables
-    Public tfCt As Integer = 0
-    Public tfEnd As Integer = 0
+    'stats
     Public sMaxHealth, sMana, sMaxMana, sAttack, sDefense, sWill, sSpeed As Integer
     Public xp_value As Integer = 10
+    Public perks As Dictionary(Of npc_perk, Integer) = New Dictionary(Of npc_perk, Integer)()
+
     'dialog variables
     Public form As String = ""
     Public title As String = " The "
@@ -28,12 +36,6 @@ Public Class NPC
     Public r_pronoun As String = "it"
     Public intro_taunt As String = ""
     Public img_index As Integer = 0
-    'stun variables
-    Public isStunned As Boolean = False
-    Public stunct As Integer = 0
-    Public firstTurn = True
-
-    Public debuffed = False
 
     Dim img As Image
 
@@ -44,6 +46,13 @@ Public Class NPC
         defense = Math.Min(Math.Max(1, defense) * multiplier, DDUtils.INTLMT)
         will = Math.Min(Math.Max(1, will) * multiplier, DDUtils.INTLMT)
         speed = Math.Min(Math.Max(1, speed) * multiplier, DDUtils.INTLMT)
+    End Sub
+    Public Sub initPerks()
+        perks.Clear()
+        'Creates the dictionary of perks
+        For Each p In System.Enum.GetValues(GetType(npc_perk))
+            perks.Add(p, -1)
+        Next
     End Sub
     Public Overrides Sub update()
         reactToTF()
@@ -57,7 +66,7 @@ Public Class NPC
             Exit Sub
         End If
 
-        If Not isStunned Then
+        If Not perks(npc_perk.stun) >= 0 Then
             If (Game.player1.formName.Equals("Frog") Or Game.player1.formName.Equals("Chicken") Or (Game.player1.formName.Equals("Cow") And Not sName = Bovinomancer.BASE_NAME) Or Game.player1.formName.Equals("Horse") Or Game.player1.formName.Equals("Unicorn")) And (Me.GetType().IsSubclassOf(GetType(Monster)) And Not Me.GetType().IsSubclassOf(GetType(MiniBoss))) Then
                 despawn("animaltf")
                 Exit Sub
@@ -66,6 +75,20 @@ Public Class NPC
             nextCombatAction = Sub(t As Entity) attackCMD(t)
         Else
             handleStun()
+        End If
+
+        If perks(npc_perk.poison) > -1 Then
+            Dim d As Integer = Math.Min(0.15 * getMaxHealth(), 750)
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " takes " & d & " poison damage!")
+            takeDMG(d, Game.player1)
+            perks(npc_perk.poison) -= 1
+        End If
+
+        If perks(npc_perk.burn) > -1 Then
+            Dim d As Integer = 4 + Int(Rnd() * 3)
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " takes " & d & " fire damage!")
+            takeDMG(d, Game.player1)
+            perks(npc_perk.burn) -= 1
         End If
 
         MyBase.update()
@@ -77,11 +100,10 @@ Public Class NPC
         Else
             TextEvent.pushAndLog(Trim(title & getName() & " is too stunned to react!"))
         End If
-        If stunct <= 0 Then
-            isStunned = False
-            stunct = 0
+        If perks(npc_perk.stun) <= 0 Then
+            perks(npc_perk.stun) = -1
         Else
-            stunct -= 1
+            perks(npc_perk.stun) -= 1
         End If
     End Sub
     Protected Function getXPValue() As Integer
@@ -292,6 +314,7 @@ Public Class NPC
         defense = sdefense
         speed = sSpeed
         img_index = 0
+        form = ""
         TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle()) & " returns to " & p_pronoun & " original self!")
     End Sub
     Public Sub setInventory(ByVal contents() As Integer, Optional ByVal resetCurrentInv As Boolean = True)
@@ -430,10 +453,10 @@ Public Class NPC
         Return True
     End Function
     Public Overridable Sub reactToTF()
-        If tfCt > 0 Then
-            tfCt += 1
-        ElseIf tfCt > tfEnd Then
-            tfCt = 0
+        If perks(npc_perk.tfdur) > 0 Then
+            perks(npc_perk.tfdur) -= 1
+        ElseIf perks(npc_perk.tfdur) <> -1 Then
+            perks(npc_perk.tfdur) = -1
             revert()
         End If
     End Sub

@@ -32,7 +32,7 @@
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
-        If tfEnd > 0 And mana >= 17 Then
+        If perks(npc_perk.tfdur) > 0 And mana >= 17 Then
             TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " casts Greater Restoration!")
             mana -= 17
             revert()

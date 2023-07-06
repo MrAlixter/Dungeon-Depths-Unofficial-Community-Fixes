@@ -233,6 +233,14 @@
     Public Shared Function containsIgnoreCase(ByRef s As String, ByRef token As String) As Boolean
         Return s.ToUpper.Contains(token.ToUpper)
     End Function
+    Public Shared Function sanitizeString(ByRef s As String) As String
+        s = s.Replace("*", "")
+        s = s.Replace("~", "")
+        s = s.Replace("@", "")
+        s = s.Replace(":", "")
+
+        Return s
+    End Function
 
     '|COLOR SHIFT FUNCTIONS|
     Shared Function cEquals(ByVal a As Color, ByVal b As Color)

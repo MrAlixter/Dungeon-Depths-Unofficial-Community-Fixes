@@ -21,8 +21,7 @@
             MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
         End If
 
-        MyBase.getTarget.isStunned = True
-        MyBase.getTarget.stunct = 1
+        getTarget.perks(npc_perk.stun) = 1
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

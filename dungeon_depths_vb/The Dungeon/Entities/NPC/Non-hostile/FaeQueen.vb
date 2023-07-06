@@ -565,7 +565,7 @@
 
         Game.drawBoard()
 
-        If debuffed Then inv.setCount(LingerieCatalog.ITEM_NAME, 0)
+        If perks(npc_perk.debuffed) < 0 Then inv.setCount(LingerieCatalog.ITEM_NAME, 0)
 
         Objective.showNPC(local_img(LocalImgInd.alt3), """G-GET OUT!  WHAT IS THIS CRAP!?  NO WAY I'D LOSE TO A " & Game.player1.formName & "!""" & DDUtils.RNRN &
                                     "The fae vanishes in a plume of mist, but now there's nothing to stop you from going through her stuff...", AddressOf pushChestContents)

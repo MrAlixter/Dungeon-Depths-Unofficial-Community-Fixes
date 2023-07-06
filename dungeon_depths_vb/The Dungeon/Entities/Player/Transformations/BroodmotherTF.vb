@@ -40,19 +40,26 @@
             Exit Sub
         End If
 
-        Dim out = "Catching a glimpse of your reflection in a puddle, you nearly do a double take.  As you take a closer look, you notice that you're hairstyle seems to have completely have changed.  "
-        If p.sState.getSkinColor.R > sc.R Then out += "In addition, you seem to have developed a bit of a tan!  "
-        If p.sState.getSkinColor.R < sc.R Then out += "In addition, your skin seems have become a little bit lighter!  "
+        Dim out = "As you pass by the smooth surface of a nearby puddle, you nearly double take at your reflection.  "
+        If p.sState.getSkinColor.R > sc.R Then
+            out += "Your hairstyle seems to have completely changed, and you seem to have developed a bit of a tan!"
+        ElseIf p.sState.getSkinColor.R < sc.R Then
+            out += "Your hairstyle seems to have completely changed, and your skin seems have become a little bit lighter!"
+        Else
+            out += "Your hairstyle seems to have completely changed, becoming messier than before!"
+        End If
+
         p.prt.setIAInd(pInd.rearhair, 11, True, True)
         p.prt.setIAInd(pInd.midhair, 32, True, True)
         p.prt.setIAInd(pInd.fronthair, 31, True, True)
 
         If p.sex.Equals("Male") Then
             p.MtF()
-            out += "It seems that you've missed more of a transformation than you thought, and a quick inspection shows that you now have a pussy!"
+            out += DDUtils.RNRN & "It also seems that you've missed more of a transformation than you thought, and your frame has become noticeably more feminine..."
         End If
 
-        out += DDUtils.RNRN & "Slightly concerned, you set back out while musing on your changes, which hopefully won't go any further..."
+        out += DDUtils.RNRN & "Slightly concerned, you set back out while musing on these changes; hoping that they don't go any further..."
+
         If p.breastSize <> 2 Then p.breastSize = 2
 
         TextEvent.push(out)
@@ -62,7 +69,8 @@
         p.prt.setIAInd(pInd.mouth, 7, True, True)
         p.prt.setIAInd(pInd.eyes, 40, True, True)
 
-        TextEvent.push("While it's been subtle, you can tell that your vision is getting sharper.  As you watch an ant across the dungeon crawl up the wall, you grin to yourself..." & DDUtils.RNRN & "Soon, there won't be anything that can escape your gaze.")
+        TextEvent.push("While the change has been gradual, you can tell that your vision is getting sharper.  As you watch an ant across the dungeon crawl up the wall, you grin to yourself..." & DDUtils.RNRN &
+                       "Soon, there won't be anything that can escape your gaze.")
     End Sub
     Sub step4()
         Dim p As Player = Game.player1
@@ -70,19 +78,26 @@
         p.prt.setIAInd(pInd.horns, 4, True, False)
         p.changeHairColor(hc)
         p.changeSkinColor(sc)
-        TextEvent.push("As you walk around, you become increasingly aware of a pressure on your head and back.  A quick inspection reveals that you now have a pair of leathery wings, and a set of wicked looking black horns!")
+        TextEvent.push("A sudden shift in your center of balance knocks you over, and you prop yourself back up with the assistance of a new pair of leathery black wings." & DDUtils.RNRN &
+                       "Further, a new set of wicked looking black horns poke out from your blonde hair!")
     End Sub
     Sub step5p1()
         Dim p As Player = Game.player1
         p.changeForm("Half-Dragoness")
         p.drawPort()
 
-        TextEvent.push("While your senses have been steadily becoming more precise, you can't help but feel that you're getting less done.  It's almost as though some distraction is clouding your judgment, and as you catch the echo of a dragon's wingbeat from far off in the distance you wonder if maybe you should track it down for a good fucking to clear your head..." & DDUtils.RNRN & "You are now a half broodmother!", AddressOf step5p2)
+        TextEvent.push("While your senses have been gradually becoming more precise, you can't help but feel that you're getting less done." & DDUtils.RNRN &
+                       "It's almost as though some distraction is clouding your judgment, and as you catch the echo of a dragon's wingbeat from far off in the distance you wonder if maybe you should track it down for a good fucking to clear your head..." & DDUtils.RNRN &
+                       "You are now a half-broodmother!", AddressOf step5p2)
     End Sub
     Sub step5p2()
         Dim p As Player = Game.player1
         p.changeForm("Half-Broodmother")
-        TextEvent.push("*The next day...*" & DDUtils.RNRN & "You may have set off to find the dragon on somewhat of a whim, but the mere thought of being pinned down and bred by it has fanned a burning desire within you.  Blushing under your scales, you stagger forward, knees weak with anticipation.  While a small part of your psyche is screaming that you need to focus up, you practically tear off your clothes to get at your sex.  You collapse to the ground, panting as you desperately finger your pussy.  As you edge closer and closer to climaxing, you let out a gutteral roar, thrusting your wings out and spitting out a jet of red-hot flame.  As you sprawl out, scales covering every inch of your once fleshy hide, you giggle with an almost schoolgirl-like excitement.  That dragon may have gotten away this time, but next time you'll get him for sure!" & DDUtils.RNRN & "You are now a broodmother!", AddressOf step5p3)
+        TextEvent.push("*A day passes...*" & DDUtils.RNRN &
+                       "You may have set off to find the dragon on somewhat of a whim, but the mere thought of being pinned down and bred by it has fanned a burning desire within you.  Blushing under your scales, you stagger forward, knees weak with anticipation." & DDUtils.RNRN &
+                       "While a small part of your psyche is screaming that you need to focus up, you practically tear off your clothes to get at your sex.  You collapse to the ground, panting as you desperately finger your pussy.  As you edge closer and closer to climaxing, you let out a gutteral roar, thrusting your wings out and spitting out a jet of red-hot flame." & DDUtils.RNRN &
+                       "As you sprawl out, scales covering every inch of your once fleshy hide, you giggle with an almost schoolgirl-like excitement.  That dragon may have gotten away this time, but next time you'll get him for sure!" & DDUtils.RNRN &
+                       "You are now a broodmother!", AddressOf step5p3)
         p.drawPort()
     End Sub
     Sub step5p3()

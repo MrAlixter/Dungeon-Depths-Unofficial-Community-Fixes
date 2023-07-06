@@ -71,6 +71,7 @@ Public MustInherit Class ShopNPC
 
         '| -- Stats -- |
         health = 1.0
+        initPerks()
 
         '| -- Dialog Handles -- |
         title = " The "
@@ -95,9 +96,23 @@ Public MustInherit Class ShopNPC
             Game.picNPC.BackgroundImage = local_img(LocalImgInd.normal)
         End If
 
+        If perks(npc_perk.poison) > -1 Then
+            Dim d As Integer = Math.Min(0.15 * getMaxHealth(), 750)
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " takes " & d & " poison damage!")
+            takeDMG(d, Game.player1)
+            perks(npc_perk.poison) -= 1
+        End If
+
+        If perks(npc_perk.burn) > -1 Then
+            Dim d As Integer = 4 + Int(Rnd() * 3)
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " takes " & d & " fire damage!")
+            takeDMG(d, Game.player1)
+            perks(npc_perk.burn) -= 1
+        End If
+
         '| -- First Turn -- |
-        If firstTurn = True Then
-            firstTurn = False
+        If perks(npc_perk.firstturn) > 0 Then
+            perks(npc_perk.firstturn) = -1
         End If
 
         If Game.combat_engaged Then Game.lblEName.Text = getName()
@@ -109,10 +124,10 @@ Public MustInherit Class ShopNPC
         End If
 
         '| -- Polymorph Handling -- |
-        If tfCt > 0 Then
-            tfCt += 1
-        ElseIf tfCt > tfEnd Then
-            tfCt = 0
+        If perks(npc_perk.tfdur) > 0 Then
+            perks(npc_perk.tfdur) -= 1
+        ElseIf perks(npc_perk.tfdur) <> -1 Then
+            perks(npc_perk.tfdur) = -1
             revert()
         End If
     End Sub
@@ -158,7 +173,7 @@ Public MustInherit Class ShopNPC
         discount = 0
         setGold(9999)
         firstCTurn = True
-        firstTurn = True
+        perks(npc_perk.firstturn) = 1
 
         '| -- Inventory Update -- |
         If Game.mDun.floor_boss.ContainsKey(Game.mDun.numCurrFloor) AndAlso Game.mDun.floor_boss(Game.mDun.numCurrFloor).Equals("Key") Then
@@ -297,7 +312,7 @@ Public MustInherit Class ShopNPC
         tfStatUpdate()
     End Sub
     Public Overridable Sub toBunny()
-        tfEnd = 15
+        perks(npc_perk.tfdur) = 15
 
         toFemale("bunny")
         form = "Bunny Girl"
@@ -308,8 +323,7 @@ Public MustInherit Class ShopNPC
         If Game.combat_engaged Then Game.shopNPCFromCombat(Me)
     End Sub
     Public Overridable Sub toBimbo()
-        tfCt = 1
-        tfEnd = 9999999
+        perks(npc_perk.tfdur) = 9999999
 
         toFemale("bimbo")
         form = "Bimbo"
@@ -318,7 +332,7 @@ Public MustInherit Class ShopNPC
         tfStatUpdate()
     End Sub
     Public Overridable Sub toPrincess()
-        tfEnd = 15
+        perks(npc_perk.tfdur) = 15
 
         toFemale("prin")
 
@@ -326,7 +340,7 @@ Public MustInherit Class ShopNPC
         tfStatUpdate()
     End Sub
     Public Overridable Sub toSheep()
-        tfEnd = 15
+        perks(npc_perk.tfdur) = 15
 
         img_index = LocalImgInd.sheep
         tfStatUpdate()
@@ -339,8 +353,7 @@ Public MustInherit Class ShopNPC
         If Game.combat_engaged Then Game.shopNPCFromCombat(Me)
     End Sub
     Public Overridable Sub toArachne()
-        tfCt = 1
-        tfEnd = 9999999
+        perks(npc_perk.tfdur) = 9999999
 
         toFemale("arachne")
         form = "Arachne"
@@ -349,7 +362,7 @@ Public MustInherit Class ShopNPC
         tfStatUpdate()
     End Sub
     Public Overridable Sub toCatgirl()
-        tfEnd = 15
+        perks(npc_perk.tfdur) = 15
 
         toFemale("catg")
 
@@ -361,7 +374,7 @@ Public MustInherit Class ShopNPC
         tfStatUpdate()
     End Sub
     Public Overridable Sub toBeeGirl()
-        tfEnd = 15
+        perks(npc_perk.tfdur) = 15
 
         toFemale("beeg")
 

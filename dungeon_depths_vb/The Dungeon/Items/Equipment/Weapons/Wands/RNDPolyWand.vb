@@ -100,6 +100,6 @@
         n.speed *= form.s
 
         n.form = form.name
-        n.tfCt = 999
+        n.perks(npc_perk.tfdur) = 999
     End Sub
 End Class

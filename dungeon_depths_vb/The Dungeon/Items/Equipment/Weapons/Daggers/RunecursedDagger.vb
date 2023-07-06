@@ -2,6 +2,7 @@
     Inherits Dagger
 
     Public Const ITEM_NAME As String = "Runecursed_Dagger"
+    Dim throw_cached_p As Player = Nothing
 
     Sub New()
         '|ID Info|
@@ -27,19 +28,36 @@
 
     Overridable Sub wThrow(ByRef p As Player, ByRef m As Entity)
         If m Is Nothing Then
-            TextEvent.push("You throw the knife across the dungeon at nothing in particular.")
-            TextEvent.pushLog("You throw the knife across the dungeon at nothing in particular.")
+            TextEvent.pushAndLog("You throw the knife across the dungeon at nothing in particular.")
         Else
-            TextEvent.pushLog("You throw the knife!")
+            If m.getNPC() Is Nothing Then
+                TextEvent.pushAndLog("You throw the " & getName.Replace("_", " ") & "!")
+            Else
+                TextEvent.pushAndLog("You throw the " & getName.Replace("_", " ") & " at " & m.getNPC.getNameWithTitle & "!")
+            End If
+
             Dim dmg As Integer = (p.getATK) + (10) + Int(Rnd() * 3 + 1)
             p.hit(dmg, m)
         End If
 
-        durability -= Int(Rnd() * 6 + 1) + Int(Rnd() * 6 + 1) + Int(Rnd() * 6 + 1)
-        If durability <= 0 Then break()
+        Dim w_dmg = Int(Rnd() * 6 + 1) + Int(Rnd() * 6 + 1) + Int(Rnd() * 6 + 1)
+        durability -= w_dmg
+        If durability <= 0 Then
+            break()
+        ElseIf Not m.isDead Then
+            TextEvent.pushAndLog("The " & getName.Replace("_", " ") & " takes " & w_dmg & " damage.")
+        Else
+            TextEvent.pushLog("The " & getName.Replace("_", " ") & " takes " & w_dmg & " damage.")
+        End If
     End Sub
 
     Public Overrides Sub use(ByRef p As Player)
-        wThrow(p, p.currTarget)
+        If Game.combat_engaged Then
+            throw_cached_p = p
+            p.nextCombatAction = Sub(m As Entity) wThrow(throw_cached_p, m)
+            Game.updatable_queue.add(p, DDUtils.INTLMT)
+        Else
+            wThrow(p, p.currTarget)
+        End If
     End Sub
 End Class

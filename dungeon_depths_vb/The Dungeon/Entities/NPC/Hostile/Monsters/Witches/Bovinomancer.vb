@@ -67,8 +67,7 @@
         Polymorph.transform(p, "Cow")
     End Sub
     Sub npcSpell1(ByRef n As NPC)
-        n.tfCt = 1
-        n.tfEnd = Int(Rnd() * 7) + 3
+        n.perks(npc_perk.tfdur) = Int(Rnd() * 7) + 3
         n.form = "Cow"
         n.attack = 1
         n.defense = 20

@@ -51,6 +51,7 @@
     End Sub
 
     Public Overrides Sub effect(ByRef p As Player)
+        If p.perks(perk.dubrations) < 0 Then p.perks(perk.dubrations) = 0
         If p.passDieRoll(4, 3) Then
             primaryEffect(p)
         Else
@@ -127,13 +128,18 @@
     Public Shared Sub demonicEffect(ByRef p As Player)
         p.savePState()
 
-        If Not p.formName = "Demon" Then
+        If Not p.formName = "Demon" And p.perks(perk.dubrations) > 0 Then
             p.prt.changeSkinColor(Color.FromArgb(255, 214, 106, 106))
             p.prt.changeHairColor(DemonTF.getDemonHairColor(p.prt.haircolor))
             p.changeForm("Demon")
 
             p.perks(perk.canmeetcyn) = 2
             TextEvent.pushAndLog("The ration was bewitched!  You turn into a demon.")
+        ElseIf Not p.formName = "Demon" Then
+            Dim dmg As Integer = Math.Min(25, p.getIntHealth - 1)
+            TextEvent.pushAndLog("The ration was bewitched!  Black flames engulf you, and you take " & dmg & " damage.")
+            p.takeDMG(dmg, Monster.monsterFactory(mInd.bewitched_ration))
+            p.perks(perk.dubrations) += 1
         ElseIf p.getLust > 0 And Not p.equippedAcce.getAName.Equals(CynnsBimboMark.ITEM_NAME) Then
             TextEvent.pushAndLog("The ration was bewitched!  You sizzle for " & p.getLust & " damage, and -" & (p.getLust * 0.2) & " lust...")
             p.takeDMG(p.getLust, Monster.monsterFactory(mInd.bewitched_ration))

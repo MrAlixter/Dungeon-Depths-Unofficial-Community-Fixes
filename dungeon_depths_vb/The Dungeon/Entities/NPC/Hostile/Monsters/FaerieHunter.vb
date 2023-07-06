@@ -51,8 +51,7 @@
         defense *= 1.5
         speed *= 3.0
         will *= 0.33
-        tfEnd = 3
-        tfCt = 1
+        perks(npc_perk.tfdur) = 3
         form = "Bee Girl"
     End Sub
 
@@ -69,7 +68,7 @@
             End If
 
             Randomize()
-            If Int(Rnd() * 3) = 0 Or firstTurn Then
+            If Int(Rnd() * 3) = 0 Or perks(npc_perk.firstturn) < 0 Then
                 Select Case cmode
                     Case mode.red
                         TextEvent.pushAndLog("The Bee Girl's stinger ripples with a pink sheen!")
@@ -87,7 +86,7 @@
             MyBase.attackCMD(target)
         End If
 
-        If firstTurn Then firstTurn = False
+        If perks(npc_perk.firstturn) > 0 Then perks(npc_perk.firstturn) = -1
     End Sub
 
     Public Sub redSting()

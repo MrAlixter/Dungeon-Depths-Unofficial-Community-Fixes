@@ -28,7 +28,7 @@
             m.attack -= m.attack / 4
             m.defense -= m.defense / 4
             m.speed += (m.speed / 4)
-            mP.tfEnd += Int(3 * m.maxHealth / mP.sMaxHealth)
+            mP.perks(npc_perk.tfdur) += Int(3 * m.maxHealth / mP.sMaxHealth)
             TextEvent.push("You zap your target with the shrink ray, and they get slightly smaller!")
         Else
             If Int(Rnd() * 2) = 0 And Not p.className.Equals("Shrunken") And Transformation.canBeTFed(p) Then

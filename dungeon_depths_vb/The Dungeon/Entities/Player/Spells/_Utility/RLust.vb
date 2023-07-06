@@ -12,14 +12,13 @@
 
         Dim t = MyBase.getTarget
 
-        If t.isStunned Then
-            If t.stunct < 2 Then t.stunct *= 2
+        If t.perks(npc_perk.stun) >= 0 Then
+            If t.perks(npc_perk.stun) < 2 Then t.perks(npc_perk.stun) *= 2
         Else
-            t.isStunned = True
-            t.stunct = 1
+            t.perks(npc_perk.stun) = 1
         End If
 
-        TextEvent.pushAndLog("Your foe is distracted by their lust!  " & t.stunct & " turns remaining.")
+        TextEvent.pushAndLog("Your foe is distracted by their lust!  " & t.perks(npc_perk.stun) & " turns remaining.")
     End Sub
 
     Public Overrides Sub backfire()
