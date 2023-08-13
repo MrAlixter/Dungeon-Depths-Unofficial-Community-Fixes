@@ -50,6 +50,7 @@
         local_img.Add(LocalImgInd.bimbo, ShopNPC.gbl_img.atrs(0).getAt(158))
         local_img.Add(LocalImgInd.alt1, ShopNPC.gbl_img.atrs(0).getAt(36))
         local_img.Add(LocalImgInd.alt2, ShopNPC.gbl_img.atrs(0).getAt(37))
+        local_img.Add(LocalImgInd.alt3, ShopNPC.gbl_img.atrs(0).getAt(139))
     End Sub
 
     Public Overrides Function toFight() As String
@@ -147,8 +148,32 @@
         badForYou()
     End Sub
 
+    Public Overrides Sub encounter()
+        floor10Adjustment()
+
+        MyBase.encounter()
+    End Sub
+
+    '| - FLOOR 10 - |
+    Sub floor10Adjustment()
+        If Game.currFloor.pinkMist Then
+            img_index = 0
+        End If
+    End Sub
+
     '| - DIALOG - |
     Protected Overrides Function normalDialog(ByRef p As Player)
+        If Game.currFloor.pinkMist Then
+            img_index = LocalImgInd.alt3
+
+            If Game.currFloor.mBoard(pos.Y, pos.X).Tag = 3 Then
+                Return "Ooh, what a delightful affliction..." & DDUtils.RNRN &
+                       "Are you taking deep breaths?"
+            Else
+                Return "You..." & DDUtils.RNRN &
+                       "How dare you?  Breaking such a delightful curse..."
+            End If
+        End If
 
         If p.perks(perk.faecurse) > 1 Then
             img_index = LocalImgInd.normal
@@ -193,6 +218,10 @@
     End Function
 
     Protected Overrides Function normalPostPurchaseDialog(ByRef p As Player) As String
+        If Game.currFloor.pinkMist Then
+            Return "Come back soon, cutie..."
+        End If
+
         Return "Come back soon..."
     End Function
     Protected Overrides Function bimboPostPurchaseDialog(ByRef p As Player) As String

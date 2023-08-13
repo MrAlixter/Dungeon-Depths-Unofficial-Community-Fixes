@@ -136,10 +136,15 @@
 
             gold = 1000
 
-            Return "Like, hey..." & DDUtils.RNRN &
-                   "What's... um..." & DDUtils.RNRN &
-                   "I'm, so, like... um..." & DDUtils.RNRN &
-                   "Do you want to buy stuff?"
+            If Game.currFloor.mBoard(pos.Y, pos.X).Tag = 3 Then
+                Return "Like, hey..." & DDUtils.RNRN &
+                       "What's... um..." & DDUtils.RNRN &
+                       "I'm, so, like... um..." & DDUtils.RNRN &
+                       "Do you want to buy stuff?"
+            Else
+                Return "Like, hey..." & DDUtils.RNRN &
+                       "You still wanna buy stuff?"
+            End If
         End If
 
         If Game.player1.quests(qInd.helpWanted).canGet Then

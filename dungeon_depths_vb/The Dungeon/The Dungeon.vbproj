@@ -272,6 +272,7 @@
     <Compile Include="Items\Equipment\Armor\MagicCloaks\NecromancerRobe.vb" />
     <Compile Include="Items\Equipment\Armor\MagicCloaks\FaerieWitchRobes.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\AmaArmor.vb" />
+    <Compile Include="Items\Equipment\Armor\PlateArmor\BimboArmor.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\MaidArmor.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\PaladinArmor.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\PlatArmor.vb" />
@@ -337,6 +338,7 @@
     <Compile Include="Items\LootTable.vb" />
     <Compile Include="Items\Misc\ArmorFragments.vb" />
     <Compile Include="Items\Misc\ExtraLife.vb" />
+    <Compile Include="Items\Misc\CrackedPinkOrb.vb" />
     <Compile Include="Items\Misc\LumpOfIron.vb" />
     <Compile Include="Items\Services\AdvClassChange.vb" />
     <Compile Include="Items\Services\BasicClassChange.vb" />

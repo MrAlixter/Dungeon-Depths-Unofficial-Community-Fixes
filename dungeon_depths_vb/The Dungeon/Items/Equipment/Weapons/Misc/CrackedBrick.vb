@@ -28,16 +28,27 @@
 
     Overridable Sub wThrow(ByRef p As Player, ByRef m As Entity)
         If m Is Nothing Then
-            TextEvent.push("You throw the brick across the dungeon at nothing in particular.")
-            TextEvent.pushLog("You throw the brick across the dungeon at nothing in particular.")
+            TextEvent.pushAndLog("You throw the brick across the dungeon at nothing in particular.")
         Else
-            TextEvent.pushLog("You throw the brick!")
+            If m.getNPC() Is Nothing Then
+                TextEvent.pushAndLog("You throw the " & getName.Replace("_", " ") & "!")
+            Else
+                TextEvent.pushAndLog("You throw the " & getName.Replace("_", " ") & " at " & m.getNPC.getNameWithTitle & "!")
+            End If
+
             Dim dmg As Integer = (p.getATK) + (15) + Int(Rnd() * 3 + 1)
             p.hit(dmg, m)
         End If
 
-        durability -= 30 + Int(Rnd() * 6 + 1) + Int(Rnd() * 6 + 1)
-        If durability <= 0 Then break()
+        Dim w_dmg = 30 + Int(Rnd() * 6 + 1) + Int(Rnd() * 6 + 1)
+        durability -= w_dmg
+        If durability <= 0 Then
+            break()
+        ElseIf Not m.isDead Then
+            TextEvent.pushAndLog("The " & getName.Replace("_", " ") & " takes " & w_dmg & " damage.")
+        Else
+            TextEvent.pushLog("The " & getName.Replace("_", " ") & " takes " & w_dmg & " damage.")
+        End If
     End Sub
 
     Public Overrides Sub use(ByRef p As Player)

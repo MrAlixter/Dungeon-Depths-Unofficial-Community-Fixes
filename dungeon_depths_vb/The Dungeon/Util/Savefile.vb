@@ -410,7 +410,7 @@
         floor.playerPosition = playerPosition
         floor.bossDialog = bossDialog
         floor.beatBoss = beatBoss
-        If Game.version > 13 Then floor.pinkMist = CBool(subseg(16))
+        If Game.version >= 13 Then floor.pinkMist = CBool(subseg(16))
 
         start_pos += 1
         For y = 0 To mBoardHeight - 1

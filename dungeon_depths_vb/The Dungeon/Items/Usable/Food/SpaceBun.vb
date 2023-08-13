@@ -27,12 +27,10 @@ Public Class SpaceBun
     End Sub
 
     Public Overrides Sub effect(ByRef p As Player)
-        If p.perks(perk.spacebun) > 0 Or Settings.active(setting.norng) Then
+        If (p.perks(perk.spacebun) > 0 Or Settings.active(setting.norng)) And Not (p.equippedArmor.getAName.Equals(NanosilkQipaoP.ITEM_NAME) Or p.prt.checkNDefFemInd(pInd.eyes, 64) Or p.prt.checkNDefFemInd(pInd.rearhair, 41) Or p.prt.checkNDefFemInd(pInd.midhair, 49)) Then
             p.ongoingTFs.add(New SpaceBunTF())
             p.update()
             p.perks(perk.spacebun) = -1
-        ElseIf p.perks(perk.spacebun) = -1 Then
-            p.perks(perk.spacebun) = 0
         Else
             p.perks(perk.spacebun) += 1
         End If

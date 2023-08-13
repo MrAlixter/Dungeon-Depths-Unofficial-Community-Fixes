@@ -442,6 +442,8 @@
         internal_inventory.Add(CynnsBimboMark.ITEM_NAME, New CynnsBimboMark)         '414
         internal_inventory.Add(GumGun20mm.ITEM_NAME, New GumGun20mm)                 '415
         internal_inventory.Add(GumGrenade.ITEM_NAME, New GumGrenade)                 '416
+        internal_inventory.Add(CrackedPinkOrb.ITEM_NAME, New CrackedPinkOrb)         '417
+        internal_inventory.Add(BimboArmor.ITEM_NAME, New BimboArmor)                 '418
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -473,7 +475,7 @@
                  Me.item(343), Me.item(345), Me.item(354), Me.item(357),
                  Me.item(363), Me.item(364), Me.item(384), Me.item(393),
                  Me.item(394), Me.item(398), Me.item(404), Me.item(405),
-                 Me.item(413)}
+                 Me.item(413), Me.item(418)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -562,7 +564,7 @@
 
         misc = {Me.item(43), Me.item(53), Me.item(224), Me.item(229),
                 Me.item(242), Me.item(243), Me.item(261), Me.item(264),
-                Me.item(287), Me.item(352)}
+                Me.item(287), Me.item(352), Me.item(417)}
 
         glasses = {New noGlasses(),
                    Me.item(161), Me.item(299), Me.item(308), Me.item(309),

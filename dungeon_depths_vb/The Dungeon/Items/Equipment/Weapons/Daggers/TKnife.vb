@@ -60,7 +60,6 @@
         Else
             TextEvent.pushLog("The " & getName.Replace("_", " ") & " takes " & w_dmg & " damage.")
         End If
-
     End Sub
 
     Public Overrides Sub use(ByRef p As Player)

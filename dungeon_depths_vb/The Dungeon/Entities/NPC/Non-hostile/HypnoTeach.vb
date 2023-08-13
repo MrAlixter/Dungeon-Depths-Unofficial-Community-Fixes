@@ -177,14 +177,14 @@
 
     '| - DIALOG - |
     Protected Overrides Function normalDialog(ByRef p As Player)
-        If Game.currFloor.pinkMist And Not hasMetPlayer Then
+        If Game.currFloor.pinkMist And p.inv.getCountAt(CrackedPinkOrb.ITEM_NAME) < 1 Then
             img_index = LocalImgInd.alt6
 
             Game.npc_list.Clear()
             Game.shop_npc_engaged = False
 
             Return """Hello, adventurer." & DDUtils.RNRN &
-                   "I have been researching a new technique of... oh, nevermind." & DDUtils.RNRN &
+                   If(hasMetPlayer, "", "I have been researching a new technique of... oh, nevermind." & DDUtils.RNRN) &
                    "We seem to be in a rather interesting predicament.  This forest seems to be flooded with a pink mist- one with a powerful effect on all it touches." & DDUtils.RNRN &
                    "Fortunately I happened to have a compliant slime nearby to act as a buffer, though I dare not go back into the woods until I've gathered more information." & DDUtils.RNRN &
                    "If you plan to continue on yourself, please do be careful.  Oh, and take careful notes, ok?""" & DDUtils.PAKTC
@@ -194,10 +194,8 @@
             Game.npc_list.Clear()
             Game.shop_npc_engaged = False
 
-            Return """Hello, adventurer." & DDUtils.RNRN &
-                   "We seem to be in a rather interesting predicament.  This forest seems to be flooded with a pink mist- one with a powerful effect on all it touches." & DDUtils.RNRN &
-                   "Fortunately I happened to have a compliant slime nearby to act as a buffer, though I dare not go back into the woods until I've gathered more information." & DDUtils.RNRN &
-                   "If you plan to continue on yourself, please see if you can locate the Food Vendor.  Oh, and take careful notes, ok?""" & DDUtils.PAKTC
+            Return """So... you found the cause of the mist?" & DDUtils.RNRN &
+                   "A cracked orb?  Curious...""" & DDUtils.PAKTC
         End If
 
         If Int(Rnd() * 20) = 0 And Game.currFloor.floorNumber <> 7 And hasMetPlayer Then

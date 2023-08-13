@@ -606,6 +606,10 @@ Public Class Game
                         TextEvent.pushLog("Fox Statue discovered!")
                     End If
 
+                    If tile.Text = "⬤" And tile.Tag < 2 Then
+                        TextEvent.pushLog("Pink Orb discovered!")
+                    End If
+
                     If tile.Tag = 1 Then tile.Tag = 2
                 End If
             Next
@@ -747,7 +751,7 @@ Public Class Game
         '54 = iso_v_wallcap
         '55 = iso_u_corner
         '56 = iso_l_corner
-        '57 = pink mist
+        '57 = pink orb
 
         Select Case tileText
             Case ""
@@ -864,6 +868,8 @@ Public Class Game
                 If tileTag = 0 Then Return 55 Else Return 2
             Case "╝"
                 If tileTag = 0 Then Return 56 Else Return 2
+            Case "⬤"
+                Return 57
         End Select
 
         Return 2
@@ -1060,6 +1066,8 @@ Public Class Game
                 Return mTile.imgLib.getImg(tSet.forest, tile.iso_u_corner)
             Case 56
                 Return mTile.imgLib.getImg(tSet.forest, tile.iso_l_corner)
+            Case 57
+                Return mTile.imgLib.getImg(tSet.forest, tile.extra12)
             Case Else
                 Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
         End Select
@@ -2398,6 +2406,13 @@ Public Class Game
         If Not last_tile Is Nothing AndAlso last_tile.Item1 = "a" AndAlso player1.ongoingQuests.contains("Fae Woods Q2A - Simple Instructions") Then FaeWoodsQ2A.passengerDialog(player1.pos)
 
         If btnEQP.Enabled = False Then btnEQP.Enabled = True
+
+        If Not last_tile Is Nothing AndAlso last_tile.Item1 = "⬤" And currFloor.pinkMist Then
+            currFloor.cleanupPinkMist()
+            TextEvent.pushAndLog("You pick up the orb, and the strange mist subsides!")
+            player1.inv.add(CrackedPinkOrb.ITEM_NAME, 1)
+            last_tile = Nothing
+        End If
 
         If currFloor.chestList.Count > 0 Then
             For i = 0 To currFloor.chestList.Count - 1

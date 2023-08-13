@@ -62,6 +62,13 @@
         local_img.Add(LocalImgInd.alt1, ShopNPC.gbl_img.atrs(0).getAt(29))
         local_img.Add(LocalImgInd.alt2, ShopNPC.gbl_img.atrs(0).getAt(30))
         local_img.Add(LocalImgInd.alt3, ShopNPC.gbl_img.atrs(0).getAt(31))
+        local_img.Add(LocalImgInd.alt4, ShopNPC.gbl_img.atrs(0).getAt(141))
+    End Sub
+
+    Public Overrides Sub encounter()
+        floor10Adjustment()
+
+        MyBase.encounter()
     End Sub
 
     Public Overrides Sub inventoryUpdate()
@@ -98,6 +105,13 @@
         Game.player1.drawPort()
 
         TextEvent.push(out, AddressOf Game.player1.die)
+    End Sub
+
+    '| - FLOOR 10 - |
+    Sub floor10Adjustment()
+        If Game.currFloor.pinkMist Then
+            img_index = 0
+        End If
     End Sub
 
     '| - WEAPON UPGRADES - |
@@ -244,6 +258,21 @@
         Return "You pause as you approach the weaponsmith, who stumbles away from a thick cloud of- um, something pink..."
     End Function
     Protected Overrides Function normalDialog(ByRef p As Player)
+        If Game.currFloor.pinkMist Then
+            img_index = LocalImgInd.alt4
+
+            gold = 1000
+
+            If Game.currFloor.mBoard(pos.Y, pos.X).Tag = 3 Then
+                Return "Hey!  Umm..." & DDUtils.RNRN &
+                       "What's... uh, do you know if something is- like, going on?" & DDUtils.RNRN &
+                       "I'm feelin' kinda weird..."
+            Else
+                Return "Hey!  Umm..." & DDUtils.RNRN &
+                      "Did you, like, do something?  It's lookin' kinda... clearer- uh, or whatever..."
+            End If
+        End If
+
         If p.quests(qInd.dfaUpgrade).canGet Then
             p.quests(qInd.dfaUpgrade).init()
             Return ""
@@ -370,6 +399,10 @@
     End Function
 
     Protected Overrides Function normalPostPurchaseDialog(ByRef p As Player) As String
+        If Game.currFloor.pinkMist Then
+            Return "See ya around..."
+        End If
+
         Return "Stay safe, yeah?"
     End Function
     Protected Overrides Function bimboPostPurchaseDialog(ByRef p As Player) As String

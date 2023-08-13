@@ -54,6 +54,7 @@
         local_img.Add(LocalImgInd.alt1, ShopNPC.gbl_img.atrs(0).getAt(46))
         local_img.Add(LocalImgInd.alt2, ShopNPC.gbl_img.atrs(0).getAt(47))
         local_img.Add(LocalImgInd.alt3, ShopNPC.gbl_img.atrs(0).getAt(59))
+        local_img.Add(LocalImgInd.alt4, ShopNPC.gbl_img.atrs(0).getAt(142))
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
@@ -83,8 +84,35 @@
         Game.leaveNPC()
     End Sub
 
+    Public Overrides Sub encounter()
+        floor10Adjustment()
+
+        MyBase.encounter()
+    End Sub
+
+    '| - FLOOR 10 - |
+    Sub floor10Adjustment()
+        If Game.currFloor.pinkMist Then
+            img_index = 0
+        End If
+    End Sub
+
     '| - DIALOG - |
     Protected Overrides Function normalDialog(ByRef p As Player)
+        If Game.currFloor.pinkMist Then
+            img_index = LocalImgInd.alt4
+
+            gold = 1000
+
+            If Game.currFloor.mBoard(pos.Y, pos.X).Tag = 3 Then
+                Return "Heh heh, so I guess I was standing around too long, huh?" & DDUtils.RNRN &
+                       "Like... that's probably gonna be fine..."
+            Else
+                Return "Hey~!" & DDUtils.RNRN &
+                       "Looks like the weird mist is gone!  Did you do that?"
+            End If
+        End If
+
         If Int(Rnd() * 25) = 0 And hasMetPlayer Then
             img_index = LocalImgInd.alt1
             Return "Hey, like, have you seen that spooky red guy with a hood?  He TOTALLY put some sorta curse on my wand!" & DDUtils.RNRN &

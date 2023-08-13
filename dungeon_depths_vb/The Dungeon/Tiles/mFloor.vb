@@ -23,7 +23,7 @@ Public Class mFloor
 
     Public sessions As Dictionary(Of Integer, Session) = New Dictionary(Of Integer, Session)
 
-    Public Shared nonRandomFloors() As Integer = {9999, 10000, 91017, 91018, 5, 75, 9, 13}
+    Public Shared nonRandomFloors() As Integer = {9999, 10000, 91017, 91018, 5, 75, 9, 10, 13}
     Public Shared loopVerticalFloors() As Integer = {13}
 
     Public Sub New(ByVal code As String, ByVal fNum As Integer,
@@ -97,12 +97,12 @@ Public Class mFloor
         Select Case floorNumber
             Case 5, 91018
                 genBossFloor(Game.player1)
-            Case 6, 7, 8, 10, 11, 12
+            Case 6, 7, 8, 11, 12
                 generateForestLevel(floorCode)
             Case 9
                 genFloor9()
-                'Case 10
-                '    genFloor10(floorCode)
+            Case 10
+                genFloor10(floorCode)
             Case 13
                 genFloor13()
             Case 9999
@@ -845,7 +845,12 @@ Public Class mFloor
         connectPoints(Game.player1.pos, randPoint)
         connectPoints(Game.player1.pos, randPoint)
 
-        stairs = New Point(mBoardWidth - 5, mBoardHeight - 5)
+        stairs = randPoint()
+        Dim failsafe As Integer = 0
+        Do While (route(Game.player1.pos, stairs).Length < 10 And failsafe < 30)
+            stairs = randPoint()
+            failsafe += 1
+        Loop
 
         placeChest(floorCode)
         If floorNumber > 2 Then placeTraps()
@@ -871,6 +876,14 @@ Public Class mFloor
         End If
 
         deployPinkMist()
+
+        Dim orb = randPoint()
+        failsafe = 0
+        Do While (mBoard(orb.Y, orb.X).Tag <> 3 And failsafe < 30)
+            orb = randPoint()
+            failsafe += 1
+        Loop
+        mBoard(orb.Y, orb.X).Text = "⬤"
     End Sub
     Sub deployPinkMist()
         For y = 0 To mBoardHeight - 1
@@ -879,6 +892,17 @@ Public Class mFloor
                     mBoard(y, x).Tag = 2
                 ElseIf mBoard(y, x).Tag > 0 Then
                     mBoard(y, x).Tag = 3
+                End If
+            Next
+        Next
+
+        pinkMist = True
+    End Sub
+    Sub cleanupPinkMist()
+        For y = 0 To mBoardHeight - 1
+            For x = 0 To mBoardWidth - 1
+                If mBoard(y, x).Tag = 3 Then
+                    mBoard(y, x).Tag = 2
                 End If
             Next
         Next
@@ -1134,8 +1158,8 @@ Public Class mFloor
         inv.add(CryoGrenade.ITEM_NAME, r)
         If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
         inv.add(CombatModule.ITEM_NAME, r)
-        'If Int(Rnd() * 3) = 0 Then r = 3 Else r = 0
-        'inv.add(SpaceBun.ITEM_NAME, r)
+        If Int(Rnd() * 3) = 0 Then r = 3 Else r = 0
+        inv.add(SpaceBun.ITEM_NAME, r)
 
         inv.add(VialOfBimbo.ITEM_NAME, 1)
         c1 = DDConst.BASE_CHEST.Create(inv, p, False)
