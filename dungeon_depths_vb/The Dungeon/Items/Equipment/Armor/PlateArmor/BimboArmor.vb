@@ -34,8 +34,19 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(496, True, True)
 
         '|Description|
-        setDesc("A pastel pink set of armor that seems to provide" & DDUtils.RNRN &
+        setDesc("A pastel pink set of armor that seems to provide more defense the less its wearer thinks.  Each plate is dotted with slight imperfections, as though it has been stretched into place by an external force..." & DDUtils.RNRN &
                 getSizeInformation() & DDUtils.RNRN &
                 getStatInformation())
     End Sub
+
+    Public Overrides Function getDescription() As Object
+        Return "A pastel pink set of armor that seems to provide more defense the less its wearer thinks.  Each plate is dotted with slight imperfections, as though it has been stretched into place by an external force..." & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation()
+    End Function
+
+    Public Overrides Function getDBoost(ByRef p As Player) As Integer
+        If p Is Nothing Then Return 27
+        Return 7 + Math.Min(30, Math.Max(3, 30 - (2 * (p.will + p.wBuff))))
+    End Function
 End Class
