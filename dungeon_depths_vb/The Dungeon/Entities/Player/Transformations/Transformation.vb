@@ -67,6 +67,7 @@
     mimicmino
     mindless
     mintbimbo
+    mistbimbo
     mpbimbo
     neko
     plantfolk
@@ -342,6 +343,9 @@ Public MustInherit Class Transformation
 
         ElseIf tf = tfind.mintbimbo Then
             Return New MBimboTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.mistbimbo Then
+            Return New MistBimboTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.mpbimbo Then
             Return New MPBimboTF(cs, n, tts, wi, cbs, tfd)

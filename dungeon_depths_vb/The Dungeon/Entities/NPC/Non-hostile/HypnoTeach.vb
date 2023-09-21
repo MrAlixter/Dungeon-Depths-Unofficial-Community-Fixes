@@ -187,7 +187,7 @@
                    If(hasMetPlayer, "", "I have been researching a new technique of... oh, nevermind." & DDUtils.RNRN) &
                    "We seem to be in a rather interesting predicament.  This forest seems to be flooded with a pink mist- one with a powerful effect on all it touches." & DDUtils.RNRN &
                    "Fortunately I happened to have a compliant slime nearby to act as a buffer, though I dare not go back into the woods until I've gathered more information." & DDUtils.RNRN &
-                   "If you plan to continue on yourself, please do be careful.  Oh, and take careful notes, ok?""" & DDUtils.PAKTC
+                   "If you plan to continue on yourself, please do be careful.  Oh, and take careful notes, alright?""" & DDUtils.PAKTC
         ElseIf Game.currFloor.pinkMist Then
             img_index = LocalImgInd.alt6
 

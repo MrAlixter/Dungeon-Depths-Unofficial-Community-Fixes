@@ -118,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\Mayue.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\Elementals\PinkMistElemental.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Witches\MarissasStudent.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Slime\LeporineOoze.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\TimeJudgeFight.vb" />
@@ -196,6 +197,7 @@
     <Compile Include="Entities\Player\Spells\_Utility\SizeForLife.vb" />
     <Compile Include="Entities\Player\Spells\_Utility\SummonBattery.vb" />
     <Compile Include="Entities\Player\Spells\_Utility\turnToPanties.vb" />
+    <Compile Include="Entities\Player\Transformations\BimboTFs\MistBimboTF.vb" />
     <Compile Include="Entities\Player\Transformations\BimboTFs\DragonfruitBimboTF.vb" />
     <Compile Include="Entities\Player\Transformations\BimboTFs\FClericTF.vb" />
     <Compile Include="Entities\Player\Transformations\BimboTFs\FBimboTF.vb" />

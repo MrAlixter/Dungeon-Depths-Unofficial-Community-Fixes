@@ -59,7 +59,7 @@
     Private Sub PicMisc_Click(sender As Object, e As EventArgs) Handles picMisc.Click
         Dim cd As New ColorDialog()
         cd.Color = sc
-        cd.CustomColors = {(195 << 16 Or 219 << 8 Or 247), (160 << 16 Or 184 << 8 Or 240), (140 << 16 Or 161 << 8 Or 210), (120 << 16 Or 138 << 8 Or 180), (70 << 16 Or 80 << 8 Or 105)}
+        cd.CustomColors = {(215 << 16 Or 235 << 8 Or 250), (195 << 16 Or 219 << 8 Or 247), (160 << 16 Or 184 << 8 Or 240), (140 << 16 Or 161 << 8 Or 210), (120 << 16 Or 138 << 8 Or 180), (70 << 16 Or 80 << 8 Or 105)}
         If cd.ShowDialog() = Windows.Forms.DialogResult.OK Then
             sc = cd.Color
         End If

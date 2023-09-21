@@ -180,7 +180,7 @@
         internal_inventory.Add(SigStaff.ITEM_NAME, New SigStaff)                     '159
         internal_inventory.Add(SpikedStaff.ITEM_NAME, New SpikedStaff)               '160
         internal_inventory.Add(Blindfold.ITEM_NAME, New Blindfold)                   '161
-        internal_inventory.Add(ThrowingKnife.ITEM_NAME, New ThrowingKnife)                         '162
+        internal_inventory.Add(ThrowingKnife.ITEM_NAME, New ThrowingKnife)           '162
         internal_inventory.Add(SigDagger.ITEM_NAME, New SigDagger)                   '163
         internal_inventory.Add(StealthGear.ITEM_NAME, New StealthGear)               '164
         internal_inventory.Add(MShank.ITEM_NAME, New MShank)                         '165

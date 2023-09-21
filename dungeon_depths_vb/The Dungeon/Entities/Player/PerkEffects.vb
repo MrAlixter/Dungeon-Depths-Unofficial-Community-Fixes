@@ -368,6 +368,15 @@
             p.changeHairColor(faeleaf_green)
         End If
     End Sub
+    Shared Sub pinkMistTF(ByRef p As Player, ByVal tag As Integer)
+        If tag = DDConst.PINK_MIST_TILETAG And Not p.ongoingTFs.contains(tfind.mistbimbo) Then
+            p.ongoingTFs.add(New MistBimboTF(2, 99, 0.25, True))
+            p.perks(perk.bimbotf) = 0
+        ElseIf tag <> DDConst.PINK_MIST_TILETAG Then
+            p.ongoingTFs.remove(tfind.mistbimbo)
+            p.perks(perk.bimbotf) = -1
+        End If
+    End Sub
 
     '|SPECIAL MOVE HANDLERS|
     Shared Sub berserkerRage(ByRef p As Player)
