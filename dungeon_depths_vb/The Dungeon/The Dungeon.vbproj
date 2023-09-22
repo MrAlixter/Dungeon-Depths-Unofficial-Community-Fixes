@@ -315,9 +315,12 @@
     <Compile Include="Items\Equipment\Weapons\Misc\GumGun20mm.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\PixieDuster.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\CrackedBrick.vb" />
+    <Compile Include="Items\Equipment\Weapons\Spears\HeronSpear.vb" />
     <Compile Include="Items\Equipment\Weapons\Staffs\Hyacinth.vb" />
     <Compile Include="Items\Equipment\Weapons\Swords\CyberValkyrieSword.vb" />
+    <Compile Include="Items\Equipment\Weapons\Swords\PeregrineFalchion.vb" />
     <Compile Include="Items\Equipment\Weapons\Swords\HellflamingSword.vb" />
+    <Compile Include="Items\Equipment\Weapons\Wands\FirehawkWand.vb" />
     <Compile Include="Items\Equipment\Weapons\Whips\Rose.vb" />
     <Compile Include="Items\Equipment\Weapons\Axes\Tulip.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\PhaseDrill.vb" />

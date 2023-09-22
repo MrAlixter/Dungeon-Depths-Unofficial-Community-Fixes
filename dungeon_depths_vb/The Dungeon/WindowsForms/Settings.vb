@@ -187,6 +187,7 @@ Public Class Settings
             compressed = False
 
             populateSpawnRatePanel()
+            populateSeasonalOverridePanel()
 
             btnAdv.Text = "Basic Settings"
             btnAdv.Location = New Point(555 * (CDbl(Me.Width) / CDbl(expanded_X)), btnAdv.Location.Y)
@@ -246,8 +247,77 @@ Public Class Settings
             createSpawnRatePanel(l.Item(i).Item2, l.Item(i).Item1, i)
         Next
     End Sub
+    Private Sub createSeasonalOverridePanel(ByVal o As dateTimeOverride, ByVal index As Integer, ByVal value As Boolean)
+        Dim r As Double = CDbl(Me.Width) / CDbl(expanded_X)
+        Dim pnl As Panel = New Panel()
+
+        pnl.AutoSize = False
+        pnl.Size = New Size(440 * r, 25 * r)
+        pnl.Location = New Point(6 * r, (8 * r) + (index * pnl.Size.Height))
+        pnl.BackColor = Color.Black
+
+        Dim name As Label = New Label()
+        name.Text = translateSOValue(o)
+        name.AutoSize = False
+        name.Size = New Size(198 * r, 21 * r)
+        name.Location = New Point(3 * r, 2 * r)
+        name.ForeColor = Color.White
+        name.BackColor = Color.Black
+        name.Font = tabSpawnRates.Font
+        pnl.Controls.Add(name)
+
+        Dim toggle As TrackBar = New TrackBar()
+        toggle.Size = New Size(150 * r, 21 * r)
+        toggle.Location = New Point(257 * r, 2 * r)
+        toggle.ForeColor = Color.White
+        toggle.BackColor = Color.Black
+        toggle.Minimum = 0
+        toggle.Maximum = 1
+        toggle.LargeChange = 1
+        toggle.Tag = o
+
+        If value Then toggle.Value = 1 Else toggle.Value = 0
+        AddHandler toggle.ValueChanged, AddressOf dateTimeOverrideToggle
+        pnl.Controls.Add(toggle)
+
+        tabSeasonalOverride.Controls.Add(pnl)
+    End Sub
+    Private Shared Function translateSOValue(ByVal o As dateTimeOverride) As String
+        If o = dateTimeOverride.winterOverride Then
+            Return "Winter"
+        ElseIf o = dateTimeOverride.springOverride Then
+            Return "Spring"
+        ElseIf o = dateTimeOverride.summerOverride Then
+            Return "Summer"
+        ElseIf o = dateTimeOverride.autumnOverride Then
+            Return "Autumn"
+        ElseIf o = dateTimeOverride.aniverOverride Then
+            Return "D_D Anniversary"
+        ElseIf o = dateTimeOverride.valentOverride Then
+            Return "Valentine's Day"
+        ElseIf o = dateTimeOverride.hallowOverride Then
+            Return "Halloween"
+        ElseIf o = dateTimeOverride.holidaOverride Then
+            Return "Winter Holiday"
+        End If
+
+        Return "???"
+    End Function
+    Private Sub populateSeasonalOverridePanel()
+        tabSeasonalOverride.Controls.Clear()
+
+        createSeasonalOverridePanel(dateTimeOverride.winterOverride, 0, DDDateTime.overrideActive(dateTimeOverride.winterOverride))
+        createSeasonalOverridePanel(dateTimeOverride.springOverride, 1, DDDateTime.overrideActive(dateTimeOverride.springOverride))
+        createSeasonalOverridePanel(dateTimeOverride.summerOverride, 2, DDDateTime.overrideActive(dateTimeOverride.summerOverride))
+        createSeasonalOverridePanel(dateTimeOverride.autumnOverride, 3, DDDateTime.overrideActive(dateTimeOverride.autumnOverride))
+        createSeasonalOverridePanel(dateTimeOverride.aniverOverride, 4, DDDateTime.overrideActive(dateTimeOverride.aniverOverride))
+        createSeasonalOverridePanel(dateTimeOverride.hallowOverride, 5, DDDateTime.overrideActive(dateTimeOverride.hallowOverride))
+    End Sub
 
     Private Sub spawnRateChanged(sender As TrackBar, e As EventArgs)
         If Settings.monsterSpawns.ContainsKey(sender.Tag) Then Settings.monsterSpawns(sender.Tag) = sender.Value
+    End Sub
+    Private Sub dateTimeOverrideToggle(sender As TrackBar, e As EventArgs)
+        If sender.Value = 0 Then DDDateTime.removeActiveOverride(sender.Tag) Else DDDateTime.addActiveOverride(sender.Tag)
     End Sub
 End Class

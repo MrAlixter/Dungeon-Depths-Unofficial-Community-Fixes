@@ -444,6 +444,9 @@
         internal_inventory.Add(GumGrenade.ITEM_NAME, New GumGrenade)                 '416
         internal_inventory.Add(CrackedPinkOrb.ITEM_NAME, New CrackedPinkOrb)         '417
         internal_inventory.Add(BimboArmor.ITEM_NAME, New BimboArmor)                 '418
+        internal_inventory.Add(PeregrineFalchion.ITEM_NAME, New PeregrineFalchion)   '419
+        internal_inventory.Add(HeronSpear.ITEM_NAME, New HeronSpear)                 '420
+        internal_inventory.Add(FirehawkWand.ITEM_NAME, New FirehawkWand)             '421
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -497,7 +500,7 @@
                    Me.item(367), Me.item(368), Me.item(369), Me.item(370),
                    Me.item(372), Me.item(377), Me.item(381), Me.item(388),
                    Me.item(390), Me.item(399), Me.item(401), Me.item(412),
-                   Me.item(415)}
+                   Me.item(415), Me.item(419), Me.item(420), Me.item(421)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4), Me.item(65),
                    Me.item(15), Me.item(36), Me.item(37), Me.item(48),

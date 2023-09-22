@@ -42,6 +42,7 @@ Partial Class Settings
         Me.chkMakeIso = New System.Windows.Forms.CheckBox()
         Me.chkBimboNames = New System.Windows.Forms.CheckBox()
         Me.chkOldLoot = New System.Windows.Forms.CheckBox()
+        Me.tabSeasonalOverride = New System.Windows.Forms.TabPage()
         Me.tabAdvSettings.SuspendLayout()
         Me.tabIsoMaps.SuspendLayout()
         CType(Me.picSampleIsotile, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -220,6 +221,7 @@ Partial Class Settings
         '
         Me.tabAdvSettings.Controls.Add(Me.tabSpawnRates)
         Me.tabAdvSettings.Controls.Add(Me.tabIsoMaps)
+        Me.tabAdvSettings.Controls.Add(Me.tabSeasonalOverride)
         Me.tabAdvSettings.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tabAdvSettings.Location = New System.Drawing.Point(281, 33)
         Me.tabAdvSettings.Name = "tabAdvSettings"
@@ -249,7 +251,7 @@ Partial Class Settings
         Me.tabIsoMaps.ForeColor = System.Drawing.Color.White
         Me.tabIsoMaps.Location = New System.Drawing.Point(4, 24)
         Me.tabIsoMaps.Name = "tabIsoMaps"
-        Me.tabIsoMaps.Size = New System.Drawing.Size(462, 397)
+        Me.tabIsoMaps.Size = New System.Drawing.Size(462, 447)
         Me.tabIsoMaps.TabIndex = 1
         Me.tabIsoMaps.Text = "Isometric Maps"
         '
@@ -324,6 +326,16 @@ Partial Class Settings
         Me.chkOldLoot.Text = "Use old loot tables"
         Me.chkOldLoot.UseVisualStyleBackColor = True
         '
+        'tabSeasonalOverride
+        '
+        Me.tabSeasonalOverride.BackColor = System.Drawing.Color.Black
+        Me.tabSeasonalOverride.ForeColor = System.Drawing.Color.White
+        Me.tabSeasonalOverride.Location = New System.Drawing.Point(4, 24)
+        Me.tabSeasonalOverride.Name = "tabSeasonalOverride"
+        Me.tabSeasonalOverride.Size = New System.Drawing.Size(462, 447)
+        Me.tabSeasonalOverride.TabIndex = 2
+        Me.tabSeasonalOverride.Text = "Seasonal Override"
+        '
         'Settings
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
@@ -373,4 +385,5 @@ Partial Class Settings
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents picSampleIsotile As System.Windows.Forms.PictureBox
     Friend WithEvents chkOldLoot As System.Windows.Forms.CheckBox
+    Friend WithEvents tabSeasonalOverride As System.Windows.Forms.TabPage
 End Class
