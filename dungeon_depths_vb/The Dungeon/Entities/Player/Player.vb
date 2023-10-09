@@ -1437,10 +1437,270 @@ Public Class Player
 
         turnCt = Game.getTurn
     End Sub
-    Sub tfUpdate(Optional ByRef pUpdateFlag = False)
+    Protected Sub tfUpdate(Optional ByRef pUpdateFlag = False)
         'transformations
         ongoingTFs.ping(pUpdateFlag)
     End Sub
+    Protected Function perkUpdate() As Boolean
+        Dim needsToUpdatePortrait = False
+
+        If quests(qInd.fanPhan).canGet Then
+            quests(qInd.fanPhan).init()
+            Return needsToUpdatePortrait
+        End If
+
+        '|GENERAL EFFECTS|
+        applyMiscPerkEffects(needsToUpdatePortrait)
+        applyClassPerkEffects(needsToUpdatePortrait)
+        applyFormPerkEffects(needsToUpdatePortrait)
+
+        '|TRANSFORMATION TRIGGERS|
+        applyTFTriggerPerkEffects(needsToUpdatePortrait)
+        applyTFEffectPerkEffects(needsToUpdatePortrait)
+
+        '|ABILITY (SPELL/SPECIAL) HANDLERS|
+        applyAbilityPerkEffects(needsToUpdatePortrait)
+
+        '|CURSES|
+        applyCursePerkEffects(needsToUpdatePortrait)
+
+        description = CStr(name & " is a " & sex & " " & pForm.name & " " & pClass.name)
+        Return needsToUpdatePortrait
+    End Function
+    Protected Sub applyMiscPerkEffects(ByRef needsToUpdatePortrait As Boolean)
+        '| - Stamina (Hunger) Depletion - |
+        If perks(perk.hunger) > -1 And Game.getTurn Mod 5 = 0 Then
+            PerkEffects.staminaEffect(Me)
+        End If
+        '| - Burn Lingering Damage - |
+        If perks(perk.burn) > -1 And Game.getTurn Mod 4 = 0 Then
+            PerkEffects.burnEffect(Me)
+        End If
+        '| - Illuminate Linger - |
+        If perks(perk.lightsource) > -1 Then
+            perks(perk.lightsource) -= 1
+        End If
+
+        '| - Polymorph Effects - |
+        If perks(perk.polymorphed) > -1 And Not ongoingTFs.containsPolymorph() Then
+            If perks(perk.polymorphed) = 0 Then revertToPState()
+            perks(perk.polymorphed) -= 1
+        End If
+
+        '| - Ring of Minor Regen - |
+        If perks(perk.minRegen) > -1 Then
+            PerkEffects.minorRegen(Me)
+        End If
+        '| - Ring of Minor Mana Regen - |
+        If perks(perk.minmanregen) > -1 Then
+            PerkEffects.minorManaRegen(Me)
+        End If
+
+        '| - Phase Deflector - |
+        If perks(perk.pdeflector) > -1 Then
+            PerkEffects.phaseDeflector(Me)
+        End If
+
+        '| - Living Armor/Lingerie - |
+        If perks(perk.livearm) > -1 Then
+            needsToUpdatePortrait = PerkEffects.livingArmor(Me)
+        End If
+        If perks(perk.livelinge) > -1 Then
+            needsToUpdatePortrait = PerkEffects.livingLingerie(Me)
+        End If
+
+        '| - Imitation Cowbell Dowse - |
+        If Not pClass.name.Equals("Thrall") And forcedPath Is Nothing And prt.checkFemInd(pInd.horns, 12) AndAlso Int(Rnd() * 100) = 0 AndAlso Not Game.combat_engaged AndAlso Not Game.shop_npc_engaged Then
+            PerkEffects.imitationCowbell(Me)
+        End If
+
+        '| - Cowbell Cleanup - |
+        If perks(perk.cowbell) > -1 And Not (equippedAcce.getAName.Equals(Cowbell.ITEM_NAME) Or equippedAcce.getAName.Equals(Bimbell.ITEM_NAME) Or equippedAcce.getAName.Equals(ImmitationCowbell.ITEM_NAME)) Then
+            perks(perk.cowbell) = -1
+        End If
+        '| - Fae Stockings Cleanup - |
+        If equippedAcce.getAName.Equals(FaeStockings.ITEM_NAME) And equippedArmor.bind_wearer Then
+            Equipment.equipAcce(Me, "Nothing", False)
+            TextEvent.pushAndLog("Your accessory vanishes...")
+            drawPort()
+        End If
+        '| - Cynn's Tonic Cleanup - |
+        If perks(perk.cynnstonic) > -1 Then
+            If Game.turn Mod 5 = 0 Then perks(perk.cynnstonic) -= 1
+        End If
+        '| - Dark Pact P1 Cleanup - |
+        If perks(perk.canmeetcyn) > 0 And Not (formName.Equals("Succubus") Or formName.Equals("Demon") Or formName.Equals("Daemon")) Then
+            perks(perk.canmeetcyn) = -1
+        End If
+    End Sub
+    Protected Sub applyClassPerkEffects(ByRef needsToUpdatePortrait As Boolean)
+        '| - Amazon - |
+        If perks(perk.amazon) > -1 Then
+            PerkEffects.amazon(Me)
+        End If
+        '| - Barbarian - |
+        If perks(perk.barbarian) > -1 Then
+            PerkEffects.barbarian(Me)
+        End If
+    End Sub
+    Protected Sub applyFormPerkEffects(ByRef needsToUpdatePortrait As Boolean)
+        '| - Slime Regen - |
+        If perks(perk.slimehair) > -1 Or perks(perk.slimeregenplus) > -1 Then
+            PerkEffects.slimeHairRegen(Me)
+        End If
+        If perks(perk.vsslimehair) > -1 Then
+            PerkEffects.vslimeHairRegen(Me)
+        End If
+        '| - Plantfolk Regen - |
+        If pForm.name.Equals("Plantfolk") Then
+            PerkEffects.plantRegen(Me)
+        End If
+    End Sub
+    Protected Sub applyTFTriggerPerkEffects(ByRef needsToUpdatePortrait As Boolean)
+        '| - Targax Sword TF - |
+        If perks(perk.swordpossess) > -1 Then
+            PerkEffects.targaxSwordTF(Me)
+        End If
+
+        '| - Shift Toward Preferred Form - |
+        If Not prefForm Is Nothing AndAlso Transformation.canBeTFed(Me) And (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player1) And Not pForm.name.Equals("Half-Succubus") And Not perks(perk.thrall) = 1 Then
+            PerkEffects.thrallRestore(Me)
+        End If
+
+        '| - Petrification - |
+        If perks(perk.astatue) > -1 Then
+            PerkEffects.aStatue(Me)
+        End If
+
+        '| - Magical Girl/Valkyrie Status Checks - |
+        If pClass.name.Equals("Magical Girl") And perks(perk.tfedbyweapon) > 0 Then
+            PerkEffects.magicGirlStatusCheck(Me)
+        End If
+        If pClass.name.Contains("Valkyrie") And perks(perk.tfedbyweapon) > 0 Then
+            PerkEffects.valkyrieStatusCheck(Me)
+        End If
+        If perks(perk.tfedbyweapon) < 0 And (perks(perk.tfcausingwand) > -1 Or perks(perk.tfcausingsword) > -1) Then
+            perks(perk.tfcausingwand) = -1
+            perks(perk.tfcausingsword) = -1
+        End If
+
+        '| - Bimbo Mist TF - |
+        If (perks(perk.bimbotf) < 0 And Game.currFloor.mBoard(pos.Y, pos.X).Tag = DDConst.PINK_MIST_TILETAG) Or ongoingTFs.contains(tfind.mistbimbo) Then
+            PerkEffects.pinkMistTF(Me, Game.currFloor.mBoard(pos.Y, pos.X).Tag)
+        End If
+    End Sub
+    Protected Sub applyTFEffectPerkEffects(ByRef needsToUpdatePortrait As Boolean)
+        '| - Cupcake TF - |
+        If perks(perk.cupcake) > -1 Then
+            If Game.getTurn Mod 20 = 0 Then perks(perk.cupcake) -= 1
+        End If
+        '| - Space Bun TF - |
+        If perks(perk.spacebun) > -1 Then
+            If Game.getTurn Mod 20 = 0 Then perks(perk.spacebun) -= 1
+        End If
+        '| - Bunny Ear TF - |
+        If perks(perk.bunnyears) > -1 And equippedAcce.getAName.Equals(BunnyEars.ITEM_NAME) Then
+            PerkEffects.bunnyEarsEff(Me)
+        End If
+        '| - Golden Gum TF - |
+        If inv.getCountAt("Golden_Gum") > 0 And Not ongoingTFs.contains(tfind.goldbimbo) And Not className.Equals("Bimbo") Then
+            TextEvent.push("A dizzy calm washes over you...")
+            ongoingTFs.add(New GBimboTF(2, 20, 0.25, True))
+        End If
+        '| - Fae Blossom - |
+        If equippedAcce.getAName.Equals(FaerieBlossom.ITEM_NAME) And Int(Rnd() * 200) = 0 Then
+            PerkEffects.faeleafBloom(Me)
+        End If
+    End Sub
+    Protected Sub applyAbilityPerkEffects(ByRef needsToUpdatePortrait As Boolean)
+        '| - Attack Up - |
+        If perks(perk.atkup) > -1 Then
+            PerkEffects.attackUp(Me)
+        End If
+        '| - Guard Up - |
+        If perks(perk.guardup) > -1 Then
+            PerkEffects.guardUp(Me)
+        End If
+        '| - Will Up - |
+        If perks(perk.willup) > -1 Then
+            PerkEffects.willUp(Me)
+        End If
+
+        '| - Berserker Rage - |
+        If perks(perk.brage) > -1 Then
+            PerkEffects.berserkerRage(Me)
+        End If
+        '| - Lurk - |
+        If perks(perk.lurk) > -1 Then
+            PerkEffects.lurk(Me)
+        End If
+
+        '| - Massive Mammaries - |
+        If perks(perk.mmammaries) > -1 Then
+            PerkEffects.massiveMammaries(Me)
+        End If
+        '| - Pillowy Protect - |
+        If perks(perk.pprot) > -1 Then
+            PerkEffects.pProt(Me)
+        End If
+
+        '| - Ironhide Fury - |
+        If perks(perk.ihfury) > -1 Then
+            PerkEffects.ironhideFury(Me)
+        End If
+        '| - Inferno Aura - |
+        If perks(perk.infernoa) > -1 Then
+            PerkEffects.infernoAura(Me)
+        End If
+        '| - Mana Burst - |
+        If perks(perk.mburst) > -1 And Game.getTurn Mod 4 = 0 Then
+            PerkEffects.mBurst(Me)
+        End If
+
+        '| - Spot Fusion Cooldown - |
+        If perks(perk.isspotfused) > -1 Then
+            perks(perk.isspotfused) -= 1
+            If perks(perk.isspotfused) < 1 Then perks(perk.isspotfused) = -1
+        End If
+
+        '| - Eye of Medusa - |
+        If Game.combat_engaged And equippedAcce.getAName.Equals(MedusaEye.ITEM_NAME) And Not currTarget Is Nothing Then
+            Dim s = New MedusaEyePassive(Me, currTarget)
+            s.cast()
+        End If
+    End Sub
+    Protected Sub applyCursePerkEffects(ByRef needsToUpdatePortrait As Boolean)
+        '| - Clothing Curse - |
+        If perks(perk.slutcurse) > -1 AndAlso equippedArmor.getAntiSlutInd = -1 Then
+            needsToUpdatePortrait = Equipment.clothingCurse1(Me)
+        End If
+        '| - Curse of Rust - |
+        If perks(perk.corust) > -1 Then
+            needsToUpdatePortrait = PerkEffects.curseOfRust(Me)
+        End If
+        '| - Curse of Milk - |
+        If perks(perk.comilk) > -1 Then
+            needsToUpdatePortrait = PerkEffects.curseOfMilk(Me)
+        End If
+        '| - Curse of Random Polymorph - |
+        If perks(perk.copoly) > -1 Then
+            needsToUpdatePortrait = PerkEffects.curseOfPolymorph(Me)
+        End If
+        '| - Curse of Blindness - |
+        If perks(perk.coblind) > -1 And Not perks(perk.blind) > -1 Then
+            perks(perk.blind) = 1
+        End If
+        '| - Succubus Curse - |
+        If perks(perk.succubuscurse) > -1 Then
+            PerkEffects.curseOfBimbo(Me)
+        End If
+        '| - Cryptic Cursemark - |
+        If Not equippedAcce Is Nothing AndAlso equippedAcce.getAName.Equals(SPCursemark.ITEM_NAME) Then
+            PerkEffects.crypticCursemark(Me)
+        End If
+    End Sub
+
+    '|UI METHODS|
     Sub keepStatsInBounds()
         '|HEALTH|
         If Not Game.combat_engaged And Not solFlag Then health = Math.Min(1, health)
@@ -1467,223 +1727,6 @@ Public Class Player
         lust = Math.Max(0, lust)
         If perks(perk.cmark) > -1 Then lust = Math.Max((mana / getMaxMana()) * 100, lust)
     End Sub
-    Function perkUpdate() As Boolean
-        Dim needsToUpdatePortrait = False
-
-        If quests(qInd.fanPhan).canGet Then
-            quests(qInd.fanPhan).init()
-            Return needsToUpdatePortrait
-        End If
-
-        '|GENERAL EFFECTS|
-        'stamina
-        If perks(perk.hunger) > -1 And Game.getTurn Mod 5 = 0 Then
-            PerkEffects.staminaEffect(Me)
-        End If
-        If perks(perk.burn) > -1 And Game.getTurn Mod 4 = 0 Then
-            PerkEffects.burnEffect(Me)
-        End If
-        If perks(perk.mburst) > -1 And Game.getTurn Mod 4 = 0 Then
-            PerkEffects.mBurst(Me)
-        End If
-        'polymorph
-        If perks(perk.polymorphed) > -1 And Not ongoingTFs.containsPolymorph() Then
-            If perks(perk.polymorphed) = 0 Then revertToPState()
-            perks(perk.polymorphed) -= 1
-        End If
-        'slime hair health regen
-        If perks(perk.slimehair) > -1 Or perks(perk.slimeregenplus) > -1 Then
-            PerkEffects.slimeHairRegen(Me)
-        End If
-        If perks(perk.vsslimehair) > -1 Then
-            PerkEffects.vslimeHairRegen(Me)
-        End If
-        'plant regen
-        If pForm.name.Equals("Plantfolk") Then
-            PerkEffects.plantRegen(Me)
-        End If
-        'ring of min. regen
-        If perks(perk.minRegen) > -1 Then
-            PerkEffects.minorRegen(Me)
-        End If
-        'mana generator
-        If perks(perk.minmanregen) > -1 Then
-            PerkEffects.minorManaRegen(Me)
-        End If
-        'amazon effect
-        If perks(perk.amazon) > -1 Then
-            PerkEffects.amazon(Me)
-        End If
-        'barbarian effect
-        If perks(perk.barbarian) > -1 Then
-            PerkEffects.barbarian(Me)
-        End If
-        'caketf effect
-        If perks(perk.cupcake) > -1 Then
-            If Game.getTurn Mod 20 = 0 Then perks(perk.cupcake) -= 1
-        End If
-        'spacebuntf effect
-        If perks(perk.spacebun) > -1 Then
-            If Game.getTurn Mod 20 = 0 Then perks(perk.spacebun) -= 1
-        End If
-        'illuminate effect
-        If perks(perk.lightsource) > -1 Then
-            perks(perk.lightsource) -= 1
-        End If
-        'bunny ear effect
-        If perks(perk.bunnyears) > -1 And equippedAcce.getAName.Equals(BunnyEars.ITEM_NAME) Then
-            PerkEffects.bunnyEarsEff(Me)
-        End If
-        'phase deflector effect
-        If perks(perk.pdeflector) > -1 Then
-            PerkEffects.phaseDeflector(Me)
-        End If
-        'living armor
-        If perks(perk.livearm) > -1 Then
-            needsToUpdatePortrait = PerkEffects.livingArmor(Me)
-        End If
-        'living lingerie
-        If perks(perk.livelinge) > -1 Then
-            needsToUpdatePortrait = PerkEffects.livingLingerie(Me)
-        End If
-        'golden gum
-        If inv.getCountAt("Golden_Gum") > 0 And Not ongoingTFs.contains(tfind.goldbimbo) And Not className.Equals("Bimbo") Then
-            TextEvent.push("A dizzy calm washes over you...")
-            ongoingTFs.add(New GBimboTF(2, 20, 0.25, True))
-        End If
-        'cowbell cleanup
-        If perks(perk.cowbell) > -1 And Not (equippedAcce.getAName.Equals(Cowbell.ITEM_NAME) Or equippedAcce.getAName.Equals(Bimbell.ITEM_NAME) Or equippedAcce.getAName.Equals(ImmitationCowbell.ITEM_NAME)) Then
-            perks(perk.cowbell) = -1
-        End If
-        'imitation cowbell
-        If Not pClass.name.Equals("Thrall") And forcedPath Is Nothing And prt.checkFemInd(pInd.horns, 12) AndAlso Int(Rnd() * 100) = 0 AndAlso Not Game.combat_engaged AndAlso Not Game.shop_npc_engaged Then
-            PerkEffects.imitationCowbell(Me)
-        End If
-        'mesmerized
-        If perks(perk.mesmerized) > -1 Then
-            PerkEffects.mesmerized(Me)
-        End If
-        'eye of medusa
-        If Game.combat_engaged And equippedAcce.getAName.Equals(MedusaEye.ITEM_NAME) And Not currTarget Is Nothing Then
-            Dim s = New MedusaEyePassive(Me, currTarget)
-            s.cast()
-        End If
-        If equippedAcce.getAName.Equals(FaeStockings.ITEM_NAME) And equippedArmor.bind_wearer Then
-            Equipment.equipAcce(Me, "Nothing", False)
-            TextEvent.pushAndLog("Your accessory vanishes...")
-            drawPort()
-        End If
-        'fae blossom
-        If equippedAcce.getAName.Equals(FaerieBlossom.ITEM_NAME) And Int(Rnd() * 200) = 0 Then
-            PerkEffects.faeleafBloom(Me)
-        End If
-        'cynn's tonic
-        If perks(perk.cynnstonic) > -1 Then
-            If Game.turn Mod 5 = 0 Then perks(perk.cynnstonic) -= 1
-        End If
-        'dark pact p1
-        If perks(perk.canmeetcyn) > 0 And Not (formName.Equals("Succubus") Or formName.Equals("Demon") Or formName.Equals("Daemon")) Then
-            perks(perk.canmeetcyn) = -1
-        End If
-
-        '|TRANSFORMATION TRIGGERS|
-        'targax sword tf
-        If perks(perk.swordpossess) > -1 Then
-            PerkEffects.targaxSwordTF(Me)
-        End If
-        'shift toward preferred form
-        If Not prefForm Is Nothing AndAlso Transformation.canBeTFed(Me) And (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player1) And Not pForm.name.Equals("Half-Succubus") And Not perks(perk.thrall) = 1 Then
-            PerkEffects.thrallRestore(Me)
-        End If
-        If perks(perk.astatue) > -1 Then
-            PerkEffects.aStatue(Me)
-        End If
-        If pClass.name.Equals("Magical Girl") And perks(perk.tfedbyweapon) > 0 Then
-            PerkEffects.magicGirlStatusCheck(Me)
-        End If
-        If pClass.name.Contains("Valkyrie") And perks(perk.tfedbyweapon) > 0 Then
-            PerkEffects.valkyrieStatusCheck(Me)
-        End If
-        If perks(perk.tfedbyweapon) < 0 And (perks(perk.tfcausingwand) > -1 Or perks(perk.tfcausingsword) > -1) Then
-            perks(perk.tfcausingwand) = -1
-            perks(perk.tfcausingsword) = -1
-        End If
-
-        '|SPECIAL MOVE HANDLERS|
-        'berserker rage special
-        If perks(perk.brage) > -1 Then
-            PerkEffects.berserkerRage(Me)
-        End If
-        'massive mammaries special
-        If perks(perk.mmammaries) > -1 Then
-            PerkEffects.massiveMammaries(Me)
-        End If
-        'guard up special
-        If perks(perk.guardup) > -1 Then
-            PerkEffects.guardUp(Me)
-        End If
-        'will up special
-        If perks(perk.willup) > -1 Then
-            PerkEffects.willUp(Me)
-        End If
-        'attack up special
-        If perks(perk.atkup) > -1 Then
-            PerkEffects.attackUp(Me)
-        End If
-        'lurk special
-        If perks(perk.lurk) > -1 Then
-            PerkEffects.lurk(Me)
-        End If
-        'pillowy protect special
-        If perks(perk.pprot) > -1 Then
-            PerkEffects.pProt(Me)
-        End If
-        'ironhide fury
-        If perks(perk.ihfury) > -1 Then
-            PerkEffects.ironhideFury(Me)
-        End If
-        'inferno aura
-        If perks(perk.infernoa) > -1 Then
-            PerkEffects.infernoAura(Me)
-        End If
-        'spotfusion cooldown
-        If perks(perk.isspotfused) > -1 Then
-            perks(perk.isspotfused) -= 1
-            If perks(perk.isspotfused) < 1 Then perks(perk.isspotfused) = -1
-        End If
-
-        '|CURSES|
-        'clothing curse
-        If perks(perk.slutcurse) > -1 AndAlso equippedArmor.getAntiSlutInd = -1 Then
-            needsToUpdatePortrait = Equipment.clothingCurse1(Me)
-        End If
-        'curse of rust
-        If perks(perk.corust) > -1 Then
-            needsToUpdatePortrait = PerkEffects.curseOfRust(Me)
-        End If
-        'curse of milk
-        If perks(perk.comilk) > -1 Then
-            needsToUpdatePortrait = PerkEffects.curseOfMilk(Me)
-        End If
-        'curse of milk
-        If perks(perk.copoly) > -1 Then
-            needsToUpdatePortrait = PerkEffects.curseOfPolymorph(Me)
-        End If
-        'curse of blindness
-        If perks(perk.coblind) > -1 And Not perks(perk.blind) > -1 Then
-            perks(perk.blind) = 1
-        End If
-        'succubus curse
-        If perks(perk.succubuscurse) > -1 Then
-            PerkEffects.curseOfBimbo(Me)
-        End If
-        If Not equippedAcce Is Nothing AndAlso equippedAcce.getAName.Equals(SPCursemark.ITEM_NAME) Then
-            PerkEffects.crypticCursemark(Me)
-        End If
-
-        description = CStr(name & " is a " & sex & " " & pForm.name & " " & pClass.name)
-        Return needsToUpdatePortrait
-    End Function
     Sub UIupdate(Optional do_inv As Boolean = True)
         'Dim startTime As Double = DDDateTime.getTimeNow()
         keepStatsInBounds()

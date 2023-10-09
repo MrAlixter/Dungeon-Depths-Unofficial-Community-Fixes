@@ -447,6 +447,8 @@
         internal_inventory.Add(PeregrineFalchion.ITEM_NAME, New PeregrineFalchion)   '419
         internal_inventory.Add(HeronSpear.ITEM_NAME, New HeronSpear)                 '420
         internal_inventory.Add(FirehawkWand.ITEM_NAME, New FirehawkWand)             '421
+        internal_inventory.Add(KestrelKnife.ITEM_NAME, New KestrelKnife)             '422
+        internal_inventory.Add(MistwarpedClothes.ITEM_NAME, New MistwarpedClothes)   '423
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -478,7 +480,7 @@
                  Me.item(343), Me.item(345), Me.item(354), Me.item(357),
                  Me.item(363), Me.item(364), Me.item(384), Me.item(393),
                  Me.item(394), Me.item(398), Me.item(404), Me.item(405),
-                 Me.item(413), Me.item(418)}
+                 Me.item(413), Me.item(418), Me.item(423)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -500,7 +502,8 @@
                    Me.item(367), Me.item(368), Me.item(369), Me.item(370),
                    Me.item(372), Me.item(377), Me.item(381), Me.item(388),
                    Me.item(390), Me.item(399), Me.item(401), Me.item(412),
-                   Me.item(415), Me.item(419), Me.item(420), Me.item(421)}
+                   Me.item(415), Me.item(419), Me.item(420), Me.item(421),
+                   Me.item(422)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4), Me.item(65),
                    Me.item(15), Me.item(36), Me.item(37), Me.item(48),
@@ -521,7 +524,7 @@
                    Me.item(344), Me.item(350), Me.item(362), Me.item(373),
                    Me.item(375), Me.item(379), Me.item(380), Me.item(387),
                    Me.item(388), Me.item(390), Me.item(395), Me.item(410),
-                   Me.item(416)}
+                   Me.item(416), Me.item(422)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32),
                 Me.item(33), Me.item(34), Me.item(35), Me.item(44),

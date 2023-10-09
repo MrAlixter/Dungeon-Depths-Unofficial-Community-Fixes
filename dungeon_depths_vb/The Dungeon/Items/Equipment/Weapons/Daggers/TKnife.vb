@@ -55,7 +55,7 @@
         durability -= w_dmg
         If durability <= 0 Then
             break()
-        ElseIf Not m.isDead Then
+        ElseIf Not m Is Nothing AndAlso Not m.isDead Then
             TextEvent.pushAndLog("The " & getName.Replace("_", " ") & " takes " & w_dmg & " damage.")
         Else
             TextEvent.pushLog("The " & getName.Replace("_", " ") & " takes " & w_dmg & " damage.")

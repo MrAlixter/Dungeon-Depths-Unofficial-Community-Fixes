@@ -1,7 +1,7 @@
 ﻿Public Class FirehawkWand
     Inherits Wand
 
-    Public Const ITEM_NAME As String = "Firehawk_Wand"
+    Public Const ITEM_NAME As String = "Firehawk's_Quill"
     Protected Const MANA_COST As Integer = 8
     Sub New()
         '|ID Info|

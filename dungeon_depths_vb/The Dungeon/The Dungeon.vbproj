@@ -286,6 +286,7 @@
     <Compile Include="Items\Equipment\Armor\SlutVar\PaladinBikini.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\PlatAdornment.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\GShowgirlOutfit.vb" />
+    <Compile Include="Items\Equipment\Armor\SlutVar\MistwarpedClothes.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\SkimpyClothesF.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\SkimpyClothesG.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\RegalLingerieF.vb" />
@@ -311,6 +312,7 @@
     <Compile Include="Items\Equipment\Weapons\Daggers\IronDagger.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\FeatherDagger.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\RunecursedDagger.vb" />
+    <Compile Include="Items\Equipment\Weapons\Daggers\KestrelKnife.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\VipersFang.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\GumGun20mm.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\PixieDuster.vb" />

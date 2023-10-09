@@ -11,6 +11,8 @@
 
         '|Item Flags|
         usable = False
+        'hide_rearhair = True
+        slut_var_ind = 423
 
         '|Stats|
         d_boost = 27
@@ -33,6 +35,9 @@
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(495, True, True)
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(496, True, True)
 
+        'hood = New Tuple(Of Integer, Boolean, Boolean)(29, True, True)
+        'cloak = New Tuple(Of Integer, Boolean, Boolean)(34, True, False)
+
         '|Description|
         setDesc("A pastel pink set of armor that seems to provide more defense the less its wearer thinks.  Each plate is dotted with slight imperfections, as though it has been stretched into place by an external force..." & DDUtils.RNRN &
                 getSizeInformation() & DDUtils.RNRN &
@@ -40,7 +45,7 @@
     End Sub
 
     Public Overrides Function getDescription() As Object
-        Return "A pastel pink set of armor that seems to provide more defense the less its wearer thinks.  Each plate is dotted with slight imperfections, as though it has been stretched into place by an external force..." & DDUtils.RNRN &
+        Return "A set of pastel pink armor that seems to provide more defense the less its wearer thinks.  Each plate is dotted with slight imperfections, as though it has been stretched into place by an external force..." & DDUtils.RNRN &
                 getSizeInformation() & DDUtils.RNRN &
                 getStatInformation()
     End Function
