@@ -15,6 +15,7 @@
         show_underboob = True
         adjust_sleeve_layer = False
         anti_slut_ind = 301
+        is_sexy = True
 
         '|Stats|
         m_boost = 10

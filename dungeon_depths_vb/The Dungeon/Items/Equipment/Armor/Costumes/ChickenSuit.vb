@@ -16,6 +16,7 @@
         compress_breast = False
         show_underboob = True
         rando_inv_allowed = False
+        is_sexy = True
 
         '|Stats|
         s_boost = 10

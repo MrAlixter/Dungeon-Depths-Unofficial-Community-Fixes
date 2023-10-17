@@ -18,6 +18,7 @@
         show_underboob = True
         hide_rearhair = True
         anti_slut_ind = 265
+        is_sexy = True
 
         '|Stats|
         w_boost = 25

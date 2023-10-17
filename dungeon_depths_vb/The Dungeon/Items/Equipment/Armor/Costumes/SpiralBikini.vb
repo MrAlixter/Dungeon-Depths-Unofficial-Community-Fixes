@@ -15,6 +15,7 @@
         show_underboob = True
         rando_inv_allowed = False
         list_in_shop = False
+        is_sexy = True
 
         '|Stats|
         m_boost = 18

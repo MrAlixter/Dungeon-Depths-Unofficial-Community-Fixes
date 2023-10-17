@@ -15,6 +15,7 @@
         show_underboob = True
         slut_var_ind = 196
         anti_slut_ind = 262
+        is_sexy = True
 
         '|Stats|
         d_boost = 1

@@ -14,6 +14,7 @@
         compress_breast = False
         show_underboob = True
         hide_dick = True
+        is_sexy = True
 
         '|Stats|
         h_boost = 25

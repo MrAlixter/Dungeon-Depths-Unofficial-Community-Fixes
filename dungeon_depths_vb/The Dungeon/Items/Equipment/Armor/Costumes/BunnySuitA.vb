@@ -11,8 +11,9 @@
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
-        MyBase.slut_var_ind = 129
+        compress_breast = True
+        slut_var_ind = 129
+        is_sexy = True
 
         '|Stats|
         d_boost = 16

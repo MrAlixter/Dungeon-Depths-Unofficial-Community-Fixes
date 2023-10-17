@@ -15,6 +15,7 @@
         compress_breast = True
         show_underboob = False
         anti_slut_ind = 335
+        is_sexy = True
 
         '|Stats|
         m_boost = 5

@@ -14,6 +14,7 @@
         compress_breast = True
         droppable = False
         rando_inv_allowed = False
+        is_sexy = True
 
         '|Stats|
         h_boost = 100

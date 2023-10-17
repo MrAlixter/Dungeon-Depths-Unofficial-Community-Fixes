@@ -16,6 +16,7 @@
         adjust_sleeve_layer = False
         droppable = False
         rando_inv_allowed = False
+        is_sexy = True
 
         '|Stats|
         h_boost = 30

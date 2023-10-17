@@ -13,6 +13,7 @@
         usable = False
         compress_breast = False
         rando_inv_allowed = False
+        is_sexy = True
 
         '|Stats|
         count = 0

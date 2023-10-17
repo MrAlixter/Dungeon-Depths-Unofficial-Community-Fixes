@@ -15,6 +15,7 @@
         droppable = False
         rando_inv_allowed = False
         anti_slut_var_ind = 325
+        is_sexy = True
 
         '|Stats|
         d_boost = 14

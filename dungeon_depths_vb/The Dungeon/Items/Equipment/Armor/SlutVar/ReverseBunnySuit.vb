@@ -13,6 +13,7 @@
         usable = False
         compress_breast = False
         anti_slut_ind = 16
+        is_sexy = True
 
         '|Stats|
         d_boost = 1

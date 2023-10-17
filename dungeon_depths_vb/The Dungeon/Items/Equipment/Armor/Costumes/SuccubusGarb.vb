@@ -12,6 +12,7 @@
         '|Item Flags|
         usable = False
         compress_breast = True
+        is_sexy = True
 
         '|Stats|
         a_boost = 2

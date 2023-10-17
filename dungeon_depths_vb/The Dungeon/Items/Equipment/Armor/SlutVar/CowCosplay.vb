@@ -15,6 +15,7 @@
         compress_breast = False
         hide_dick = False
         swap_gen_clothesbtm = True
+        is_sexy = True
 
         '|Stats|
         d_boost = 1

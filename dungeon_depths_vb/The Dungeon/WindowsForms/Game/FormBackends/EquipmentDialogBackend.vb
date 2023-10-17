@@ -407,7 +407,7 @@
         If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
 
         'if the player has the slut curse, this takes care of it
-        If p.perks(perk.slutcurse) > -1 AndAlso p.equippedArmor.getAntiSlutInd = -1 Then
+        If p.perks(perk.slutcurse) > -1 AndAlso Not p.equippedArmor.is_sexy Then
             clothingCurse(p)
         End If
 

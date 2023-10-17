@@ -30,6 +30,7 @@
         compress_breast = True
         only_drop_one = True
         rando_inv_allowed = False
+        is_sexy = True
 
         '|Stats|
         d_boost = 25

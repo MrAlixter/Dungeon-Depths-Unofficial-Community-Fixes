@@ -14,6 +14,7 @@
         compress_breast = True
         rando_inv_allowed = False
         anti_slut_ind = 10
+        is_sexy = True
 
         '|Stats|
         d_boost = 10

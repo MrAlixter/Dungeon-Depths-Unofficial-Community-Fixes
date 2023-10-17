@@ -14,6 +14,7 @@
         MyBase.compress_breast = True
         MyBase.show_underboob = True
         MyBase.anti_slut_ind = 19
+        is_sexy = True
 
         '|Stats|
         MyBase.d_boost = 6

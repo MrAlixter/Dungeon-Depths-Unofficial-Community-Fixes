@@ -114,7 +114,7 @@
     End Sub
     Overridable Sub s2ClothesChange(ByRef p As Player)
         If Not p.equippedArmor.getName.Equals("Naked") And Not p.className.Equals("Magical Girl") Then
-            If p.equippedArmor.getSlutVarInd = -1 Then
+            If p.equippedArmor.getSlutVarInd = -1 And Not p.equippedArmor.is_sexy Then
                 If p.inv.item("Skimpy_Clothes").count < 1 Then p.inv.add("Skimpy_Clothes", 1)
                 EquipmentDialogBackend.armorChange(p, "Skimpy_Clothes")
             ElseIf p.equippedArmor.getAntiSlutInd = -1 Then
@@ -193,7 +193,7 @@
 
                 out = ""
             Else
-                If p.equippedArmor.getSlutVarInd = -1 Then
+                If p.equippedArmor.getSlutVarInd = -1 And Not p.equippedArmor.is_sexy Then
                     If p.inv.getCountAt(VSkimpyClothes.ITEM_NAME) < 1 Then p.inv.add(VSkimpyClothes.ITEM_NAME, 1)
                     EquipmentDialogBackend.armorChange(p, VSkimpyClothes.ITEM_NAME)
                 ElseIf p.equippedArmor.getAntiSlutInd = -1 Then
@@ -286,7 +286,7 @@
 
         'Clothes Change
         If Not p.equippedArmor.getName.Equals("Naked") Then
-            If p.equippedArmor.getSlutVarInd = -1 Then
+            If p.equippedArmor.getSlutVarInd = -1 And Not p.equippedArmor.is_sexy Then
                 If p.inv.getCountAt(SkimpyClothes.ITEM_NAME) < 1 Then p.inv.add(SkimpyClothes.ITEM_NAME, 1)
                 EquipmentDialogBackend.armorChange(p, SkimpyClothes.ITEM_NAME)
             ElseIf p.equippedArmor.getAntiSlutInd = -1 Then

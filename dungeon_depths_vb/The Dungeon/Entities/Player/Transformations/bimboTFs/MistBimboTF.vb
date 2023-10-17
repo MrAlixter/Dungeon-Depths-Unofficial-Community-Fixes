@@ -58,6 +58,39 @@
     Protected Sub step8()
 
     End Sub
+    Protected Function clothesChangeS8(ByRef p As Player) As String
+        If p.equippedArmor.getSlutVarInd() > -1 Then
+            Return ""
+        ElseIf p.equippedArmor.is_sexy Then
+            Return "A glittery shimmer washes over your gear, but it doesn't seem to do anything..."
+        ElseIf p.equippedArmor.d_boost > 20 Then
+            p.inv.add(BimboArmor.ITEM_NAME, -1)
+            p.inv.add(p.equippedArmor.getAName(), -1)
+
+            If Not p.inv.item(BimboArmor.ITEM_NAME) Is Nothing AndAlso CType(p.inv.item(BimboArmor.ITEM_NAME), Armor).fits(p) Then
+                EquipmentDialogBackend.equipArmor(p, BimboArmor.ITEM_NAME, False)
+                Return "Your equipment twists into a revealing set of pink armor.  Jet black stockings slink up to your thighs, and a pair garters fall down from around your waist before pulling taut.  Your top warps into a sheer breastplate; held in place only by the contours of your chest.  Finally, a short pink skirt spins into being around your hips."
+            ElseIf Not p.equippedArmor.getAName.Equals("Naked") Then
+                EquipmentDialogBackend.equipArmor(p, "Naked", False)
+                Return "Your equipment twists into a revealing set of pink armor, so tight that it can barely contain your body.  With even the slightest movement it stretches and strains, until eventually you hear a tear and it falls to the ground in tatters."
+            End If
+
+            Return "A revealing set of pink armor twists into being around you, but it doesn't seem to fit."
+        Else
+            p.inv.add(MistwarpedClothes.ITEM_NAME, -1)
+            p.inv.add(p.equippedArmor.getAName(), -1)
+
+            If Not p.inv.item(MistwarpedClothes.ITEM_NAME) Is Nothing AndAlso CType(p.inv.item(MistwarpedClothes.ITEM_NAME), Armor).fits(p) Then
+                EquipmentDialogBackend.equipArmor(p, MistwarpedClothes.ITEM_NAME, False)
+                Return "Your equipment twists into a skanty pink outfit.  Pale rose stockings slink up to your thighs, and a pair of small ribbons twirl around their cuff.  Your top melts into sheer fabric; held in place only by the contours of your chest.  Finally, a short pink skirt spins into being around your hips."
+            ElseIf Not p.equippedArmor.getAName.Equals("Naked") Then
+                EquipmentDialogBackend.equipArmor(p, "Naked", False)
+                Return "Your equipment twists into a skanty pink outfit, so tight that it can barely contain your body.  With even the slightest movement it stretches and strains, until eventually you hear a tear and it falls to the ground in tatters."
+            End If
+
+            Return "A skimpy pink outfit twists into being around you, but it doesn't seem to fit."
+        End If
+    End Function
     'Step 9:  clothes change to misttorn bimbo clothes, level drops to 1
     Protected Sub step9()
 

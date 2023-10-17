@@ -15,6 +15,7 @@
         hide_dick = False
         swap_gen_clothesbtm = True
         cursed = True
+        is_sexy = True
 
         '|Stats|
         s_boost = 5

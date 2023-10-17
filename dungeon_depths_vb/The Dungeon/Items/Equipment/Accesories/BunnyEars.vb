@@ -50,7 +50,7 @@
     Public Overrides Function getHBoost(ByRef p As Player) As Integer
         If p Is Nothing Then Return 0
         If Not p.className.Equals("Bunny Girl") Then Return 0
-        If Not (p.equippedArmor.getSlutVarInd = -1 And p.equippedArmor.getAntiSlutInd <> -1) And Not p.equippedArmor.getName.Contains("Bunny") Then Return 0
+        If Not (p.equippedArmor.getSlutVarInd = -1 And p.equippedArmor.getAntiSlutInd <> -1) And Not p.equippedArmor.getName.Contains("Bunny") And Not p.equippedArmor.is_sexy Then Return 0
 
         Dim buff = p.equippedArmor.d_boost
 
@@ -67,7 +67,7 @@
     Public Overrides Function getDBoost(ByRef p As Player) As Integer
         If p Is Nothing Then Return 0
         If Not p.className.Equals("Bunny Girl") Then Return 0
-        If Not (p.equippedArmor.getSlutVarInd = -1 And p.equippedArmor.getAntiSlutInd <> -1) And Not p.equippedArmor.getName.Contains("Bunny") Then Return 0
+        If Not (p.equippedArmor.getSlutVarInd = -1 And p.equippedArmor.getAntiSlutInd <> -1) And Not p.equippedArmor.getName.Contains("Bunny") And Not p.equippedArmor.is_sexy Then Return 0
 
         Dim buff = p.equippedArmor.d_boost
 

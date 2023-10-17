@@ -16,6 +16,7 @@ Public Class AmaAttire
         show_underboob = True
         hide_dick = False
         anti_slut_ind = 302
+        is_sexy = True
 
         '|Stats|
         a_boost = 20

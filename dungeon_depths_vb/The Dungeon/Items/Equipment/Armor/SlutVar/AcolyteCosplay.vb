@@ -14,6 +14,7 @@
         compress_breast = True
         hide_rearhair = True
         anti_slut_ind = 300
+        is_sexy = True
 
         '|Stats|
         h_boost = 10

@@ -16,6 +16,7 @@
         cursed = True
         rando_inv_allowed = False
         anti_slut_ind = 55
+        is_sexy = True
 
         '|Stats|
         d_boost = 6

@@ -16,6 +16,7 @@ Public Class PhotonBikini
         show_underboob = True
         rando_inv_allowed = False
         anti_slut_ind = 104
+        is_sexy = True
 
         '|Stats|
         m_boost = 7

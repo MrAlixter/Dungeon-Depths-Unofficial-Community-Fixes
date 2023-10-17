@@ -15,6 +15,7 @@
         compress_breast = True
         show_underboob = True
         adjust_sleeve_layer = False
+        is_sexy = True
 
         '|Stats|
         d_boost = 11

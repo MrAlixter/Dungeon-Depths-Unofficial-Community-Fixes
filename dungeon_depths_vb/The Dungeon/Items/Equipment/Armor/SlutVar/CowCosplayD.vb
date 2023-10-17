@@ -15,6 +15,7 @@
         show_underboob = True
         hide_dick = True
         anti_slut_ind = 71
+        is_sexy = True
 
         '|Stats|
         d_boost = 1

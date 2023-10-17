@@ -25,6 +25,8 @@
 
     Protected slut_var_ind As Integer = -1
     Protected anti_slut_ind As Integer = -1
+    Public is_sexy As Boolean = True
+
     Public bsizeneg1 As Tuple(Of Integer, Boolean, Boolean) = Nothing
     Public bsize0 As Tuple(Of Integer, Boolean, Boolean) = Nothing
     Public bsize1 As Tuple(Of Integer, Boolean, Boolean) = Nothing

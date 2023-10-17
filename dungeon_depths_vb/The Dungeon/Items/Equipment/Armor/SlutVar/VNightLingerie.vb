@@ -15,6 +15,7 @@
         show_underboob = True
         droppable = False
         rando_inv_allowed = False
+        is_sexy = True
 
         '|Stats|
         MyBase.d_boost = 6

@@ -13,6 +13,7 @@
         usable = False
         'hide_rearhair = True
         slut_var_ind = 423
+        is_sexy = True
 
         '|Stats|
         d_boost = 27

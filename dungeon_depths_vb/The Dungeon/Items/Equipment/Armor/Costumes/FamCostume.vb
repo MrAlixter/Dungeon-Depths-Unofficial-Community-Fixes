@@ -16,6 +16,7 @@
         compress_breast = True
         droppable = False
         anti_slut_ind = 166
+        is_sexy = True
 
         '|Stats|
         d_boost = 1
