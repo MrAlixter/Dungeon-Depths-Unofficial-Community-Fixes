@@ -449,6 +449,7 @@
         internal_inventory.Add(FirehawkWand.ITEM_NAME, New FirehawkWand)             '421
         internal_inventory.Add(KestrelKnife.ITEM_NAME, New KestrelKnife)             '422
         internal_inventory.Add(MistwarpedClothes.ITEM_NAME, New MistwarpedClothes)   '423
+        internal_inventory.Add(BadRations.ITEM_NAME, New BadRations)                 '424
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -536,7 +537,7 @@
                 Me.item(295), Me.item(296), Me.item(334), Me.item(341),
                 Me.item(347), Me.item(358), Me.item(360), Me.item(385),
                 Me.item(386), Me.item(392), Me.item(406), Me.item(407),
-                Me.item(408), Me.item(409)}
+                Me.item(408), Me.item(409), Me.item(424)}
 
         acce = {New noAcce(),
                 Me.item(66), Me.item(67), Me.item(68), Me.item(69),

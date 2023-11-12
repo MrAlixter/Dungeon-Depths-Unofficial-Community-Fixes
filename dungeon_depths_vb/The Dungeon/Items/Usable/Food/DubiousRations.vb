@@ -34,6 +34,10 @@
             p.inv.add(SafeRations.ITEM_NAME, 1)
             Game.lblEvent.Text = Game.lblEvent.Text.Replace(DDUtils.PAKTC, DDUtils.RNRN & "This ration is safe!" & DDUtils.PAKTC)
             TextEvent.pushLog("This ration is safe!")
+        ElseIf p.passDieRoll(4, 3) Then
+            p.inv.add(BadRations.ITEM_NAME, 1)
+            Game.lblEvent.Text = Game.lblEvent.Text.Replace(DDUtils.PAKTC, DDUtils.RNRN & "This ration is- ugh, gross..." & DDUtils.PAKTC)
+            TextEvent.pushLog("This ration is- ugh, gross...")
         Else
             Select Case Int(Rnd() * (If(Game.currFloor.floorNumber > 1, 2, 1)))
                 Case 1
@@ -54,6 +58,9 @@
         If p.perks(perk.dubrations) < 0 Then p.perks(perk.dubrations) = 0
         If p.passDieRoll(4, 3) Then
             primaryEffect(p)
+        ElseIf p.passDieRoll(4, 3) Then
+            p.stamina -= (getCalories() + 14)
+            secondaryEffect(p)
         Else
             Select Case Int(Rnd() * (If(Game.currFloor.floorNumber > 1, 2, 1)))
                 Case 2
@@ -78,7 +85,9 @@
     Public Shared Sub primaryEffect(ByRef p As Player)
         TextEvent.pushAndLog("The ration has no adverse effects.")
     End Sub
-
+    Public Shared Sub secondaryEffect(ByRef p As Player)
+        TextEvent.pushAndLog("The ration is gross and you regret trying to eat it...")
+    End Sub
     Public Shared Sub protoPanaceaEffect(ByRef p As Player)
 
         Dim h_color = p.sState.haircolor

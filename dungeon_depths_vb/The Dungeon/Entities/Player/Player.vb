@@ -690,6 +690,7 @@ Public Class Player
         classes.Add("Cynn Onahole", New CynnOnahole())
         classes.Add("Onahole", New CynnOnahole2())
         classes.Add("Mecha-Warrior", New Warrior())
+        classes.Add("Mindless Bimbo", New MindlessBimbo())
     End Sub
     Private Shared Sub initForms()
         'Creates the form dictionary
@@ -842,7 +843,7 @@ Public Class Player
         If board(newY, newX).Tag = 0 Then Exit Sub
 
         '|-Mindless-|
-        If className.Equals("Mindless") Then wander(board) : Exit Sub
+        If (className.Equals("Mindless") Or className.Equals("Mindless Bimbo")) And passDieRoll(5, 3) Then wander(board) : Exit Sub
 
         '|-Move-|
         board(pos.Y, pos.X).Text = ""

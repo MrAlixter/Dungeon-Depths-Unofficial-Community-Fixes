@@ -126,11 +126,14 @@ Public Class Portrait
             If ent.getPlayer.className.Equals("Mindless") And Not ent.getPlayer.isPetrified Then
                 If sexBool() Then
                     iArr(pInd.eyes) = imgLib.atrs(pInd.eyes).getAt(New Tuple(Of Integer, Boolean, Boolean)(33, True, True))
-                    iArr(pInd.mouth) = imgLib.atrs(pInd.mouth).getAt(New Tuple(Of Integer, Boolean, Boolean)(16, True, True))
+                    If Not ent.getPlayer.equippedAcce.hide_mouth Then iArr(pInd.mouth) = imgLib.atrs(pInd.mouth).getAt(New Tuple(Of Integer, Boolean, Boolean)(16, True, True))
                 Else
                     iArr(pInd.eyes) = imgLib.atrs(pInd.eyes).getAt(New Tuple(Of Integer, Boolean, Boolean)(10, False, True))
-                    iArr(pInd.mouth) = imgLib.atrs(pInd.mouth).getAt(New Tuple(Of Integer, Boolean, Boolean)(6, False, True))
+                    If Not ent.getPlayer.equippedAcce.hide_mouth Then iArr(pInd.mouth) = imgLib.atrs(pInd.mouth).getAt(New Tuple(Of Integer, Boolean, Boolean)(6, False, True))
                 End If
+            ElseIf ent.getPlayer.className.Equals("Mindless Bimbo") And Not ent.getPlayer.isPetrified Then
+                iArr(pInd.eyes) = imgLib.atrs(pInd.eyes).getAt(New Tuple(Of Integer, Boolean, Boolean)(68, True, True))
+                If Not ent.getPlayer.equippedAcce.hide_mouth Then iArr(pInd.mouth) = imgLib.atrs(pInd.mouth).getAt(New Tuple(Of Integer, Boolean, Boolean)(16, True, True))
             End If
         End If
 

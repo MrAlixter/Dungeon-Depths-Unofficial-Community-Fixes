@@ -140,6 +140,7 @@
     <Compile Include="Entities\Player\Classes\CynnOnahole2.vb" />
     <Compile Include="Entities\Player\Classes\CynnOnahole.vb" />
     <Compile Include="Entities\Player\Classes\CyberValkyrie.vb" />
+    <Compile Include="Entities\Player\Classes\needPassages\MindlessBimbo.vb" />
     <Compile Include="Entities\Player\Classes\ValkyrieTransform.vb" />
     <Compile Include="Entities\Player\Classes\Necromancer.vb" />
     <Compile Include="Entities\Player\Classes\needPassages\Pirate.vb" />
@@ -354,6 +355,7 @@
     <Compile Include="Items\Services\SellHellfireBlade.vb" />
     <Compile Include="Items\Services\UpgradeValkyrieSword.vb" />
     <Compile Include="Items\Services\UpgradeArmor.vb" />
+    <Compile Include="Items\Usable\Food\BadRations.vb" />
     <Compile Include="Items\Usable\GumGrenade.vb" />
     <Compile Include="Items\Usable\CynthiasRemote.vb" />
     <Compile Include="Items\Usable\Food\Acorn.vb" />

@@ -26,41 +26,52 @@
         TextEvent.fpush("Your hair color becomes slightly lighter, brightening to a rosy pink.")
     End Sub
 
-    'Step 1:  Sneeze and Minor Headache
     Protected Sub step1()
-
+        TextEvent.push("Something feels... weird..." & DDUtils.RNRN &
+                       "As pink sparkles drift though the air around you, your head begins to ache...")
+        TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
     'Step 2:  Eye color shift, stat reduction
     Protected Sub step2()
 
+        TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
     'Step 3:  Hair shift (messy), slut curse on equipped gear
     Protected Sub step3()
 
+        TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
     'Step 4:  Potion transformation, major headache
     Protected Sub step4()
 
+        TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
     'Step 5:  Forget any restore spells, transfiguration of any restore items
     Protected Sub step5()
-
+        TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
     'Step 6:  Trancelike daze, slut curse on all gear
     Protected Sub step6()
-
+        TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
     'Step 7:  Face change to bimbo, class change to bimbo
     Protected Sub step7()
-
+        TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
     'Step 8:  Hair shift (styled), armor changes to bimbo clothes or bimbo armor
     Protected Sub step8()
+        Dim p As Player = Game.player1
 
+        TextEvent.fpush("The air around you is ." & DDUtils.RNRN &
+                        hairChangeS8(p) & DDUtils.RNRN &
+                        clothesChangeS8(p))
+        TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
     Protected Function clothesChangeS8(ByRef p As Player) As String
         If p.equippedArmor.getSlutVarInd() > -1 Then
-            Return ""
+            EquipmentDialogBackend.clothingCurse(p, False)
+
+            Return "A glittery shimmer washes over your gear, and your outfit becomes far more revealing."
         ElseIf p.equippedArmor.is_sexy Then
             Return "A glittery shimmer washes over your gear, but it doesn't seem to do anything..."
         ElseIf p.equippedArmor.d_boost > 20 Then
@@ -91,17 +102,48 @@
             Return "A skimpy pink outfit twists into being around you, but it doesn't seem to fit."
         End If
     End Function
+    Protected Function hairChangeS8(ByRef p As Player) As String
+        Return ""
+    End Function
     'Step 9:  clothes change to misttorn bimbo clothes, level drops to 1
     Protected Sub step9()
-
+        TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
     'Step 10: Changes class to 'Mindless Bimbo'
     Protected Sub step10()
+        Dim p = Game.player1
 
+        If Not p.className.Equals("Mindless Bimbo") Then p.changeClass("Mindless Bimbo")
+
+        TextEvent.push("You... uh..." & DDUtils.RNRN &
+                       "Something kinda... feels- like- uh..." & DDUtils.RNRN &
+                       "Everything's all... um- shimmery...")
+        TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
     'Step 11: inv vanishes, drops the player to floor 1
     Protected Sub step11()
+        Dim p As Player = Game.player1
 
+        For i = 0 To p.inv.upperBound
+            If Not (i = p.equippedArmor.getId Or i = p.equippedWeapon.getId Or i = p.equippedAcce.getId Or i = p.equippedGlasses.getId) Then p.inv.setCount(i, 0)
+        Next
+
+        TextEvent.push("You absentmindedly swoon as the rose haze thickens to the point that you can't see anything else.  You can faintly recognize that you're tumbling, but- like... it doesn't really feel like you're hurt or anything..." & DDUtils.RNRN &
+                       "You fade... in and out... in... and out... deeper... and woozier... and deeper... oh..." & DDUtils.PAKTC, AddressOf step11p2)
+        TextEvent.pushLog("The pink mist swirls around you, one final time...")
+    End Sub
+    Protected Sub step11p2()
+        Game.mDun.jumpTo(Game.currFloor.floorNumber - 1)
+        Game.mDun.setFloor(Game.currFloor)
+
+        Game.player1.health = 1.0
+
+        Game.player1.inv.invNeedsUDate = True
+        Game.player1.UIupdate()
+        Game.player1.drawPort()
+
+        TextEvent.push("You eventually come to, somewhere else." & DDUtils.RNRN &
+                  "Hey... haven't you been here before?")
     End Sub
 
     Public Overrides Sub stopTF()
