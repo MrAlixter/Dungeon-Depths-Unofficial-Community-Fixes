@@ -19,7 +19,6 @@
         next_step = getNextStep(cs)
     End Sub
 
-    'Hair color shifting
     Overridable Sub hairColorShift()
         Game.player1.prt.haircolor = DDUtils.cShift(Game.player1.prt.haircolor, bimbopink1, 10)
         If Not Game.player1.getHairColor.Equals(bimbopink1) Then curr_step -= 1
@@ -31,16 +30,33 @@
                        "As pink sparkles drift though the air around you, your head begins to ache...")
         TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
+
     'Step 2:  Eye color shift, stat reduction
     Protected Sub step2()
 
         TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
-    'Step 3:  Hair shift (messy), slut curse on equipped gear
-    Protected Sub step3()
 
+    Protected Sub step3()
+        Dim p = Game.player1
+        Dim out = "You sneeze, as the pink mist seems to coalesce around the contours of your body.  It's easy enough to clear the air with a wave of your hand, but... hmm..." & DDUtils.RNRN
+
+        If EquipmentDialogBackend.clothingCurse(p, False) Then
+            out += "Wait- has your outfit always been, like... this?  And " & hairChangeS3(p) & DDUtils.RNRN
+        Else
+            out += "Wait- " & hairChangeS3(p) & DDUtils.RNRN
+        End If
+
+        TextEvent.fpush(out & "No... probably just best to keep moving...")
         TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
+    Protected Function hairChangeS3(ByRef p As Player) As String
+        p.prt.setIAInd(pInd.rearhair, 1, True, False)
+        p.prt.setIAInd(pInd.midhair, 32, True, True)
+        p.prt.setIAInd(pInd.fronthair, 9, True, True)
+        Return "why do strands of your hair keep falling over your face?"
+    End Function
+
     'Step 4:  Potion transformation, major headache
     Protected Sub step4()
 
@@ -54,15 +70,24 @@
     Protected Sub step6()
         TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
-    'Step 7:  Face change to bimbo, class change to bimbo
+
     Protected Sub step7()
+        Dim p = Game.player1
+
+        p.prt.setIAInd(pInd.eyebrows, 9, True, False)
+        p.prt.setIAInd(pInd.mouth, 36, True, True)
+        p.prt.setIAInd(pInd.eyes, 68, True, True)
+
+        p.changeClass("Bimbo")
+
+        TextEvent.fpush("Your face feels... kinda tingly...")
         TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
-    'Step 8:  Hair shift (styled), armor changes to bimbo clothes or bimbo armor
+
     Protected Sub step8()
         Dim p As Player = Game.player1
 
-        TextEvent.fpush("The air around you is ." & DDUtils.RNRN &
+        TextEvent.fpush("The air around you almost seems to glow; pulsing with the ebb and flow of the swirling mists." & DDUtils.RNRN &
                         hairChangeS8(p) & DDUtils.RNRN &
                         clothesChangeS8(p))
         TextEvent.pushLog("The pink mist swirls around you...")
@@ -103,25 +128,35 @@
         End If
     End Function
     Protected Function hairChangeS8(ByRef p As Player) As String
+        p.prt.haircolor = bimbopink2
+        p.prt.setIAInd(pInd.rearhair, 18, True, True)
+        p.prt.setIAInd(pInd.midhair, 7, True, False)
+        p.prt.setIAInd(pInd.fronthair, 6, True, True)
         Return ""
     End Function
-    'Step 9:  clothes change to misttorn bimbo clothes, level drops to 1
+
     Protected Sub step9()
-        TextEvent.pushLog("The pink mist swirls around you...")
-    End Sub
-    'Step 10: Changes class to 'Mindless Bimbo'
-    Protected Sub step10()
         Dim p = Game.player1
 
         If Not p.className.Equals("Mindless Bimbo") Then p.changeClass("Mindless Bimbo")
+
+        If p.level > 20 Then
+            p.deLevel(10)
+        ElseIf p.level > 10 Then
+            p.deLevel(5)
+        ElseIf p.level > 5 Then
+            p.deLevel(3)
+        Else
+            p.deLevel(p.level)
+        End If
 
         TextEvent.push("You... uh..." & DDUtils.RNRN &
                        "Something kinda... feels- like- uh..." & DDUtils.RNRN &
                        "Everything's all... um- shimmery...")
         TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
-    'Step 11: inv vanishes, drops the player to floor 1
-    Protected Sub step11()
+
+    Protected Sub step10()
         Dim p As Player = Game.player1
 
         For i = 0 To p.inv.upperBound
@@ -129,10 +164,10 @@
         Next
 
         TextEvent.push("You absentmindedly swoon as the rose haze thickens to the point that you can't see anything else.  You can faintly recognize that you're tumbling, but- like... it doesn't really feel like you're hurt or anything..." & DDUtils.RNRN &
-                       "You fade... in and out... in... and out... deeper... and woozier... and deeper... oh..." & DDUtils.PAKTC, AddressOf step11p2)
+                       "You fade... in and out... in... and out... deeper... and woozier... and deeper... oh..." & DDUtils.PAKTC, AddressOf step10p2)
         TextEvent.pushLog("The pink mist swirls around you, one final time...")
     End Sub
-    Protected Sub step11p2()
+    Protected Sub step10p2()
         Game.mDun.jumpTo(Game.currFloor.floorNumber - 1)
         Game.mDun.setFloor(Game.currFloor)
 
@@ -161,6 +196,9 @@
         If Game.player1.perks(perk.bimbotf) = -1 Then
             Return AddressOf stopTF
         End If
+        If stage < 8 And Game.player1.className.Contains("Bimbo") Then
+            Return AddressOf stopTF
+        End If
 
         Select Case stage
             Case 0
@@ -183,8 +221,6 @@
                 Return AddressOf step9
             Case 9
                 Return AddressOf step10
-            Case 10
-                Return AddressOf step11
             Case Else
                 Return AddressOf stopTF
         End Select
@@ -202,9 +238,7 @@
             Case 9
                 turns_until_next_step = 77 + (Int(Rnd() * 5) + 1)
             Case 10
-                turns_until_next_step = 77 + (Int(Rnd() * 5) + 1)
-            Case 11
-                turns_until_next_step = 66 + (Int(Rnd() * 5) + 1)
+                turns_until_next_step = 99 + (Int(Rnd() * 5) + 1)
             Case Else
                 turns_until_next_step = 5 + (Int(Rnd() * 5) + 1)
         End Select
