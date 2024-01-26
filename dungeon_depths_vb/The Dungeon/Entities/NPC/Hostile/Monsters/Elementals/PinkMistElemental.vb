@@ -16,7 +16,7 @@
         setupMonsterOnSpawn()
 
         '|Inventory|
-        setInventory({49, 189, 198, 205})
+        setInventory({49, 191, 197, 205})
 
         '|Dialog Variables|
 
@@ -25,12 +25,12 @@
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
-        TextEvent.pushCombat("The " & getName() & " casts Blaze!")
-        TextEvent.pushLog("The " & getName() & " casts Blaze!")
-        Dim dmg = calcDamage(Me.getATK, target.getDEF * 0.8)
-        hit(dmg, target)
-
-        If target.GetType() Is GetType(Player) Then CType(target, Player).perks(perk.burn) += 3
+        If Int(Rnd() * 3) < 2 Then
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " casts Haze!")
+            TextEvent.push("...but it doens't seem to do anything.")
+        Else
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " just... kinda floats there...")
+        End If
     End Sub
 
     Public Overrides Sub playerDeath(ByRef p As Player)

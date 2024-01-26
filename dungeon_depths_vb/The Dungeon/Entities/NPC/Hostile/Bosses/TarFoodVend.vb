@@ -85,7 +85,7 @@
             Case phase.phase2
                 phase2Attack(target)
             Case phase.phase3
-
+                phase3Attack(target)
             Case phase.phase4
 
         End Select
@@ -166,7 +166,65 @@
     End Sub
 
     Private Sub phase3Attack(ByRef target As Entity)
+        If health > 2 Then
+            Dim cost As Integer = getIntHealth() * 0.75
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " pays " & cost & " HP to cast Greater Turn to Cupcake.")
+        End If
 
+        If combat_turn Mod 3 = 2 And getSPD() > target.getSPD Then
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " performs Dodge!")
+            dodgeing = True
+
+            Exit Sub
+        ElseIf Not target.getPlayer Is Nothing AndAlso combat_turn Mod 5 = 2 And getWIL() > target.getWIL Then
+            Dim p = target.getPlayer
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " casts Sweet Replacement!")
+
+            If Not p.equippedWeapon Is Nothing And Not p.equippedWeapon.getAName.Equals("Fists") Then
+                TextEvent.push("Your " & p.equippedWeapon.getName & " turns into a cupcake!")
+                p.inv.item(p.equippedWeapon.getAName).add(-1)
+                EquipmentDialogBackend.weaponChange(p, "Fists", True)
+                p.inv.item(Cupcake.ITEM_NAME).add(1)
+
+                p.UIupdate()
+            Else
+                TextEvent.push("...but it doesn't seem to do anything.")
+            End If
+
+            Exit Sub
+        End If
+
+        Dim p_starting_hp As Integer = target.getIntHealth
+        If identified_weakness = p_weakness.def Then
+            If combat_turn Mod 3 = 0 Or combat_turn Mod 3 = 2 Then
+                TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle()) & " thrusts at you, " & p_pronoun & " attack faster than lightning!")
+                If target.takeDMG(Entity.calcDamage(getATK() * 1.15, target.getDEF), Me) Then TextEvent.pushAndLog("You take " & Entity.calcDamage(getATK() * 1.15, target.getDEF) & " damage!")
+            ElseIf combat_turn Mod 3 = 1 Then
+                TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle()) & " swipes at you with " & p_pronoun & " cursed blade!")
+                MyBase.attackCMD(target)
+                TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle()) & " swings two crimson orbs in your direction!")
+                If Game.combat_engaged Then attackSpell(target, "orb", getATK() * 0.1)
+                If Game.combat_engaged Then attackSpell(target, "orb", getATK() * 0.1)
+            End If
+        Else
+            If combat_turn Mod 3 = 0 Or combat_turn Mod 3 = 2 Then
+                attackSpell(target, "spectral knife", getWIL() * 0.75)
+                If Game.combat_engaged Then attackSpell(target, "spectral knife", getWIL() * 0.75)
+            ElseIf combat_turn Mod 3 = 1 Then
+                attackSpell(target, "spectral cleaver", getWIL() * 1.15)
+                TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle()) & " swings two crimson orbs in your direction!")
+                If Game.combat_engaged Then attackSpell(target, "orb", getATK() * 0.1)
+                If Game.combat_engaged Then attackSpell(target, "orb", getATK() * 0.1)
+            End If
+        End If
+
+        Dim dmg = (p_starting_hp - target.getIntHealth) * 0.15
+        takeDMG(-dmg, Nothing)
+        If dmg > 0 Then
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle()) & " siphons " & dmg & " HP through " & p_pronoun & " attack!")
+        Else
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle()) & " siphons " & dmg & " HP through " & p_pronoun & " attack... but it seems to have backfired...")
+        End If
     End Sub
 
     Private Sub phase4Attack(ByRef target As Entity)

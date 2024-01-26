@@ -31,6 +31,7 @@
     archwitch_recluse
     marissa_neop
     bewitched_ration
+    pink_mist_elem
 End Enum
 
 Public Class Monster
@@ -140,6 +141,8 @@ Public Class Monster
                 Return New ArchwitchRecluse
             Case mInd.fox_fire_elem
                 Return New FFElemental
+            Case mInd.pink_mist_elem
+                Return New PinkMistElemental
             Case mInd.fire
                 Dim m = New Monster
                 m.name = "Fire"
@@ -195,6 +198,8 @@ Public Class Monster
                 tier = {mInd.mesm_thrall, mInd.slime, mInd.goo_girl, mInd.enth_sorc, mInd.spider, mInd.arach_hunt, mInd.web_caster_arach}
             Case 7
                 tier = {mInd.mesm_thrall, mInd.slime, mInd.goo_girl, mInd.enth_sorc, mInd.spider, mInd.arach_hunt, mInd.alraune, mInd.fox_fire_elem, mInd.fox_fire_elem, mInd.web_caster_arach}
+            Case 10
+                tier = {mInd.goo_girl, mInd.pink_mist_elem}
             Case 13
                 tier = {mInd.faerie, mInd.alraune, mInd.archwitch_recluse, mInd.namestealer_faerie}
             Case 10000, 91018
