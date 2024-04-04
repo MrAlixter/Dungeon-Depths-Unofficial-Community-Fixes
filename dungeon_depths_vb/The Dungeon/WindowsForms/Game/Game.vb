@@ -4202,6 +4202,15 @@ Public Class Game
     Private Sub equipDialogCBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxArmor.SelectedValueChanged, cboxAccessory.SelectedValueChanged, cboxGlasses.SelectedValueChanged
         EquipmentDialogBackend.changeCBoxIndex(player1)
     End Sub
+    Private Sub chkShowHat_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowHat.CheckedChanged
+        If Not player1 Is Nothing AndAlso chkShowHat.Checked Then
+            player1.perks(perk.hidehat) = -1
+            If pnlEquip.Visible Then EquipmentDialogBackend.drawImg(player1)
+        ElseIf Not player1 Is Nothing Then
+            player1.perks(perk.hidehat) = 1
+            If pnlEquip.Visible Then EquipmentDialogBackend.drawImg(player1)
+        End If
+    End Sub
 
     '| - FUSION DIALOG BOX - |
     Private Sub btnFusionAcc_Click(sender As Object, e As EventArgs) Handles btnFusionAcc.Click

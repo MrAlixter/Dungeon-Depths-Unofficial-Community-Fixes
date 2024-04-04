@@ -68,8 +68,42 @@
     End Sub
     'Step 6:  Trancelike daze, slut curse on all gear
     Protected Sub step6()
-        TextEvent.pushLog("The pink mist swirls around you...")
+        Dim p = Game.player1
+        Dim out = ""
+
+        Dim ctTFdArmors = transfigureClothes(p)
+        Dim ctTFdWeapons = transfigureWeapons(p)
+
+        TextEvent.pushLog("The pink mist swirls around the equipment in your bag...")
     End Sub
+    Protected Function transfigureClothes(ByRef p As Player) As Integer
+        Dim ctTFClothes As Integer = 0
+        Dim idsToTF As List(Of Integer) = New List(Of Integer)()
+
+        For Each itm In p.inv.getArmors.Item2
+            If (itm.getCount > 0 AndAlso itm.getSlutVarInd() > 0 AndAlso p.equippedArmor.getId <> itm.getId) OrElse (itm.getCount > 1 AndAlso itm.getSlutVarInd() > 0 AndAlso p.equippedArmor.getId = itm.getId) Then
+                idsToTF.Add(itm.getId())
+                ctTFClothes += 1
+            End If
+        Next
+
+        For Each id In idsToTF
+            If Not id = p.equippedArmor.getId Then
+                p.inv.add(CType(p.inv.item(id), Armor).getSlutVarInd, (p.inv.item(id).getCount - 1))
+                p.inv.add(id, -(p.inv.item(id).getCount - 1))
+            Else
+                p.inv.add(CType(p.inv.item(id), Armor).getSlutVarInd, p.inv.item(id).getCount)
+                p.inv.add(id, -p.inv.item(id).getCount)
+            End If
+        Next
+
+        Return ctTFClothes
+    End Function
+    Protected Function transfigureWeapons(ByRef p As Player) As Integer
+        Dim ctTFWeapons As Integer = 0
+
+        Return ctTFWeapons
+    End Function
 
     Protected Sub step7()
         Dim p = Game.player1
@@ -89,7 +123,8 @@
 
         TextEvent.fpush("The air around you almost seems to glow; pulsing with the ebb and flow of the swirling mists." & DDUtils.RNRN &
                         hairChangeS8(p) & DDUtils.RNRN &
-                        clothesChangeS8(p))
+                        clothesChangeS8(p) & DDUtils.RNRN &
+                        weaponChangeS8(p))
         TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
     Protected Function clothesChangeS8(ByRef p As Player) As String
@@ -126,6 +161,27 @@
 
             Return "A skimpy pink outfit twists into being around you, but it doesn't seem to fit."
         End If
+    End Function
+    Protected Function weaponChangeS8(ByRef p As Player) As String
+
+        If p.equippedWeapon.GetType.IsSubclassOf(GetType(Sword)) Then
+            p.inv.item(p.equippedWeapon.getAName).add(-1)
+            p.inv.item(MistwarpedSword.ITEM_NAME).add(1)
+            EquipmentDialogBackend.equipWeapon(p, MistwarpedSword.ITEM_NAME, False)
+            Return "Your weapon shimmers, as it morphs into a less effective version of itself."
+        ElseIf p.equippedWeapon.GetType.IsSubclassOf(GetType(Spear)) And p.equippedWeapon.GetType.IsSubclassOf(GetType(Staff)) Then
+            p.inv.item(p.equippedWeapon.getAName).add(-1)
+            p.inv.item(MistwarpedPolearm.ITEM_NAME).add(1)
+            EquipmentDialogBackend.equipWeapon(p, MistwarpedPolearm.ITEM_NAME, False)
+            Return "Your weapon shimmers, as it morphs into a less effective version of itself."
+        ElseIf p.equippedWeapon.GetType.IsSubclassOf(GetType(Dagger)) And p.equippedWeapon.GetType.IsSubclassOf(GetType(Wand)) Then
+            p.inv.item(p.equippedWeapon.getAName).add(-1)
+            p.inv.item(MistwarpedRod.ITEM_NAME).add(1)
+            EquipmentDialogBackend.equipWeapon(p, MistwarpedRod.ITEM_NAME, False)
+            Return "Your weapon shimmers, as it morphs into a less effective version of itself."
+        End If
+
+        Return "Your weapon shimmers briefly, but nothing seems to happen to it."
     End Function
     Protected Function hairChangeS8(ByRef p As Player) As String
         p.prt.haircolor = bimbopink2

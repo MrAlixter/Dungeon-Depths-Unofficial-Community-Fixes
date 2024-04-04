@@ -113,6 +113,12 @@
         Game.pnlEquip.Visible = True
         Game.pnlEquip.BringToFront()
 
+        If p.perks(perk.hidehat) < 0 Then
+            Game.chkShowHat.Checked = True
+        Else
+            Game.chkShowHat.Checked = False
+        End If
+
         skipInvUpdate = False
     End Sub
     Public Shared Sub fromEquipDialog(ByRef p As Player)

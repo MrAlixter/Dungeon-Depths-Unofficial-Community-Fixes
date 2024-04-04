@@ -16,6 +16,7 @@
         show_underboob = True
         adjust_sleeve_layer = False
         is_sexy = True
+        anti_slut_ind = 429
 
         '|Stats|
         d_boost = 11
@@ -38,7 +39,7 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(491, True, True)
 
         '|Description|
-        setDesc("A suprisingly lightweight set of armored plates that allows its user to move freely while also provideing protection.  Much of the armor seems to be missing, though, replaced by a crimson swimsuit." & DDUtils.RNRN &
+        setDesc("A surprisingly lightweight set of armored plates that allows one to move freely without sacrificing defense.  Much of the armor seems to be missing, though, replaced by a crimson swimsuit." & DDUtils.RNRN &
                 getSizeInformation() & DDUtils.RNRN &
                 getStatInformation())
     End Sub

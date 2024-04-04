@@ -233,6 +233,7 @@ Partial Class Game
         Me.pnlSaveLoad = New System.Windows.Forms.Panel()
         Me.picBoard = New System.Windows.Forms.PictureBox()
         Me.picPinkMist = New System.Windows.Forms.PictureBox()
+        Me.chkShowHat = New System.Windows.Forms.CheckBox()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStart, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -2342,6 +2343,7 @@ Partial Class Game
         Me.pnlEquip.AutoScroll = True
         Me.pnlEquip.BackgroundImage = CType(resources.GetObject("pnlEquip.BackgroundImage"), System.Drawing.Image)
         Me.pnlEquip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.pnlEquip.Controls.Add(Me.chkShowHat)
         Me.pnlEquip.Controls.Add(Me.lblEquippedGlasses)
         Me.pnlEquip.Controls.Add(Me.cboxGlasses)
         Me.pnlEquip.Controls.Add(Me.lblEquippedAccessory)
@@ -2365,7 +2367,7 @@ Partial Class Game
         Me.lblEquippedGlasses.BackColor = System.Drawing.Color.Black
         Me.lblEquippedGlasses.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblEquippedGlasses.ForeColor = System.Drawing.Color.White
-        Me.lblEquippedGlasses.Location = New System.Drawing.Point(18, 249)
+        Me.lblEquippedGlasses.Location = New System.Drawing.Point(14, 249)
         Me.lblEquippedGlasses.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblEquippedGlasses.Name = "lblEquippedGlasses"
         Me.lblEquippedGlasses.Size = New System.Drawing.Size(109, 13)
@@ -2378,7 +2380,7 @@ Partial Class Game
         Me.cboxGlasses.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cboxGlasses.ForeColor = System.Drawing.Color.White
         Me.cboxGlasses.FormattingEnabled = True
-        Me.cboxGlasses.Location = New System.Drawing.Point(20, 274)
+        Me.cboxGlasses.Location = New System.Drawing.Point(14, 271)
         Me.cboxGlasses.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.cboxGlasses.Name = "cboxGlasses"
         Me.cboxGlasses.Size = New System.Drawing.Size(199, 21)
@@ -2390,7 +2392,7 @@ Partial Class Game
         Me.lblEquippedAccessory.BackColor = System.Drawing.Color.Black
         Me.lblEquippedAccessory.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblEquippedAccessory.ForeColor = System.Drawing.Color.White
-        Me.lblEquippedAccessory.Location = New System.Drawing.Point(15, 174)
+        Me.lblEquippedAccessory.Location = New System.Drawing.Point(14, 174)
         Me.lblEquippedAccessory.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblEquippedAccessory.Name = "lblEquippedAccessory"
         Me.lblEquippedAccessory.Size = New System.Drawing.Size(121, 13)
@@ -2403,7 +2405,7 @@ Partial Class Game
         Me.cboxAccessory.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cboxAccessory.ForeColor = System.Drawing.Color.White
         Me.cboxAccessory.FormattingEnabled = True
-        Me.cboxAccessory.Location = New System.Drawing.Point(17, 199)
+        Me.cboxAccessory.Location = New System.Drawing.Point(14, 199)
         Me.cboxAccessory.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.cboxAccessory.Name = "cboxAccessory"
         Me.cboxAccessory.Size = New System.Drawing.Size(199, 21)
@@ -2415,7 +2417,7 @@ Partial Class Game
         Me.lblEquippedArmor.BackColor = System.Drawing.Color.Black
         Me.lblEquippedArmor.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblEquippedArmor.ForeColor = System.Drawing.Color.White
-        Me.lblEquippedArmor.Location = New System.Drawing.Point(12, 99)
+        Me.lblEquippedArmor.Location = New System.Drawing.Point(14, 99)
         Me.lblEquippedArmor.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblEquippedArmor.Name = "lblEquippedArmor"
         Me.lblEquippedArmor.Size = New System.Drawing.Size(97, 13)
@@ -2440,7 +2442,7 @@ Partial Class Game
         Me.lblEquippedWeapon.BackColor = System.Drawing.Color.Black
         Me.lblEquippedWeapon.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblEquippedWeapon.ForeColor = System.Drawing.Color.White
-        Me.lblEquippedWeapon.Location = New System.Drawing.Point(13, 27)
+        Me.lblEquippedWeapon.Location = New System.Drawing.Point(14, 27)
         Me.lblEquippedWeapon.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblEquippedWeapon.Name = "lblEquippedWeapon"
         Me.lblEquippedWeapon.Size = New System.Drawing.Size(103, 13)
@@ -2749,6 +2751,22 @@ Partial Class Game
         Me.picPinkMist.TabIndex = 424
         Me.picPinkMist.TabStop = False
         Me.picPinkMist.Visible = False
+        '
+        'chkShowHat
+        '
+        Me.chkShowHat.AutoSize = True
+        Me.chkShowHat.BackColor = System.Drawing.Color.Black
+        Me.chkShowHat.Checked = True
+        Me.chkShowHat.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkShowHat.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.chkShowHat.Font = New System.Drawing.Font("Consolas", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkShowHat.ForeColor = System.Drawing.Color.White
+        Me.chkShowHat.Location = New System.Drawing.Point(14, 413)
+        Me.chkShowHat.Name = "chkShowHat"
+        Me.chkShowHat.Size = New System.Drawing.Size(72, 17)
+        Me.chkShowHat.TabIndex = 289
+        Me.chkShowHat.Text = "Show Hat"
+        Me.chkShowHat.UseVisualStyleBackColor = False
         '
         'Game
         '
@@ -3099,4 +3117,5 @@ Partial Class Game
     Friend WithEvents picBoard As System.Windows.Forms.PictureBox
     Friend WithEvents picPinkMist As System.Windows.Forms.PictureBox
     Friend WithEvents btnEditGender As System.Windows.Forms.Button
+    Friend WithEvents chkShowHat As System.Windows.Forms.CheckBox
 End Class

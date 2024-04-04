@@ -1,7 +1,7 @@
 ﻿Public Class GothOutfit
     Inherits Armor
 
-    Public Const ITEM_NAME As String = "TODO_Outfit"
+    Public Const ITEM_NAME As String = "Fishnet_Outfit"
 
     Sub New()
         '|ID Info|
@@ -35,7 +35,7 @@
         usize5 = New Tuple(Of Integer, Boolean, Boolean)(260, True, True)
 
         '|Description|
-        setDesc("Yeah, uhh... I didn't have time to finish the thing this was a part of, so..." & DDUtils.RNRN &
+        setDesc("A mesh top and short leather skirt.  The top would easily slide off were it not for its wearer's assets." & DDUtils.RNRN &
                 getSizeInformation() & DDUtils.RNRN &
                 getStatInformation())
     End Sub
