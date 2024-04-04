@@ -59,6 +59,14 @@
 
     'Step 4:  Potion transformation, major headache
     Protected Sub step4()
+        Dim p = Game.player1
+
+        For Each itm In p.inv.getPotions
+            If Not itm.getAName.Equals(DitzyPotion.ITEM_NAME) Then
+                p.inv.item(DitzyPotion.ITEM_NAME).add(itm.getCount())
+                itm.add(-itm.getCount())
+            End If
+        Next
 
         TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
@@ -68,6 +76,14 @@
     End Sub
     'Step 6:  Trancelike daze, slut curse on all gear
     Protected Sub step6()
+        Dim p = Game.player1
+
+        For Each itm In p.inv.getArmors.Item2
+            If Not itm.getAName.Equals(DitzyPotion.ITEM_NAME) Then
+                p.inv.item(DitzyPotion.ITEM_NAME).add(itm.getCount())
+                itm.add(-itm.getCount())
+            End If
+        Next
         TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
 
