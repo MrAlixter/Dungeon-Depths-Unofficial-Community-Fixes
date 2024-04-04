@@ -14,7 +14,6 @@ Public Class LabcoatSV
         usable = false
         compress_breast = True
         show_underboob = True
-        hide_dick = False
         rando_inv_allowed = False
         anti_slut_ind = 106
         is_sexy = True

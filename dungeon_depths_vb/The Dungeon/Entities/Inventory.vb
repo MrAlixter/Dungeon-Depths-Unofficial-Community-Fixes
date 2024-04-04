@@ -451,6 +451,10 @@
         internal_inventory.Add(MistwarpedClothes.ITEM_NAME, New MistwarpedClothes)   '423
         internal_inventory.Add(BadRations.ITEM_NAME, New BadRations)                 '424
         internal_inventory.Add(NotColdWeatherGarb.ITEM_NAME, New NotColdWeatherGarb) '425
+        internal_inventory.Add(MistwarpedSword.ITEM_NAME, New MistwarpedSword)       '426
+        internal_inventory.Add(MistwarpedPolearm.ITEM_NAME, New MistwarpedPolearm)   '427
+        internal_inventory.Add(MistwarpedRod.ITEM_NAME, New MistwarpedRod)           '428
+        internal_inventory.Add(DarkplateArmor.ITEM_NAME, New DarkplateArmor)         '429
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -482,7 +486,8 @@
                  Me.item(343), Me.item(345), Me.item(354), Me.item(357),
                  Me.item(363), Me.item(364), Me.item(384), Me.item(393),
                  Me.item(394), Me.item(398), Me.item(404), Me.item(405),
-                 Me.item(413), Me.item(418), Me.item(423), Me.item(425)}
+                 Me.item(413), Me.item(418), Me.item(423), Me.item(425),
+                 Me.item(429)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -505,7 +510,7 @@
                    Me.item(372), Me.item(377), Me.item(381), Me.item(388),
                    Me.item(390), Me.item(399), Me.item(401), Me.item(412),
                    Me.item(415), Me.item(419), Me.item(420), Me.item(421),
-                   Me.item(422)}
+                   Me.item(422), Me.item(426), Me.item(427), Me.item(428)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4), Me.item(65),
                    Me.item(15), Me.item(36), Me.item(37), Me.item(48),

@@ -107,6 +107,7 @@
     spacebun        '105
     pinkmist        '106
     dubrations      '107
+    hidehat         '108
 End Enum
 Public Enum stateInd
     goddState

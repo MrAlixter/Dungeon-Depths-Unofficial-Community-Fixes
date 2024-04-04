@@ -119,6 +119,7 @@
   <ItemGroup>
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\Mayue.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Elementals\PinkMistElemental.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\Gorgons\BimboGorgon.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Witches\MarissasStudent.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Slime\LeporineOoze.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\TimeJudgeFight.vb" />
@@ -281,6 +282,7 @@
     <Compile Include="Items\Equipment\Armor\PlateArmor\PaladinArmor.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\PlatArmor.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\CyberValkyrieArmor.vb" />
+    <Compile Include="Items\Equipment\Armor\PlateArmor\DarkplateArmor.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\AcolyteCosplay.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\DarkplateBikini.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\PlantBikini.vb" />
@@ -311,6 +313,10 @@
     <Compile Include="Items\Equipment\Glasses\Glasses.vb" />
     <Compile Include="Items\Equipment\Glasses\noGlasses.vb" />
     <Compile Include="Items\Equipment\Glasses\SummerShades.vb" />
+    <Compile Include="Items\Equipment\Weapons\Bludgeons\Bludgeon.vb" />
+    <Compile Include="Items\Equipment\Weapons\Bludgeons\MistwarpedPolearm.vb" />
+    <Compile Include="Items\Equipment\Weapons\Bludgeons\MistwarpedSword.vb" />
+    <Compile Include="Items\Equipment\Weapons\Bludgeons\MistwarpedRod.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\IronDagger.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\FeatherDagger.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\RunecursedDagger.vb" />

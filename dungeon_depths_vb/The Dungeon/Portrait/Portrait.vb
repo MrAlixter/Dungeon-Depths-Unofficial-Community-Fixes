@@ -34,6 +34,9 @@ End Enum
 Public Class Portrait
     Public Const NUM_IMG_LAYERS As Integer = 26
     Protected Friend Shared STARTING_INDEX() As Integer = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0} 'the starting indexes of each catagory
+    Protected Friend Shared SKIP_RECOLOR_REARHAIR_INDS() As Integer = {25, 26, 32, 34, 35, 36}
+    Protected Friend Shared SKIP_RECOLOR_MIDHAIR_INDS() As Integer = {28, 29, 38, 40, 41, 42}
+    Protected Friend Shared SKIP_RECOLOR_FRONTHAIR_INDS() As Integer = {26, 27, 36, 38, 39, 40}
 
     Public ent As Entity
 
@@ -114,6 +117,14 @@ Public Class Portrait
         If Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing Then
             hoodsAndCloaks()
             clothingLayerClipping()
+
+            If ent.getPlayer.perks(perk.hidehat) > 0 And iArrInd(pInd.hat).Item1 > 0 Then
+                iArr(pInd.hat) = nullImg
+                changeHairColor(haircolor)
+                changeSkinColor(skincolor)
+                hideEars()
+                iArr(pInd.hairacc) = imgLib.atrs(pInd.mouth).getAt(iArrInd(pInd.hairacc))
+            End If
 
             If ent.getPlayer.equippedArmor.hide_dick Or ent.getPlayer.equippedAcce.hide_dick Then
                 iArr(pInd.genitalia) = nullImg
@@ -363,7 +374,7 @@ Public Class Portrait
             iArr(pInd.rearhair) = CreateFullBodyBMP({nullImg, imgLib.atrs(pInd.hairacc).getAt(New Tuple(Of Integer, Boolean, Boolean)(30, True, False))})
 
         ElseIf checkNDefFemInd(pInd.accessory, 14) Or checkNDefMalInd(pInd.accessory, 13) Then
-            iArr(pInd.rearhair) = imgLib.atrs(pInd.ears).getAt(New Tuple(Of Integer, Boolean, Boolean)(5, True, True))
+            iArr(pInd.rearhair) = nullImg
         End If
     End Sub
     Sub hoodsAndCloaks()
@@ -662,14 +673,11 @@ Public Class Portrait
 
     Public Sub changeHairColor(ByVal c As Color)
         haircolor = c
-        Dim rearHairIndsToIgnore = {25, 26, 32, 34, 35, 36}
-        Dim midHairIndsToIgnore = {28, 29, 38, 40, 41, 42}
-        Dim frontHairIndsToIgnore = {26, 27, 36, 38, 39, 40}
 
-        If Not checkNDefFemInd(pInd.rearhair, rearHairIndsToIgnore) Then iArr(pInd.rearhair) = Portrait.hairRecolor(imgLib.atrs(pInd.rearhair).getAt(iArrInd(pInd.rearhair)), c)
-        If Not checkNDefFemInd(pInd.midhair, midHairIndsToIgnore) And Not checkNDefMalInd(pInd.midhair, 5) Then iArr(pInd.midhair) = Portrait.hairRecolor(imgLib.atrs(pInd.midhair).getAt(iArrInd(pInd.midhair)), c)
+        If Not checkNDefFemInd(pInd.rearhair, SKIP_RECOLOR_REARHAIR_INDS) Then iArr(pInd.rearhair) = Portrait.hairRecolor(imgLib.atrs(pInd.rearhair).getAt(iArrInd(pInd.rearhair)), c)
+        If Not checkNDefFemInd(pInd.midhair, SKIP_RECOLOR_MIDHAIR_INDS) And Not checkNDefMalInd(pInd.midhair, 5) Then iArr(pInd.midhair) = Portrait.hairRecolor(imgLib.atrs(pInd.midhair).getAt(iArrInd(pInd.midhair)), c)
         iArr(pInd.eyebrows) = Portrait.hairRecolor(imgLib.atrs(pInd.eyebrows).getAt(iArrInd(pInd.eyebrows)), c)
-        If Not checkNDefFemInd(pInd.fronthair, frontHairIndsToIgnore) And Not checkNDefMalInd(pInd.fronthair, 6) Then iArr(pInd.fronthair) = Portrait.hairRecolor(imgLib.atrs(pInd.fronthair).getAt(iArrInd(pInd.fronthair)), c)
+        If Not checkNDefFemInd(pInd.fronthair, SKIP_RECOLOR_FRONTHAIR_INDS) And Not checkNDefMalInd(pInd.fronthair, 6) Then iArr(pInd.fronthair) = Portrait.hairRecolor(imgLib.atrs(pInd.fronthair).getAt(iArrInd(pInd.fronthair)), c)
 
         If checkFemInd(pInd.wings, 10) Then iArr(pInd.wings) = Portrait.hairRecolor(imgLib.atrs(pInd.wings).getAt(iArrInd(pInd.wings)), DDUtils.cShift(c, Color.White, 75))
 
