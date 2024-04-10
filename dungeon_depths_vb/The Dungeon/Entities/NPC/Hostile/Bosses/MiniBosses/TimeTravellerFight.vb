@@ -41,7 +41,7 @@
             End If
 
 
-            TextEvent.push("The Time Traveler tosses a cryogrenade at you!")
+            TextEvent.pushAndLog("The Time Traveler tosses a cryogrenade at you!")
             Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(42), "Alright, easy there.  Let's just put you on ice for a bit...", AddressOf OutOfTime.hostileArrest)
             Exit Sub
         End If

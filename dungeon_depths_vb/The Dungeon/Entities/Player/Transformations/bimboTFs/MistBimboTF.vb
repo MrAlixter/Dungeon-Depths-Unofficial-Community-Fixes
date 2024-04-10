@@ -78,20 +78,24 @@
     Protected Sub step6()
         Dim p = Game.player1
 
-        Dim out = ""
-
-        For Each itm In p.inv.getArmors.Item2
-            If Not itm.getAName.Equals(DitzyPotion.ITEM_NAME) Then
-                p.inv.item(DitzyPotion.ITEM_NAME).add(itm.getCount())
-                itm.add(-itm.getCount())
-            End If
-        Next
-
+        Dim out = "As the mists swirl around you once more, you find that you aren't feeling much different.  Your body and mind seem to have been unaffected this time around..." & DDUtils.RNRN
 
         Dim ctTFdArmors = transfigureClothes(p)
         Dim ctTFdWeapons = transfigureWeapons(p)
 
-        TextEvent.pushLog("The pink mist swirls around the equipment in your bag...")
+        If ctTFdArmors > 0 Then
+            out += "Within your bag, " & ctTFdArmors & " sets of clothing and armor seem to have been touched by the mists..." & DDUtils.RNRN
+        End If
+
+        If ctTFdWeapons > 0 Then
+            out += "Within your bag, " & ctTFdArmors & " weapons seem to have been touched by the mists..." & DDUtils.RNRN
+        End If
+
+        If EquipmentDialogBackend.clothingCurse(p, False) Then
+            out += "Your " & DDUtils.amrOrClth(p) & " twists in the mist's magic, not that you notice the change..." & DDUtils.RNRN
+        End If
+
+        TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
     Protected Function transfigureClothes(ByRef p As Player) As Integer
         Dim ctTFClothes As Integer = 0
