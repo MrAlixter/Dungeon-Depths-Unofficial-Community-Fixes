@@ -829,22 +829,29 @@ Public Class mFloor
     End Sub
     'floor 10
     Sub genFloor10(ByVal floorCode As String)
-        If mBoardHeight < 14 Then mBoardHeight = 14
-        If mBoardWidth < 14 Then mBoardWidth = 14
+        If mBoardHeight < 25 Then mBoardHeight = 25
+        If mBoardWidth < 25 Then mBoardWidth = 25
 
-        generateForestLevel(floorCode)
+        'Generate base level
+        generateDungeonLevel(floorCode)
 
+        'Spawn in player and safe area
         Game.player1.pos = New Point(2, 2)
 
         Dim gen_tiles = {New Point(1, 2), New Point(2, 2),
                          New Point(1, 3), New Point(2, 3)}
 
+        For Each t In gen_tiles
+            mBoard(t.Y, t.X).Tag = 13
+        Next
+
         connectPoints(Game.player1.pos, randPoint)
         connectPoints(Game.player1.pos, randPoint)
         connectPoints(Game.player1.pos, randPoint)
         connectPoints(Game.player1.pos, randPoint)
         connectPoints(Game.player1.pos, randPoint)
 
+        'Spawn in stairs/chests/traps
         stairs = randPoint()
         Dim failsafe As Integer = 0
         Do While (route(Game.player1.pos, stairs).Length < 10 And failsafe < 30)
@@ -857,6 +864,7 @@ Public Class mFloor
 
         verifyNoDisconectedChunks(Game.player1)
 
+        'Spawn in NPCs
         placeNPCs(Game.shop_npc_list, getPossibleNPCs)
 
         For Each npc In getPossibleNPCs()
@@ -867,23 +875,54 @@ Public Class mFloor
                 If break > 10 Then Game.shop_npc_list(npc).pos = New Point(-1, -1)
             End While
         Next
-        For Each t In gen_tiles
-            mBoard(t.Y, t.X).Tag = 13
-        Next
 
         If Not Game.hteach.isDead Then
             Game.hteach.pos = New Point(1, 2)
         End If
 
-        deployPinkMist()
-
+        'Set up a clearing for an orb
+        Dim clearingLayout As String() = {"_________#####_________",
+                                          "______###########______",
+                                          "____###############____",
+                                          "___#################___",
+                                          "__###################__",
+                                          "__###################__",
+                                          "_#####################_",
+                                          "_#####################_",
+                                          "_#####################_",
+                                          "#######################",
+                                          "#######################",
+                                          "###########⬤###########",
+                                          "#######################",
+                                          "#######################",
+                                          "_#####################_",
+                                          "_#####################_",
+                                          "_#####################_",
+                                          "__###################__",
+                                          "__###################__",
+                                          "___#################___",
+                                          "____###############____",
+                                          "______###########______",
+                                          "_________#####_________"}
         Dim orb = randPoint()
         failsafe = 0
-        Do While (mBoard(orb.Y, orb.X).Tag <> 3 And failsafe < 30)
+        Do While (mBoard(orb.Y, orb.X).Tag <> 3 And failsafe < 30 And Not (orb.X - 11) < 3 And Not (orb.X - 11) > mBoardWidth And Not (orb.Y - 11) < 3 And Not (orb.Y - 11) > mBoardWidth)
             orb = randPoint()
             failsafe += 1
         Loop
-        mBoard(orb.Y, orb.X).Text = "⬤"
+
+        For y = (orb.Y - 11) To (orb.Y - 11) + UBound(clearingLayout)
+            Dim line = clearingLayout(y).ToCharArray
+            For x = (orb.X - 11) To (orb.X - 11) + UBound(line)
+                If Not line(x) = "_"c Then mBoard(y, x).Tag = 3
+                If line(x) = "⬤"c Then
+                    mBoard(y, x).Text = "⬤"
+                End If
+            Next
+        Next
+
+        'Set up the mist
+        deployPinkMist()
     End Sub
     Sub deployPinkMist()
         For y = 0 To mBoardHeight - 1

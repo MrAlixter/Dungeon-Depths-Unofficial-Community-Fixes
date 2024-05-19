@@ -144,7 +144,7 @@ Public Class Portrait
                 End If
             ElseIf ent.getPlayer.className.Equals("Mindless Bimbo") And Not ent.getPlayer.isPetrified Then
                 iArr(pInd.eyes) = imgLib.atrs(pInd.eyes).getAt(New Tuple(Of Integer, Boolean, Boolean)(68, True, True))
-                If Not ent.getPlayer.equippedAcce.hide_mouth Then iArr(pInd.mouth) = imgLib.atrs(pInd.mouth).getAt(New Tuple(Of Integer, Boolean, Boolean)(16, True, True))
+                If Not ent.getPlayer.equippedAcce.hide_mouth Then iArr(pInd.mouth) = imgLib.atrs(pInd.mouth).getAt(New Tuple(Of Integer, Boolean, Boolean)(36, True, True))
             End If
         End If
 
@@ -682,9 +682,9 @@ Public Class Portrait
         If checkFemInd(pInd.wings, 10) Then iArr(pInd.wings) = Portrait.hairRecolor(imgLib.atrs(pInd.wings).getAt(iArrInd(pInd.wings)), DDUtils.cShift(c, Color.White, 75))
 
         If Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing AndAlso ent.getPlayer.isPetrified Then
-            iArr(pInd.eyes) = Portrait.hairRecolor(imgLib.atrs(pInd.eyes).getAt(iArrInd(pInd.eyes)), c)
-            iArr(pInd.mouth) = Portrait.hairRecolor(imgLib.atrs(pInd.mouth).getAt(iArrInd(pInd.mouth)), c)
-            iArr(pInd.nose) = Portrait.hairRecolor(imgLib.atrs(pInd.nose).getAt(iArrInd(pInd.nose)), c)
+            iArr(pInd.eyes) = Portrait.hairRecolor(imgLib.atrs(pInd.eyes).getAt(iArrInd(pInd.eyes)), skincolor)
+            iArr(pInd.mouth) = Portrait.hairRecolor(imgLib.atrs(pInd.mouth).getAt(iArrInd(pInd.mouth)), skincolor)
+            iArr(pInd.nose) = Portrait.hairRecolor(imgLib.atrs(pInd.nose).getAt(iArrInd(pInd.nose)), skincolor)
         End If
     End Sub
     Public Sub changeSkinColor(ByVal c As Color)

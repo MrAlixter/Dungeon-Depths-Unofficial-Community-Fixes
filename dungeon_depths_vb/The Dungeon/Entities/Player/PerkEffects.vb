@@ -370,7 +370,7 @@
     End Sub
     Shared Sub pinkMistTF(ByRef p As Player, ByVal tag As Integer)
         If tag = DDConst.PINK_MIST_TILETAG And Not p.ongoingTFs.contains(tfind.mistbimbo) Then
-            p.ongoingTFs.add(New MistBimboTF(2, 99, 0.25, True))
+            p.ongoingTFs.add(New MistBimboTF(10, 13, 0.25, True))
             p.perks(perk.bimbotf) = 0
         ElseIf tag <> DDConst.PINK_MIST_TILETAG Then
             p.ongoingTFs.remove(tfind.mistbimbo)

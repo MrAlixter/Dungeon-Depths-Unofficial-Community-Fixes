@@ -74,6 +74,17 @@
             a(j) = tAi
         Next
     End Sub
+    Public Shared Function ishuffle(ByVal a As Item()) As Item()
+        For i = 1 To UBound(a)
+            Dim j = Int(Rnd() * i + 1)
+
+            Dim tAi = a(i)
+            a(i) = a(j)
+            a(j) = tAi
+        Next
+
+        Return a
+    End Function
     Public Shared Function sortMaxToMin(ByVal l As List(Of Integer)) As List(Of Integer)
         If l.Count < 2 Then
             Return l

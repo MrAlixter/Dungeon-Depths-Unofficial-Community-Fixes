@@ -616,6 +616,7 @@
         For i = 0 To upperBound()
             item(i).add(inv.item(i).count)
         Next
+        invNeedsUDate = True
     End Sub
     Sub mergeRevalue(ByRef inv As Inventory)
         For i = 0 To upperBound()
@@ -630,6 +631,7 @@
             DDError.missingInvItemError(key)
         End If
         sum += count
+        invNeedsUDate = True
     End Sub
     Sub add(ByVal id As Integer, ByVal count As Integer)
         If id >= 0 And id <= upperBound() Then
@@ -637,6 +639,7 @@
             internal_inventory(key).add(count)
         End If
         sum += count
+        invNeedsUDate = True
     End Sub
     Sub setCount(k As String, v As Integer)
         sum -= item(k).count
@@ -644,11 +647,13 @@
             item(k).count = v
         End If
         sum += v
+        invNeedsUDate = True
     End Sub
     Sub setCount(i As Integer, v As Integer)
         sum -= item(i).count
         item(i).count = v
         sum += v
+        invNeedsUDate = True
     End Sub
 
     '|SAVE/LOAD|

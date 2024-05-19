@@ -10,7 +10,7 @@
         MyBase.New(n, tts, wi, cbs)
         MyBase.update_during_combat = False
         tf_name = TF_IND
-        next_step = AddressOf hairColorShift
+        next_step = getNextStep(0)
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
@@ -19,66 +19,89 @@
         next_step = getNextStep(cs)
     End Sub
 
+    'Step 0: Haircolor shift to hot pink, over multiple steps
     Overridable Sub hairColorShift()
-        Game.player1.prt.haircolor = DDUtils.cShift(Game.player1.prt.haircolor, bimbopink1, 10)
+        Game.player1.prt.haircolor = DDUtils.cShift(Game.player1.prt.haircolor, bimbopink1, 40)
         If Not Game.player1.getHairColor.Equals(bimbopink1) Then curr_step -= 1
         TextEvent.fpush("Your hair color becomes slightly lighter, brightening to a rosy pink.")
     End Sub
 
+    'Step 1: Intro step
     Protected Sub step1()
-        TextEvent.push("Something feels... weird..." & DDUtils.RNRN &
+        TextEvent.fpush("Something feels... weird..." & DDUtils.RNRN &
                        "As pink sparkles drift though the air around you, your head begins to ache...")
         TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
 
-    'Step 2:  Eye color shift, stat reduction
+    'Step 2:  Minor clothing/hair TFs
     Protected Sub step2()
-
-        TextEvent.pushLog("The pink mist swirls around you...")
-    End Sub
-
-    Protected Sub step3()
         Dim p = Game.player1
-        Dim out = "You sneeze, as the pink mist seems to coalesce around the contours of your body.  It's easy enough to clear the air with a wave of your hand, but... hmm..." & DDUtils.RNRN
+        Dim out = "You sneeze, as the pink mist seems to wind around the contours of your body.  It's easy enough to clear the air with a wave of your hand, but... hmm..." & DDUtils.RNRN
 
         If EquipmentDialogBackend.clothingCurse(p, False) Then
-            out += "Wait- has your outfit always been, like... this?  And " & hairChangeS3(p) & DDUtils.RNRN
+            out += "Wait- has your outfit always been, like... this?  And " & hairChangeS2(p) & DDUtils.RNRN
         Else
-            out += "Wait- " & hairChangeS3(p) & DDUtils.RNRN
+            out += "Wait- " & hairChangeS2(p) & DDUtils.RNRN
         End If
 
-        TextEvent.fpush(out & "No... probably just best to keep moving...")
+        TextEvent.fpush(out & "No... probably just best to keep moving...", AddressOf p.UIupdate)
         TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
-    Protected Function hairChangeS3(ByRef p As Player) As String
+    Protected Function hairChangeS2(ByRef p As Player) As String
         p.prt.setIAInd(pInd.rearhair, 1, True, False)
         p.prt.setIAInd(pInd.midhair, 32, True, True)
         p.prt.setIAInd(pInd.fronthair, 9, True, True)
         Return "why do strands of your hair keep falling over your face?"
     End Function
 
-    'Step 4:  Potion transformation, major headache
+    'Step 2:  Minor body TFs
+    Protected Sub step3()
+        Dim p = Game.player1
+        Dim tfed = False
+        If p.breastSize < 0 Then p.breastSize = 0 : tfed = True
+        If p.buttSize < 0 Then p.buttSize = 0
+
+        TextEvent.fpush("You sneeze again, as you push through the thick rose-colored cloud.  " & If(tfed, "", "The dungeon."))
+        TextEvent.pushLog("The pink mist swirls around you...")
+    End Sub
+
+    'Step 4:  Potion transformation, headache replacing with trance
     Protected Sub step4()
         Dim p = Game.player1
 
-        For Each itm In p.inv.getPotions
-            If Not itm.getAName.Equals(DitzyPotion.ITEM_NAME) Then
+        Dim ctTFs As Integer = 0
+        Dim oddsToTF As Double = 1.0
+        For Each itm In DDUtils.ishuffle(p.inv.getPotions)
+            If itm.getCount() > 0 And Rnd() <= oddsToTF And Not itm.getAName.Equals(DitzyPotion.ITEM_NAME) Then
                 p.inv.item(DitzyPotion.ITEM_NAME).add(itm.getCount())
-                itm.add(-itm.getCount())
+                ctTFs += itm.getCount()
+                p.inv.add(itm.getId(), -itm.getCount())
+                oddsToTF *= 0.95
             End If
         Next
 
+        TextEvent.fpush("Your headache seems to be easing up... you're even feeling kinda- like- good..." & DDUtils.RNRN &
+                        "Hmmm... a little too good, all things considered..." & DDUtils.RNRN &
+                        If((ctTFs > 0), "Within your bag, " & ctTFs & " potion" & If((ctTFs > 1), "s", "") & " " & If((ctTFs < 2), "is", "are") & " transmuted into " & If((ctTFs < 2), "a ", "") & p.inv.item(DitzyPotion.ITEM_NAME).getName & If((ctTFs > 1), "s", "") & ".", "...but nothing seems to happen."), AddressOf p.UIupdate)
         TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
-    'Step 5:  Forget any restore spells, transfiguration of any restore items
+
+    'Step 5:  Forget any restore spells, transfiguration of any restore items, minor body transformation
     Protected Sub step5()
+        Dim p = Game.player1
+
+        If p.breastSize < 2 Then p.breastSize = 2
+        If p.buttSize < 2 Then p.buttSize = 2
+
+        TextEvent.fpush("")
         TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
+
     'Step 6:  Trancelike daze, slut curse on all gear
     Protected Sub step6()
         Dim p = Game.player1
 
-        Dim out = "As the mists swirl around you once more, you find that you aren't feeling much different.  Your body and mind seem to have been unaffected this time around..." & DDUtils.RNRN
+        Dim out = "As the mists swirl around you once more, you find that you aren't feeling much different.  With each step, you find yourself falling further and further into a dazed trance..." & DDUtils.RNRN
 
         Dim ctTFdArmors = transfigureClothes(p)
         Dim ctTFdWeapons = transfigureWeapons(p)
@@ -91,25 +114,25 @@
             out += "Within your bag, " & ctTFdArmors & " weapons seem to have been touched by the mists..." & DDUtils.RNRN
         End If
 
-        If EquipmentDialogBackend.clothingCurse(p, False) Then
-            out += "Your " & DDUtils.amrOrClth(p) & " twists in the mist's magic, not that you notice the change..." & DDUtils.RNRN
-        End If
-
+        TextEvent.fpush(out, AddressOf p.UIupdate)
         TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
     Protected Function transfigureClothes(ByRef p As Player) As Integer
         Dim ctTFClothes As Integer = 0
+        Dim oddsToTF As Double = 1.0
         Dim idsToTF As List(Of Integer) = New List(Of Integer)()
 
-        For Each itm In p.inv.getArmors.Item2
-            If (itm.getCount > 0 AndAlso itm.getSlutVarInd() > 0 AndAlso p.equippedArmor.getId <> itm.getId) OrElse (itm.getCount > 1 AndAlso itm.getSlutVarInd() > 0 AndAlso p.equippedArmor.getId = itm.getId) Then
+        For Each itm In DDUtils.ishuffle(p.inv.getArmors.Item2)
+            Dim hold_itm = CType(itm, Armor)
+            If (itm.getCount > 0 AndAlso hold_itm.getSlutVarInd() > 0 AndAlso p.equippedArmor.getId <> itm.getId) OrElse (itm.getCount > 1 AndAlso hold_itm.getSlutVarInd() > 0 AndAlso p.equippedArmor.getId = itm.getId) And Rnd() <= oddsToTF Then
                 idsToTF.Add(itm.getId())
-                ctTFClothes += 1
+                ctTFClothes += itm.getCount
+                oddsToTF *= 0.95
             End If
         Next
 
         For Each id In idsToTF
-            If Not id = p.equippedArmor.getId Then
+            If id = p.equippedArmor.getId Then
                 p.inv.add(CType(p.inv.item(id), Armor).getSlutVarInd, (p.inv.item(id).getCount - 1))
                 p.inv.add(id, -(p.inv.item(id).getCount - 1))
             Else
@@ -126,6 +149,7 @@
         Return ctTFWeapons
     End Function
 
+    'Step 7: Face transformation, class change
     Protected Sub step7()
         Dim p = Game.player1
 
@@ -134,29 +158,27 @@
         p.prt.setIAInd(pInd.eyes, 68, True, True)
 
         p.changeClass("Bimbo")
+        p.textColor = Color.FromArgb(255, 255, 235, 240)
 
-        TextEvent.fpush("Your face feels... kinda tingly...")
+        TextEvent.fpush("Your face feels... kinda tingly...", AddressOf p.UIupdate)
         TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
 
+    'Step 8: Hair change 2, clothes change, weapon change.
     Protected Sub step8()
         Dim p As Player = Game.player1
 
-        TextEvent.fpush("The air around you almost seems to glow; pulsing with the ebb and flow of the swirling mists." & DDUtils.RNRN &
+        TextEvent.fpush("The air around you almost seems to glow; pulsing with the ebb and flow of the swirling mists.  Your head feels lighter than ever, and it becomes clear that you are close to a point of no return..." & DDUtils.RNRN &
                         hairChangeS8(p) & DDUtils.RNRN &
                         clothesChangeS8(p) & DDUtils.RNRN &
-                        weaponChangeS8(p))
+                        weaponChangeS8(p), AddressOf p.UIupdate)
         TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
     Protected Function clothesChangeS8(ByRef p As Player) As String
-        If p.equippedArmor.getSlutVarInd() > -1 Then
-            EquipmentDialogBackend.clothingCurse(p, False)
-
-            Return "A glittery shimmer washes over your gear, and your outfit becomes far more revealing."
-        ElseIf p.equippedArmor.is_sexy Then
+        If p.equippedArmor.is_sexy And Not p.equippedArmor.getAName.Contains(SkimpyClothes.ITEM_NAME) Then
             Return "A glittery shimmer washes over your gear, but it doesn't seem to do anything..."
         ElseIf p.equippedArmor.d_boost > 20 Then
-            p.inv.add(BimboArmor.ITEM_NAME, -1)
+            p.inv.add(BimboArmor.ITEM_NAME, 1)
             p.inv.add(p.equippedArmor.getAName(), -1)
 
             If Not p.inv.item(BimboArmor.ITEM_NAME) Is Nothing AndAlso CType(p.inv.item(BimboArmor.ITEM_NAME), Armor).fits(p) Then
@@ -168,8 +190,8 @@
             End If
 
             Return "A revealing set of pink armor twists into being around you, but it doesn't seem to fit."
-        Else
-            p.inv.add(MistwarpedClothes.ITEM_NAME, -1)
+        ElseIf New MistwarpedClothes().fits(p) Then
+            p.inv.add(MistwarpedClothes.ITEM_NAME, 1)
             p.inv.add(p.equippedArmor.getAName(), -1)
 
             If Not p.inv.item(MistwarpedClothes.ITEM_NAME) Is Nothing AndAlso CType(p.inv.item(MistwarpedClothes.ITEM_NAME), Armor).fits(p) Then
@@ -181,6 +203,12 @@
             End If
 
             Return "A skimpy pink outfit twists into being around you, but it doesn't seem to fit."
+        ElseIf p.equippedArmor.getSlutVarInd() > -1 Then
+            EquipmentDialogBackend.clothingCurse(p, False)
+
+            Return "A glittery shimmer washes over your gear, and your outfit becomes far more revealing."
+        Else
+            Return "A glittery shimmer washes over your gear, but it doesn't seem to do anything..."
         End If
     End Function
     Protected Function weaponChangeS8(ByRef p As Player) As String
@@ -190,12 +218,12 @@
             p.inv.item(MistwarpedSword.ITEM_NAME).add(1)
             EquipmentDialogBackend.equipWeapon(p, MistwarpedSword.ITEM_NAME, False)
             Return "Your weapon shimmers, as it morphs into a less effective version of itself."
-        ElseIf p.equippedWeapon.GetType.IsSubclassOf(GetType(Spear)) And p.equippedWeapon.GetType.IsSubclassOf(GetType(Staff)) Then
+        ElseIf p.equippedWeapon.GetType.IsSubclassOf(GetType(Spear)) Or p.equippedWeapon.GetType.IsSubclassOf(GetType(Staff)) Then
             p.inv.item(p.equippedWeapon.getAName).add(-1)
             p.inv.item(MistwarpedPolearm.ITEM_NAME).add(1)
             EquipmentDialogBackend.equipWeapon(p, MistwarpedPolearm.ITEM_NAME, False)
             Return "Your weapon shimmers, as it morphs into a less effective version of itself."
-        ElseIf p.equippedWeapon.GetType.IsSubclassOf(GetType(Dagger)) And p.equippedWeapon.GetType.IsSubclassOf(GetType(Wand)) Then
+        ElseIf p.equippedWeapon.GetType.IsSubclassOf(GetType(Dagger)) Or p.equippedWeapon.GetType.IsSubclassOf(GetType(Wand)) Then
             p.inv.item(p.equippedWeapon.getAName).add(-1)
             p.inv.item(MistwarpedRod.ITEM_NAME).add(1)
             EquipmentDialogBackend.equipWeapon(p, MistwarpedRod.ITEM_NAME, False)
@@ -207,15 +235,17 @@
     Protected Function hairChangeS8(ByRef p As Player) As String
         p.prt.haircolor = bimbopink2
         p.prt.setIAInd(pInd.rearhair, 18, True, True)
-        p.prt.setIAInd(pInd.midhair, 7, True, False)
-        p.prt.setIAInd(pInd.fronthair, 6, True, True)
-        Return ""
+        p.prt.setIAInd(pInd.midhair, 21, True, False)
+        p.prt.setIAInd(pInd.fronthair, 30, True, True)
+        Return "Your hair glows with a soft pink light, before falling into a neat style."
     End Function
 
+    'Step 9: Mindless bimbo TF, delevel
     Protected Sub step9()
         Dim p = Game.player1
 
         If Not p.className.Equals("Mindless Bimbo") Then p.changeClass("Mindless Bimbo")
+        p.textColor = Color.FromArgb(255, 255, 235, 240)
 
         If p.level > 20 Then
             p.deLevel(10)
@@ -227,12 +257,13 @@
             p.deLevel(p.level)
         End If
 
-        TextEvent.push("You... uh..." & DDUtils.RNRN &
+        TextEvent.fpush("You... uh..." & DDUtils.RNRN &
                        "Something kinda... feels- like- uh..." & DDUtils.RNRN &
-                       "Everything's all... um- shimmery...")
+                       "Everything's all... um- shimmery...", AddressOf p.UIupdate)
         TextEvent.pushLog("The pink mist swirls around you...")
     End Sub
 
+    'Step 10: Total daze, inventory loss, sent back a few floors.
     Protected Sub step10()
         Dim p As Player = Game.player1
 
@@ -240,12 +271,12 @@
             If Not (i = p.equippedArmor.getId Or i = p.equippedWeapon.getId Or i = p.equippedAcce.getId Or i = p.equippedGlasses.getId) Then p.inv.setCount(i, 0)
         Next
 
-        TextEvent.push("You absentmindedly swoon as the rose haze thickens to the point that you can't see anything else.  You can faintly recognize that you're tumbling, but- like... it doesn't really feel like you're hurt or anything..." & DDUtils.RNRN &
+        TextEvent.fpush("You absentmindedly swoon as the rose haze thickens to the point that you can't see anything else.  You can faintly recognize that you're tumbling, but- like... it doesn't really feel like you're hurt or anything..." & DDUtils.RNRN &
                        "You fade... in and out... in... and out... deeper... and woozier... and deeper... oh..." & DDUtils.PAKTC, AddressOf step10p2)
         TextEvent.pushLog("The pink mist swirls around you, one final time...")
     End Sub
     Protected Sub step10p2()
-        Game.mDun.jumpTo(Game.currFloor.floorNumber - 1)
+        Game.mDun.jumpTo(Game.currFloor.floorNumber - 3)
         Game.mDun.setFloor(Game.currFloor)
 
         Game.player1.health = 1.0
@@ -255,7 +286,7 @@
         Game.player1.drawPort()
 
         TextEvent.push("You eventually come to, somewhere else." & DDUtils.RNRN &
-                  "Hey... haven't you been here before?")
+                  "Hey... haven't you been here before?", AddressOf Game.player1.UIupdate)
     End Sub
 
     Public Overrides Sub stopTF()
@@ -273,7 +304,7 @@
         If Game.player1.perks(perk.bimbotf) = -1 Then
             Return AddressOf stopTF
         End If
-        If stage < 8 And Game.player1.className.Contains("Bimbo") Then
+        If stage < 5 And Game.player1.className.Contains("Bimbo") Then
             Return AddressOf stopTF
         End If
 

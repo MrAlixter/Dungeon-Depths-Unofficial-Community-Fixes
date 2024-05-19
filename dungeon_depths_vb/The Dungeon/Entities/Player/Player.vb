@@ -1520,12 +1520,14 @@ Public Class Player
         If perks(perk.cowbell) > -1 And Not (equippedAcce.getAName.Equals(Cowbell.ITEM_NAME) Or equippedAcce.getAName.Equals(Bimbell.ITEM_NAME) Or equippedAcce.getAName.Equals(ImmitationCowbell.ITEM_NAME)) Then
             perks(perk.cowbell) = -1
         End If
+
         '| - Fae Stockings Cleanup - |
         If equippedAcce.getAName.Equals(FaeStockings.ITEM_NAME) And equippedArmor.bind_wearer Then
             Equipment.equipAcce(Me, "Nothing", False)
             TextEvent.pushAndLog("Your accessory vanishes...")
             drawPort()
         End If
+
         '| - Cynn's Tonic Cleanup - |
         If perks(perk.cynnstonic) > -1 Then
             If Game.turn Mod 5 = 0 Then perks(perk.cynnstonic) -= 1
@@ -1870,7 +1872,7 @@ Public Class Player
                 player_image = getFrogTileImage()
             Case formName.Equals("Blob")
                 player_image = getBlobTileImage()
-            Case className.Equals("Bimbo")
+            Case className.Contains("Bimbo")
                 player_image = getBimboTileImage()
             Case className.Equals("Thong​")
                 player_image = getItemTileImage()
