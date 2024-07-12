@@ -224,13 +224,15 @@ Public Class mFloor
         Next
     End Sub
     Private Sub placeTile(ByVal x As Integer, ByVal y As Integer, ByVal seen As Boolean, Optional ByVal glow As Boolean = False)
-        mBoard(y, x).Tag = If(seen, 2, 1)
+        If mBoard(y, x).Tag <> 2 Then
+            mBoard(y, x).Tag = If(seen, 2, 1)
 
-        If glow Then
-            mBoard(y, x).Text = "x"
+            If glow Then
+                mBoard(y, x).Text = "x"
+            End If
+
+            coveredBoardSpace += 1
         End If
-
-        coveredBoardSpace += 1
     End Sub
     Private Sub connectRooms(ByRef r1 As Room, ByRef r2 As Room, Optional overrideFlag As Boolean = False)
         If (r1.connectedTo(r2) Or r2.connectedTo(r1)) And Not overrideFlag Then Exit Sub
@@ -257,126 +259,159 @@ Public Class mFloor
             'p1 is below p2
             If p1.X > p2.X Then
                 'p1 is right of p2
-                goUpThenLeft(p1, p2)
+                goLeftThenUp(p1, p2)
             Else
                 'p1 is left of p2
-                goUpThenRight(p1, p2)
+                goRightThenUp(p1, p2)
             End If
         Else
             'p1 is above p2
             If p1.X > p2.X Then
                 'p1 is right of p2
-                goDownThenLeft(p1, p2)
+                goLeftThenDown(p1, p2)
             Else
                 'p1 is left of p2
-                goDownThenRight(p1, p2)
+                goRightThenDown(p1, p2)
             End If
         End If
     End Sub
-    Private Sub goUpThenRight(ByVal p1 As Point, ByVal p2 As Point)
-        'go up from p1's Y to p2's Y
-        For y = p1.Y To p2.Y Step -1
-            y = Math.Max(0, y)
-            y = Math.Min(mBoardHeight, y)
+    Private Function shouldBreakTilePlacement(ByVal x As Integer, ByVal y As Integer, ByVal d As Integer)
+        'Directions
+        '
+        ' ← = 1
+        ' ↓ = 2
+        ' → = 3
+        ' ↑ = 4
+        'If d = 1 AndAlso ptInBounds(New Point(x - 1, y)) AndAlso Not mBoard(y, x - 1).Tag = 0 Then Return False
+        'If d = 2 AndAlso ptInBounds(New Point(x, y + 1)) AndAlso Not mBoard(y + 1, x).Tag = 0 Then Return False
+        'If d = 3 AndAlso ptInBounds(New Point(x + 1, y)) AndAlso Not mBoard(y, x + 1).Tag = 0 Then Return False
+        'If d = 4 AndAlso ptInBounds(New Point(x, y - 1)) AndAlso Not mBoard(y - 1, x).Tag = 0 Then Return False
 
-            Dim x = Math.Max(0, p1.X)
-            x = Math.Min(mBoardWidth, p1.X)
+        'If mBoard(y, x).Tag = 1 Then Return True
+        'If mBoard(y, x).Tag = 2 Then Return True
 
-            If Not mBoard(y, x).Tag = 2 Then
-                placeTile(x, y, False)
-            End If
-        Next
-
+        Return False
+    End Function
+    Private Sub goRightThenUp(ByVal p1 As Point, ByVal p2 As Point)
         'go right from p1's X to p2's X
-        For x = p1.X To p2.X
+        For x = p1.X + 1 To p2.X
             Dim y = Math.Max(0, p2.Y)
             y = Math.Min(mBoardHeight, p2.Y)
 
             x = Math.Max(0, x)
             x = Math.Min(mBoardWidth, x)
 
-            If Not mBoard(y, x).Tag = 2 Then
+            If shouldBreakTilePlacement(x, y, 3) Then
+                Exit For
+            ElseIf Not mBoard(y, x).Tag = 2 Then
                 placeTile(x, y, False)
             End If
         Next
-    End Sub
-    Private Sub goUpThenLeft(ByVal p1 As Point, ByVal p2 As Point)
+
         'go up from p1's Y to p2's Y
-        For y = p1.Y To p2.Y Step -1
+        For y = p1.Y - 1 To p2.Y Step -1
             y = Math.Max(0, y)
             y = Math.Min(mBoardHeight, y)
 
             Dim x = Math.Max(0, p1.X)
             x = Math.Min(mBoardWidth, p1.X)
 
-            If Not mBoard(y, x).Tag = 2 Then
+            If shouldBreakTilePlacement(x, y, 4) Then
+                Exit For
+            ElseIf Not mBoard(y, x).Tag = 2 Then
                 placeTile(x, y, False)
             End If
         Next
-
+    End Sub
+    Private Sub goLeftThenUp(ByVal p1 As Point, ByVal p2 As Point)
         'go left from p1's X to p2's X
-        For x = p1.X To p2.X Step -1
+        For x = p1.X - 1 To p2.X Step -1
             Dim y = Math.Max(0, p2.Y)
             y = Math.Min(mBoardHeight, y)
 
             x = Math.Max(0, x)
             x = Math.Min(mBoardWidth, x)
 
-            If Not mBoard(y, x).Tag = 2 Then
+            If shouldBreakTilePlacement(x, y, 1) Then
+                Exit For
+            ElseIf Not mBoard(y, x).Tag = 2 Then
                 placeTile(x, y, False)
             End If
         Next
-    End Sub
-    Private Sub goDownThenRight(ByVal p1 As Point, ByVal p2 As Point)
+
         'go up from p1's Y to p2's Y
-        For y = p1.Y To p2.Y
+        For y = p1.Y - 1 To p2.Y Step -1
             y = Math.Max(0, y)
             y = Math.Min(mBoardHeight, y)
 
             Dim x = Math.Max(0, p1.X)
             x = Math.Min(mBoardWidth, p1.X)
 
-            If Not mBoard(y, x).Tag = 2 Then
+            If shouldBreakTilePlacement(x, y, 4) Then
+                Exit For
+            ElseIf Not mBoard(y, x).Tag = 2 Then
                 placeTile(x, y, False)
             End If
         Next
-
+    End Sub
+    Private Sub goRightThenDown(ByVal p1 As Point, ByVal p2 As Point)
         'go right from p1's X to p2's X
-        For x = p1.X To p2.X
+        For x = p1.X + 1 To p2.X
             Dim y = Math.Max(0, p2.Y)
             y = Math.Min(mBoardHeight, y)
 
             x = Math.Max(0, x)
             x = Math.Min(mBoardWidth, x)
 
-            If Not mBoard(y, x).Tag = 2 Then
+            If shouldBreakTilePlacement(x, y, 3) Then
+                Exit For
+            ElseIf Not mBoard(y, x).Tag = 2 Then
                 placeTile(x, y, False)
             End If
         Next
-    End Sub
-    Private Sub goDownThenLeft(ByVal p1 As Point, ByVal p2 As Point)
+
         'go up from p1's Y to p2's Y
-        For y = p1.Y To p2.Y
+        For y = p1.Y + 1 To p2.Y
             y = Math.Max(0, y)
             y = Math.Min(mBoardHeight, y)
 
             Dim x = Math.Max(0, p1.X)
             x = Math.Min(mBoardWidth, p1.X)
 
-            If Not mBoard(y, x).Tag = 2 Then
+            If shouldBreakTilePlacement(x, y, 2) Then
+                Exit For
+            ElseIf Not mBoard(y, x).Tag = 2 Then
                 placeTile(x, y, False)
             End If
         Next
-
+    End Sub
+    Private Sub goLeftThenDown(ByVal p1 As Point, ByVal p2 As Point)
         'go left from p1's X to p2's X
-        For x = p1.X To p2.X Step -1
+        For x = p1.X - 1 To p2.X Step -1
             Dim y = Math.Max(0, p2.Y)
             y = Math.Min(mBoardHeight, y)
 
             x = Math.Max(0, x)
             x = Math.Min(mBoardWidth, x)
 
-            If Not mBoard(y, x).Tag = 2 Then
+            If shouldBreakTilePlacement(x, y, 1) Then
+                Exit For
+            ElseIf Not mBoard(y, x).Tag = 2 Then
+                placeTile(x, y, False)
+            End If
+        Next
+
+        'go down from p1's Y to p2's Y
+        For y = p1.Y + 1 To p2.Y
+            y = Math.Max(0, y)
+            y = Math.Min(mBoardHeight, y)
+
+            Dim x = Math.Max(0, p1.X)
+            x = Math.Min(mBoardWidth, p1.X)
+
+            If shouldBreakTilePlacement(x, y, 2) Then
+                Exit For
+            ElseIf Not mBoard(y, x).Tag = 2 Then
                 placeTile(x, y, False)
             End If
         Next
@@ -829,27 +864,24 @@ Public Class mFloor
     End Sub
     'floor 10
     Sub genFloor10(ByVal floorCode As String)
-        If mBoardHeight < 25 Then mBoardHeight = 25
-        If mBoardWidth < 25 Then mBoardWidth = 25
-
         'Generate base level
-        generateDungeonLevel(floorCode)
+        generateRadialFloor(floorCode)
+        Dim center_x As Integer = Math.Floor(mBoardWidth / 2)
+        Dim center_y As Integer = Math.Floor(mBoardHeight / 2)
+        Dim banned_tiles = {New Point(center_x - 1, center_y - 1), New Point(center_x, center_y - 1), New Point(center_x + 1, center_y - 1),
+                         New Point(center_x - 1, center_y), New Point(center_x, center_y), New Point(center_x + 1, center_y),
+                         New Point(center_x - 1, center_y + 1), New Point(center_x, center_y + 1), New Point(center_x + 1, center_y + 1)}
 
         'Spawn in player and safe area
-        Game.player1.pos = New Point(2, 2)
-
-        Dim gen_tiles = {New Point(1, 2), New Point(2, 2),
-                         New Point(1, 3), New Point(2, 3)}
+        While banned_tiles.Contains(Game.player1.pos) Or Game.player1.pos.X < 2 Or Game.player1.pos.Y < 2
+            Game.player1.pos = randPoint()
+        End While
+        Dim gen_tiles = {New Point(Game.player1.pos.X - 1, Game.player1.pos.Y - 1), New Point(Game.player1.pos.X, Game.player1.pos.Y - 1),
+                         New Point(Game.player1.pos.X - 1, Game.player1.pos.Y), New Point(Game.player1.pos.X, Game.player1.pos.Y)}
 
         For Each t In gen_tiles
             mBoard(t.Y, t.X).Tag = 13
         Next
-
-        connectPoints(Game.player1.pos, randPoint)
-        connectPoints(Game.player1.pos, randPoint)
-        connectPoints(Game.player1.pos, randPoint)
-        connectPoints(Game.player1.pos, randPoint)
-        connectPoints(Game.player1.pos, randPoint)
 
         'Spawn in stairs/chests/traps
         stairs = randPoint()
@@ -861,8 +893,6 @@ Public Class mFloor
 
         placeChest(floorCode)
         If floorNumber > 2 Then placeTraps()
-
-        verifyNoDisconectedChunks(Game.player1)
 
         'Spawn in NPCs
         placeNPCs(Game.shop_npc_list, getPossibleNPCs)
@@ -877,49 +907,12 @@ Public Class mFloor
         Next
 
         If Not Game.hteach.isDead Then
-            Game.hteach.pos = New Point(1, 2)
+            Game.hteach.pos = New Point(Game.player1.pos.X - 1, Game.player1.pos.Y - 1)
         End If
 
-        'Set up a clearing for an orb
-        Dim clearingLayout As String() = {"_________#####_________",
-                                          "______###########______",
-                                          "____###############____",
-                                          "___#################___",
-                                          "__###################__",
-                                          "__###################__",
-                                          "_#####################_",
-                                          "_#####################_",
-                                          "_#####################_",
-                                          "#######################",
-                                          "#######################",
-                                          "###########⬤###########",
-                                          "#######################",
-                                          "#######################",
-                                          "_#####################_",
-                                          "_#####################_",
-                                          "_#####################_",
-                                          "__###################__",
-                                          "__###################__",
-                                          "___#################___",
-                                          "____###############____",
-                                          "______###########______",
-                                          "_________#####_________"}
-        Dim orb = randPoint()
-        failsafe = 0
-        Do While (mBoard(orb.Y, orb.X).Tag <> 3 And failsafe < 30 And Not (orb.X - 11) < 3 And Not (orb.X - 11) > mBoardWidth And Not (orb.Y - 11) < 3 And Not (orb.Y - 11) > mBoardWidth)
-            orb = randPoint()
-            failsafe += 1
-        Loop
+        mBoard(center_y, center_x).Text = "⬤"
 
-        For y = (orb.Y - 11) To (orb.Y - 11) + UBound(clearingLayout)
-            Dim line = clearingLayout(y).ToCharArray
-            For x = (orb.X - 11) To (orb.X - 11) + UBound(line)
-                If Not line(x) = "_"c Then mBoard(y, x).Tag = 3
-                If line(x) = "⬤"c Then
-                    mBoard(y, x).Text = "⬤"
-                End If
-            Next
-        Next
+        verifyNoDisconectedChunks(Game.player1)
 
         'Set up the mist
         deployPinkMist()
@@ -1046,6 +1039,198 @@ Public Class mFloor
         If floorNumber > 2 Then placeTraps()
 
         placeNPCs(Game.shop_npc_list, getPossibleNPCs)
+    End Sub
+
+    '|-Radial Floors-|
+    Sub generateRadialFloor(ByVal code As String, Optional ByVal diameter As Integer = 25)
+        'generateLevel creates the random rooms and corridors of each level
+        floorCode = code
+        Rnd(-1)
+        Randomize(code.GetHashCode)
+
+        If mBoardHeight < diameter Then mBoardHeight = diameter
+        If mBoardWidth < diameter Then mBoardWidth = diameter
+        ReDim mBoard(mBoardHeight, mBoardWidth)
+        For y = 0 To mBoardHeight
+            For x = 0 To mBoardWidth
+                mBoard(y, x) = New mTile(0, "", Color.Black)
+            Next
+        Next
+
+        Dim maxBoardSpace As Integer = mBoardWidth * mBoardHeight
+        Dim roomRow As List(Of Room) = New List(Of Room)
+        Dim cursor As Point = New Point(0, 5)
+
+        '|CREATE THE CENTER ROOM|
+        Dim clearingLayout As String() = {"_______________________",
+                                          "_______#########_______",
+                                          "_____#############_____",
+                                          "____###############____",
+                                          "___#################___",
+                                          "__###################__",
+                                          "__###################__",
+                                          "_#####################_",
+                                          "_#####################_",
+                                          "_#####################_",
+                                          "_#####################_",
+                                          "_#####################_",
+                                          "_#####################_",
+                                          "_#####################_",
+                                          "_#####################_",
+                                          "_#####################_",
+                                          "__###################__",
+                                          "__###################__",
+                                          "___#################___",
+                                          "____###############____",
+                                          "_____#############_____",
+                                          "_______#########_______",
+                                          "_______________________"}
+
+        For y = 0 To UBound(clearingLayout)
+            Dim line = clearingLayout(y).ToCharArray
+            For x = 0 To UBound(line)
+                If line(x) = "#"c Then placeTile(x + (Math.Floor(mBoardWidth / 2) - 11), y + (Math.Floor(mBoardHeight / 2) - 11), True)
+            Next
+        Next
+
+        Dim centerRoom = New Room(New Point(((mBoardWidth / 2) - 5), ((mBoardHeight / 2) - 5)), 11, 11)
+
+        Dim prevProgress As Double = -1
+        While (coveredBoardSpace / maxBoardSpace) < 0.75
+            'define a new room:  Each iteration get smaller
+            For i = 0 To 18
+                'define the new room's length
+                Dim l = Int(Rnd() * (16 - i)) + 2
+                Dim h = Int(Rnd() * (16 - i)) + 2
+
+                'define the new room's x and y positions
+                Dim x = cursor.X
+                'y +- 10% of the board's height 
+                Dim y = (cursor.Y - (Int(Rnd() * 10)) + ((Int(Rnd() * 20))))
+
+                Dim outer_radius_width As Integer = (mBoardWidth / 2) - (diameter / 2)
+                Dim outer_radius_height As Integer = (mBoardHeight / 2) - (diameter / 2)
+
+                If y > outer_radius_height And y + h < outer_radius_height And x > outer_radius_width And x + l < outer_radius_width Then
+                    i -= 1
+                    If y > outer_radius_height Then cursor = New Point(cursor.X, outer_radius_height)
+                    If y + l < outer_radius_height Then cursor = New Point(cursor.X, h + outer_radius_height)
+                    If x > outer_radius_width Then cursor = New Point(outer_radius_width, cursor.Y)
+                    If x + l < outer_radius_width Then cursor = New Point(l + outer_radius_width, cursor.Y)
+                    Continue For
+                End If
+
+                If x + l < mBoardWidth And x >= 0 And y + h < mBoardHeight And y >= 0 Then
+                    Dim roomToPlace = New Room(New Point(x, y), l, h)
+                    roomRow.Add(roomToPlace)
+                    For j = 0 To h
+                        For k = 0 To l
+                            placeTile(k + x, j + y, False)
+                        Next
+                    Next
+
+                    'move the cursor to the next room
+                    Dim newCursorX = x + l + 1 + Int(Rnd() * 20)
+                    Dim newCursorY = cursor.Y
+                    If newCursorX >= mBoardWidth - 4 Then
+                        rooms.Add(roomRow)
+                        roomRow = New List(Of Room)
+                        newCursorX = 0 + Int(Rnd() * 3)
+                        newCursorY = cursor.Y + 20
+                    End If
+
+                    cursor = New Point(newCursorX, newCursorY)
+                    Exit For
+                End If
+            Next
+            If prevProgress = (coveredBoardSpace / maxBoardSpace) Then Exit While
+            prevProgress = (coveredBoardSpace / maxBoardSpace)
+        End While
+
+        '|CONNECT THE ROOMS|
+        Dim allrooms As List(Of Room) = New List(Of Room)()
+        allrooms.Add(centerRoom)
+        For j = 0 To rooms.Count - 1
+            For i = 0 To rooms(j).Count - 1
+                'get the room in question
+                Dim r = rooms(j)(i)
+                allrooms.Add(r)
+
+
+                Dim potentialNeighbors As List(Of Room) = getPotentialNeigbors(rooms, i, j)
+                If potentialNeighbors.Count = 0 Then Continue For
+
+                'set the number of exits on the room
+                Dim numExits = Int(Rnd() * potentialNeighbors.Count) + 1
+                For num = 1 To numExits
+                    connectRooms(r, potentialNeighbors(Int(Rnd() * potentialNeighbors.Count)))
+                Next
+
+                r.marked = True
+            Next
+        Next
+
+        '|VERIFY NO DISCONECTED CHUNKS|
+        For i = 0 To allrooms.Count - 1
+            For j = i + 1 To allrooms.Count - 1
+                If Not allrooms(i).connectedToV2(allrooms(j)) Then connectRooms(allrooms(i), allrooms(j), True)
+            Next
+        Next
+    End Sub
+    Private Shared Function getPotentialRadialNeigbors(ByRef allRooms As List(Of List(Of Room)), ByVal x As Integer, ByVal y As Integer) As List(Of Room)
+
+        'Directions
+        '
+        ' ↖ = 1
+        ' ↗ = 2
+        ' ↘ = 3
+        ' ↙ = 4
+
+        Dim direction = -1
+
+        Dim allRooms_y_mid = allRooms.Count() / 2
+        Dim allRooms_x_mid = allRooms(y).Count() / 2
+
+        If x < allRooms_x_mid And y < allRooms_y_mid Then direction = 1
+        If x >= allRooms_x_mid And y < allRooms_y_mid Then direction = 2
+        If x >= allRooms_x_mid And y >= allRooms_y_mid Then direction = 3
+        If x < allRooms_x_mid And y >= allRooms_y_mid Then direction = 4
+
+
+        Dim results As List(Of Room) = New List(Of Room)
+
+        If x > 0 And (direction = 1 Or direction = 4) Then results.Add(allRooms(y)(x - 1))
+        If x < allRooms(y).Count - 1 And (direction = 2 Or direction = 3) Then results.Add(allRooms(y)(x + 1))
+        If y > 0 AndAlso x < allRooms(y - 1).Count - 1 And (direction = 1 Or direction = 2) Then results.Add(allRooms(y - 1)(x))
+        If y < allRooms.Count - 1 AndAlso x < allRooms(y + 1).Count - 1 And (direction = 3 Or direction = 4) Then results.Add(allRooms(y + 1)(x))
+
+        Return results
+    End Function
+    Private Sub connectRadialRooms(ByRef r1 As Room, ByRef r2 As Room, Optional overrideFlag As Boolean = False)
+        If (r1.connectedTo(r2) Or r2.connectedTo(r1)) And Not overrideFlag Then Exit Sub
+        If r1.directConnections > (Room.MAX_DIRECT_CONNECTIONS / 2) Or r2.directConnections > (Room.MAX_DIRECT_CONNECTIONS / 2) Then Exit Sub
+
+        'Directions
+        '
+        ' ↖ = 1
+        ' ↗ = 2
+        ' ↘ = 3
+        ' ↙ = 4
+
+        Dim direction = -1
+
+        If r1.top_left_pos.X < r2.top_left_pos.X And r1.top_left_pos.Y < r2.top_left_pos.Y Then direction = 1
+        If r1.top_left_pos.X >= -r2.top_left_pos.X And r1.top_left_pos.Y < r2.top_left_pos.Y Then direction = 2
+        If r1.top_left_pos.X >= r2.top_left_pos.X And r1.top_left_pos.Y >= r2.top_left_pos.Y Then direction = 3
+        If r1.top_left_pos.X < r2.top_left_pos.X And r1.top_left_pos.Y >= r2.top_left_pos.Y Then direction = 4
+
+        r1.directConnections += 1
+        r2.directConnections += 1
+
+        connectPoints(r1.getExit(direction), r2.getExit)
+
+        r1.connect(r2)
+        r2.connect(r1)
     End Sub
 
     '|-Boss Hallways-|
@@ -1868,14 +2053,74 @@ Public Class Room
         While (p = Nothing Or DDUtils.withinOnePlusMinus(p, exits)) And ct < 12
             Select Case Int(Rnd() * 4)
                 Case 0
+                    ' ←
                     p = New Point(top_left_pos.X, top_left_pos.Y + Int(Rnd() * height))
                 Case 1
+                    ' →
                     p = New Point(top_left_pos.X + width, top_left_pos.Y + Int(Rnd() * height))
                 Case 2
+                    ' ↑
                     p = New Point(top_left_pos.X + Int(Rnd() * width), top_left_pos.Y)
                 Case Else
+                    ' ↓
                     p = New Point(top_left_pos.X + Int(Rnd() * width), top_left_pos.Y + height)
             End Select
+            ct += 1
+        End While
+
+        exits.Add(p)
+        Return p
+    End Function
+    Public Function getExit(ByVal d As Integer) As Point
+        'Directions
+        '
+        ' ↖ = 1
+        ' ↗ = 2
+        ' ↘ = 3
+        ' ↙ = 4
+
+        Dim p As Point = Nothing
+        Dim ct = 0
+        While (p = Nothing Or DDUtils.withinOnePlusMinus(p, exits)) And ct < 12
+            Select Case d
+                Case 1
+                    Select Case Int(Rnd() * 2)
+                        Case 0
+                            ' ←
+                            p = New Point(top_left_pos.X, top_left_pos.Y + Int(Rnd() * height))
+                        Case Else
+                            ' ↑
+                            p = New Point(top_left_pos.X + Int(Rnd() * width), top_left_pos.Y)
+                    End Select
+                Case 2
+                    Select Case Int(Rnd() * 2)
+                        Case 0
+                            ' →
+                            p = New Point(top_left_pos.X + width, top_left_pos.Y + Int(Rnd() * height))
+                        Case Else
+                            ' ↑
+                            p = New Point(top_left_pos.X + Int(Rnd() * width), top_left_pos.Y)
+                    End Select
+                Case 3
+                    Select Case Int(Rnd() * 2)
+                        Case 0
+                            ' →
+                            p = New Point(top_left_pos.X + width, top_left_pos.Y + Int(Rnd() * height))
+                        Case Else
+                            ' ↓
+                            p = New Point(top_left_pos.X + Int(Rnd() * width), top_left_pos.Y + height)
+                    End Select
+                Case 4
+                    Select Case Int(Rnd() * 2)
+                        Case 0
+                            ' ←
+                            p = New Point(top_left_pos.X, top_left_pos.Y + Int(Rnd() * height))
+                        Case Else
+                            ' ↓
+                            p = New Point(top_left_pos.X + Int(Rnd() * width), top_left_pos.Y + height)
+                    End Select
+            End Select
+
             ct += 1
         End While
 
@@ -1898,6 +2143,24 @@ Public Class Room
 
         For Each r2 In connectedRooms
             If r2.top_left_pos.Equals(r1.top_left_pos) Then Return True
+
+            For Each subR2 In r2.connectedRooms
+                If Not checkedRooms.Contains(subR2.top_left_pos) Then
+                    checkedRooms.Add(subR2.top_left_pos)
+                    Return subR2.connectedTo(r1, checkedRooms)
+                End If
+            Next
+        Next
+
+        Return False
+    End Function
+    Public Function connectedToV2(ByRef r1 As Room, Optional ByRef checkedRooms As List(Of Point) = Nothing)
+        If checkedRooms Is Nothing Then checkedRooms = New List(Of Point)()
+
+        If top_left_pos.Equals(r1.top_left_pos) Or (top_left_pos.X > r1.top_left_pos.X And top_left_pos.X < r1.top_left_pos.X + r1.width) Or (top_left_pos.Y > r1.top_left_pos.Y And top_left_pos.Y < r1.top_left_pos.Y + r1.height) Then Return True
+
+        For Each r2 In connectedRooms
+            If top_left_pos.Equals(r1.top_left_pos) Or (top_left_pos.X > r1.top_left_pos.X And top_left_pos.X < r1.top_left_pos.X + r1.width) Or (top_left_pos.Y > r1.top_left_pos.Y And top_left_pos.Y < r1.top_left_pos.Y + r1.height) Then Return True
 
             For Each subR2 In r2.connectedRooms
                 If Not checkedRooms.Contains(subR2.top_left_pos) Then

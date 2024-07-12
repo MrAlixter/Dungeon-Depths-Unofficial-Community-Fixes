@@ -2528,11 +2528,11 @@ Public Class Game
                     Next
                 Next
             ElseIf last_keys_pressed = "gogo" Then
-                Try
-                    Dim f As Integer = CInt(InputBox("Which floor?"))
-                    quickChangeFloor(f)
-                Catch ex As Exception
-                End Try
+                'Try
+                Dim f As Integer = CInt(InputBox("Which floor?"))
+                quickChangeFloor(f)
+                'Catch ex As Exception
+                'End Try
             ElseIf last_keys_pressed = "aeio" Then
                 player1.inv.add(149, 1)
                 player1.UIupdate()
@@ -2590,18 +2590,18 @@ Public Class Game
         last_keys_pressed = ""
     End Sub
     Public Sub quickChangeFloor(ByVal f As Integer)
-        Try
-            mDun.jumpTo(f)
-            mDun.setFloor(currFloor)
-            TextEvent.push(If(Not lblEvent.Visible,
-                            "You draw a circle in chalk on the ground, and think hard about floor number " & f & ".  A portal opens to it, and you jump through, skipping every floor in between.",
-                            "You draw a circle in chalk on the ground, and think hard about floor number " & f & ".  A portal opens to it, and you jump through, skipping every floor in between." & DDUtils.RNRN & lblEvent.Text.Split(vbCrLf)(0)),
-                        AddressOf initializeBoard)
+        'Try
+        mDun.jumpTo(f)
+        mDun.setFloor(currFloor)
+        TextEvent.push(If(Not lblEvent.Visible,
+                        "You draw a circle in chalk on the ground, and think hard about floor number " & f & ".  A portal opens to it, and you jump through, skipping every floor in between.",
+                        "You draw a circle in chalk on the ground, and think hard about floor number " & f & ".  A portal opens to it, and you jump through, skipping every floor in between." & DDUtils.RNRN & lblEvent.Text.Split(vbCrLf)(0)),
+                    AddressOf initializeBoard)
 
-            mDun.tfNPCToArachne()
-        Catch e As Exception
-            TextEvent.push("Your attempted teleportation fails in a less than spectacular fashion, the portal you created simply fizzling away to nothingness.")
-        End Try
+        mDun.tfNPCToArachne()
+        'Catch e As Exception
+        'TextEvent.push("Your attempted teleportation fails in a less than spectacular fashion, the portal you created simply fizzling away to nothingness.")
+        'End Try
     End Sub
     '| -- Talk -- |
     Sub talkKey()
