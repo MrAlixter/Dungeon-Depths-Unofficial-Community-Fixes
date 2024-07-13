@@ -582,38 +582,47 @@ Public Class Game
                 Dim x = player1.pos.X + indX
                 Dim y = player1.pos.Y + indY
                 If (y < currFloor.mBoardHeight And y >= 0 And x < currFloor.mBoardWidth And x >= 0) Then
+
+                    '| -- General Tile Tracking -- |
                     Dim tile = currFloor.mBoard(y, x)
+                    Dim tile_text = tile.Text
+                    Dim tile_tag = tile.Tag
 
-                    If tile.Text = "@" Then tile.Text = ""
+                    '| -- Pink Mist Tracking -- |
+                    Dim in_pink_mist = tile.Tag >= DDConst.PINK_MIST_OFFSET
+                    If in_pink_mist Then tile_tag -= DDConst.PINK_MIST_OFFSET
 
-                    If tile.Text = "H" And tile.Tag < DDConst.TILE_SEEN Then
+                    '| -- Object Detection -- |
+                    If tile_text = "@" Then tile.Text = ""
+
+                    If tile_text = "H" And tile_tag < DDConst.TILE_SEEN Then
                         TextEvent.pushLog("Floor " & mDun.numCurrFloor & ": Staircase Discovered")
                     End If
 
-                    If tile.Text = "#" And tile.Tag < DDConst.TILE_SEEN Then
+                    If tile_text = "#" And tile_tag < DDConst.TILE_SEEN Then
                         TextEvent.pushLog("Chest discovered!")
                     End If
 
-                    If tile.Text = "$" And tile.Tag < DDConst.TILE_SEEN Then
+                    If tile_text = "$" And tile_tag < DDConst.TILE_SEEN Then
                         TextEvent.pushLog("Shop discovered!")
                     End If
 
-                    If tile.Text = "`" And tile.Tag < DDConst.TILE_SEEN Then
+                    If tile_text = "`" And tile_tag < DDConst.TILE_SEEN Then
                         TextEvent.pushLog("Statue discovered!")
                     End If
 
-                    If tile.Text = "d" And tile.Tag < DDConst.TILE_SEEN Then
+                    If tile_text = "d" And tile_tag < DDConst.TILE_SEEN Then
                         TextEvent.pushLog("Fox Statue discovered!")
                     End If
 
-                    If tile.Text = "⬤" And tile.Tag < DDConst.TILE_SEEN Then
+                    If tile_text = "⬤" And tile_tag < DDConst.TILE_SEEN Then
                         TextEvent.pushLog("Pink Orb discovered!")
                     End If
 
-                    If tile.Tag = DDConst.TILE_UNSEEN Then
+                    '| -- Unseen Tile Update -- |
+                    If tile_tag = DDConst.TILE_UNSEEN Then
                         tile.Tag = DDConst.TILE_SEEN
-                    ElseIf tile.Tag = DDConst.TILE_UNSEEN + DDConst.PINK_MIST_OFFSET Then
-                        tile.Tag = DDConst.TILE_SEEN + DDConst.PINK_MIST_OFFSET
+                        If in_pink_mist Then tile.Tag += DDConst.PINK_MIST_OFFSET
                     End If
                 End If
             Next
@@ -632,17 +641,21 @@ Public Class Game
             x = 0
             For indX = -Math.Floor(getViewWidth() / 2) To Math.Ceiling(getViewWidth() / 2)
                 If (player1.pos.Y + indY >= 0 And player1.pos.Y + indY < currFloor.mBoardHeight) And (player1.pos.X + indX >= 0 And player1.pos.X + indX < currFloor.mBoardWidth) Then
-                    'get the tile's text/tag
-
                     'Console.WriteLine(player1.pos.X + indX & ", " & player1.pos.Y + indY)
-                    Dim tileText As String = currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text
-                    Dim tileTag As Integer = currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag
 
-                    viewArray(y, x) = tileTag
+                    '| -- General Tile Tracking -- |
+                    Dim tile_text As String = currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text
+                    Dim tile_tag As Integer = currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag
 
-                    If tileTag = DDConst.TILE_SEEN Or tileTag = DDConst.TILE_SEEN + DDConst.PINK_MIST_OFFSET Or DDConst.ALWAYS_REDRAWN_CHARS.Contains(tileText) Then
+                    '| -- Pink Mist Tracking -- |
+                    Dim in_pink_mist = currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag >= DDConst.PINK_MIST_OFFSET
+                    If in_pink_mist Then tile_tag -= DDConst.PINK_MIST_OFFSET
+
+                    viewArray(y, x) = tile_tag
+
+                    If tile_tag = DDConst.TILE_SEEN Or DDConst.ALWAYS_REDRAWN_CHARS.Contains(tile_text) Then
                         'get the tile to display
-                        viewArray(y, x) = getTileToDisplay(player1.pos.X + indX, player1.pos.Y + indY, tileText, tileTag)
+                        viewArray(y, x) = getTileToDisplay(player1.pos.X + indX, player1.pos.Y + indY, tile_text, tile_tag)
 
                         'if the player is blind, treat all tiles as unseen
                         If player1.perks(perk.blind) > -1 And Not player1.perks(perk.esper) > -1 Then viewArray(y, x) = 1
@@ -652,8 +665,9 @@ Public Class Game
                         If indY = 0 And indX = 0 Then viewArray(y, x) = 4
                     End If
 
-                    'If tileTag >= DDConst.PINK_MIST_OFFSET Then viewArray(y, x) += DDConst.PINK_MIST_OFFSET
+                    If in_pink_mist Then viewArray(y, x) += DDConst.PINK_MIST_OFFSET
                 ElseIf mDun.numCurrFloor = 13 AndAlso (player1.pos.Y + indY >= currFloor.mBoardHeight Or player1.pos.Y + indY < 0) And (player1.pos.X + indX >= 0 And player1.pos.X + indX < currFloor.mBoardWidth) Then
+                    '| - Floor 13 Loop Handling - |
                     Dim y_offset = 0
                     If player1.pos.Y + indY < 0 Then
                         y_offset = currFloor.mBoardHeight + (player1.pos.Y + indY)
@@ -661,13 +675,18 @@ Public Class Game
                         y_offset = indY - (currFloor.mBoardHeight - player1.pos.Y)
                     End If
 
-                    Dim tileText As String = currFloor.mBoard(y_offset, player1.pos.X + indX).Text
-                    Dim tileTag As Integer = currFloor.mBoard(y_offset, player1.pos.X + indX).Tag
+                    '| -- General Tile Tracking -- |
+                    Dim tile_text As String = currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text
+                    Dim tile_tag As Integer = currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag
 
-                    viewArray(y, x) = tileTag
-                    If tileTag = DDConst.TILE_SEEN Or tileTag = DDConst.TILE_SEEN + DDConst.PINK_MIST_OFFSET Or DDConst.ALWAYS_REDRAWN_CHARS.Contains(tileText) Then
+                    '| -- Pink Mist Tracking -- |
+                    Dim in_pink_mist = currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag >= DDConst.PINK_MIST_OFFSET
+                    If in_pink_mist Then tile_tag -= DDConst.PINK_MIST_OFFSET
+
+                    viewArray(y, x) = tile_tag
+                    If tile_tag = DDConst.TILE_SEEN Or DDConst.ALWAYS_REDRAWN_CHARS.Contains(tile_text) Then
                         'get the tile to display
-                        viewArray(y, x) = getTileToDisplay(player1.pos.X + indX, y_offset, tileText, tileTag)
+                        viewArray(y, x) = getTileToDisplay(player1.pos.X + indX, y_offset, tile_text, tile_tag)
 
                         'if the player is blind, treat all tiles as unseen
                         If player1.perks(perk.blind) > -1 And Not player1.perks(perk.esper) > -1 Then viewArray(y, x) = 1
@@ -677,7 +696,7 @@ Public Class Game
                         If indY = 0 And indX = 0 Then viewArray(y, x) = 4
                     End If
 
-                    'If tileTag >= DDConst.PINK_MIST_OFFSET Then viewArray(y, x) += DDConst.PINK_MIST_OFFSET
+                    If in_pink_mist Then viewArray(y, x) += DDConst.PINK_MIST_OFFSET
                 Else
                     If Settings.active(setting.isotiles) AndAlso player1.pos.X + indX = -1 AndAlso currFloor.ptInBounds(New Point(0, player1.pos.Y + indY)) AndAlso currFloor.mBoard(player1.pos.Y + indY, 0).Tag <> 0 Then
                         viewArray(y, x) = 53

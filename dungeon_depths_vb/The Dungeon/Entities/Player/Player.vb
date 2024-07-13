@@ -1589,7 +1589,7 @@ Public Class Player
         End If
 
         '| - Bimbo Mist TF - |
-        If (perks(perk.bimbotf) < 0 And Game.currFloor.mBoard(pos.Y, pos.X).Tag >= DDConst.PINK_MIST_OFFSET) Or ongoingTFs.contains(tfind.mistbimbo) Then
+        If (perks(perk.bimbotf) < 0 And Game.currFloor.mBoard(pos.Y, pos.X).Tag > DDConst.PINK_MIST_OFFSET) Or ongoingTFs.contains(tfind.mistbimbo) Then
             PerkEffects.pinkMistTF(Me, Game.currFloor.mBoard(pos.Y, pos.X).Tag)
         End If
     End Sub

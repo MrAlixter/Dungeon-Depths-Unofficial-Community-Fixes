@@ -50,7 +50,7 @@ Public Class mFloor
         placeStairs()
         placePlayer(Game.player1)
 
-        If floorNumber > 5 And Not nonRandomFloors.Contains(floorNumber) Then verifyNoDisconectedChunks(Game.player1)
+        If Not nonRandomFloors.Contains(floorNumber) Then verifyNoDisconectedChunks(Game.player1)
 
         placeChest(floorCode)
         If floorNumber > 2 Then placeTraps()

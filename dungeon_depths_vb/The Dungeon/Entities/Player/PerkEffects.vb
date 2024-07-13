@@ -275,7 +275,7 @@
         End If
     End Sub
     Shared Sub pinkMist(ByRef p As Player)
-        If Game.currFloor.mBoard(p.pos.Y, p.pos.X).Tag >= DDConst.PINK_MIST_OFFSET Then
+        If Game.currFloor.mBoard(p.pos.Y, p.pos.X).Tag > DDConst.PINK_MIST_OFFSET Then
             If p.perks(perk.pinkmist) < 500 And Game.turn Mod 4 = 0 Then p.perks(perk.pinkmist) += 1
         Else
             p.perks(perk.pinkmist) -= 1
@@ -369,10 +369,10 @@
         End If
     End Sub
     Shared Sub pinkMistTF(ByRef p As Player, ByVal tag As Integer)
-        If tag >= DDConst.PINK_MIST_OFFSET And Not p.ongoingTFs.contains(tfind.mistbimbo) Then
+        If tag > DDConst.PINK_MIST_OFFSET And Not p.ongoingTFs.contains(tfind.mistbimbo) Then
             p.ongoingTFs.add(New MistBimboTF(10, 13, 0.25, True))
             p.perks(perk.bimbotf) = 0
-        ElseIf tag >= DDConst.PINK_MIST_OFFSET Then
+        ElseIf tag < DDConst.PINK_MIST_OFFSET Then
             p.ongoingTFs.remove(tfind.mistbimbo)
             p.perks(perk.bimbotf) = -1
         End If
