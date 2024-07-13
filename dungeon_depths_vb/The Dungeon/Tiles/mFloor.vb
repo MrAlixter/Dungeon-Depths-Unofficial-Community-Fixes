@@ -832,7 +832,6 @@ Public Class mFloor
     'floor 10
     Sub genFloor10(ByVal floorCode As String)
         'Generate base level
-        'MsgBox("A")
         generateRadialFloor(floorCode)
         Dim center_x As Integer = Math.Floor(mBoardWidth / 2)
         Dim center_y As Integer = Math.Floor(mBoardHeight / 2)
@@ -840,7 +839,6 @@ Public Class mFloor
                          New Point(center_x - 1, center_y), New Point(center_x, center_y), New Point(center_x + 1, center_y),
                          New Point(center_x - 1, center_y + 1), New Point(center_x, center_y + 1), New Point(center_x + 1, center_y + 1)}
 
-        'MsgBox("B")
         'Spawn in player and safe area
         Dim failsafe As Integer = 0
         Do While (banned_tiles.Contains(Game.player1.pos) Or Game.player1.pos.X < 2 Or Game.player1.pos.Y < 2) And failsafe < 30
@@ -850,11 +848,6 @@ Public Class mFloor
         Dim gen_tiles = {New Point(Game.player1.pos.X - 1, Game.player1.pos.Y - 1), New Point(Game.player1.pos.X, Game.player1.pos.Y - 1),
                          New Point(Game.player1.pos.X - 1, Game.player1.pos.Y), New Point(Game.player1.pos.X, Game.player1.pos.Y)}
 
-        For Each t In gen_tiles
-            mBoard(t.Y, t.X).Tag = 13
-        Next
-
-        'MsgBox("C")
         'Spawn in stairs/chests/traps
         stairs = randPoint()
         failsafe = 0
@@ -866,7 +859,6 @@ Public Class mFloor
         placeChest(floorCode)
         If floorNumber > 2 Then placeTraps()
 
-        'MsgBox("D")
         'Spawn in NPCs
         placeNPCs(Game.shop_npc_list, getPossibleNPCs)
 
@@ -885,14 +877,14 @@ Public Class mFloor
 
         mBoard(center_y, center_x).Text = "⬤"
 
-        'MsgBox("E")
         verifyNoDisconectedChunks(Game.player1)
 
-        'MsgBox("F")
         'Set up the mist
-        deployPinkMist()
+        For Each t In gen_tiles
+            mBoard(t.Y, t.X).Tag = 13
+        Next
 
-        'MsgBox("G")
+        deployPinkMist()
     End Sub
     Sub deployPinkMist()
         For y = 0 To mBoardHeight - 1
