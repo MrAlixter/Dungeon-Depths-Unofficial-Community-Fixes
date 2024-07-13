@@ -275,23 +275,6 @@ Public Class mFloor
             End If
         End If
     End Sub
-    Private Function shouldBreakTilePlacement(ByVal x As Integer, ByVal y As Integer, ByVal d As Integer)
-        'Directions
-        '
-        ' ← = 1
-        ' ↓ = 2
-        ' → = 3
-        ' ↑ = 4
-        'If d = 1 AndAlso ptInBounds(New Point(x - 1, y)) AndAlso Not mBoard(y, x - 1).Tag = 0 Then Return False
-        'If d = 2 AndAlso ptInBounds(New Point(x, y + 1)) AndAlso Not mBoard(y + 1, x).Tag = 0 Then Return False
-        'If d = 3 AndAlso ptInBounds(New Point(x + 1, y)) AndAlso Not mBoard(y, x + 1).Tag = 0 Then Return False
-        'If d = 4 AndAlso ptInBounds(New Point(x, y - 1)) AndAlso Not mBoard(y - 1, x).Tag = 0 Then Return False
-
-        'If mBoard(y, x).Tag = 1 Then Return True
-        'If mBoard(y, x).Tag = 2 Then Return True
-
-        Return False
-    End Function
     Private Sub goRightThenUp(ByVal p1 As Point, ByVal p2 As Point)
         'go right from p1's X to p2's X
         For x = p1.X + 1 To p2.X
@@ -301,9 +284,7 @@ Public Class mFloor
             x = Math.Max(0, x)
             x = Math.Min(mBoardWidth, x)
 
-            If shouldBreakTilePlacement(x, y, 3) Then
-                Exit For
-            ElseIf Not mBoard(y, x).Tag = 2 Then
+            If Not mBoard(y, x).Tag = DDConst.TILE_SEEN Then
                 placeTile(x, y, False)
             End If
         Next
@@ -316,9 +297,7 @@ Public Class mFloor
             Dim x = Math.Max(0, p1.X)
             x = Math.Min(mBoardWidth, p1.X)
 
-            If shouldBreakTilePlacement(x, y, 4) Then
-                Exit For
-            ElseIf Not mBoard(y, x).Tag = 2 Then
+            If Not mBoard(y, x).Tag = DDConst.TILE_SEEN Then
                 placeTile(x, y, False)
             End If
         Next
@@ -332,9 +311,7 @@ Public Class mFloor
             x = Math.Max(0, x)
             x = Math.Min(mBoardWidth, x)
 
-            If shouldBreakTilePlacement(x, y, 1) Then
-                Exit For
-            ElseIf Not mBoard(y, x).Tag = 2 Then
+            If Not mBoard(y, x).Tag = DDConst.TILE_SEEN Then
                 placeTile(x, y, False)
             End If
         Next
@@ -347,9 +324,7 @@ Public Class mFloor
             Dim x = Math.Max(0, p1.X)
             x = Math.Min(mBoardWidth, p1.X)
 
-            If shouldBreakTilePlacement(x, y, 4) Then
-                Exit For
-            ElseIf Not mBoard(y, x).Tag = 2 Then
+            If Not mBoard(y, x).Tag = DDConst.TILE_SEEN Then
                 placeTile(x, y, False)
             End If
         Next
@@ -363,9 +338,7 @@ Public Class mFloor
             x = Math.Max(0, x)
             x = Math.Min(mBoardWidth, x)
 
-            If shouldBreakTilePlacement(x, y, 3) Then
-                Exit For
-            ElseIf Not mBoard(y, x).Tag = 2 Then
+            If Not mBoard(y, x).Tag = DDConst.TILE_SEEN Then
                 placeTile(x, y, False)
             End If
         Next
@@ -378,9 +351,7 @@ Public Class mFloor
             Dim x = Math.Max(0, p1.X)
             x = Math.Min(mBoardWidth, p1.X)
 
-            If shouldBreakTilePlacement(x, y, 2) Then
-                Exit For
-            ElseIf Not mBoard(y, x).Tag = 2 Then
+            If Not mBoard(y, x).Tag = DDConst.TILE_SEEN Then
                 placeTile(x, y, False)
             End If
         Next
@@ -394,9 +365,7 @@ Public Class mFloor
             x = Math.Max(0, x)
             x = Math.Min(mBoardWidth, x)
 
-            If shouldBreakTilePlacement(x, y, 1) Then
-                Exit For
-            ElseIf Not mBoard(y, x).Tag = 2 Then
+            If Not mBoard(y, x).Tag = DDConst.TILE_SEEN Then
                 placeTile(x, y, False)
             End If
         Next
@@ -409,9 +378,7 @@ Public Class mFloor
             Dim x = Math.Max(0, p1.X)
             x = Math.Min(mBoardWidth, p1.X)
 
-            If shouldBreakTilePlacement(x, y, 2) Then
-                Exit For
-            ElseIf Not mBoard(y, x).Tag = 2 Then
+            If Not mBoard(y, x).Tag = DDConst.TILE_SEEN Then
                 placeTile(x, y, False)
             End If
         Next
@@ -544,14 +511,14 @@ Public Class mFloor
             If Int(Rnd() * 3) = 0 Then
                 For yP = RoomPos.Y To RoomSpanY
                     For xP = RoomPos.X To RoomSpanX
-                        If xP < mBoardWidth And yP < mBoardHeight And xP > 0 And yP > 0 Then mBoard(yP, xP).Tag = 2 'Colour in the square
+                        If xP < mBoardWidth And yP < mBoardHeight And xP > 0 And yP > 0 Then mBoard(yP, xP).Tag = DDConst.TILE_SEEN 'Colour in the square
                     Next
                 Next
                 'else just colour it
             Else
                 For yP = RoomPos.Y To RoomSpanY
                     For xp = RoomPos.X To RoomSpanX
-                        If xp < mBoardWidth And yP < mBoardHeight And xp > 0 And yP > 0 Then mBoard(yP, xp).Tag = 1 'Colour in the square
+                        If xp < mBoardWidth And yP < mBoardHeight And xp > 0 And yP > 0 Then mBoard(yP, xp).Tag = DDConst.TILE_UNSEEN 'Colour in the square
                     Next
                 Next
             End If
@@ -561,10 +528,10 @@ Public Class mFloor
             Select Case Int(Rnd() * 2)
                 Case 0
                     mainExit = (New Point(RoomPos.X + 2, Int(Rnd() * (RoomSpanY - RoomPos.Y)) + RoomPos.Y))
-                    If mainExit.X - 1 < mBoardWidth And mainExit.X - 1 > 0 And mainExit.Y - 1 < mBoardHeight And mainExit.Y - 1 > 0 AndAlso Not mBoard(mainExit.Y, mainExit.X - 1).Tag = 2 Then mBoard(mainExit.Y, mainExit.X - 1).Tag = 1
+                    If mainExit.X - 1 < mBoardWidth And mainExit.X - 1 > 0 And mainExit.Y - 1 < mBoardHeight And mainExit.Y - 1 > 0 AndAlso Not mBoard(mainExit.Y, mainExit.X - 1).Tag = DDConst.TILE_SEEN Then mBoard(mainExit.Y, mainExit.X - 1).Tag = DDConst.TILE_UNSEEN
                 Case Else
                     mainExit = (New Point(Int(Rnd() * (RoomSpanX - RoomPos.X)) + RoomPos.X, RoomPos.Y + 2))
-                    If mainExit.X - 1 < mBoardWidth And mainExit.X - 1 > 0 And mainExit.Y - 1 < mBoardHeight And mainExit.Y - 1 > 0 AndAlso Not mBoard(mainExit.Y - 1, mainExit.X).Tag = 2 Then mBoard(mainExit.Y - 1, mainExit.X).Tag = 1
+                    If mainExit.X - 1 < mBoardWidth And mainExit.X - 1 > 0 And mainExit.Y - 1 < mBoardHeight And mainExit.Y - 1 > 0 AndAlso Not mBoard(mainExit.Y - 1, mainExit.X).Tag = DDConst.TILE_SEEN Then mBoard(mainExit.Y - 1, mainExit.X).Tag = DDConst.TILE_UNSEEN
             End Select
             If i > 0 Then
                 connectPoints(mainExit, exits(exits.Count - 1))
@@ -576,11 +543,11 @@ Public Class mFloor
                     Case 0
                         exits.Add(New Point(RoomPos.X + 2, Int(Rnd() * (RoomSpanY - RoomPos.Y)) + RoomPos.Y))
                         If exits.Last.X - 1 < mBoardWidth And exits.Last.X - 1 > 0 And exits.Last.Y - 1 < mBoardHeight And exits.Last.Y - 1 > 0 And
-                            exits.Last.X < mBoardWidth And exits.Last.X > 0 And exits.Last.Y < mBoardHeight And exits.Last.Y > 0 AndAlso Not mBoard(exits.Last.Y, exits.Last.X - 1).Tag = 2 Then mBoard(exits.Last.Y, exits.Last.X - 1).Tag = 1
+                            exits.Last.X < mBoardWidth And exits.Last.X > 0 And exits.Last.Y < mBoardHeight And exits.Last.Y > 0 AndAlso Not mBoard(exits.Last.Y, exits.Last.X - 1).Tag = DDConst.TILE_SEEN Then mBoard(exits.Last.Y, exits.Last.X - 1).Tag = DDConst.TILE_UNSEEN
                     Case 1
                         exits.Add(New Point(Int(Rnd() * (RoomSpanX - RoomPos.X)) + RoomPos.X, RoomPos.Y + 2))
                         If exits.Last.X - 1 < mBoardWidth And exits.Last.X - 1 > 0 And exits.Last.Y - 1 < mBoardHeight And exits.Last.Y - 1 > 0 And
-                            exits.Last.X < mBoardWidth And exits.Last.X > 0 And exits.Last.Y < mBoardHeight And exits.Last.Y > 0 AndAlso Not mBoard(exits.Last.Y - 1, exits.Last.X).Tag = 2 Then mBoard(exits.Last.Y - 1, exits.Last.X).Tag = 1
+                            exits.Last.X < mBoardWidth And exits.Last.X > 0 And exits.Last.Y < mBoardHeight And exits.Last.Y > 0 AndAlso Not mBoard(exits.Last.Y - 1, exits.Last.X).Tag = DDConst.TILE_SEEN Then mBoard(exits.Last.Y - 1, exits.Last.X).Tag = DDConst.TILE_UNSEEN
                 End Select
             Next
         Next
@@ -623,7 +590,7 @@ Public Class mFloor
                     For yInd As Integer = 0 To mBoardHeight - 1
                         For xInd As Integer = 0 To mBoardWidth - 1
                             If mBoard(yInd, xInd).Tag = 0 Then
-                                mBoard(yInd, xInd).Tag = 1
+                                mBoard(yInd, xInd).Tag = DDConst.TILE_UNSEEN
                                 timesDug = 0
                                 tileCount += 1
                                 Exit For
@@ -639,16 +606,16 @@ Public Class mFloor
                     For xInd As Integer = 0 AndAlso tileCount < 4 To mBoardWidth - 1
                         If mBoard(yInd, xInd).Tag > 0 AndAlso mBoard(yInd, xInd).Text = "" Then
                             If yInd - 1 >= 0 AndAlso mBoard(yInd - 1, xInd).Tag = 0 Then
-                                mBoard(yInd - 1, xInd).Tag = 1
+                                mBoard(yInd - 1, xInd).Tag = DDConst.TILE_UNSEEN
                                 tileCount += 1
                             ElseIf yInd + 1 < mBoardHeight AndAlso mBoard(yInd + 1, xInd).Tag = 0 Then
-                                mBoard(yInd + 1, xInd).Tag = 1
+                                mBoard(yInd + 1, xInd).Tag = DDConst.TILE_UNSEEN
                                 tileCount += 1
                             ElseIf xInd - 1 >= 0 AndAlso mBoard(yInd, xInd - 1).Tag = 0 Then
-                                mBoard(yInd, xInd - 1).Tag = 1
+                                mBoard(yInd, xInd - 1).Tag = DDConst.TILE_UNSEEN
                                 tileCount += 1
                             ElseIf xInd + 1 < mBoardWidth AndAlso mBoard(yInd, xInd + 1).Tag = 0 Then
-                                mBoard(yInd, xInd + 1).Tag = 1
+                                mBoard(yInd, xInd + 1).Tag = DDConst.TILE_UNSEEN
                                 tileCount += 1
                             End If
                         End If
@@ -666,11 +633,11 @@ Public Class mFloor
                 Dim y As Integer
                 If dir Then
                     For y = p1.Y To Int(Rnd() * 8)
-                        If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 AndAlso Not mBoard(y, p1.X).Tag = 2 Then mBoard(y, p1.X).Tag = 1
+                        If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 AndAlso Not mBoard(y, p1.X).Tag = DDConst.TILE_SEEN Then mBoard(y, p1.X).Tag = DDConst.TILE_UNSEEN
                     Next
                 Else
                     For y = p1.Y To Int(Rnd() * 8) Step -1
-                        If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 AndAlso Not mBoard(y, p1.X).Tag = 2 Then mBoard(y, p1.X).Tag = 1
+                        If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 AndAlso Not mBoard(y, p1.X).Tag = DDConst.TILE_SEEN Then mBoard(y, p1.X).Tag = DDConst.TILE_UNSEEN
                     Next
                 End If
                 p1 = New Point(p1.X, y)
@@ -678,11 +645,11 @@ Public Class mFloor
                 Dim x As Integer
                 If dir Then
                     For x = p1.X To Int(Rnd() * 8)
-                        If x < mBoardWidth And x > 0 And p1.Y < mBoardHeight And p1.Y > 0 AndAlso Not mBoard(p1.Y, x).Tag = 2 Then mBoard(p1.Y, x).Tag = 1
+                        If x < mBoardWidth And x > 0 And p1.Y < mBoardHeight And p1.Y > 0 AndAlso Not mBoard(p1.Y, x).Tag = DDConst.TILE_SEEN Then mBoard(p1.Y, x).Tag = DDConst.TILE_UNSEEN
                     Next
                 Else
                     For x = p1.X To Int(Rnd() * 8) Step -1
-                        If x < mBoardWidth And x > 0 And p1.Y < mBoardHeight And p1.Y > 0 AndAlso Not mBoard(p1.Y, x).Tag = 2 Then mBoard(p1.Y, x).Tag = 1
+                        If x < mBoardWidth And x > 0 And p1.Y < mBoardHeight And p1.Y > 0 AndAlso Not mBoard(p1.Y, x).Tag = DDConst.TILE_SEEN Then mBoard(p1.Y, x).Tag = DDConst.TILE_UNSEEN
                     Next
                 End If
                 p1 = New Point(x, p1.Y)
@@ -774,7 +741,7 @@ Public Class mFloor
         For y = 0 To UBound(floorLayout)
             Dim line = floorLayout(y).ToCharArray
             For x = 0 To UBound(line)
-                If Not line(x) = "_"c Then mBoard(y, x).Tag = 2
+                If Not line(x) = "_"c Then mBoard(y, x).Tag = DDConst.TILE_SEEN
                 If line(x) = "%"c Then
                     stairs = New Point(x, y)
                 ElseIf line(x) = "@"c Then
@@ -828,7 +795,7 @@ Public Class mFloor
         For y = 0 To 26
             Dim line = floorLayout(y).ToCharArray
             For x = 0 To UBound(line)
-                If Not line(x) = "_"c Then mBoard(y, x).Tag = 2
+                If Not line(x) = "_"c Then mBoard(y, x).Tag = DDConst.TILE_SEEN
                 If line(x) = "%"c Then
                     stairs = New Point(x, y)
                 ElseIf line(x) = "@"c Then
@@ -865,6 +832,7 @@ Public Class mFloor
     'floor 10
     Sub genFloor10(ByVal floorCode As String)
         'Generate base level
+        'MsgBox("A")
         generateRadialFloor(floorCode)
         Dim center_x As Integer = Math.Floor(mBoardWidth / 2)
         Dim center_y As Integer = Math.Floor(mBoardHeight / 2)
@@ -872,10 +840,13 @@ Public Class mFloor
                          New Point(center_x - 1, center_y), New Point(center_x, center_y), New Point(center_x + 1, center_y),
                          New Point(center_x - 1, center_y + 1), New Point(center_x, center_y + 1), New Point(center_x + 1, center_y + 1)}
 
+        'MsgBox("B")
         'Spawn in player and safe area
-        While banned_tiles.Contains(Game.player1.pos) Or Game.player1.pos.X < 2 Or Game.player1.pos.Y < 2
+        Dim failsafe As Integer = 0
+        Do While (banned_tiles.Contains(Game.player1.pos) Or Game.player1.pos.X < 2 Or Game.player1.pos.Y < 2) And failsafe < 30
             Game.player1.pos = randPoint()
-        End While
+            failsafe += 1
+        Loop
         Dim gen_tiles = {New Point(Game.player1.pos.X - 1, Game.player1.pos.Y - 1), New Point(Game.player1.pos.X, Game.player1.pos.Y - 1),
                          New Point(Game.player1.pos.X - 1, Game.player1.pos.Y), New Point(Game.player1.pos.X, Game.player1.pos.Y)}
 
@@ -883,10 +854,11 @@ Public Class mFloor
             mBoard(t.Y, t.X).Tag = 13
         Next
 
+        'MsgBox("C")
         'Spawn in stairs/chests/traps
         stairs = randPoint()
-        Dim failsafe As Integer = 0
-        Do While (route(Game.player1.pos, stairs).Length < 10 And failsafe < 30)
+        failsafe = 0
+        Do While route(Game.player1.pos, stairs).Length < 10 And failsafe < 30
             stairs = randPoint()
             failsafe += 1
         Loop
@@ -894,6 +866,7 @@ Public Class mFloor
         placeChest(floorCode)
         If floorNumber > 2 Then placeTraps()
 
+        'MsgBox("D")
         'Spawn in NPCs
         placeNPCs(Game.shop_npc_list, getPossibleNPCs)
 
@@ -912,18 +885,22 @@ Public Class mFloor
 
         mBoard(center_y, center_x).Text = "⬤"
 
+        'MsgBox("E")
         verifyNoDisconectedChunks(Game.player1)
 
+        'MsgBox("F")
         'Set up the mist
         deployPinkMist()
+
+        'MsgBox("G")
     End Sub
     Sub deployPinkMist()
         For y = 0 To mBoardHeight - 1
             For x = 0 To mBoardWidth - 1
                 If mBoard(y, x).Tag = 13 Then
-                    mBoard(y, x).Tag = 2
+                    mBoard(y, x).Tag = DDConst.TILE_SEEN
                 ElseIf mBoard(y, x).Tag > 0 Then
-                    mBoard(y, x).Tag = 3
+                    mBoard(y, x).Tag += DDConst.PINK_MIST_OFFSET
                 End If
             Next
         Next
@@ -933,8 +910,8 @@ Public Class mFloor
     Sub cleanupPinkMist()
         For y = 0 To mBoardHeight - 1
             For x = 0 To mBoardWidth - 1
-                If mBoard(y, x).Tag = 3 Then
-                    mBoard(y, x).Tag = 2
+                If mBoard(y, x).Tag >= DDConst.PINK_MIST_OFFSET Then
+                    mBoard(y, x).Tag -= DDConst.PINK_MIST_OFFSET
                 End If
             Next
         Next
@@ -1026,7 +1003,7 @@ Public Class mFloor
             Dim line = floorLayout(y).ToCharArray
             For x = 0 To UBound(line)
                 If line(x) = "#"c Then
-                    mBoard(y, x).Tag = 2
+                    mBoard(y, x).Tag = DDConst.TILE_SEEN
                 ElseIf line(x) = "%"c Then
                     stairs = New Point(x, y)
                 End If
@@ -1173,7 +1150,7 @@ Public Class mFloor
         '|VERIFY NO DISCONECTED CHUNKS|
         For i = 0 To allrooms.Count - 1
             For j = i + 1 To allrooms.Count - 1
-                If Not allrooms(i).connectedToV2(allrooms(j)) Then connectRooms(allrooms(i), allrooms(j), True)
+                If Not allrooms(i).connectedTo(allrooms(j)) Then connectRooms(allrooms(i), allrooms(j), True)
             Next
         Next
     End Sub
@@ -1248,7 +1225,7 @@ Public Class mFloor
 
         For y = 1 To 25
             For x = 3 To 7
-                mBoard(y, x).Tag = 2
+                mBoard(y, x).Tag = DDConst.TILE_SEEN
             Next
         Next
         p.pos = New Point(5, 25)
@@ -1279,8 +1256,8 @@ Public Class mFloor
             If i Mod 4 = 0 And mBoard(i, 5).Tag > 0 Then
                 mBoard(i, 3).Text = "✢"
                 mBoard(i, 7).Text = "✢"
-                mBoard(i, 3).Tag = 2
-                mBoard(i, 7).Tag = 2
+                mBoard(i, 3).Tag = DDConst.TILE_SEEN
+                mBoard(i, 7).Tag = DDConst.TILE_SEEN
             End If
         Next
     End Sub
@@ -1317,7 +1294,7 @@ Public Class mFloor
         For y = 0 To UBound(floorLayout)
             Dim line = floorLayout(y).ToCharArray
             For x = 0 To UBound(line)
-                If Not line(x) = "_"c Then mBoard(y, x).Tag = 2
+                If Not line(x) = "_"c Then mBoard(y, x).Tag = DDConst.TILE_SEEN
                 If line(x) = "%"c Then
                     stairs = New Point(x, y)
                 ElseIf line(x) = "^"c Then
@@ -1465,9 +1442,9 @@ Public Class mFloor
         For y = 0 To UBound(floorLayout)
             Dim line = floorLayout(y).ToCharArray
             For x = 0 To UBound(line)
-                If Not line(x) = "_"c Then mBoard(y, x).Tag = 2
+                If Not line(x) = "_"c Then mBoard(y, x).Tag = DDConst.TILE_SEEN
                 If line(x) = "L"c Then
-                    mBoard(y, x).Tag = 1
+                    mBoard(y, x).Tag = DDConst.TILE_UNSEEN
                 ElseIf line(x) = "%"c Then
                     stairs = New Point(x, y)
                 ElseIf line(x) = "^"c Then
@@ -1609,7 +1586,7 @@ Public Class mFloor
         For y = 0 To 19
             Dim line = floorLayout(y).ToCharArray
             For x = 0 To UBound(line)
-                If Not line(x) = "_"c Then mBoard(y, x).Tag = 1
+                If Not line(x) = "_"c Then mBoard(y, x).Tag = DDConst.TILE_UNSEEN
                 If line(x) = "%"c Then
                     stairs = New Point(x, y)
                 ElseIf line(x) = "^"c Then
@@ -1813,6 +1790,49 @@ Public Class mFloor
             attempts += 1
         Loop
         Return New Point(posX, posY)
+        'Return randPointV2()
+    End Function
+    Function randPointV2() As Point
+        Dim pos_x As Integer
+        Dim pos_y As Integer
+
+        Dim min_x As Integer = 0
+        Dim max_x As Integer = mBoardWidth
+
+        Dim min_y As Integer = 0
+        Dim max_y As Integer = mBoardHeight
+
+        For i = 0 To 10
+            Do While (mBoard(pos_y, pos_x).Tag < 1 Or mBoard(pos_y, pos_x).Text <> "") And Not (min_x = max_x Or min_y = max_y)
+
+                Select Case Int(Rnd() * 4)
+                    Case 0
+                        'Q4: X, -Y
+                        min_y = Math.Floor(min_y / 2)
+                        max_y = Math.Floor(max_y / 2)
+                    Case 1
+                        'Q2: -X, Y
+                        min_x = Math.Floor(min_x / 2)
+                        max_x = Math.Floor(max_x / 2)
+                    Case 2
+                        'Q3: -X, -Y
+                        max_x = Math.Floor(max_x / 2)
+                        max_y = Math.Floor(max_y / 2)
+                    Case Else
+                        'Q1: X, Y
+                        min_x = Math.Floor(max_x / 2)
+                        min_y = Math.Floor(max_y / 2)
+                End Select
+
+                pos_x = CInt(Int(Rnd() * (max_x - min_x))) + min_x
+                pos_y = CInt(Int(Rnd() * (max_y - min_y))) + min_y
+            Loop
+
+            If mBoard(pos_y, pos_x).Tag >= 1 And mBoard(pos_y, pos_x).Text = "" Then Exit For
+        Next
+
+
+        Return New Point(pos_x, pos_y)
     End Function
     Function route(ByVal p1 As Point, ByVal p2 As Point) As Point()
         'Generates a path between two points.  This is not always the shortest path
@@ -2032,7 +2052,7 @@ Public Class mFloor
     End Sub
 End Class
 
-Public Class Room
+Public Class Room 
     Public Shared MAX_DIRECT_CONNECTIONS As Integer = 5
 
     Public top_left_pos As Point
@@ -2132,8 +2152,12 @@ Public Class Room
 
         connectedRooms.Add(r)
 
-        For Each subR In r.connectedRooms
+        For Each subR In difference(r.connectedRooms, connectedRooms)
             connect(subR)
+        Next
+
+        For Each subR In difference(connectedRooms, r.connectedRooms)
+            r.connect(subR)
         Next
     End Sub
     Public Function connectedTo(ByRef r1 As Room, Optional ByRef checkedRooms As List(Of Point) = Nothing)
@@ -2154,28 +2178,21 @@ Public Class Room
 
         Return False
     End Function
-    Public Function connectedToV2(ByRef r1 As Room, Optional ByRef checkedRooms As List(Of Point) = Nothing)
-        If checkedRooms Is Nothing Then checkedRooms = New List(Of Point)()
-
-        If top_left_pos.Equals(r1.top_left_pos) Or (top_left_pos.X > r1.top_left_pos.X And top_left_pos.X < r1.top_left_pos.X + r1.width) Or (top_left_pos.Y > r1.top_left_pos.Y And top_left_pos.Y < r1.top_left_pos.Y + r1.height) Then Return True
-
-        For Each r2 In connectedRooms
-            If top_left_pos.Equals(r1.top_left_pos) Or (top_left_pos.X > r1.top_left_pos.X And top_left_pos.X < r1.top_left_pos.X + r1.width) Or (top_left_pos.Y > r1.top_left_pos.Y And top_left_pos.Y < r1.top_left_pos.Y + r1.height) Then Return True
-
-            For Each subR2 In r2.connectedRooms
-                If Not checkedRooms.Contains(subR2.top_left_pos) Then
-                    checkedRooms.Add(subR2.top_left_pos)
-                    Return subR2.connectedTo(r1, checkedRooms)
-                End If
-            Next
-        Next
-
-        Return False
-    End Function
     Public Overrides Function Equals(obj As Object) As Boolean
         If Not obj.GetType Is GetType(Room) Then Return False
 
         Return CType(obj, Room).top_left_pos.Equals(top_left_pos)
+    End Function
+
+    Public Shared Function difference(ByRef l1 As List(Of Room), ByRef l2 As List(Of Room)) As List(Of Room)
+        'Returns the items in l1 that are not in l2
+        Dim results As List(Of Room) = New List(Of Room)()
+
+        For Each i In l1
+            If Not l2.Contains(i) Then results.Add(i)
+        Next
+
+        Return results
     End Function
 End Class
 

@@ -53,9 +53,9 @@ Public Class TileSelector
                     map.SetPixel(boardX + 1, boardY + 1, Color.Blue)
                 ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "+") Then 'Trap
                     map.SetPixel(boardX + 1, boardY + 1, Color.Red)
-                ElseIf (Game.currfloor.mBoard(boardY, boardX).Tag = 2) Then 'Seen
+                ElseIf (Game.currFloor.mBoard(boardY, boardX).Tag = DDConst.TILE_SEEN) Then 'Seen
                     map.SetPixel(boardX + 1, boardY + 1, Color.White)
-                ElseIf (Game.currfloor.mBoard(boardY, boardX).Tag = 1) Then 'Unseen
+                ElseIf (Game.currFloor.mBoard(boardY, boardX).Tag = DDConst.TILE_UNSEEN) Then 'Unseen
                     map.SetPixel(boardX + 1, boardY + 1, Color.Gray)
                 Else 'Nothing
                     map.SetPixel(boardX + 1, boardY + 1, Color.Black)

@@ -1,7 +1,9 @@
 ﻿Public Class DDConst
     Public Shared ReadOnly NEXT_LEVEL_FLOOR As Integer = 125
+    Public Shared ReadOnly TILE_WALL As Integer = 0
+    Public Shared ReadOnly TILE_UNSEEN As Integer = 1
+    Public Shared ReadOnly TILE_SEEN As Integer = 2
     Public Shared ReadOnly PINK_MIST_OFFSET As Integer = 1000
-    Public Shared ReadOnly PINK_MIST_TILETAG As Integer = 3
     Public Shared ReadOnly TILE_SIZES() As Integer = {15, 30, 45, 60, 90}
     Public Shared ReadOnly CHEAT_LIST() As String = {"asss", "daaa", "wawa", "sasa", "gogo", "seee", "aeio", "wasd", "aaaa", "sawd", "swda", "ssss", "eaea", "ffff"}
 

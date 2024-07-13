@@ -104,7 +104,7 @@
 
             gold = 1000
 
-            If Game.currFloor.mBoard(pos.Y, pos.X).Tag = 3 Then
+            If Game.currFloor.mBoard(pos.Y, pos.X).Tag >= DDConst.PINK_MIST_OFFSET Then
                 Return "Heh heh, so I guess I was standing around too long, huh?" & DDUtils.RNRN &
                        "Like... that's probably gonna be fine..."
             Else

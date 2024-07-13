@@ -166,7 +166,7 @@
         If Game.currFloor.pinkMist Then
             img_index = LocalImgInd.alt3
 
-            If Game.currFloor.mBoard(pos.Y, pos.X).Tag = 3 Then
+            If Game.currFloor.mBoard(pos.Y, pos.X).Tag >= DDConst.PINK_MIST_OFFSET Then
                 Return "Ooh, what a delightful affliction..." & DDUtils.RNRN &
                        "Are you taking deep breaths?"
             Else

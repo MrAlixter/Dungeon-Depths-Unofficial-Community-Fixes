@@ -586,31 +586,35 @@ Public Class Game
 
                     If tile.Text = "@" Then tile.Text = ""
 
-                    If tile.Text = "H" And tile.Tag < 2 Then
+                    If tile.Text = "H" And tile.Tag < DDConst.TILE_SEEN Then
                         TextEvent.pushLog("Floor " & mDun.numCurrFloor & ": Staircase Discovered")
                     End If
 
-                    If tile.Text = "#" And tile.Tag < 2 Then
+                    If tile.Text = "#" And tile.Tag < DDConst.TILE_SEEN Then
                         TextEvent.pushLog("Chest discovered!")
                     End If
 
-                    If tile.Text = "$" And tile.Tag < 2 Then
+                    If tile.Text = "$" And tile.Tag < DDConst.TILE_SEEN Then
                         TextEvent.pushLog("Shop discovered!")
                     End If
 
-                    If tile.Text = "`" And tile.Tag < 2 Then
+                    If tile.Text = "`" And tile.Tag < DDConst.TILE_SEEN Then
                         TextEvent.pushLog("Statue discovered!")
                     End If
 
-                    If tile.Text = "d" And tile.Tag < 2 Then
+                    If tile.Text = "d" And tile.Tag < DDConst.TILE_SEEN Then
                         TextEvent.pushLog("Fox Statue discovered!")
                     End If
 
-                    If tile.Text = "⬤" And tile.Tag < 2 Then
+                    If tile.Text = "⬤" And tile.Tag < DDConst.TILE_SEEN Then
                         TextEvent.pushLog("Pink Orb discovered!")
                     End If
 
-                    If tile.Tag = 1 Then tile.Tag = 2
+                    If tile.Tag = DDConst.TILE_UNSEEN Then
+                        tile.Tag = DDConst.TILE_SEEN
+                    ElseIf tile.Tag = DDConst.TILE_UNSEEN + DDConst.PINK_MIST_OFFSET Then
+                        tile.Tag = DDConst.TILE_SEEN + DDConst.PINK_MIST_OFFSET
+                    End If
                 End If
             Next
         Next
@@ -636,7 +640,7 @@ Public Class Game
 
                     viewArray(y, x) = tileTag
 
-                    If tileTag = 2 Or tileTag = DDConst.PINK_MIST_TILETAG Or DDConst.ALWAYS_REDRAWN_CHARS.Contains(tileText) Then
+                    If tileTag = DDConst.TILE_SEEN Or tileTag = DDConst.TILE_SEEN + DDConst.PINK_MIST_OFFSET Or DDConst.ALWAYS_REDRAWN_CHARS.Contains(tileText) Then
                         'get the tile to display
                         viewArray(y, x) = getTileToDisplay(player1.pos.X + indX, player1.pos.Y + indY, tileText, tileTag)
 
@@ -648,7 +652,7 @@ Public Class Game
                         If indY = 0 And indX = 0 Then viewArray(y, x) = 4
                     End If
 
-                    If tileTag = DDConst.PINK_MIST_TILETAG Then viewArray(y, x) += DDConst.PINK_MIST_OFFSET
+                    'If tileTag >= DDConst.PINK_MIST_OFFSET Then viewArray(y, x) += DDConst.PINK_MIST_OFFSET
                 ElseIf mDun.numCurrFloor = 13 AndAlso (player1.pos.Y + indY >= currFloor.mBoardHeight Or player1.pos.Y + indY < 0) And (player1.pos.X + indX >= 0 And player1.pos.X + indX < currFloor.mBoardWidth) Then
                     Dim y_offset = 0
                     If player1.pos.Y + indY < 0 Then
@@ -661,7 +665,7 @@ Public Class Game
                     Dim tileTag As Integer = currFloor.mBoard(y_offset, player1.pos.X + indX).Tag
 
                     viewArray(y, x) = tileTag
-                    If tileTag = 2 Or tileTag = DDConst.PINK_MIST_TILETAG Or DDConst.ALWAYS_REDRAWN_CHARS.Contains(tileText) Then
+                    If tileTag = DDConst.TILE_SEEN Or tileTag = DDConst.TILE_SEEN + DDConst.PINK_MIST_OFFSET Or DDConst.ALWAYS_REDRAWN_CHARS.Contains(tileText) Then
                         'get the tile to display
                         viewArray(y, x) = getTileToDisplay(player1.pos.X + indX, y_offset, tileText, tileTag)
 
@@ -673,7 +677,7 @@ Public Class Game
                         If indY = 0 And indX = 0 Then viewArray(y, x) = 4
                     End If
 
-                    If tileTag = DDConst.PINK_MIST_TILETAG Then viewArray(y, x) += DDConst.PINK_MIST_OFFSET
+                    'If tileTag >= DDConst.PINK_MIST_OFFSET Then viewArray(y, x) += DDConst.PINK_MIST_OFFSET
                 Else
                     If Settings.active(setting.isotiles) AndAlso player1.pos.X + indX = -1 AndAlso currFloor.ptInBounds(New Point(0, player1.pos.Y + indY)) AndAlso currFloor.mBoard(player1.pos.Y + indY, 0).Tag <> 0 Then
                         viewArray(y, x) = 53
@@ -753,6 +757,7 @@ Public Class Game
         '56 = iso_l_corner
         '57 = pink orb
 
+        If tileTag >= DDConst.PINK_MIST_OFFSET Then tileTag -= DDConst.PINK_MIST_OFFSET
         Select Case tileText
             Case ""
                 Return 2
@@ -2511,19 +2516,23 @@ Public Class Game
                     For indX = -currFloor.mBoardWidth To currFloor.mBoardWidth
                         If player1.pos.Y + indY < currFloor.mBoardHeight And player1.pos.Y + indY >= 0 And player1.pos.X + indX < currFloor.mBoardWidth And player1.pos.X + indX >= 0 Then
                             If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "@" Then currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = ""
-                            If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "H" And currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag < 2 Then
+                            If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "H" And currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag < DDConst.TILE_SEEN Then
                                 currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).ForeColor = Color.Black
                                 TextEvent.pushLog("Floor " & mDun.numCurrFloor & ": Staircase Discovered")
                             End If
-                            If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "#" And currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag < 2 Then
+                            If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "#" And currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag < DDConst.TILE_SEEN Then
                                 currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).ForeColor = Color.Black
                                 TextEvent.pushLog("Chest discovered!")
                             End If
-                            If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "$" And currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag < 2 Then
+                            If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "$" And currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag < DDConst.TILE_SEEN Then
                                 currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).ForeColor = Color.Navy
                                 TextEvent.pushLog("Shop discovered!")
                             End If
-                            If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag = 1 Then currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag = 2
+                            If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag = DDConst.TILE_UNSEEN Then
+                                currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag = DDConst.TILE_SEEN
+                            ElseIf currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag = DDConst.TILE_UNSEEN + DDConst.PINK_MIST_OFFSET Then
+                                currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag = DDConst.TILE_SEEN + DDConst.PINK_MIST_OFFSET
+                            End If
                         End If
                     Next
                 Next

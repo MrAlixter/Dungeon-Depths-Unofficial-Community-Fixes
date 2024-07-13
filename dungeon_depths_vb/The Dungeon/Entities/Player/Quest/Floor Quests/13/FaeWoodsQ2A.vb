@@ -180,7 +180,7 @@ Friend Class FaeWoodsQ2AS2
         Game.player1.pos = New Point(49, 56)
 
         For Each p In points
-            floor.mBoard(p.Y, p.X).Tag = 2
+            floor.mBoard(p.Y, p.X).Tag = DDConst.TILE_SEEN
         Next
 
         Game.drawBoard()
@@ -255,7 +255,7 @@ Friend Class FaeWoodsQ2AS2
             Dim path = Game.currFloor.route(Game.player1.pos, Game.currFloor.stairs)
 
             For i = 0 To UBound(path) Step 3
-                Game.currFloor.mBoard(path(i).Y, path(i).X).Tag = 2
+                Game.currFloor.mBoard(path(i).Y, path(i).X).Tag = DDConst.TILE_SEEN
                 If Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "" Then Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "x"
             Next
 
@@ -329,15 +329,15 @@ Friend Class FWQ2APassenger2
             Game.currFloor.mBoard(13, 52).Text = ""
             Game.currFloor.mBoard(15, 52).Text = ""
 
-            Game.currFloor.mBoard(23, 25).Tag = 2
-            Game.currFloor.mBoard(23, 26).Tag = 2
+            Game.currFloor.mBoard(23, 25).Tag = DDConst.TILE_SEEN
+            Game.currFloor.mBoard(23, 26).Tag = DDConst.TILE_SEEN
 
             Game.currFloor.mBoard(23, 26).Text = "a"
 
             Dim path = Game.currFloor.route(Game.player1.pos, New Point(25, 23))
 
             For i = 0 To UBound(path) Step 3
-                Game.currFloor.mBoard(path(i).Y, path(i).X).Tag = 2
+                Game.currFloor.mBoard(path(i).Y, path(i).X).Tag = DDConst.TILE_SEEN
                 If Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "" Then Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "x"
             Next
 
@@ -355,7 +355,7 @@ Friend Class FWQ2APassenger2
             Dim path = Game.currFloor.route(Game.player1.pos, Game.currFloor.stairs)
 
             For i = 0 To UBound(path) Step 3
-                Game.currFloor.mBoard(path(i).Y, path(i).X).Tag = 2
+                Game.currFloor.mBoard(path(i).Y, path(i).X).Tag = DDConst.TILE_SEEN
                 If Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "" Then Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "x"
             Next
 
@@ -499,7 +499,7 @@ Friend Class FWQ2APassenger3
 
         Game.player1.perks(perk.faepassangers) = -1
 
-        If Not Game.currFloor.mBoard(29, 7).Tag = 2 Then FaeQueen.spawn(Game.currFloor)
+        If Not Game.currFloor.mBoard(29, 7).Tag = DDConst.TILE_SEEN Then FaeQueen.spawn(Game.currFloor)
 
         Game.player1.ongoingQuests.getAt("Fae Woods Q2A - Simple Instructions").completeEntireQuest()
         Game.player1.drawPort()
@@ -533,7 +533,7 @@ Friend Class FWQ2APassenger3
             Dim path2 = Game.currFloor.route(Game.player1.pos, New Point(48, 56))
 
             For i = 0 To UBound(path2) Step 3
-                Game.currFloor.mBoard(path2(i).Y, path2(i).X).Tag = 2
+                Game.currFloor.mBoard(path2(i).Y, path2(i).X).Tag = DDConst.TILE_SEEN
                 If Game.currFloor.mBoard(path2(i).Y, path2(i).X).Text = "" Then Game.currFloor.mBoard(path2(i).Y, path2(i).X).Text = "x"
             Next
 
@@ -551,7 +551,7 @@ Friend Class FWQ2APassenger3
             Dim path = Game.currFloor.route(Game.player1.pos, Game.currFloor.stairs)
 
             For i = 0 To UBound(path) Step 3
-                Game.currFloor.mBoard(path(i).Y, path(i).X).Tag = 2
+                Game.currFloor.mBoard(path(i).Y, path(i).X).Tag = DDConst.TILE_SEEN
                 If Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "" Then Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "x"
             Next
 

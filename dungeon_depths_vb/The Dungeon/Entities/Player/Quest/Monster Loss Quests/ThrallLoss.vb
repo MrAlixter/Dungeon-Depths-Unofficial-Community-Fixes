@@ -17,7 +17,7 @@
 
             Dim crystal = Game.currFloor.randPoint
 
-            Game.currFloor.mBoard(crystal.Y, crystal.X).Tag = 2
+            Game.currFloor.mBoard(crystal.Y, crystal.X).Tag = DDConst.TILE_SEEN
             Game.currFloor.mBoard(crystal.Y, crystal.X).Text = "c"
 
             p.forcedPath = Game.currFloor.route(p.pos, crystal)

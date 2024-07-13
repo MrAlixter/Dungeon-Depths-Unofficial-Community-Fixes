@@ -109,7 +109,7 @@ Friend Class OutOfTimeS1
     End Sub
 
     Private Sub completeS2()
-        Game.currFloor.mBoard(33, 61).Tag = 2
+        Game.currFloor.mBoard(33, 61).Tag = DDConst.TILE_SEEN
         Game.currFloor.mBoard(33, 61).Text = ""
 
         Game.drawBoard()
@@ -219,9 +219,9 @@ Friend Class OutOfTimeS3
             Game.player1.gold -= 1000
         End If
 
-        Game.currFloor.mBoard(5, 49).Tag = 2
+        Game.currFloor.mBoard(5, 49).Tag = DDConst.TILE_SEEN
         Game.currFloor.mBoard(5, 49).Text = ""
-        Game.currFloor.mBoard(5, 72).Tag = 2
+        Game.currFloor.mBoard(5, 72).Tag = DDConst.TILE_SEEN
         Game.currFloor.mBoard(5, 72).Text = ""
 
         Game.compOOT = True
@@ -259,9 +259,9 @@ Friend Class OutOfTimeS3
             Game.player1.gold -= 500
         End If
 
-        Game.currFloor.mBoard(5, 49).Tag = 2
+        Game.currFloor.mBoard(5, 49).Tag = DDConst.TILE_SEEN
         Game.currFloor.mBoard(5, 49).Text = ""
-        Game.currFloor.mBoard(5, 72).Tag = 2
+        Game.currFloor.mBoard(5, 72).Tag = DDConst.TILE_SEEN
         Game.currFloor.mBoard(5, 72).Text = ""
 
         Game.compOOT = True

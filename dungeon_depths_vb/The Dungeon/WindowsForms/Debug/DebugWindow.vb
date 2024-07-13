@@ -250,23 +250,28 @@ Public Class Debug_Window
         map = New Bitmap(Game.currFloor.mBoardWidth + 2, Game.currFloor.mBoardHeight + 2)
         For boardX = 0 To map.Width - 3
             For boardY = 0 To map.Height - 3
-                If (Game.currFloor.mBoard(boardY, boardX).Text = "#") Then 'Chest
+
+                Dim tileText = Game.currFloor.mBoard(boardY, boardX).Text
+                Dim tileTag = Game.currFloor.mBoard(boardY, boardX).Tag
+                If tileTag >= DDConst.PINK_MIST_OFFSET Then tileTag -= DDConst.PINK_MIST_OFFSET
+
+                If (tileText = "#") Then 'Chest
                     map.SetPixel(boardX + 1, boardY + 1, Color.Yellow)
-                ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "H") Then 'Stairs
+                ElseIf (tileText = "H") Then 'Stairs
                     map.SetPixel(boardX + 1, boardY + 1, Color.Sienna)
-                ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "@" And Game.player1.pos.X = boardX And Game.player1.pos.Y = boardY) Then 'Player
+                ElseIf (tileText = "@" And Game.player1.pos.X = boardX And Game.player1.pos.Y = boardY) Then 'Player
                     map.SetPixel(boardX + 1, boardY + 1, Color.LawnGreen)
-                ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "@") Then 'Statue
+                ElseIf (tileText = "@") Then 'Statue
                     map.SetPixel(boardX + 1, boardY + 1, Color.Silver)
-                ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "$") Then 'NPC
+                ElseIf (tileText = "$") Then 'NPC
                     map.SetPixel(boardX + 1, boardY + 1, Color.Blue)
-                ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "+") Then 'Trap
+                ElseIf (tileText = "+") Then 'Trap
                     map.SetPixel(boardX + 1, boardY + 1, Color.Red)
-                ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "|") Or (Game.currFloor.mBoard(boardY, boardX).Text = "-") Then 'Barrier
+                ElseIf (tileText = "|") Or (tileText = "-") Then 'Barrier
                     map.SetPixel(boardX + 1, boardY + 1, Color.DarkRed)
-                ElseIf (Game.currFloor.mBoard(boardY, boardX).Tag = 2) Or (Game.currFloor.mBoard(boardY, boardX).Tag = 3) Or (DDConst.ALWAYS_REDRAWN_CHARS.Contains(Game.currFloor.mBoard(boardY, boardX).Text) AndAlso Not {"═", "╕", "║", "╙", "╔", "╝"}.Contains(Game.currFloor.mBoard(boardY, boardX).Text)) Then 'Seen
+                ElseIf (tileTag = DDConst.TILE_SEEN) Or (DDConst.ALWAYS_REDRAWN_CHARS.Contains(tileText) AndAlso Not {"═", "╕", "║", "╙", "╔", "╝"}.Contains(tileText)) Then 'Seen
                     map.SetPixel(boardX + 1, boardY + 1, Color.White)
-                ElseIf (Game.currFloor.mBoard(boardY, boardX).Tag = 1) Then 'Unseen
+                ElseIf (tileTag = DDConst.TILE_UNSEEN) Then 'Unseen
                     map.SetPixel(boardX + 1, boardY + 1, Color.Gray)
                 Else 'Nothing
                     map.SetPixel(boardX + 1, boardY + 1, Color.Black)

@@ -28,19 +28,19 @@
         For indY = -3 To 3
             For indX = -3 To 3
                 If p.pos.Y + indY < Game.currFloor.mBoardHeight And p.pos.Y + indY >= 0 And p.pos.X + indX < Game.currFloor.mBoardWidth And p.pos.X + indX >= 0 Then
-                    If Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Text = "H" And Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Tag < 2 Then
+                    If Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Text = "H" And Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Tag < DDConst.TILE_SEEN Then
                         Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).ForeColor = Color.Black
                         TextEvent.pushLog("Floor " & Game.mDun.numCurrFloor & ": Staircase Discovered")
                     End If
-                    If Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Text = "#" And Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Tag < 2 Then
+                    If Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Text = "#" And Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Tag < DDConst.TILE_SEEN Then
                         Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).ForeColor = Color.Black
                         TextEvent.pushLog("Chest discovered!")
                     End If
-                    If Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Text = "$" And Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Tag < 2 Then
+                    If Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Text = "$" And Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Tag < DDConst.TILE_SEEN Then
                         Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).ForeColor = Color.Navy
                         TextEvent.pushLog("Shop discovered!")
                     End If
-                    If Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Tag = 1 Then Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Tag = 2
+                    If Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Tag = DDConst.TILE_UNSEEN Then Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Tag = DDConst.TILE_SEEN
                 End If
             Next
         Next

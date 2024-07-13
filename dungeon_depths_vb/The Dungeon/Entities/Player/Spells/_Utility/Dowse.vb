@@ -17,19 +17,19 @@
                 Dim tileColor = Game.currFloor.mBoard(y, x).forecolor
 
                 If y < Game.mBoardHeight And y >= 0 And x < Game.mBoardWidth And x >= 0 Then
-                    If tileText = "H" And tileTag < 2 Then
+                    If tileText = "H" And tileTag < DDConst.TILE_SEEN Then
                         tileColor = Color.Black
-                        If tileTag = 1 Then tileTag = 2
+                        If tileTag = DDConst.TILE_UNSEEN Then tileTag = DDConst.TILE_SEEN
                         TextEvent.pushLog("Floor " & Game.mDun.numCurrFloor & ": Staircase Discovered")
                     End If
-                    If tileText = "#" And tileTag < 2 Then
+                    If tileText = "#" And tileTag < DDConst.TILE_SEEN Then
                         tileColor = Color.Black
-                        If tileTag = 1 Then tileTag = 2
+                        If tileTag = DDConst.TILE_UNSEEN Then tileTag = DDConst.TILE_SEEN
                         TextEvent.pushLog("Chest discovered!")
                     End If
-                    If tileText = "+" And tileTag < 2 Then
+                    If tileText = "+" And tileTag < DDConst.TILE_SEEN Then
                         tileColor = Color.Navy
-                        If tileTag = 1 Then tileTag = 2
+                        If tileTag = DDConst.TILE_UNSEEN Then tileTag = DDConst.TILE_SEEN
                         TextEvent.pushLog("Trap discovered!")
                     End If
                 End If

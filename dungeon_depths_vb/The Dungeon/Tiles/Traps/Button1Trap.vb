@@ -11,24 +11,24 @@
 
         TextEvent.push("You press a big glowing red button, and the nearby console alerts you that ""Security gates for the Cross-Station Interchange, Contraband Locker, Staff Quarters, and Warp Chamber have been deactivated""", AddressOf postcheck)
         'Warp Area
-        Game.currFloor.mBoard(5, 43).Tag = 2
+        Game.currFloor.mBoard(5, 43).Tag = DDConst.TILE_SEEN
         Game.currFloor.mBoard(5, 43).Text = ""
-        Game.currFloor.mBoard(5, 49).Tag = 2
+        Game.currFloor.mBoard(5, 49).Tag = DDConst.TILE_SEEN
         Game.currFloor.mBoard(5, 49).Text = ""
         'Contraband Locker
-        Game.currFloor.mBoard(10, 26).Tag = 2
+        Game.currFloor.mBoard(10, 26).Tag = DDConst.TILE_SEEN
         Game.currFloor.mBoard(10, 26).Text = ""
         'Staff Area
-        Game.currFloor.mBoard(17, 17).Tag = 2
+        Game.currFloor.mBoard(17, 17).Tag = DDConst.TILE_SEEN
         Game.currFloor.mBoard(17, 17).Text = ""
         'Interchange
-        Game.currFloor.mBoard(22, 72).Tag = 2
+        Game.currFloor.mBoard(22, 72).Tag = DDConst.TILE_SEEN
         Game.currFloor.mBoard(22, 72).Text = ""
-        Game.currFloor.mBoard(23, 72).Tag = 2
+        Game.currFloor.mBoard(23, 72).Tag = DDConst.TILE_SEEN
         Game.currFloor.mBoard(23, 72).Text = ""
-        Game.currFloor.mBoard(24, 72).Tag = 2
+        Game.currFloor.mBoard(24, 72).Tag = DDConst.TILE_SEEN
         Game.currFloor.mBoard(24, 72).Text = ""
-        Game.currFloor.mBoard(25, 72).Tag = 2
+        Game.currFloor.mBoard(25, 72).Tag = DDConst.TILE_SEEN
         Game.currFloor.mBoard(25, 72).Text = ""
     End Sub
 

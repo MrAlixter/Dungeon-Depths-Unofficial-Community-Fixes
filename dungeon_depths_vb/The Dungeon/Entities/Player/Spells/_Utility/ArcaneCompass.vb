@@ -48,10 +48,10 @@
         Dim p = Game.currFloor.route(getCaster.pos, pt)
 
         For i = 0 To UBound(p) Step 3
-            Game.currFloor.mBoard(p(i).Y, p(i).X).Tag = 2
+            Game.currFloor.mBoard(p(i).Y, p(i).X).Tag = DDConst.TILE_SEEN
             If Game.currFloor.mBoard(p(i).Y, p(i).X).Text = "" Then Game.currFloor.mBoard(p(i).Y, p(i).X).Text = "x"
         Next
-        Game.currFloor.mBoard(p(UBound(p)).Y, p(UBound(p)).X).Tag = 2
+        Game.currFloor.mBoard(p(UBound(p)).Y, p(UBound(p)).X).Tag = DDConst.TILE_SEEN
 
         Game.drawBoard()
     End Sub

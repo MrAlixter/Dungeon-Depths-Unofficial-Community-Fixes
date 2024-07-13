@@ -29,9 +29,9 @@
         boxOptions.Visible = False
         boxOptions.Controls.Clear()
         boxSeen.Enabled = True
-        If (t.Tag = 2) Then 'Seen
+        If (t.Tag = DDConst.TILE_SEEN) Then 'Seen
             boxSeen.Checked = True
-        ElseIf (t.Tag = 1) Then 'Unseen
+        ElseIf (t.Tag = DDConst.TILE_UNSEEN) Then 'Unseen
             boxSeen.Checked = False
         Else 'WALL
             boxSeen.Enabled = False
@@ -141,20 +141,20 @@
     Private Sub boxSeen_CheckedChanged(sender As Object, e As EventArgs) Handles boxSeen.CheckedChanged
         If t.Tag <> 0 Then
             If boxSeen.Checked Then
-                t.Tag = 2
+                t.Tag = DDConst.TILE_SEEN
             Else
-                t.Tag = 1
+                t.Tag = DDConst.TILE_UNSEEN
             End If
         End If
         updateTagLbl()
     End Sub
 
     Private Sub updateTagLbl()
-        If t.Tag = 0 Then
+        If t.Tag = DDConst.TILE_WALL Then
             lblTag.Text = "TAG: 0 (WALL)"
-        ElseIf t.Tag = 1 Then
+        ElseIf t.Tag = DDConst.TILE_UNSEEN Then
             lblTag.Text = "TAG: 1 (UNSEEN)"
-        ElseIf t.Tag = 2 Then
+        ElseIf t.Tag = DDConst.TILE_SEEN Then
             lblTag.Text = "TAG: 2 (SEEN)"
         End If
     End Sub
@@ -179,7 +179,7 @@
             boxType.SelectedItem = prevTypeSel
             Exit Sub
         ElseIf name = "@ (Player)" Then
-            t.Tag = 2
+            t.Tag = DDConst.TILE_SEEN
             t.Text = "@"
             Game.player1.pos = p
         ElseIf name = "(Wall)" Then
@@ -191,7 +191,7 @@
             boxSeen.Checked = False
         ElseIf name = "(Walkable)" Or name = "@ (Statue)" Then
             If removeFlag Then removeItem()
-            If t.Tag = 0 Then t.Tag = 1
+            If t.Tag = 0 Then t.Tag = DDConst.TILE_UNSEEN
             If name = "(Walkable)" Then
                 t.Text = ""
             Else
@@ -199,14 +199,14 @@
             End If
             t.ForeColor = Color.Black
             boxSeen.Enabled = True
-            If t.Tag = 1 Then
+            If t.Tag = DDConst.TILE_UNSEEN Then
                 boxSeen.Checked = False
-            ElseIf t.Tag = 2 Then
+            ElseIf t.Tag = DDConst.TILE_SEEN Then
                 boxSeen.Checked = True
             End If
         ElseIf name = "# (Chest)" Then
             If removeFlag Then removeItem()
-            If t.Tag = 0 Then t.Tag = 1
+            If t.Tag = 0 Then t.Tag = DDConst.TILE_UNSEEN
             t.Text = "#"
             t.ForeColor = Color.FromArgb(45, 45, 45)
             Game.currFloor.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
@@ -214,7 +214,7 @@
             Game.currFloor.chestList.Add(c)
         ElseIf name = "+ (Trap)" Then
             If removeFlag Then removeItem()
-            If t.Tag = 0 Then t.Tag = 1
+            If t.Tag = 0 Then t.Tag = DDConst.TILE_UNSEEN
             t.Text = "+"
             t.ForeColor = Color.FromArgb(45, 45, 45)
             Game.currFloor.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
@@ -374,11 +374,11 @@
     Private Sub EditTile_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         Dim tag As Integer
         If Not boxSeen.Enabled Then
-            tag = 0
+            tag = DDConst.TILE_WALL
         ElseIf boxSeen.Checked Then
-            tag = 2
+            tag = DDConst.TILE_SEEN
         ElseIf Not boxSeen.Checked Then
-            tag = 1
+            tag = DDConst.TILE_UNSEEN
         End If
         Game.currfloor.mBoard(p.Y, p.X).Tag = tag
         Game.currfloor.mBoard(p.Y, p.X).Text = t.Text

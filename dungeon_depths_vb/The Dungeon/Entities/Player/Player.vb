@@ -830,13 +830,13 @@ Public Class Player
         Dim board = Game.currFloor.mBoard
 
         '|-Pickaxe Effect-|
-        If board(newY, newX).Tag = 0 And perks(perk.pickaxe) > 0 And Game.mDun.numCurrFloor <> 13 Then board(newY, newX).Tag = 2
+        If board(newY, newX).Tag = DDConst.TILE_WALL And perks(perk.pickaxe) > 0 And Game.mDun.numCurrFloor <> 13 Then board(newY, newX).Tag = DDConst.TILE_SEEN
 
         '|-Phase Drill Effect-|
-        If board(newY, newX).Tag = 0 And perks(perk.pdrill) > 0 And inv.getCountAt("AAAAAA_Battery") > 0 And Game.mDun.numCurrFloor <> 13 Then
-            board(newY, newX).Tag = 2
+        If board(newY, newX).Tag = DDConst.TILE_WALL And perks(perk.pdrill) > 0 And inv.getCountAt("AAAAAA_Battery") > 0 And Game.mDun.numCurrFloor <> 13 Then
+            board(newY, newX).Tag = DDConst.TILE_SEEN
             getPlayer.inv.add("AAAAAA_Battery", -1)
-        ElseIf board(newY, newX).Tag = 0 And perks(perk.pdrill) > 0 And inv.getCountAt("AAAAAA_Battery") < 1 And Game.mDun.numCurrFloor <> 13 Then
+        ElseIf board(newY, newX).Tag = DDConst.TILE_WALL And perks(perk.pdrill) > 0 And inv.getCountAt("AAAAAA_Battery") < 1 And Game.mDun.numCurrFloor <> 13 Then
             TextEvent.push("The drill spins weakly...")
         End If
 
@@ -1589,7 +1589,7 @@ Public Class Player
         End If
 
         '| - Bimbo Mist TF - |
-        If (perks(perk.bimbotf) < 0 And Game.currFloor.mBoard(pos.Y, pos.X).Tag = DDConst.PINK_MIST_TILETAG) Or ongoingTFs.contains(tfind.mistbimbo) Then
+        If (perks(perk.bimbotf) < 0 And Game.currFloor.mBoard(pos.Y, pos.X).Tag >= DDConst.PINK_MIST_OFFSET) Or ongoingTFs.contains(tfind.mistbimbo) Then
             PerkEffects.pinkMistTF(Me, Game.currFloor.mBoard(pos.Y, pos.X).Tag)
         End If
     End Sub

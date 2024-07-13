@@ -22,7 +22,7 @@
                 Dim x = Game.player1.pos.X - ind
                 If x < Game.mBoardWidth And x >= 0 Then
                     Dim tileTagX = Game.currFloor.mBoard(Game.player1.pos.Y, x).Tag
-                    If tileTagX = 1 And goLeft Then Game.currFloor.mBoard(Game.player1.pos.Y, x).Tag = 2
+                    If tileTagX = 1 And goLeft Then Game.currFloor.mBoard(Game.player1.pos.Y, x).Tag = DDConst.TILE_SEEN
 
                     If tileTagX = 0 Then goLeft = False
                 End If
@@ -30,7 +30,7 @@
                 x = Game.player1.pos.X + ind
                 If x < Game.mBoardWidth And x >= 0 Then
                     Dim tileTagX = Game.currFloor.mBoard(Game.player1.pos.Y, x).Tag
-                    If tileTagX = 1 And goRight Then Game.currFloor.mBoard(Game.player1.pos.Y, x).Tag = 2
+                    If tileTagX = 1 And goRight Then Game.currFloor.mBoard(Game.player1.pos.Y, x).Tag = DDConst.TILE_SEEN
 
                     If tileTagX = 0 Then goRight = False
                 End If
@@ -38,7 +38,7 @@
                 Dim y = Game.player1.pos.Y - ind
                 If y < Game.mBoardHeight And y >= 0 Then
                     Dim tileTagY = Game.currFloor.mBoard(y, Game.player1.pos.X).Tag
-                    If tileTagY = 1 And goUp Then Game.currFloor.mBoard(y, Game.player1.pos.X).Tag = 2
+                    If tileTagY = 1 And goUp Then Game.currFloor.mBoard(y, Game.player1.pos.X).Tag = DDConst.TILE_SEEN
 
                     If tileTagY = 0 Then goUp = False
                 End If
@@ -46,7 +46,7 @@
                 y = Game.player1.pos.Y + ind
                 If y < Game.mBoardHeight And y >= 0 Then
                     Dim tileTagY = Game.currFloor.mBoard(y, Game.player1.pos.X).Tag
-                    If tileTagY = 1 And goDown Then Game.currFloor.mBoard(y, Game.player1.pos.X).Tag = 2
+                    If tileTagY = 1 And goDown Then Game.currFloor.mBoard(y, Game.player1.pos.X).Tag = DDConst.TILE_SEEN
 
                     If tileTagY = 0 Then goDown = False
                 End If

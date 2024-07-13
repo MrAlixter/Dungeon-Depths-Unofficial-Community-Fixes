@@ -33,10 +33,10 @@
 
         Dim path = Game.currFloor.route(p.pos, Game.currFloor.stairs)
         For i = 0 To UBound(path) Step 4
-            Game.currFloor.mBoard(path(i).Y, path(i).X).Tag = 2
+            Game.currFloor.mBoard(path(i).Y, path(i).X).Tag = DDConst.TILE_SEEN
             If Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "" Then Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "x"
         Next
-        Game.currFloor.mBoard(path(UBound(path)).Y, path(UBound(path)).X).Tag = 2
+        Game.currFloor.mBoard(path(UBound(path)).Y, path(UBound(path)).X).Tag = DDConst.TILE_SEEN
         Game.drawBoard()
         count -= 1
     End Sub

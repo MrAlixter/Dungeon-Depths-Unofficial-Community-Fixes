@@ -611,7 +611,7 @@ Public MustInherit Class ShopNPC
                     New Point(pos.X - 1, pos.Y + 1), New Point(pos.X, pos.Y + 1), New Point(pos.X + 1, pos.Y + 1)}
 
         For Each pt In area
-            If floor.ptInBounds(pt) AndAlso floor.mBoard(pt.Y, pt.X).Tag > 0 Then floor.mBoard(pt.Y, pt.X).Tag = 2
+            If floor.ptInBounds(pt) AndAlso floor.mBoard(pt.Y, pt.X).Tag > 0 Then floor.mBoard(pt.Y, pt.X).Tag = DDConst.TILE_SEEN
         Next
     End Sub
 End Class

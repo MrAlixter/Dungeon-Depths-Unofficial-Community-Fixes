@@ -75,7 +75,7 @@
         floor.addNPC(Game.fqueen, New Point(7, 29))
 
         For Each p In points
-            floor.mBoard(p.Y, p.X).Tag = 2
+            floor.mBoard(p.Y, p.X).Tag = DDConst.TILE_SEEN
         Next
     End Sub
     Public Shared Sub spawnStairs(ByRef floor As mFloor)
@@ -86,7 +86,7 @@
                                  New Point(52, 15), New Point(53, 15), New Point(54, 15)}
 
         For Each p In points
-            floor.mBoard(p.Y, p.X).Tag = 2
+            floor.mBoard(p.Y, p.X).Tag = DDConst.TILE_SEEN
         Next
     End Sub
     Public Shared Sub spawnFountain(ByRef floor As mFloor)
@@ -122,7 +122,7 @@
             Objective.showNPC(local_img(LocalImgInd.normal), """You again, outstanding...  Must I do everything myself?""" & DDUtils.PAKTC, AddressOf toCombat)
         ElseIf Game.player1.perks(perk.faecurse) > -1 Then
             Objective.showNPC(local_img(LocalImgInd.normal), """Oh, hello...  Who do we have here?""" & DDUtils.PAKTC, AddressOf faeCursedInitialResponse)
-        ElseIf Game.player1.perks(perk.f13fqueentalked) > 0 And Game.currFloor.mBoard(Game.currFloor.stairs.Y, Game.currFloor.stairs.X).Tag = 2 Then
+        ElseIf Game.player1.perks(perk.f13fqueentalked) > 0 And Game.currFloor.mBoard(Game.currFloor.stairs.Y, Game.currFloor.stairs.X).Tag = DDConst.TILE_SEEN Then
             Objective.showNPC(local_img(LocalImgInd.normal), "Hello again...")
         Else
             Objective.showNPC(local_img(LocalImgInd.normal), """Well, well, well...  Who do we have here?""" & DDUtils.PAKTC, AddressOf selectInitialResponse)
@@ -131,7 +131,7 @@
     Public Overrides Sub despawn(reason As String)
         MyBase.despawn(reason)
 
-        Game.currFloor.mBoard(29, 9).Tag = 2
+        Game.currFloor.mBoard(29, 9).Tag = DDConst.TILE_SEEN
     End Sub
 
     '| - QUESTIONS - |
@@ -142,7 +142,7 @@
         Dim d4 = New Tuple(Of String, Action)(FaeQueen.DIALOG_OPTION_4, AddressOf FaeQueen.dialogTree4)
         TextEvent.pushManySelect("Who does she have here?", d1, d2, d3, d4)
 
-        Game.currFloor.mBoard(29, 9).Tag = 2
+        Game.currFloor.mBoard(29, 9).Tag = DDConst.TILE_SEEN
     End Sub
     Private Shared Sub giveRealName()
         TextEvent.pushYesNo("Give the Fae Queen your real name?", AddressOf dialogTree1alt, AddressOf canYouBeTrusted)
@@ -241,7 +241,7 @@
         Dim path = Game.currFloor.route(Game.fqueen.pos, Game.currFloor.stairs)
 
         For i = 0 To UBound(path) Step 4
-            Game.currFloor.mBoard(path(i).Y, path(i).X).Tag = 2
+            Game.currFloor.mBoard(path(i).Y, path(i).X).Tag = DDConst.TILE_SEEN
             If Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "" Then Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "x"
         Next
 
@@ -559,7 +559,7 @@
         Dim path = Game.currFloor.route(Game.fqueen.pos, Game.currFloor.stairs)
 
         For i = 0 To UBound(path) Step 4
-            Game.currFloor.mBoard(path(i).Y, path(i).X).Tag = 2
+            Game.currFloor.mBoard(path(i).Y, path(i).X).Tag = DDConst.TILE_SEEN
             If Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "" Then Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "x"
         Next
 
@@ -600,7 +600,7 @@
         Dim path = Game.currFloor.route(Game.fqueen.pos, Game.currFloor.stairs)
 
         For i = 0 To UBound(path) Step 4
-            Game.currFloor.mBoard(path(i).Y, path(i).X).Tag = 2
+            Game.currFloor.mBoard(path(i).Y, path(i).X).Tag = DDConst.TILE_SEEN
             If Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "" Then Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "x"
         Next
 

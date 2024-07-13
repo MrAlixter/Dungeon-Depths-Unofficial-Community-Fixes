@@ -136,7 +136,7 @@
 
             gold = 1000
 
-            If Game.currFloor.mBoard(pos.Y, pos.X).Tag = 3 Then
+            If Game.currFloor.mBoard(pos.Y, pos.X).Tag >= DDConst.PINK_MIST_OFFSET Then
                 Return "Like, hey..." & DDUtils.RNRN &
                        "What's... um..." & DDUtils.RNRN &
                        "I'm, so, like... um..." & DDUtils.RNRN &
