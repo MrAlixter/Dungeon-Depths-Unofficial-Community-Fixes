@@ -435,7 +435,7 @@ Public Class Portrait
 
     '| - DRAW - |
     Shared Function CreateBMP(ByRef img() As Image, Optional ByVal drawBoarder As Boolean = True) As Bitmap
-        Dim startTime As Double = DDDateTime.getTimeNow()
+        'Dim startTime As Double = DDDateTime.getTimeNow()
         Dim bmp As New Bitmap(146, 216)
         Dim g As Graphics = Graphics.FromImage(bmp)
 
@@ -446,8 +446,8 @@ Public Class Portrait
         Next
         If drawBoarder Then g.DrawImage(Game.picPortOutline.BackgroundImage, 0, 0, 146, 216)
 
-        Dim endTime = DDDateTime.getTimeNow()
-        Console.WriteLine("HBPRT RENDER TIME: " + (endTime - startTime).ToString())
+        'Dim endTime = DDDateTime.getTimeNow()
+        'Console.WriteLine("HBPRT RENDER TIME: " + (endTime - startTime).ToString())
         Return bmp
     End Function
     Shared Function CreateBMPFast(ByRef img() As Image, Optional ByVal drawBoarder As Boolean = True) As Bitmap

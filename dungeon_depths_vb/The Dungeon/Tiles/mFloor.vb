@@ -115,6 +115,22 @@ Public Class mFloor
                 generateDungeonLevel(floorCode)
         End Select
 
+        'Pink Mist
+        'If floorNumber > 13 Then
+        '    For i = 0 To Int(Rnd() * rooms.Count)
+        '        Dim j = Int(Rnd() * rooms(i).Count)
+
+        '        Dim room = rooms(i)(j)
+
+        '        For y = room.top_left_pos.Y To room.top_left_pos.Y + room.height
+        '            For x = room.top_left_pos.X To room.top_left_pos.X + room.width
+        '                If ptInBounds(New Point(x, y)) Then mBoard(y, x).Tag = DDConst.TILE_MARKED
+        '            Next
+        '        Next
+        '    Next
+        '    deployPinkMist()
+        'End If
+
         If Settings.active(setting.isotiles) Then fillIsoWalls()
 
         If floorNumber = 7 Then placeFloor7Statues()
@@ -224,6 +240,10 @@ Public Class mFloor
         Next
     End Sub
     Private Sub placeTile(ByVal x As Integer, ByVal y As Integer, ByVal seen As Boolean, Optional ByVal glow As Boolean = False)
+        If Settings.active(setting.isotiles) AndAlso DDConst.ISO_WALL_CHARS.Contains(mBoard(y, x).Text) Then
+            mBoard(y, x).Text = ""
+        End If
+
         If mBoard(y, x).Tag <> 2 Then
             mBoard(y, x).Tag = If(seen, 2, 1)
 
@@ -881,7 +901,7 @@ Public Class mFloor
 
         'Set up the mist
         For Each t In gen_tiles
-            mBoard(t.Y, t.X).Tag = 13
+            mBoard(t.Y, t.X).Tag = DDConst.TILE_MARKED
         Next
 
         deployPinkMist()
@@ -889,7 +909,7 @@ Public Class mFloor
     Sub deployPinkMist()
         For y = 0 To mBoardHeight - 1
             For x = 0 To mBoardWidth - 1
-                If mBoard(y, x).Tag = 13 Then
+                If mBoard(y, x).Tag = DDConst.TILE_MARKED Then
                     mBoard(y, x).Tag = DDConst.TILE_SEEN
                 ElseIf mBoard(y, x).Tag > 0 Then
                     mBoard(y, x).Tag += DDConst.PINK_MIST_OFFSET

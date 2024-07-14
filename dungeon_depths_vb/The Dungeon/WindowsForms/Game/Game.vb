@@ -1604,8 +1604,8 @@ Public Class Game
     '| - COMMAND DRIVERS - |
     Function HandleKeyPress(ByVal Keydata As Keys) As Boolean
         'handleKeyPress handles the players pressed keys, and is the driver function for each one
-        Dim startTime As Double = DDDateTime.getTimeNow()
-        Dim endTime As Double = startTime
+        'Dim startTime As Double = DDDateTime.getTimeNow()
+        'Dim endTime As Double = startTime
 
         If Not selecting Then
             If shouldReturnEarly(Keydata) Then Return True
@@ -1621,18 +1621,18 @@ Public Class Game
             drawBoard()
 
             endTime = DDDateTime.getTimeNow()
-            Console.WriteLine("TOTAL TIME: " + (endTime - startTime).ToString())
+            'Console.WriteLine("TOTAL TIME: " + (endTime - startTime).ToString())
             Return True
         Else
             If Keydata.Equals(Keys.Up) Then
                 lstSelec.TopIndex -= 1
                 endTime = DDDateTime.getTimeNow()
-                Console.WriteLine("TOTAL TIME: " + (endTime - startTime).ToString())
+                'Console.WriteLine("TOTAL TIME: " + (endTime - startTime).ToString())
                 Return True
             ElseIf Keydata.Equals(Keys.Down) Then
                 lstSelec.TopIndex += 1
                 endTime = DDDateTime.getTimeNow()
-                Console.WriteLine("TOTAL TIME: " + (endTime - startTime).ToString())
+                'Console.WriteLine("TOTAL TIME: " + (endTime - startTime).ToString())
                 Return True
             End If
 
@@ -1661,15 +1661,15 @@ Public Class Game
                 selecting = False
                 pnlSelection.Visible = False
                 endTime = DDDateTime.getTimeNow()
-                Console.WriteLine("TOTAL TIME: " + (endTime - startTime).ToString())
+                'Console.WriteLine("TOTAL TIME: " + (endTime - startTime).ToString())
                 Return True
             End If
 
             selection(Keydata)
         End If
 
-        endTime = DDDateTime.getTimeNow()
-        Console.WriteLine("TOTAL TIME: " + (endTime - startTime).ToString())
+        'endTime = DDDateTime.getTimeNow()
+        'Console.WriteLine("TOTAL TIME: " + (endTime - startTime).ToString())
 
         Return True
     End Function

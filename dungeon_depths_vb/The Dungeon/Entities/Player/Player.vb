@@ -1879,7 +1879,7 @@ Public Class Player
             Case Else
                 player_image = getPlayerTileImage()
         End Select
-        Dim endTime = DDDateTime.getTimeNow()
+        'Dim endTime = DDDateTime.getTimeNow()
         'Console.WriteLine(" - SET PLAYER_IMAGE TIME: " + (endTime - startTime).ToString())
     End Sub
     Private Function getPlayerTileImage() As Image
