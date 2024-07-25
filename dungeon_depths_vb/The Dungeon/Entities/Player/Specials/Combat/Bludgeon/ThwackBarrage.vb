@@ -13,7 +13,7 @@
         For i = 1 To Int(Rnd() * 6) + If(p.equippedWeapon.GetType().IsSubclassOf(GetType(Bludgeon)), 2, 0)
             attackCMD(0.6, m)
 
-            If i <> 0 Then p.stamina -= getCost()
+            If i <> 1 Then p.stamina -= getCost()
 
             If m.isDead Or p.stamina < getCost() Then Exit For
         Next

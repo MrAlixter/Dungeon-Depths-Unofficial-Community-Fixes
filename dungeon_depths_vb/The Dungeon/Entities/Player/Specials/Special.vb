@@ -80,6 +80,10 @@
         specialList.Add("Draw Cut", New DrawCut(Nothing, Nothing))
         specialList.Add("Fencing Flurry", New FencingFlurry(Nothing, Nothing))
         specialList.Add("Mordhau", New Mordhau(Nothing, Nothing))
+        specialList.Add("Slit", New Slit(Nothing, Nothing))
+        specialList.Add("Stab Barrage", New StabBarrage(Nothing, Nothing))
+        specialList.Add("Precision Incision", New PrecisionIncision(Nothing, Nothing))
+        specialList.Add("Hit and Run", New HitAndRun(Nothing, Nothing))
     End Sub
 
     Sub New(ByRef u As Player, ByRef t As NPC)

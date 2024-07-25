@@ -43,15 +43,15 @@
         Select Case p.perks(perk.meltype)
             Case melType.sword
                 options = DDUtils.union(options, New List(Of String)({"Zoom Step", "Draw Cut", "Fencing Flurry", "Mordhau"}))
-                'options = New List(Of String)({"Mordhau"})
             Case melType.axe
                 options = DDUtils.union(options, New List(Of String)({"Optimal Chop", "Guillotine", "Twofold Slash", "Cleave"}))
             Case melType.dagger
-
+                options = DDUtils.union(options, New List(Of String)({"Slit", "Stab Barrage", "Precision Incision", "Hit and Run"}))
             Case melType.spear
                 options = DDUtils.union(options, New List(Of String)({"Keep Away", "Pierce And Punish", "Power Drill", "Vampiric Thrust"}))
             Case melType.whip
-
+                'options = DDUtils.union(options, New List(Of String)({}))
+                'options = New List(Of String)({})
             Case melType.bludgeon
                 options = DDUtils.union(options, New List(Of String)({"Thwack Barrage"}))
             Case melType.fist

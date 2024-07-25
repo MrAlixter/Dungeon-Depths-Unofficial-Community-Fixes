@@ -177,6 +177,10 @@
     <Compile Include="Entities\Player\Specials\Combat\Axe\Guillotine.vb" />
     <Compile Include="Entities\Player\Specials\Combat\Axe\OptimalChop.vb" />
     <Compile Include="Entities\Player\Specials\Combat\Bludgeon\ThwackBarrage.vb" />
+    <Compile Include="Entities\Player\Specials\Combat\Dagger\HitAndRun.vb" />
+    <Compile Include="Entities\Player\Specials\Combat\Dagger\PrecisionIncision.vb" />
+    <Compile Include="Entities\Player\Specials\Combat\Dagger\StabBarrage.vb" />
+    <Compile Include="Entities\Player\Specials\Combat\Dagger\Slit.vb" />
     <Compile Include="Entities\Player\Specials\Combat\Fist\AbsorptionII.vb" />
     <Compile Include="Entities\Player\Specials\Combat\Misc\Swashbuckle.vb" />
     <Compile Include="Entities\Player\Specials\Combat\Spear\VampiricThrust.vb" />
@@ -1294,7 +1298,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Debug\img\bkg\" />
-    <Folder Include="Entities\Player\Specials\Combat\Dagger\" />
     <Folder Include="Entities\Player\Specials\Combat\Whip\" />
     <Folder Include="Entities\Player\Spells\Magical Girl\Cow\" />
     <Folder Include="Entities\Player\Spells\Magical Girl\Red\" />

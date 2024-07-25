@@ -2847,7 +2847,7 @@ Public Class Player
             Case "Horse"
                 out += "You are a dark brown draft horse, bred for pulling heavy loads." & DDUtils.RNRN
                 Return out + outPutPerkText()
-            Case "Unicord"
+            Case "Unicorn"
                 out += "You are snowy white horse with a medium-sized magical horn on your forehead." & DDUtils.RNRN
                 Return out + outPutPerkText()
             Case "Blob"
@@ -2973,6 +2973,10 @@ Public Class Player
                     End If
                 End If
         End Select
+
+        If Not perks(perk.meltype) = melType.misc Then
+            out += "You are disciplined in the art of the " & DDUtils.capitalizeFirst(CType(perks(perk.meltype), melType).ToString) & "." & DDUtils.RNRN
+        End If
 
         out += outPutPerkText()
 
