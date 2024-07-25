@@ -1,5 +1,5 @@
 ﻿Public Class PhaseHammer
-    Inherits Weapon
+    Inherits Bludgeon
 
     Public Const ITEM_NAME As String = "Phase_Hammer"
 

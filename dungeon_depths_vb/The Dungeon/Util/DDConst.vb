@@ -13,7 +13,7 @@
     Public Shared ReadOnly ALWAYS_REDRAWN_CHARS() As String = {"-", "|", ">", "<", "⇦", "⇨", "/", "\", "a", "¢", "£", "¤", "¥", "¦", "§", "±", "µ", "¡", "¶", "¿", "×", "ø", "æ", "═", "╕", "║", "╙", "╔", "╝"}
     Public Shared ReadOnly NOT_REDRAWN_CHARS() As String = {"", "#", "+", "@", "$", "x", "H", "♩"}
     Public Shared ReadOnly SAVED_CHARS() As String = {"x", "a", "¢", "£", "¤", "¥", "¦", "§", "±", "µ", "¡", "¶", "¿", "×", "ø", "æ"}
-    Public Shared ReadOnly ISO_WALL_CHARS() As String = {"╔", "╝", "╕", "╙", "═", "║"}
+    Public Shared ReadOnly ISO_WALL_CHARS() As Char = {"╔"c, "╝"c, "╕"c, "╙"c, "═"c, "║"c}
 
     Public Shared ReadOnly SELECT_INDS() As Char = "abcdefghij".ToCharArray
 

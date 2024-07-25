@@ -20,6 +20,7 @@ Public Enum npc_perk
     debuffed
     poison
     burn
+    bleed
 End Enum
 Public Class NPC
     Inherits Entity
@@ -82,6 +83,18 @@ Public Class NPC
             TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " takes " & d & " poison damage!")
             takeDMG(d, Game.player1)
             perks(npc_perk.poison) -= 1
+        End If
+
+        If perks(npc_perk.bleed) > 4 Then
+            Dim d As Integer = Math.Min(0.2 * getMaxHealth(), 900)
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " takes " & d & " major bleed damage!")
+            takeDMG(d, Game.player1)
+            perks(npc_perk.bleed) -= 1
+        ElseIf perks(npc_perk.bleed) > -1 Then
+            Dim d As Integer = Math.Min(0.1 * getMaxHealth(), 600)
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " takes " & d & " bleed damage!")
+            takeDMG(d, Game.player1)
+            perks(npc_perk.bleed) -= 1
         End If
 
         If perks(npc_perk.burn) > -1 Then

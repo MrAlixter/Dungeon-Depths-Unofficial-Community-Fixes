@@ -1,4 +1,4 @@
-﻿Public Class Bounty
+﻿Public Class BountysCollection
     Inherits Special
     Sub New(ByRef u As Player, ByRef t As NPC)
         MyBase.New(u, t)

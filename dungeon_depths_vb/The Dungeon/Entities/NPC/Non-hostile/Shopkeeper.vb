@@ -31,8 +31,10 @@
         inv.setCount("Steel_Armor", 1)
         'Weapons
         inv.setCount("Steel_Sword", 1)
+        inv.setCount(SteelAxe.ITEM_NAME, 1)
         inv.setCount("Oak_Staff", 1)
         inv.setCount("Gold_Sword", 1)
+        inv.setCount(GoldAxe.ITEM_NAME, 1)
         inv.setCount("Golden_Staff", 1)
         If DDDateTime.isSummer Then inv.setCount("Staff_of_the_Tidemage", 1)
 

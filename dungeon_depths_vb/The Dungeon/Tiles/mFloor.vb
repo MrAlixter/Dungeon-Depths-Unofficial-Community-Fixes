@@ -140,7 +140,7 @@ Public Class mFloor
     Sub fillIsoWalls()
         For y = 0 To mBoardHeight - 1
             For x = 0 To mBoardWidth - 1
-                If mBoard(y, x).Tag = 0 Then
+                If mBoard(y, x).Tag = DDConst.TILE_WALL And mBoard(y, x).Text.Equals("") Then
                     If ((ptInBounds(New Point(x + 1, y + 1)) And ptInBounds(New Point(x + 1, y)) And ptInBounds(New Point(x, y + 1))) AndAlso (mBoard(y + 1, x + 1).Tag <> 0 And mBoard(y + 1, x).Tag = 0 And mBoard(y, x + 1).Tag = 0)) Then
                         mBoard(y, x).Text = "╔"
                     ElseIf ((ptInBounds(New Point(x - 1, y - 1)) And ptInBounds(New Point(x + 1, y)) And ptInBounds(New Point(x, y - 1)) And ptInBounds(New Point(x + 1, y - 1)) And ptInBounds(New Point(x, y + 1))) AndAlso (mBoard(y, x).Tag = 0 And mBoard(y - 1, x).Tag = 0 And (mBoard(y - 1, x + 1).Tag <> 0 Or mBoard(y, x + 1).Tag <> 0) And mBoard(y + 1, x).Tag <> 0)) Then
@@ -826,22 +826,22 @@ Public Class mFloor
                     mBoard(y, x).Text = "*"
                 ElseIf line(x) = "⇨"c Then
                     mBoard(y, x).Text = "⇨"
-                    mBoard(y, x).Tag = 0
+                    mBoard(y, x).Tag = DDConst.TILE_WALL
                 ElseIf line(x) = "⇦"c Then
                     mBoard(y, x).Text = "⇦"
-                    mBoard(y, x).Tag = 0
+                    mBoard(y, x).Tag = DDConst.TILE_WALL
                 ElseIf line(x) = ">"c Then
                     mBoard(y, x).Text = ">"
-                    mBoard(y, x).Tag = 0
+                    mBoard(y, x).Tag = DDConst.TILE_WALL
                 ElseIf line(x) = "<"c Then
                     mBoard(y, x).Text = "<"
-                    mBoard(y, x).Tag = 0
+                    mBoard(y, x).Tag = DDConst.TILE_WALL
                 ElseIf line(x) = "\"c Then
                     mBoard(y, x).Text = "\"
-                    mBoard(y, x).Tag = 0
+                    mBoard(y, x).Tag = DDConst.TILE_WALL
                 ElseIf line(x) = "/"c Then
                     mBoard(y, x).Text = "/"
-                    mBoard(y, x).Tag = 0
+                    mBoard(y, x).Tag = DDConst.TILE_WALL
                 End If
             Next
         Next
@@ -1480,10 +1480,10 @@ Public Class mFloor
                 ElseIf line(x) = "@"c Then
                     Game.player1.pos = New Point(x, y)
                 ElseIf line(x) = "-"c Then
-                    mBoard(y, x).Tag = 0
+                    mBoard(y, x).Tag = DDConst.TILE_WALL
                     mBoard(y, x).Text = "-"
                 ElseIf line(x) = "|"c Then
-                    mBoard(y, x).Tag = 0
+                    mBoard(y, x).Tag = DDConst.TILE_WALL
                     mBoard(y, x).Text = "|"
                 ElseIf line(x) = "T"c Then
                     addNPC(Game.ttraveler, New Point(x, y))

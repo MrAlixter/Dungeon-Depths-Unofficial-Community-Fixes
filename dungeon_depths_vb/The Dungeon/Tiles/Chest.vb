@@ -106,7 +106,7 @@ Public Class Chest
         toReturn.contents = New Inventory(False)
         Return toReturn
     End Function
-    Public Overridable Sub open()
+    Public Overridable Sub open(Optional ByVal try_mimic As Boolean = True)
         'handles the opening of a chest
         If Game.player1.pos <> pos Then Exit Sub
         If Not Game.combat_engaged And Game.mDun.numCurrFloor >= 3 And Not Me.GetType Is GetType(LoadedChest) Then
@@ -118,7 +118,7 @@ Public Class Chest
             Else
                 mOdds = Int(Rnd() * 10)
             End If
-            If Game.mDun.numCurrFloor <> 9999 And Game.mDun.numCurrFloor <> 10000 And Game.mDun.numCurrFloor <> 91017 And mOdds = 0 And Not contents.getCountAt(53) > 0 And Not Game.shop_npc_engaged And Not Game.combat_engaged Then
+            If try_mimic AndAlso Game.mDun.numCurrFloor <> 9999 And Game.mDun.numCurrFloor <> 10000 And Game.mDun.numCurrFloor <> 91017 And mOdds = 0 And Not contents.getCountAt(53) > 0 And Not Game.shop_npc_engaged And Not Game.combat_engaged Then
                 Monster.createMimic(contents)
                 Exit Sub
             End If

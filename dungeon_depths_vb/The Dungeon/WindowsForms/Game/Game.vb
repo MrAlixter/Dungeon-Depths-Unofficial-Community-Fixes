@@ -652,7 +652,6 @@ Public Class Game
                     If in_pink_mist Then tile_tag -= DDConst.PINK_MIST_OFFSET
 
                     viewArray(y, x) = tile_tag
-
                     If tile_tag = DDConst.TILE_SEEN Or DDConst.ALWAYS_REDRAWN_CHARS.Contains(tile_text) Then
                         'get the tile to display
                         viewArray(y, x) = getTileToDisplay(player1.pos.X + indX, player1.pos.Y + indY, tile_text, tile_tag)
@@ -1915,8 +1914,28 @@ Public Class Game
         If player1.selectedSpecial.Equals("~-~") Then player1.selectedSpecial = s
 
         If combat_engaged Then
-            If s = "Flash Strike" Then
+            If s = "Flash Strike" Or s = "Zoom Step" Then
+                'Go First
                 Special.specPerform(m, player1, s)
+            ElseIf s = "Power Drill" Then
+                'Go Last
+                finishSelectSpecial()
+
+                Special.specPerform(m, player1, s)
+
+                updatePnlCombat(player1, player1.currTarget)
+
+                Exit Sub
+            ElseIf s = "Twofold Slash" Then
+                player1.nextCombatAction = Sub(t As Entity) Special.specPerform(t, player1, s)
+
+                finishSelectSpecial()
+
+                If Not m.isDead Then player1.attackCMD(m)
+
+                updatePnlCombat(player1, player1.currTarget)
+
+                Exit Sub
             Else
                 player1.nextCombatAction = Sub(t As Entity) Special.specPerform(t, player1, s)
             End If
@@ -1924,6 +1943,12 @@ Public Class Game
             Special.specPerform(m, player1, s)
         End If
 
+        finishSelectSpecial()
+
+        'updates the combat banner
+        updatePnlCombat(player1, player1.currTarget)
+    End Sub
+    Sub finishSelectSpecial()
         If cboxSpec.Items.Count = 0 Then
             cboxSpec.Visible = False
             btnSpec.Visible = False
@@ -1932,9 +1957,6 @@ Public Class Game
         cboxSpec.Text = "-- Select --"
         queueSetup()
         updatable_queue.ping()
-
-        'updates the combat banner
-        updatePnlCombat(player1, player1.currTarget)
     End Sub
     Sub selectArmor(ByVal index As Integer)
         Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
@@ -2556,63 +2578,63 @@ Public Class Game
                     Next
                 Next
             ElseIf last_keys_pressed = "gogo" Then
-                'Try
-                Dim f As Integer = CInt(InputBox("Which floor?"))
-                quickChangeFloor(f)
-                'Catch ex As Exception
-                'End Try
+                Try
+                    Dim f As Integer = CInt(InputBox("Which floor?"))
+                    quickChangeFloor(f)
+                Catch ex As Exception
+                End Try
             ElseIf last_keys_pressed = "aeio" Then
-                player1.inv.add(149, 1)
-                player1.UIupdate()
+                    player1.inv.add(149, 1)
+                    player1.UIupdate()
             ElseIf last_keys_pressed = "aaaa" Then
-                Dim name As String = InputBox("Enter a Name:")
-                MsgBox("If " & name & " was a bimbo, they'd be " & Polymorph.bimboizeName(name))
+                    Dim name As String = InputBox("Enter a Name:")
+                    MsgBox("If " & name & " was a bimbo, they'd be " & Polymorph.bimboizeName(name))
             ElseIf last_keys_pressed = "sawd" Then
-                player1.lust -= 10
-                player1.UIupdate()
+                    player1.lust -= 10
+                    player1.UIupdate()
             ElseIf last_keys_pressed = "wasd" Then
-                Dim ct = New ClothingTester()
-                ct.ShowDialog()
-                ct.Dispose()
-                player1.UIupdate()
+                    Dim ct = New ClothingTester()
+                    ct.ShowDialog()
+                    ct.Dispose()
+                    player1.UIupdate()
             ElseIf last_keys_pressed = "ssss" Then
-                Try
-                    Dim f As Integer = CInt(InputBox("how many levels?"))
-                    player1.deLevel(f)
-                Catch ex As Exception
-                End Try
+                    Try
+                        Dim f As Integer = CInt(InputBox("how many levels?"))
+                        player1.deLevel(f)
+                    Catch ex As Exception
+                    End Try
             ElseIf last_keys_pressed = "ffff" Then
-                'this code is for generic debugging and is likely to change in the future
-                Dim p = player1
+                    'this code is for generic debugging and is likely to change in the future
+                    Dim p = player1
 
-                p.learnSpell("Cynn's Disguise")
+                    p.learnSpell("Cynn's Disguise")
             ElseIf last_keys_pressed = "swda" Then
-                Try
-                    Dim npcInd As Integer = CInt(InputBox("Enter an NPC index:" & vbCrLf &
-                                                     "0 - Shopkeeper" & vbCrLf &
-                                                     "1 - Shady Wizard" & vbCrLf &
-                                                     "2 - Hypnotist Teacher" & vbCrLf &
-                                                     "3 - Food Vendor" & vbCrLf &
-                                                     "4 - Weaponsmith" & vbCrLf &
-                                                     "5 - Curse Broker" & vbCrLf &
-                                                     "6 - Magical Girl"))
-                    Dim newpoint = currFloor.getRndAdjPoint(player1)
-                    shop_npc_list(npcInd).pos = newpoint
-                    currFloor.npcPositions(npcInd) = newpoint
+                    Try
+                        Dim npcInd As Integer = CInt(InputBox("Enter an NPC index:" & vbCrLf &
+                                                         "0 - Shopkeeper" & vbCrLf &
+                                                         "1 - Shady Wizard" & vbCrLf &
+                                                         "2 - Hypnotist Teacher" & vbCrLf &
+                                                         "3 - Food Vendor" & vbCrLf &
+                                                         "4 - Weaponsmith" & vbCrLf &
+                                                         "5 - Curse Broker" & vbCrLf &
+                                                         "6 - Magical Girl"))
+                        Dim newpoint = currFloor.getRndAdjPoint(player1)
+                        shop_npc_list(npcInd).pos = newpoint
+                        currFloor.npcPositions(npcInd) = newpoint
 
-                    drawBoard()
-                Catch ex As Exception
-                End Try
+                        drawBoard()
+                    Catch ex As Exception
+                    End Try
             ElseIf last_keys_pressed = "eaea" Then
-                player1.knownSpecials.Clear()
-                player1.knownSpells.Clear()
+                    player1.knownSpecials.Clear()
+                    player1.knownSpells.Clear()
 
-                For Each s In Spell.spellList.Keys
-                    player1.knownSpells.Add(s)
-                Next
-                For Each s In Special.specialList.Keys
-                    player1.knownSpecials.Add(s)
-                Next
+                    For Each s In Spell.spellList.Keys
+                        player1.knownSpells.Add(s)
+                    Next
+                    For Each s In Special.specialList.Keys
+                        player1.knownSpecials.Add(s)
+                    Next
             End If
         End If
         last_keys_pressed = ""

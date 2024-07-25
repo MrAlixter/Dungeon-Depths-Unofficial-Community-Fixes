@@ -38,7 +38,7 @@
         Return Nothing
     End Function
 
-    Public Overrides Sub open()
+    Public Overrides Sub open(Optional ByVal try_mimic As Boolean = True)
         MyBase.open()
         onOpen()
         onOpen = Nothing

@@ -1,4 +1,10 @@
-﻿Public MustInherit Class Entity
+﻿Public Enum edir
+    up
+    down
+    left
+    right
+End Enum
+Public MustInherit Class Entity
     Implements Updatable
 
     Public name, sName As String
@@ -22,6 +28,8 @@
 
     Public nextCombatAction As Action(Of Entity) = Nothing
     Public currTarget As Entity = Nothing
+
+    Public direction As edir = edir.up
 
     '|MOVEMENT COMMANDS|
     MustOverride Sub reachedFPathDest()
@@ -64,15 +72,19 @@
     End Sub
     Public Sub moveUp()
         move(pos.X, pos.Y - 1)
+        direction = edir.up
     End Sub
     Public Sub moveDown()
         move(pos.X, pos.Y + 1)
+        direction = edir.down
     End Sub
     Public Sub moveLeft()
         move(pos.X - 1, pos.Y)
+        direction = edir.left
     End Sub
     Public Sub moveRight()
         move(pos.X + 1, pos.Y)
+        direction = edir.right
     End Sub
 
     '|UPDATE|

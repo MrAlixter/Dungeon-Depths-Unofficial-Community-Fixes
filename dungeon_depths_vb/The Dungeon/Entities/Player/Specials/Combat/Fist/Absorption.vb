@@ -1,4 +1,4 @@
-﻿Public Class Abso
+﻿Public Class Absorption
     Inherits Special
     Sub New(ByRef u As Player, ByRef t As NPC)
         MyBase.New(u, t)

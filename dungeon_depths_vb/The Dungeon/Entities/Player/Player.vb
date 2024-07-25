@@ -108,6 +108,8 @@
     pinkmist        '106
     dubrations      '107
     hidehat         '108
+    magtype         '109
+    meltype         '110
 End Enum
 Public Enum stateInd
     goddState
@@ -121,6 +123,27 @@ Public Enum stateInd
     preBSBody
     preBSStartState
 End Enum
+Public Enum magType
+    fire
+    ice
+    plant
+    light
+    blight
+    flux
+    psychic
+    misc
+End Enum
+Public Enum melType
+    fist
+    sword
+    axe
+    dagger
+    spear
+    bludgeon
+    whip
+    misc
+End Enum
+
 Public Class Player
     'Player is the representation of a player controlled entity (the main player, any teammates)
     Inherits Entity
@@ -487,82 +510,105 @@ Public Class Player
         pClass = classes(s)
         'sets loadout based on selected class
         If s = "Warrior" Then
-            inv.add(83, 1)
-            inv.add(84, 1)
-            equippedArmor = inv.item(83)
-            equippedWeapon = inv.item(84)
+            inv.add(BronzeArmor.ITEM_NAME, 1)
+            inv.add(BronzeAxe.ITEM_NAME, 1)
 
+            equippedArmor = inv.item(BronzeArmor.ITEM_NAME)
+            equippedWeapon = inv.item(BronzeAxe.ITEM_NAME)
+
+            perks(perk.meltype) = melType.axe
         ElseIf s = "Rogue" Then
-            inv.add(164, 1)
-            inv.add(165, 1)
-            equippedAcce = inv.item(164)
-            equippedWeapon = inv.item(165)
+            inv.add(StealthGear.ITEM_NAME, 1)
+            inv.add(MShank.ITEM_NAME, 1)
 
+            equippedAcce = inv.item(StealthGear.ITEM_NAME)
+            equippedWeapon = inv.item(MShank.ITEM_NAME)
+
+            perks(perk.meltype) = melType.dagger
         ElseIf s = "Mage" Then
             knownSpells.Add("Fireball")
-            inv.add(2, 3)
-            inv.add(4, 1)
-            inv.add(21, 1)
-            equippedWeapon = inv.item(21)
 
+            inv.add(HealthPotion.ITEM_NAME, 3)
+            inv.add(Spellbook.ITEM_NAME, 1)
+            inv.add(OakStaff.ITEM_NAME, 1)
+
+            equippedWeapon = inv.item(OakStaff.ITEM_NAME)
+
+            perks(perk.magtype) = magType.fire
         ElseIf s = "Cleric" Then
             knownSpells.Add("Heal")
-            inv.add(2, 1)
-            inv.add(13, 1)
-            inv.add(283, 1)
-            inv.add(284, 1)
-            equippedAcce = inv.item(283)
-            equippedWeapon = inv.item(284)
 
+            inv.add(HealthPotion.ITEM_NAME, 1)
+            inv.add(ManaPotion.ITEM_NAME, 1)
+            inv.add(HallowedTalisman.ITEM_NAME, 1)
+            inv.add(LargeStick.ITEM_NAME, 1)
+
+            equippedAcce = inv.item(HallowedTalisman.ITEM_NAME)
+            equippedWeapon = inv.item(LargeStick.ITEM_NAME)
+
+            perks(perk.magtype) = magType.light
         ElseIf s = "Witch" Then
             knownSpells.Add("Turn to Frog")
-            If breastSize = -1 Then breastSize = 0
-            inv.add(4, 1)
-            inv.add(117, 3)
-            inv.add(166, 1)
-            inv.add(167, 1)
-            prt.skincolor = DDUtils.cShift(prt.skincolor, Color.ForestGreen, 15)
-            equippedArmor = inv.item(166)
-            equippedArmor.onEquip(Me)
-            equippedWeapon = inv.item(167)
 
+            inv.add(Spellbook.ITEM_NAME, 1)
+            inv.add(GardenSalad.ITEM_NAME, 3)
+            inv.add(FoNight.ITEM_NAME, 1)
+            inv.add(WOShock.ITEM_NAME, 1)
+
+            If breastSize = -1 Then breastSize = 0
+            prt.skincolor = DDUtils.cShift(prt.skincolor, Color.ForestGreen, 15)
+
+            equippedArmor = inv.item(FoNight.ITEM_NAME)
+            equippedArmor.onEquip(Me)
+            equippedWeapon = inv.item(WOShock.ITEM_NAME)
+
+            perks(perk.magtype) = magType.blight
         ElseIf s = "Magical Girl" Then
             pClass = classes("Classless")
+
             maxHealth = 80
             attack = 7
             defense = 7
             speed = 7
-            inv.add(2, 3)
-            inv.add(4, 1)
-            inv.add(11, 1)
+
+            inv.add(HealthPotion.ITEM_NAME, 3)
+            inv.add(Spellbook.ITEM_NAME, 1)
+            inv.add(MagGirlWand.ITEM_NAME, 1)
+
             TextEvent.pushLog("You find a wand lodged in the entrance...  Maybe you should equip it?")
 
+            perks(perk.magtype) = magType.flux
         ElseIf s = "Valkyrie" Then
             pClass = classes("Classless")
+
             maxHealth = 80
             attack = 7
             defense = 7
             speed = 7
-            inv.add(2, 3)
-            inv.add(88, 1)
-            inv.add("Valkyrie_Sword", 1)
-            TextEvent.pushLog("You find a sword piercing the floor...  Maybe you should equip it?")
 
+            inv.add(HealthPotion.ITEM_NAME, 3)
+            inv.add(CombatManual.ITEM_NAME, 1)
+            inv.add(ValkyrieSword.ITEM_NAME, 1)
+
+            perks(perk.meltype) = melType.sword
+
+            TextEvent.pushLog("You find a sword piercing the floor...  Maybe you should equip it?")
         ElseIf s = "Time Cop" Then
             pClass = classes("Time Cop")
-            inv.add("Phase_Pistol", 1)
-            inv.add("Phase_Deflector", 1)
-            inv.add("AAAAAA_Battery", 45)
-            inv.add("Time_Cop_Clothes", 1)
 
-            equippedWeapon = inv.item("Phase_Pistol")
-            equippedArmor = inv.item(282)
+            inv.add(PhasePistol.ITEM_NAME, 1)
+            inv.add(PhaseDeflector.ITEM_NAME, 1)
+            inv.add(A6Battery.ITEM_NAME, 45)
+            inv.add(TimeCopClothes.ITEM_NAME, 1)
+
+            equippedWeapon = inv.item(PhasePistol.ITEM_NAME)
+            equippedArmor = inv.item(TimeCopClothes.ITEM_NAME)
+
             pState = New State(Me)
-            Equipment.accChange(Me, "Phase_Deflector")
+            Equipment.accChange(Me, PhaseDeflector.ITEM_NAME)
             Game.lblEvent.Visible = False
             Game.compOOT = True
             gold = 0
-
         ElseIf s = "Cynn's Ally" Then
             pClass = classes("Rogue")
 
@@ -577,6 +623,7 @@ Public Class Player
             equippedAcce.onEquip(Me)
             equippedWeapon = inv.item(BronzeSpear.ITEM_NAME)
 
+            perks(perk.meltype) = melType.spear
         ElseIf s = "Mecha-Warrior" Then
             pClass = classes("Warrior")
             pForm = forms("Combat Unit")
@@ -601,16 +648,18 @@ Public Class Player
 
             maxMana = 999
 
-            inv.add(2, 3)
-            inv.add(4, 1)
-            inv.add(21, 1)
+            inv.add(HealthPotion.ITEM_NAME, 3)
+            inv.add(Spellbook.ITEM_NAME, 1)
+            inv.add(OakStaff.ITEM_NAME, 1)
 
-            equippedWeapon = inv.item(21)
+            equippedWeapon = inv.item(OakStaff.ITEM_NAME)
+
+            perks(perk.magtype) = magType.blight
         End If
 
         If Settings.active(setting.startwithbooks) Then
-            inv.add(242, 1)
-            inv.add(243, 1)
+            inv.add(Spellcyclopedia.ITEM_NAME, 1)
+            inv.add(BookOSpecials.ITEM_NAME, 1)
         End If
 
         'equip armor, boost mana if a staff is equipped
@@ -642,6 +691,9 @@ Public Class Player
         For Each p In System.Enum.GetValues(GetType(perk))
             perks.Add(p, -1)
         Next
+
+        perks(perk.magtype) = magType.misc
+        perks(perk.meltype) = melType.misc
     End Sub
     Private Shared Sub initClasses()
         'creates the class dictionary

@@ -37,6 +37,27 @@
         Return New CombatManual().specials
     End Function
     Public Overrides Function specials() As String()
-        Return {"Rapid Fire Jabs", "Focused Roundhouse", "Heavy Blow", "Focused Barrage", "Aura Cannon", "Dodge"}
+        Dim options As List(Of String) = New List(Of String)({"Heavy Blow", "Aura Cannon", "Dodge"})
+        Dim p As Player = Game.player1
+
+        Select Case p.perks(perk.meltype)
+            Case melType.sword
+                options = DDUtils.union(options, New List(Of String)({"Zoom Step", "Draw Cut", "Fencing Flurry", "Mordhau"}))
+                'options = New List(Of String)({"Mordhau"})
+            Case melType.axe
+                options = DDUtils.union(options, New List(Of String)({"Optimal Chop", "Guillotine", "Twofold Slash", "Cleave"}))
+            Case melType.dagger
+
+            Case melType.spear
+                options = DDUtils.union(options, New List(Of String)({"Keep Away", "Pierce And Punish", "Power Drill", "Vampiric Thrust"}))
+            Case melType.whip
+
+            Case melType.bludgeon
+                options = DDUtils.union(options, New List(Of String)({"Thwack Barrage"}))
+            Case melType.fist
+                options = DDUtils.union(options, New List(Of String)({"Rapid Fire Jabs", "Focused Roundhouse", "Focused Barrage"}))
+        End Select
+
+        Return options.ToArray()
     End Function
 End Class
