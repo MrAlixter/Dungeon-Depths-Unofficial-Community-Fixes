@@ -118,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\Mayue.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\Elementals\IceElemental.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Elementals\PinkMistElemental.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Gorgons\BimboGorgon.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Witches\MarissasStudent.vb" />
@@ -341,6 +342,7 @@
     <Compile Include="Items\Equipment\Weapons\Bludgeons\MistwarpedRod.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\IronDagger.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\FeatherDagger.vb" />
+    <Compile Include="Items\Equipment\Weapons\Daggers\IcicleDagger.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\RunecursedDagger.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\KestrelKnife.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\VipersFang.vb" />
@@ -348,6 +350,7 @@
     <Compile Include="Items\Equipment\Weapons\Misc\PixieDuster.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\CrackedBrick.vb" />
     <Compile Include="Items\Equipment\Weapons\Spears\HeronSpear.vb" />
+    <Compile Include="Items\Equipment\Weapons\Spears\IcespikeSpear.vb" />
     <Compile Include="Items\Equipment\Weapons\Staffs\Hyacinth.vb" />
     <Compile Include="Items\Equipment\Weapons\Swords\CyberValkyrieSword.vb" />
     <Compile Include="Items\Equipment\Weapons\Swords\PeregrineFalchion.vb" />
