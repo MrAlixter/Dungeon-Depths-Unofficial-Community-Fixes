@@ -11,6 +11,7 @@
 
         '|Item Flags|
         usable = True
+        can_be_stolen = False
 
         '|Stats|
         count = 0

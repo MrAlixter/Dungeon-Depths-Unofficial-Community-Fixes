@@ -84,6 +84,9 @@
         specialList.Add("Stab Barrage", New StabBarrage(Nothing, Nothing))
         specialList.Add("Precision Incision", New PrecisionIncision(Nothing, Nothing))
         specialList.Add("Hit and Run", New HitAndRun(Nothing, Nothing))
+        specialList.Add("Crackleg Snare", New CracklegSnare(Nothing, Nothing))
+        specialList.Add("Yoink", New Yoink(Nothing, Nothing))
+        specialList.Add("Countercrack", New Countercrack(Nothing, Nothing))
     End Sub
 
     Sub New(ByRef u As Player, ByRef t As NPC)

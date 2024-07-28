@@ -191,6 +191,9 @@
     <Compile Include="Entities\Player\Specials\Combat\Sword\DrawCut.vb" />
     <Compile Include="Entities\Player\Specials\Combat\Sword\FencingFlurry.vb" />
     <Compile Include="Entities\Player\Specials\Combat\Sword\ZoomStep.vb" />
+    <Compile Include="Entities\Player\Specials\Combat\Whip\CracklegSnare.vb" />
+    <Compile Include="Entities\Player\Specials\Combat\Whip\Countercrack.vb" />
+    <Compile Include="Entities\Player\Specials\Combat\Whip\Yoink.vb" />
     <Compile Include="Entities\Player\Specials\Crimson Manual\Chameleon.vb" />
     <Compile Include="Entities\Player\Specials\Utility\Crowsnest.vb" />
     <Compile Include="Entities\Player\Specials\Utility\CLight.vb" />
@@ -1298,7 +1301,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Debug\img\bkg\" />
-    <Folder Include="Entities\Player\Specials\Combat\Whip\" />
     <Folder Include="Entities\Player\Spells\Magical Girl\Cow\" />
     <Folder Include="Entities\Player\Spells\Magical Girl\Red\" />
     <Folder Include="Entities\Player\Spells\Magical Girl\White\" />

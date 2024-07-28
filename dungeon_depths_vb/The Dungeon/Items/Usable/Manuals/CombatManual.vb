@@ -50,8 +50,7 @@
             Case melType.spear
                 options = DDUtils.union(options, New List(Of String)({"Keep Away", "Pierce And Punish", "Power Drill", "Vampiric Thrust"}))
             Case melType.whip
-                'options = DDUtils.union(options, New List(Of String)({}))
-                'options = New List(Of String)({})
+                options = DDUtils.union(options, New List(Of String)({"Crackleg Snare", "Yoink", "Countercrack"}))
             Case melType.bludgeon
                 options = DDUtils.union(options, New List(Of String)({"Thwack Barrage"}))
             Case melType.fist

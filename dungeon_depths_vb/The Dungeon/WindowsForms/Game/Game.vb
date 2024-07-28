@@ -1917,7 +1917,7 @@ Public Class Game
             If s = "Flash Strike" Or s = "Zoom Step" Then
                 'Go First
                 Special.specPerform(m, player1, s)
-            ElseIf s = "Power Drill" Then
+            ElseIf s = "Power Drill" Or s = "Countercrack" Then
                 'Go Last
                 finishSelectSpecial()
 
