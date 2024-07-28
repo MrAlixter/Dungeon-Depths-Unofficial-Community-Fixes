@@ -1,0 +1,42 @@
+﻿Public Class Yoink
+    Inherits Special
+    Sub New(ByRef u As Player, ByRef t As NPC)
+        MyBase.New(u, t)
+        setName("Yoink")
+        MyBase.setUOC(False)
+        MyBase.setcost(26)
+    End Sub
+    Public Overrides Sub effect()
+        Dim p = MyBase.getUser
+        Dim m = MyBase.getTarget
+
+        If Not p.equippedWeapon.GetType().IsSubclassOf(GetType(Whip)) Then
+            TextEvent.fpushAndLog("...but you don't have a whip equipped.")
+
+            p.stamina += getCost()
+            Exit Sub
+        End If
+
+        Dim potentialSteals As List(Of Item) = New List(Of Item)
+
+        For i = 0 To getTarget.inv.upperBound()
+            If getTarget.inv.item(i).getCount > 0 And Not getTarget.inv.item(i).getName = "Gold" And getTarget.inv.item(i).can_be_stolen Then potentialSteals.Add(getTarget.inv.item(i))
+        Next
+
+        If potentialSteals.Count < 1 Then
+            TextEvent.pushAndLog(CStr(getTarget.title & MyBase.getTarget.getName & " doesn't really have anything to steal..."))
+        Else
+            Dim i As Item = potentialSteals(Int(Rnd() * potentialSteals.Count))
+            getTarget.inv.add(i.id, -1)
+            getUser.inv.add(i.id, 1)
+
+            getUser.UIupdate()
+
+            TextEvent.pushAndLog(CStr("You snatch yourself a " & i.getName & " from" & getTarget.title.ToLower & MyBase.getTarget.getName & "'s belongings."))
+        End If
+    End Sub
+
+    Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object
+        Return "Snatches an item at random from the target's inventory."
+    End Function
+End Class
