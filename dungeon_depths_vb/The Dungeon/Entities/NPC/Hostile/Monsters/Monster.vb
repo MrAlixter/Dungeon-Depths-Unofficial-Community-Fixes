@@ -32,6 +32,7 @@
     marissa_neop
     bewitched_ration
     pink_mist_elem
+    ice_elemental
 End Enum
 
 Public Class Monster
@@ -61,7 +62,7 @@ Public Class Monster
         l.Add(New Tuple(Of mInd, String)(mInd.archwitch_recluse, ArchwitchRecluse.BASE_NAME))
         l.Add(New Tuple(Of mInd, String)(mInd.lepo_ooze, LeporineOoze.BASE_NAME))
         l.Add(New Tuple(Of mInd, String)(mInd.marissa_neop, MarissasStudent.BASE_NAME))
-
+        l.Add(New Tuple(Of mInd, String)(mInd.ice_elemental, IceElemental.BASE_NAME))
         Return l
     End Function
 
@@ -179,23 +180,25 @@ Public Class Monster
                 Dim m = New Monster
                 m.name = BewitchedRations.ITEM_NAME
                 Return m
+            Case mInd.ice_elemental
+                Return New IceElemental
         End Select
 
         Return New Monster()
     End Function
     Shared Function floorMonsterTier(ByVal floorInd As Integer) As Integer()
         '| -- Random Enemies -- |
-        Dim tier = {mInd.mesm_thrall, mInd.slime, mInd.spider}
+        Dim tier = {mInd.mesm_thrall, mInd.slime, mInd.spider, mInd.ice_elemental}
 
         Select Case floorInd
             Case 1
-                tier = {mInd.mesm_thrall, mInd.slime, mInd.spider}
+                tier = {mInd.mesm_thrall, mInd.slime, mInd.spider, mInd.ice_elemental}
             Case 2
-                tier = {mInd.mesm_thrall, mInd.slime, mInd.enth_sorc, mInd.spider}
+                tier = {mInd.mesm_thrall, mInd.slime, mInd.enth_sorc, mInd.spider, mInd.ice_elemental}
             Case 3
-                tier = {mInd.mesm_thrall, mInd.slime, mInd.enth_sorc, mInd.spider, mInd.arach_hunt}
+                tier = {mInd.mesm_thrall, mInd.slime, mInd.enth_sorc, mInd.spider, mInd.arach_hunt, mInd.ice_elemental}
             Case 4
-                tier = {mInd.mesm_thrall, mInd.slime, mInd.goo_girl, mInd.enth_sorc, mInd.spider, mInd.arach_hunt, mInd.web_caster_arach}
+                tier = {mInd.mesm_thrall, mInd.slime, mInd.goo_girl, mInd.enth_sorc, mInd.spider, mInd.arach_hunt, mInd.web_caster_arach, mInd.ice_elemental}
             Case 7
                 tier = {mInd.mesm_thrall, mInd.slime, mInd.goo_girl, mInd.enth_sorc, mInd.spider, mInd.arach_hunt, mInd.alraune, mInd.fox_fire_elem, mInd.fox_fire_elem, mInd.web_caster_arach}
             Case 10
@@ -206,7 +209,7 @@ Public Class Monster
                 tier = {}
             Case Else
                 If Int(Rnd() * 3) = 0 Then
-                    tier = {mInd.mesm_thrall, mInd.slime, mInd.goo_girl, mInd.spider, mInd.arach_hunt, mInd.alraune, mInd.alraune, mInd.web_caster_arach}
+                    tier = {mInd.mesm_thrall, mInd.slime, mInd.goo_girl, mInd.spider, mInd.arach_hunt, mInd.alraune, mInd.alraune, mInd.web_caster_arach, mInd.ice_elemental}
                 ElseIf Int(Rnd() * 3) = 1 Then
                     tier = {mInd.mesm_thrall, mInd.slime, mInd.goo_girl, mInd.enth_sorc, mInd.spider, mInd.fox_fire_elem, mInd.web_caster_arach, mInd.web_caster_arach}
                 Else

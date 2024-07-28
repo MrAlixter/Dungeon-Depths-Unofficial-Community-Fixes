@@ -14,7 +14,7 @@
         under_chin = True
 
         '|Stats|
-        h_boost = 20
+        h_boost = 30
         w_boost = -1
         count = 0
         value = 834
@@ -39,7 +39,13 @@
 
     Overrides Sub onEquip(ByRef p As Player)
         p.health += 40 / p.getMaxHealth
-        p.ongoingTFs.add(New BimBellTF(9, 15, 2.0, True))
+
+        If Not p.ongoingTFs.contains(tfind.bimbomino) And Not p.formName.Contains("Minotaur") And Not p.formName.Contains("Cow") Then
+            p.ongoingTFs.add(New BimBellTF(9, 15, 2.0, True))
+        Else
+            TextEvent.fpush("Your bimbell rings with a pleasant clang.")
+        End If
+
         If p.health > 1 Then p.health = 1
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)

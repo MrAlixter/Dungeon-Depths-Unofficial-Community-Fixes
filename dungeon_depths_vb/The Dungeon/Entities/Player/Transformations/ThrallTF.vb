@@ -136,6 +136,22 @@
                        "LISTEN AND LISTEN WELL, I have an ultimatium for you.  Join me as a vessel for my infernal power, or... die.  Understand?""", AddressOf acceptSorc, AddressOf fightSorc, "Do you accept?")
     End Sub
 
+    Shared Sub collarlessThallTF(Optional ByRef p As Player = Nothing)
+        If p Is Nothing Then p = Game.player1
+
+        p.savePState()
+
+        p.changeClass("Thrall")
+
+        If p.prt.sexBool Then
+            p.prt.setIAInd(pInd.eyes, 19, True, True)
+        Else
+            p.prt.setIAInd(pInd.eyes, 8, False, True)
+        End If
+
+        p.perks(perk.polymorphed) = Int(Rnd() * 10) + 3
+    End Sub
+
     Public Overrides Sub stopTF()
         MyBase.stopTF()
         Game.player1.perks(perk.thrall) = -1

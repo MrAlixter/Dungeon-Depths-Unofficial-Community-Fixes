@@ -37,6 +37,14 @@
             Exit Sub
         End If
 
+        If p.passDieRoll(8, 5) Then
+            TextEvent.push("You collapse to the ground defeated, as the thrall pulls a metal collar from a loop on its belt." & DDUtils.RNRN &
+                           "With the last of your strength, you raise a feeble arm as they lurch towards you with the collar outstretched.  You avert your eyes from the thrall; as its murmurs of submission are cut off by a sharp click." & DDUtils.RNRN &
+                           "SNAP!" & DDUtils.RNRN &
+                           "The thrall wanders off, happy to have brought another into its master's fold.", AddressOf thrallFleeP2)
+            Exit Sub
+        End If
+
         '| - Main player death case - |
         p.inv.add(ThrallCollar.ITEM_NAME, 1)
         EquipmentDialogBackend.equipAcce(p, ThrallCollar.ITEM_NAME)
@@ -47,7 +55,7 @@
         p.UIupdate()
 
         TextEvent.pushLog("The thrall snaps a collar around your neck, enslaving you to " & p_pronoun & " master's will!  -3 WIL.")
-        TextEvent.push("As you collapse, defeated, you see the thrall pull a small metal collar from a loop on their belt." & DDUtils.RNRN &
+        TextEvent.push("You collapse to the ground defeated, as the thrall pulls a metal collar from a loop on its belt." & DDUtils.RNRN &
                        "Lacking any strength to resist, you lie powerless as they snap it around your neck whilst murmuring the joys of submission into your ear.  Once the collar is fitted properly, a small array of runes blazes with violet energy." & DDUtils.RNRN &
                        "SNAP!" & DDUtils.RNRN &
                        "Your mind goes blank in an instant, and your surroundings fade away into unimportantance.", AddressOf thrallLN2)
@@ -64,5 +72,13 @@
 
         TextEvent.push("With a final warning not to fail them, the foreign presence exits your mind." & DDUtils.RNRN &
                        "Once again you are alone in the dungeon, aside from your new " & ptype & " and your collective task.")
+    End Sub
+
+    Private Sub thrallFleeP2()
+        Game.player1.inv.add(ThrallCollar.ITEM_NAME, 1)
+        Game.player1.UIupdate()
+
+        TextEvent.push("The thrall's collar is wrapped around your wrist." & DDUtils.RNRN &
+                       "Looks like this thrall wasn't a very good minion...")
     End Sub
 End Class

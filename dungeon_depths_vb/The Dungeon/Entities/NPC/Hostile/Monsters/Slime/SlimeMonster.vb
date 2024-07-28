@@ -55,11 +55,22 @@
                             "While your back is turned to it, however, " & getNameWithTitle() & " slings a ball of goo towards you; the impact of which causes you to stumble as it strikes your back." & DDUtils.RNRN &
                             "You can already feel it starting to writhe and squirm as it begins to move..."
         despawn("p-death")
+
+        If p.passDieRoll(8, 3) Then
+            TextEvent.push(DDUtils.capitalizeFirst(getNameWithTitle()) & " bounces up and dowm menacingly as you collapse into a defeated heap.", AddressOf slimeFleeP2)
+            Exit Sub
+        End If
+
         If p.perks(perk.slimetf) = -1 Then
             p.perks(perk.slimetf) = 1
         End If
 
         p.ongoingTFs.add(New SlimeETF(p.perks(perk.slimetf)))
         TextEvent.push(out, AddressOf p.update)
+    End Sub
+
+    Private Sub slimeFleeP2()
+        TextEvent.push(DDUtils.capitalizeFirst(getNameWithTitle()) & " keeps bouncing in place..." & DDUtils.RNRN &
+                       "You slowly crawl away.")
     End Sub
 End Class

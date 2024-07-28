@@ -56,6 +56,23 @@
             Exit Sub
         End If
 
+        If p.passDieRoll(8, 5) Then
+            TextEvent.pushLog("The " & If(pronoun.Equals("he"), "sorcerer", "sorceress") & " snaps " & p_pronoun & " fingers, dropping you into a trance!  -2 WIL.")
+            Game.player1.will -= 2
+            Game.player1.UIupdate()
+
+            ThrallTF.collarlessThallTF(Game.player1)
+
+            Dim possible_desired_classes As List(Of String) = {"Warrior", "Mage", "Rogue", "Cleric", "Dancer", "Paladin", "Necromancer", "Barbarian"}.ToList
+            If possible_desired_classes.Contains(p.className) Then possible_desired_classes.Remove(p.className)
+            TextEvent.push("""Ah, what a victory!"", your opponent exclaims as you collapse, defeated. ""Don't worry, I'm sure you'll make a perfect slave...""" & DDUtils.RNRN &
+                           DDUtils.capitalizeFirst(pronoun) & " pauses for a bit, clasping your cheeks tenderly...  ""Mmm... maybe not...""" & DDUtils.RNRN &
+                           """Really I was looking for more of a... " & possible_desired_classes(Int(Rnd() * possible_desired_classes.Count)) & "..."" your opponent say, pensively, ""Still, it would be a waste to discard such a pathetic foe...""" & DDUtils.RNRN &
+                           "SNAP!" & DDUtils.RNRN &
+                           "Your mind goes blank in an instant, and your surroundings fade away into unimportantance.", AddressOf thrallFleeP2)
+            Exit Sub
+        End If
+
         '| - Main player death case - |
         p.inv.add(ThrallCollar.ITEM_NAME, 1)
         EquipmentDialogBackend.equipAcce(p, ThrallCollar.ITEM_NAME)
@@ -88,5 +105,13 @@
 
         TextEvent.push("With a final warning not to fail them, " & getNameWithTitle() & " pats you on the head and teleports away." & DDUtils.RNRN &
                        "Once again you are alone in the dungeon, left with your tainted thoughts and your " & ptype & "'s task.")
+    End Sub
+
+    Private Sub thrallFleeP2()
+        TextEvent.push("You fall to the ground, and your " & If(pronoun.Equals("he"), "master", "mistress") & " orders that you serve as a chair." & DDUtils.TODO, AddressOf thrallFleeP3)
+    End Sub
+    Private Sub thrallFleeP3()
+        TextEvent.push("With a final condecending laugh, " & getNameWithTitle() & " pats you on the head and teleports away." & DDUtils.RNRN &
+                       "You get up and dust yourself off, once again you are alone in the dungeon.")
     End Sub
 End Class

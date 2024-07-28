@@ -32,10 +32,15 @@
     End Sub
 
     Public Overrides Sub playerDeath(ByRef p As Player)
-        Dim out As String = "As " & getNameWithTitle() & " closes in on you, you push yourself off the ground with a lunging sidestep." & DDUtils.RNRN &
-                            "It anticipates this, though, and springs towards you; delivering a powerful bite." & DDUtils.RNRN &
+
+        Dim out As String = "As " & getNameWithTitle() & " closes in on you, you push yourself off the ground in a meek lunge.  It anticipates this, though, and springs towards you; delivering a powerful bite." & DDUtils.RNRN &
                             "You smack it off and make your escape, though a trickle of a golden venom hints that you might not be out of the woods quite yet..."
         despawn("p-death")
+
+        'If p.passDieRoll(2) Or (p.getSPD > getSPD() And p.passDieRoll(8, 5)) Then
+        '    TextEvent.push("As " & getNameWithTitle() & " closes in on you, you push yourself off the ground in a meek lunge.  It bites out at you, but can't seem to land a solid hit.")
+        '    Exit Sub
+        'End If
 
         If p.perks(perk.avenom) = -1 And p.perks(perk.svenom) = -1 Then
             p.perks(perk.svenom) = 1

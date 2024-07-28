@@ -34,6 +34,7 @@
                 TextEvent.push("You apply the anti-curse tag to your equipment.  The slut curse is neutralized!")
             End If
 
+            p.drawPort()
             count -= 1
 
             Exit Sub

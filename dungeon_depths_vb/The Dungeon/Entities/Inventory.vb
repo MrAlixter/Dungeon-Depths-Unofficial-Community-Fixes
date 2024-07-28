@@ -457,6 +457,8 @@
         internal_inventory.Add(DarkplateArmor.ITEM_NAME, New DarkplateArmor)         '429
         internal_inventory.Add(SteelAxe.ITEM_NAME, New SteelAxe)                     '430
         internal_inventory.Add(GoldAxe.ITEM_NAME, New GoldAxe)                       '431
+        internal_inventory.Add(IcespikeSpear.ITEM_NAME, New IcespikeSpear)           '432
+        internal_inventory.Add(IcicleDagger.ITEM_NAME, New IcicleDagger)             '433
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -513,7 +515,7 @@
                    Me.item(390), Me.item(399), Me.item(401), Me.item(412),
                    Me.item(415), Me.item(419), Me.item(420), Me.item(421),
                    Me.item(422), Me.item(426), Me.item(427), Me.item(428),
-                   Me.item(430), Me.item(431)}
+                   Me.item(430), Me.item(431), Me.item(432), Me.item(433)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4), Me.item(65),
                    Me.item(15), Me.item(36), Me.item(37), Me.item(48),
