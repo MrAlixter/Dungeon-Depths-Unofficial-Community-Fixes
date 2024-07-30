@@ -12,6 +12,7 @@
         '|Item Flags|
         usable = True
         hide_eyes = True
+        under_m_hair = True
         rando_inv_allowed = False
     
         '|Stats|

@@ -11,6 +11,7 @@
 
         '|Item Flags|
         usable = False
+        under_m_hair = True
 
         '|Stats|
         a_boost = 1

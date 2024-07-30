@@ -7,7 +7,7 @@
         '|ID Info|
         setName(ITEM_NAME)
         id = 217
-        tier = Nothing
+        tier = 3
 
         '|Item Flags|
         usable = False

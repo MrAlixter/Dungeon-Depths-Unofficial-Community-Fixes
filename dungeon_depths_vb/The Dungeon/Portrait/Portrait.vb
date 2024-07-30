@@ -185,6 +185,12 @@ Public Class Portrait
             iArr(pInd.fronthair) = hoodHairMask(iArr(pInd.fronthair), hatMask, 150, True)
         End If
 
+        If acce.under_m_hair Then
+            iArr(pInd.eyebrows) = CharacterGenerator.picPort.Image
+            iArr(pInd.midhair) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.eyebrows), iArr(pInd.accessory), iArr(pInd.midhair)})
+            iArr(pInd.accessory) = CharacterGenerator.picPort.Image
+        End If
+
         If armor.adjust_sleeve_layer And renderMode <> RENDER_MODE.half Then
             iArr(pInd.clothes) = topClothesMask(iArr(pInd.clothes), iArr(pInd.clothesbtm), getMaskInitialY(ent.getPlayer.breastSize, armor.compress_breast))
         End If

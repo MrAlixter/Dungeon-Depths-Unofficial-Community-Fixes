@@ -459,6 +459,8 @@
         internal_inventory.Add(GoldAxe.ITEM_NAME, New GoldAxe)                       '431
         internal_inventory.Add(IcespikeSpear.ITEM_NAME, New IcespikeSpear)           '432
         internal_inventory.Add(IcicleDagger.ITEM_NAME, New IcicleDagger)             '433
+        internal_inventory.Add(CollarRemoval.ITEM_NAME, New CollarRemoval)           '434
+        internal_inventory.Add(SlightRestoPotion.ITEM_NAME, New SlightRestoPotion)   '435
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -536,7 +538,7 @@
                    Me.item(344), Me.item(350), Me.item(362), Me.item(373),
                    Me.item(375), Me.item(379), Me.item(380), Me.item(387),
                    Me.item(388), Me.item(390), Me.item(395), Me.item(410),
-                   Me.item(416), Me.item(422)}
+                   Me.item(416), Me.item(422), Me.item(432)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32),
                 Me.item(33), Me.item(34), Me.item(35), Me.item(44),
@@ -567,7 +569,7 @@
         services = {Me.item(87), Me.item(113), Me.item(114), Me.item(121),
                     Me.item(122), Me.item(124), Me.item(131), Me.item(245),
                     Me.item(249), Me.item(263), Me.item(359), Me.item(371),
-                    Me.item(400), Me.item(403)}
+                    Me.item(400), Me.item(403), Me.item(434)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),
@@ -576,7 +578,7 @@
                    Me.item(193), Me.item(194), Me.item(231), Me.item(232),
                    Me.item(233), Me.item(234), Me.item(235), Me.item(236),
                    Me.item(241), Me.item(246), Me.item(247), Me.item(248),
-                   Me.item(378), Me.item(382), Me.item(383)}
+                   Me.item(378), Me.item(382), Me.item(383), Me.item(435)}
 
         Array.Sort(potions)
 

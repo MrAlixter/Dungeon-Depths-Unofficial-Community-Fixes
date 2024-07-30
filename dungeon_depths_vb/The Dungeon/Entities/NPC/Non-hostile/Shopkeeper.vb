@@ -15,28 +15,31 @@
         isShop = True
 
         '|Inventory|
-        inv.setCount("Compass", 1)
-        inv.setCount("Spellbook", 1)
-        inv.setCount("Major_Health_Potion", 1)
-        inv.setCount("Anti_Curse_Tag", 1)
-        inv.item("Anti_Curse_Tag").value *= 2.5
+        inv.setCount(Spellbook.ITEM_NAME, 1)
+        inv.setCount(AntiCurseTag.ITEM_NAME, 1)
+        inv.item(AntiCurseTag.ITEM_NAME).value *= 2.5
         'Potions
-        inv.setCount("Health_Potion", 1)
-        inv.setCount("Mana_Potion", 1)
-        inv.setCount("Anti_Venom", 1)
+        inv.setCount(HealthPotion.ITEM_NAME, 1)
+        inv.setCount(MajHealthPotion.ITEM_NAME, 1)
+        inv.setCount(ManaPotion.ITEM_NAME, 1)
+        inv.setCount(AntiVenom.ITEM_NAME, 1)
+        inv.setCount(SlightRestoPotion.ITEM_NAME, 1)
         'Food
-        inv.setCount("Chicken_Leg", 1)
+        inv.setCount(ChickenLeg.ITEM_NAME, 1)
         'Armor/Accesories
-        inv.setCount("Bronze_Armor", 1)
-        inv.setCount("Steel_Armor", 1)
+        inv.setCount(BronzeArmor.ITEM_NAME, 1)
+        inv.setCount(SteelArmor.ITEM_NAME, 1)
         'Weapons
-        inv.setCount("Steel_Sword", 1)
+        inv.setCount(SteelSword.ITEM_NAME, 1)
         inv.setCount(SteelAxe.ITEM_NAME, 1)
-        inv.setCount("Oak_Staff", 1)
-        inv.setCount("Gold_Sword", 1)
+        inv.setCount(OakStaff.ITEM_NAME, 1)
+        inv.setCount(GoldSword.ITEM_NAME, 1)
         inv.setCount(GoldAxe.ITEM_NAME, 1)
-        inv.setCount("Golden_Staff", 1)
-        If DDDateTime.isSummer Then inv.setCount("Staff_of_the_Tidemage", 1)
+        inv.setCount(GoldenStaff.ITEM_NAME, 1)
+        If DDDateTime.isSummer Then inv.setCount(TidemageStaff.ITEM_NAME, 1)
+        'Services
+        inv.setCount(CollarRemoval.ITEM_NAME, 1)
+
 
         '|Stats|
         maxHealth = 9999
@@ -77,26 +80,26 @@
     End Sub
     Public Overrides Sub inventoryUpdate()
         If Game.mDun.numCurrFloor < 2 Then
-            inv.setCount("Scale_Armor", 1)
-            inv.setCount("Gold_Armor", 0)
-            inv.setCount("Midas_Gauntlet", 0)
+            inv.setCount(ScaleArmor.ITEM_NAME, 1)
+            inv.setCount(GoldArmor.ITEM_NAME, 0)
+            inv.setCount(MidasGuantlet.ITEM_NAME, 0)
         Else
-            inv.setCount("Scale_Armor", 1)
-            inv.setCount("Gold_Armor", 1)
-            inv.setCount("Midas_Gauntlet", 1)
+            inv.setCount(ScaleArmor.ITEM_NAME, 0)
+            inv.setCount(GoldArmor.ITEM_NAME, 1)
+            inv.setCount(MidasGuantlet.ITEM_NAME, 1)
         End If
 
         If Game.player1.quests(qInd.helpWanted).getComplete Then
-            inv.setCount("Platinum_Axe", 1)
-            inv.setCount("Platinum_Daggers", 1)
-            inv.setCount("Platinum_Staff", 1)
-            inv.setCount("Platinum_Armor", 1)
-            inv.setCount("Crimson_Cloak", 1)
-            inv.setCount("Oak_Staff", 0)
-            inv.setCount("Steel_Sword", 0)
-            inv.setCount("Steel_Battle_Axe", 0)
-            inv.setCount("Bronze_Armor", 0)
-            inv.setCount("Steel_Armor", 0)
+            inv.setCount(PlatinumAxe.ITEM_NAME, 1)
+            inv.setCount(PlatinumDaggers.ITEM_NAME, 1)
+            inv.setCount(PlatinumStaff.ITEM_NAME, 1)
+            inv.setCount(PlatArmor.ITEM_NAME, 1)
+            inv.setCount(CrimsonCloak.ITEM_NAME, 1)
+            inv.setCount(OakStaff.ITEM_NAME, 0)
+            inv.setCount(SteelSword.ITEM_NAME, 0)
+            inv.setCount(SteelAxe.ITEM_NAME, 0)
+            inv.setCount(BronzeArmor.ITEM_NAME, 0)
+            inv.setCount(SteelArmor.ITEM_NAME, 0)
         End If
     End Sub
 

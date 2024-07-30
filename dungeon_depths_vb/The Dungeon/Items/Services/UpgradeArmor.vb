@@ -24,6 +24,8 @@
     End Sub
 
     Sub fix()
+        count = 0
+
         Dim p = Game.player1
         Game.shopMenu.Close()
 
@@ -34,7 +36,5 @@
             Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(31), "Hate to say it, but there's not much I can do for you there...")
             p.gold += value
         End If
-
-        count -= 1
     End Sub
 End Class

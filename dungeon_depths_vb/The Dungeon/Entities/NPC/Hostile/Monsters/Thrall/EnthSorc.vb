@@ -62,6 +62,7 @@
             Game.player1.UIupdate()
 
             ThrallTF.collarlessThallTF(Game.player1)
+            Game.player1.drawPort()
 
             Dim possible_desired_classes As List(Of String) = {"Warrior", "Mage", "Rogue", "Cleric", "Dancer", "Paladin", "Necromancer", "Barbarian"}.ToList
             If possible_desired_classes.Contains(p.className) Then possible_desired_classes.Remove(p.className)

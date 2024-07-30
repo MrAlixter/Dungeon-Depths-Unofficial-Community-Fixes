@@ -385,6 +385,7 @@
     <Compile Include="Items\Services\MGReset.vb" />
     <Compile Include="Items\Services\SWRestoration.vb" />
     <Compile Include="Items\Services\SellHellfireBlade.vb" />
+    <Compile Include="Items\Services\CollarRemoval.vb" />
     <Compile Include="Items\Services\UpgradeValkyrieSword.vb" />
     <Compile Include="Items\Services\UpgradeArmor.vb" />
     <Compile Include="Items\Usable\Food\BadRations.vb" />
@@ -402,6 +403,7 @@
     <Compile Include="Items\Usable\Food\MPStickOfGum.vb" />
     <Compile Include="Items\Usable\Food\HPStickOfGum.vb" />
     <Compile Include="Items\Usable\Food\SpaceBun.vb" />
+    <Compile Include="Items\Usable\Potions\SlightRestoPotion.vb" />
     <Compile Include="Items\Usable\ShimmeringHairbrush.vb" />
     <Compile Include="Items\Usable\Manuals\Manual.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Rare Potions\HealthPotionHB.vb" />
