@@ -1,11 +1,6 @@
 ﻿Imports System.Text.RegularExpressions
 
-Friend Enum inv_type
-    player
-    shopkeeper
-End Enum
-
-Public Class ShopV3
+Public Class ThistleMenuV3
     Public Const P_ITEMNAME_LENGTH As Integer = 23
     Private Const S_ITEMNAME_LENGTH As Integer = 28
     Private Const P_PRICE_LENGTH As Integer = 7
@@ -13,15 +8,14 @@ Public Class ShopV3
 
     Public Shared current_value As Integer
 
-    Dim sk As ShopNPC = Game.active_shop_npc
     Dim skInventory As List(Of String) = Nothing
+
+    Public Shared firstOpen As Boolean = True
 
     Dim p As Player = Game.player1
     Dim pInventory As List(Of String) = Nothing
 
     Private Sub RefreshScreen()
-        lblYG.Text = "Gold: " & p.gold
-        lblSKG.Text = "Gold: " & sk.gold
         pInventory.Clear()
         boxInventory.Items.Clear()
         skInventory.Clear()
@@ -29,18 +23,18 @@ Public Class ShopV3
 
         'update the player's inventory
         For Each itm In getFormattedInventory(p.inv, inv_type.player)
-            If Not p.inv.item(itm) Is Nothing AndAlso Not itm.EndsWith(":") And Not itm.Equals("") Then
-                boxInventory.Items.Add(lineup(p.inv.item(itm).getName(), (p.inv.item(itm).value / 2), p.inv.item(itm).count))
+            If Not p.inv.item(itm) Is Nothing AndAlso Not itm.EndsWith(":") AndAlso Not itm.Equals("") AndAlso Not itm.Equals(SluiceChime.ITEM_NAME) AndAlso Not SluiceChime.inv.getCountAt(itm) > 0 Then
+                boxInventory.Items.Add(lineup(p.inv.item(itm).getName(), ((p.inv.item(itm).value / 2) * 0.45), p.inv.item(itm).count))
                 pInventory.Add(itm)
-            Else
+            ElseIf Not itm.Equals(SluiceChime.ITEM_NAME) AndAlso Not SluiceChime.inv.getCountAt(itm) > 0 Then
                 boxInventory.Items.Add(itm)
             End If
         Next
 
         'update the shopkeeper's inventory
-        For Each itm In getFormattedInventory(sk.inv, inv_type.shopkeeper)
-            If Not sk.inv.item(itm) Is Nothing AndAlso Not itm.EndsWith(":") And Not itm.Equals("") Then
-                boxShop.Items.Add(lineupSeller(sk.inv.item(itm).getAName(), ShopNPC.getAdjustedValue(sk, itm)))
+        For Each itm In getFormattedInventory(SluiceChime.inv, inv_type.shopkeeper)
+            If Not SluiceChime.inv.item(itm) Is Nothing AndAlso Not itm.EndsWith(":") And Not itm.Equals("") Then
+                boxShop.Items.Add(lineupSeller(SluiceChime.inv.item(itm).getAName()))
                 skInventory.Add(itm)
             Else
                 boxShop.Items.Add(itm)
@@ -127,8 +121,8 @@ Public Class ShopV3
 
     '| - EVENT HANDLERS - |
     Private Sub Shop_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If sk Is Nothing OrElse Not sk.isShop Then
-            TextEvent.pushLog("There isn't an NPC to shop with here...")
+        If SluiceChime.inv Is Nothing Then
+            TextEvent.pushLog("The chime rings, but nothing happens...")
             Me.Close()
             Exit Sub
         End If
@@ -142,14 +136,9 @@ Public Class ShopV3
         Me.CenterToParent()
 
         RefreshScreen()
-        lblPlayer.Text = p.getName
-        lblShopkeeper.Text = sk.name
-    End Sub
-    Private Sub ShopV3_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        If Not sk Is Nothing And Not Game.lblEvent.Visible And Not Game.pnlEvent.Visible Then TextEvent.pushNPCDialog(sk.postPurchaseDialog(p))
     End Sub
     Private Sub inventory_SelectedIndexChange(sender As Object, e As EventArgs) Handles boxInventory.SelectedIndexChanged, boxShop.SelectedIndexChanged
-        If sender.SelectedItem Is Nothing Or sender.SelectedItem.endsWith(":") Or sender.SelectedItem.Equals("") Then Exit Sub
+        If sender.SelectedItem Is Nothing Or sender.SelectedItem.endsWith(":") Or sender.SelectedItem.Equals("") Or sender.SelectedItem.Equals(SluiceChime.ITEM_NAME) Then Exit Sub
 
         Dim ind As Integer
         Dim name As String = Replace(sender.SelectedItem.ToString.Substring(0, P_ITEMNAME_LENGTH).TrimEnd, " ", "_")
@@ -193,8 +182,13 @@ Public Class ShopV3
         End If
 
     End Sub
-    Private Sub number_ValueChanged(sender As Object, e As EventArgs) Handles number.ValueChanged
-        current_value = number.Value
+    Private Sub ThistleMenuV3_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        If firstOpen Then
+            Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(164), """Alright, now Use the chime and I'll get rid of what you selected." & DDUtils.RNRN &
+                                                                  "There won't be anythin' left of 'em in your inventory, so make sure that's what you want before you ring it." & DDUtils.RNRN &
+                                                                  "You can always Inspect the chime if you what to change that list.""")
+            firstOpen = False
+        End If
     End Sub
 
     '| - TEXT FORMATTING - |
@@ -218,7 +212,7 @@ Public Class ShopV3
 
         Return Replace(itemName & " " & formattedPrice & " x" & count, "_", " ")
     End Function
-    Function lineupSeller(ByVal itemName As String, ByVal price As Integer)
+    Function lineupSeller(ByVal itemName As String)
         'Text Format - IIIIIIIIIIIIIIIIIIIIIIIIII_PPPPPPPPg
         ' I - Item Name
         ' P - Price
@@ -229,23 +223,16 @@ Public Class ShopV3
             itemName += " "
         Loop
 
-        'price formatting
-        Dim formattedPrice = price.ToString + "g"
-        Do While formattedPrice.Length < S_PRICE_LENGTH
-            formattedPrice += " "
-        Loop
-
-        Return Replace(itemName & " " & formattedPrice, "_", " ")
+        Return Replace(itemName, "_", " ")
     End Function
 
     '| - SELL - |
     Private Sub btnSell_Click(sender As Object, e As EventArgs) Handles btnSell.Click
-        Dim cost As Integer = 0
         Dim item_indexes_to_sell As List(Of Integer) = New List(Of Integer)
         Dim items = boxInventory.SelectedItems
 
         For Each itm In items
-            If itm.ToString.EndsWith(":") Or itm.ToString.Equals("") Then Continue For
+            If itm.ToString.EndsWith(":") Or itm.ToString.Equals("") Or itm.Equals(SluiceChime.ITEM_NAME) Then Continue For
 
             Dim item_index As Integer
             Dim name As String = Replace(itm.ToString.Substring(0, P_ITEMNAME_LENGTH).TrimEnd, " ", "_")
@@ -263,45 +250,27 @@ Public Class ShopV3
                 item_index = p.inv.item(name).getId
                 item_indexes_to_sell.Add(item_index)
             End If
+        Next
 
-            Dim item As Item = p.inv.item(item_index)
-            If item.count >= number.Value Then
-                cost += (item.value) / 2 * number.Value
-            Else
-                cost += p.inv.item(item_index).value / 2 * item.count
+        'sell each of the items to the shopkeeper if they can afford them
+        Dim ct As Integer = 0
+        For Each index In item_indexes_to_sell
+            Dim item As Item = p.inv.item(index)
+
+            If item.getName().Contains(p.equippedArmor.getName()) Or item.getName().Contains(p.equippedWeapon.getName()) Or item.getName().Contains(p.equippedAcce.getName()) Or item.getName().Contains(p.equippedGlasses.getName()) Then
+                If item.count - 1 >= 1 Then
+                    p.inv.add(index, -1)
+                    SluiceChime.inv.add(index, 1)
+                    ct += 1
+                End If
+            ElseIf item.count >= 1 Then
+                p.inv.add(index, -1)
+                SluiceChime.inv.add(index, 1)
+                ct += 1
             End If
         Next
 
-
-        If cost <= sk.gold Then
-            'sell each of the items to the shopkeeper if they can afford them
-            For Each index In item_indexes_to_sell
-                Dim item As Item = p.inv.item(index)
-
-                If item.getName().Contains(p.equippedArmor.getName()) Or item.getName().Contains(p.equippedWeapon.getName()) Or item.getName().Contains(p.equippedAcce.getName()) Or item.getName().Contains(p.equippedGlasses.getName()) Then
-                    If item.count - number.Value >= 1 Then
-                        item.count -= number.Value
-                    Else
-                        item.count = 1
-                        cost -= item.value / 2
-                    End If
-                Else
-                    If item.count >= number.Value Then
-                        item.count -= number.Value
-                    Else
-                        item.count = 0
-                    End If
-                End If
-
-                If Not item.onSell Is Nothing Then item.onSell()
-            Next
-
-            p.gold += cost
-            sk.gold -= cost
-            txtDesc.Text = "Sale completed. Acquired " & cost & " gold."
-        Else
-            txtDesc.Text = "Shopkeeper does not have enough gold. They need " & cost - sk.gold & " more."
-        End If
+        If ct > 0 Then txtDesc.Text = "The Fairy takes one of each of the selected items off your hands."
 
         RefreshScreen()
 
@@ -311,7 +280,6 @@ Public Class ShopV3
 
     '| - BUY - |
     Private Sub btnBuy_Click(sender As Object, e As EventArgs) Handles btnBuy.Click
-        Dim cost As Integer = 0
         Dim item_indexes_to_buy As List(Of Integer) = New List(Of Integer)
         Dim items = boxShop.SelectedItems
 
@@ -334,27 +302,19 @@ Public Class ShopV3
                 item_index = p.inv.item(name).getId
                 item_indexes_to_buy.Add(item_index)
             End If
-
-            'add the value of the shopkeeper's item to the total
-            Dim item As Item = sk.getShopInv.item(item_index)
-            If number.Value > item.saleLim Then number.Value = item.saleLim
-            cost += ShopNPC.getAdjustedValue(sk, item.getAName) * number.Value
         Next
 
-        If cost <= p.gold Then
-            'sell each of the items to the player if they can afford them
-            For Each index In item_indexes_to_buy
-                Dim item = p.inv.item(index)
-                p.inv.add(index, CInt(number.Value))
-                If Not item.onBuy Is Nothing Then item.onBuy()
-            Next
 
-            p.gold -= cost
-            sk.gold += cost
-            txtDesc.Text = "Purchase successful. Spent " & cost & " gold."
-        Else
-            txtDesc.Text = "Insufficient gold. Need " & cost - p.gold & " more."
-        End If
+        'sell each of the items to the player if they can afford them
+        Dim ct As Integer = 0
+        For Each index In item_indexes_to_buy
+            Dim item = p.inv.item(index)
+            p.inv.add(index, 1)
+            SluiceChime.inv.add(index, -1)
+            ct += 1
+        Next
+
+        If ct > 0 Then txtDesc.Text = "You take back the selected items from thistle."
 
         RefreshScreen()
 
@@ -397,7 +357,7 @@ Public Class ShopV3
 
         boxShop.Items.Clear()
 
-        Dim skInv = sk.getShopInv
+        Dim skInv = SluiceChime.inv
 
         For i As Integer = 0 To skInventory.Count - 1
             Dim ind As Integer
@@ -407,7 +367,7 @@ Public Class ShopV3
                 End If
             Next
             If skInventory(i).IndexOf(boxShopFilter.Text, 0, StringComparison.CurrentCultureIgnoreCase) > -1 Then
-                boxShop.Items.Add(lineupSeller(skInv.item(ind).getAName(), skInv.item(ind).value))
+                boxShop.Items.Add(lineupSeller(skInv.item(ind).getAName()))
             End If
         Next
     End Sub

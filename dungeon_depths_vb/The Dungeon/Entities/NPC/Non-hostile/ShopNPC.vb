@@ -500,6 +500,8 @@ Public MustInherit Class ShopNPC
     End Function
 
     Public Overridable Function postPurchaseDialog(ByRef p As Player) As String
+        If Game.picNPC.BackgroundImage.Equals(local_img(LocalImgInd.doll)) Then Return dollPostPurchaseDialog(p)
+
         Select Case img_index
             Case LocalImgInd.frog
                 Return frogPostPurchaseDialog(p)

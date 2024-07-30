@@ -17,10 +17,11 @@
         '|Inventory|
         inv.setCount("Gelatinous_Shell", 1)
         inv.setCount("Omni_Charm", 1)
+        inv.setCount(SluiceChime.ITEM_NAME, 1)
         inv.setCount("Key", 1)
         inv.setCount("Gold", 5000)
         'random drops
-        Dim possible_drops = {"Vial_of_Slime", "Vial_of_Slime", "Vial_of_Slime", "Fusion_Crystal", "Advanced_Spellbook", "Defense_Charm", "Defense_Charm"}
+        Dim possible_drops = {"Vial_of_Slime", "Vial_of_Slime", "Vial_of_Slime", "Advanced_Spellbook", "Defense_Charm", "Defense_Charm"}
         Dim number_of_drops = Int(Rnd() * 2) + Int(Rnd() * 3) + 1
         For i = 0 To number_of_drops
             Dim r = Int(Rnd() * (possible_drops.Count))

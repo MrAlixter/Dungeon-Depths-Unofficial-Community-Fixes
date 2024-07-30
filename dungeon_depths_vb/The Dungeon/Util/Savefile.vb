@@ -662,7 +662,8 @@
                p.quests.Count & VALUE_DELIMITER &
                p.ongoingQuests.count & VALUE_DELIMITER &
                If(p.forcedPath Is Nothing, 0, p.forcedPath.Count) & VALUE_DELIMITER &
-               (Not p.prefForm Is Nothing) & SEGMENT_DELIMITER
+               (Not p.prefForm Is Nothing) & VALUE_DELIMITER &
+               (Not SluiceChime.inv Is Nothing) & SEGMENT_DELIMITER
     End Function
     Protected Shared Function savePlayerLoop(ByRef p As Player) As String
         p.currState.save(p)
@@ -719,10 +720,14 @@
             save_loop += savePlayerStateLoop(ste) & vbCrLf
         Next
 
-        save_loop += saveInventoryLoop(p.inv)
+        save_loop += saveInventoryLoop(p.inv) + vbCrLf
 
         If (Game.mDun.numCurrFloor = 4 And Game.mDun.floor_boss(4) = "Ooze Empress") Then
             save_loop += saveTempInvSegment(Game.floor_4_starting_inv)
+        End If
+
+        If Not SluiceChime.inv Is Nothing Then
+            save_loop += saveInventoryLoop(SluiceChime.inv)
         End If
 
         Return save_loop & vbCrLf & PLAYER_END_SEG & SEGMENT_DELIMITER
@@ -844,6 +849,12 @@
 
         If (Game.mDun.numCurrFloor = 4 And Game.mDun.floor_boss(4) = "Ooze Empress") Then
             Game.floor_4_starting_inv = loadTempInvSegment(save(start_pos))
+        End If
+
+        If UBound(subseg) >= 25 AndAlso CBool(subseg(25)) Then
+            Dim chime_inv_tuple = loadInventoryLoop(save, start_pos)
+            SluiceChime.inv = chime_inv_tuple.Item1
+            start_pos += chime_inv_tuple.Item2
         End If
 
         p.currState.load(p, True)

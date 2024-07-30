@@ -461,6 +461,7 @@
         internal_inventory.Add(IcicleDagger.ITEM_NAME, New IcicleDagger)             '433
         internal_inventory.Add(CollarRemoval.ITEM_NAME, New CollarRemoval)           '434
         internal_inventory.Add(SlightRestoPotion.ITEM_NAME, New SlightRestoPotion)   '435
+        internal_inventory.Add(SluiceChime.ITEM_NAME, New SluiceChime)               '436
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -538,7 +539,7 @@
                    Me.item(344), Me.item(350), Me.item(362), Me.item(373),
                    Me.item(375), Me.item(379), Me.item(380), Me.item(387),
                    Me.item(388), Me.item(390), Me.item(395), Me.item(410),
-                   Me.item(416), Me.item(422), Me.item(432)}
+                   Me.item(416), Me.item(422), Me.item(432), Me.item(436)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32),
                 Me.item(33), Me.item(34), Me.item(35), Me.item(44),

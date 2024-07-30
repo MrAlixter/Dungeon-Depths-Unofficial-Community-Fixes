@@ -10,7 +10,8 @@
         tier = Nothing
 
         '|Item Flags|
-        usable = false
+        usable = False
+        under_m_hair = True
         rando_inv_allowed = False
 
         '|Stats|
