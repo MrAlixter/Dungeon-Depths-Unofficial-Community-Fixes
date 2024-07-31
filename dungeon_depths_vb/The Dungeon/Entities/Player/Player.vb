@@ -611,8 +611,9 @@ Public Class Player
             gold = 0
         ElseIf s = "Cynn's Ally" Then
             pClass = classes("Rogue")
-
             DarkPactTF.step1ally(Me)
+            pForm = forms("Succubus")
+
             quests(qInd.darkPact).completeEntireQuest()
             Game.compDP = True
 
@@ -675,6 +676,7 @@ Public Class Player
         description = CStr(name & " is a " & sex & " " & pForm.name & " " & pClass.name)
         'saves the player's state
         currState = New State(Me)
+        pState = New State(Me)
         sState = New State(Me)
     End Sub
     Public Sub createInvPerks()

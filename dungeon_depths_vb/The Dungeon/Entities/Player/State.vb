@@ -95,8 +95,7 @@
     Public Sub load(ByRef p As Player, Optional overwriteStats As Boolean = True)
         p.name = name
         p.sex = sex
-        p.changeClass(pClass.name)
-        p.changeForm(pForm.name)
+
         p.description = description
 
         If overwriteStats Then
@@ -109,6 +108,11 @@
             p.speed = speed
             p.lust = lust
             p.perks = DDUtils.copyDictionary(perks)
+            p.pClass = Player.classes(pClass.name)
+            p.pForm = Player.forms(pForm.name)
+        Else
+            p.changeClass(pClass.name)
+            p.changeForm(pForm.name)
         End If
 
         p.gold = gold

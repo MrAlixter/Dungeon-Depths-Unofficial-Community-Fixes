@@ -85,7 +85,6 @@
     Public Shared Sub step1ally(ByRef p As Player)
         createDisguise(p)
 
-        p.changeForm("Succubus")
         'succubus transformation
         p.prt.setIAInd(pInd.hat, 0, True, False)
         p.prt.setIAInd(pInd.wings, 2, True, False)

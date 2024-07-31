@@ -675,11 +675,11 @@ Public Class Game
                     End If
 
                     '| -- General Tile Tracking -- |
-                    Dim tile_text As String = currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text
-                    Dim tile_tag As Integer = currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag
+                    Dim tile_text As String = currFloor.mBoard(y_offset, player1.pos.X + indX).Text
+                    Dim tile_tag As Integer = currFloor.mBoard(y_offset, player1.pos.X + indX).Tag
 
                     '| -- Pink Mist Tracking -- |
-                    Dim in_pink_mist = currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag >= DDConst.PINK_MIST_OFFSET
+                    Dim in_pink_mist = currFloor.mBoard(y_offset, player1.pos.X + indX).Tag >= DDConst.PINK_MIST_OFFSET
                     If in_pink_mist Then tile_tag -= DDConst.PINK_MIST_OFFSET
 
                     viewArray(y, x) = tile_tag
