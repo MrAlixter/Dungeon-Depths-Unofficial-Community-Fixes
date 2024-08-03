@@ -1,0 +1,33 @@
+﻿Public Class RaiseLust
+    Inherits Spell
+    Sub New(ByRef c As Player, ByRef t As NPC)
+        MyBase.New(c, t)
+        setName("Raise Lust")
+        MyBase.setUOC(True)
+        MyBase.settier(4)
+        MyBase.setcost(6)
+    End Sub
+    Public Overrides Sub effect()
+        If Not Game.combat_engaged Then backfire() : Exit Sub
+
+        Dim t = MyBase.getTarget
+
+        If t.perks(npc_perk.stun) >= 0 Then
+            If t.perks(npc_perk.stun) < 2 Then t.perks(npc_perk.stun) *= 2
+        Else
+            t.perks(npc_perk.stun) = 1
+        End If
+
+        TextEvent.pushAndLog("Your foe is distracted by their lust!  " & t.perks(npc_perk.stun) & " turns remaining.")
+    End Sub
+
+    Public Overrides Sub backfire()
+        MyBase.getCaster.addLust(Math.Max(MyBase.getCaster.getLust, 15))
+
+        TextEvent.pushAndLog("You raise your own lust!")
+    End Sub
+
+    Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object
+        Return "A tier 4 spell that distracts its caster by making them horny, with a medium chance of backfiring and a low chance of missing altogether.  Its effect can be stacked if used repeatedly."
+    End Function
+End Class

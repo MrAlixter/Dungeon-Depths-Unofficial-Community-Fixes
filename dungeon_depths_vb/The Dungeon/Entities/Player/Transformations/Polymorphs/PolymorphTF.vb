@@ -54,6 +54,12 @@
                 Return New BUDollTFBeach()
             Case "Human"
                 Return New HumanTF()
+            Case "Succubus_Assassin"
+                Return New SuccubusAssassinTF()
+            Case "Slime_Paladin"
+                Return New SlimePaladinTF()
+            Case "Tigress_Barbarian"
+                Return New TigressBarbarianTF()
             Case Else
                 Return Nothing
         End Select
@@ -79,6 +85,9 @@
         Game.player1.perks(perk.polymorphed) = -1
     End Sub
 
+    Public Overridable Function getTFText() As String
+        Return ""
+    End Function
     Public Overrides Function getNextStep(stage As Integer) As Action
         Select Case stage
             Case 0

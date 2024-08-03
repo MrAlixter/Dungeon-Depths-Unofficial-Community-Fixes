@@ -250,7 +250,7 @@
 
         Return True
     End Function
-    Public Shared Function antiClothingCurse(ByRef p As Player) As Boolean
+    Public Shared Function antiClothingCurse(ByRef p As Player, Optional ByVal push_text As Boolean = True) As Boolean
         'If this curse cannot be applied to the player's current armor, no action is needed
         If p.equippedArmor.getAntiSlutInd = -1 Then Return False
 
@@ -265,12 +265,12 @@
 
         'Push a text dialog
         TextEvent.pushLog("The curse is lifted from your clothing.")
-        If Not Game.lblEvent.Visible And Not Game.combat_engaged Then
+        If Not Game.lblEvent.Visible And Not Game.combat_engaged And push_text Then
             If Not Game.lblEvent.Visible Then TextEvent.push("Suddenly, something seems... off..." & DDUtils.RNRN &
                                                              "You look down to see a golden glow beginning to ripple across your outfit.  Mesmerized by the shimmering light, you strip off your clothes as their aura becomes brighter and brighter." & DDUtils.RNRN &
                                                              "As the glow becomes blinding, your gear gains mass and you shield your eyes as it twists and morphs.  A few seconds later, you peek out to find that the glow has died down and your " & DDUtils.amrOrClth(p) & "... looks the same as it always had." & DDUtils.RNRN &
                                                              "Annoyed at yourself for getting sidetracked by nothing, you re-equip the " & p.equippedArmor.getAName.Replace("_", " ") & " and set back out on your adventure.")
-        ElseIf Game.combat_engaged Then
+        ElseIf Game.combat_engaged And push_text Then
             TextEvent.push("A blinding golden glow ripples across your body, and your outfit gains mass as its shape is restored to a more practical arrangement!" & DDUtils.RNRN &
                            "Your " & If(p.equippedArmor.getAName.Contains("Armor"), "armor", "clothes") & " has been shifted into a less slutty version of itself!")
         End If

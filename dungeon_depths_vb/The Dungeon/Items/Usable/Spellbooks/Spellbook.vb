@@ -41,13 +41,91 @@
         Return New Spellbook().spells
     End Function
     Public Overridable Function spells() As String()
-        Return {"Super Fireball", "Icicle Spear", "Self Polymorph", "Turn to Frog", "Polymorph Enemy", "Petrify", "Heal", "Illuminate", "Fireball", "Warp", "Arcane Compass", "Hydrodart"}
+        Dim options As List(Of String) = New List(Of String)({"Heal", "Warp", "Arcane Compass", "Hydrodart"})
+        Dim p As Player = Game.player1
+
+        Select Case p.perks(perk.magtype)
+            Case magType.fire
+                options = DDUtils.union(options, New List(Of String)({"Fireball", "Super Fireball", "Self Polymorph"}))
+                'options = New List(Of String)({"Self Polymorph"})
+            Case magType.ice
+                options = DDUtils.union(options, New List(Of String)({"Icicle Spear", "Self Polymorph"}))
+            Case magType.plant
+                options = DDUtils.union(options, New List(Of String)({"Self Polymorph"}))
+            Case magType.light
+                options = DDUtils.union(options, New List(Of String)({"Illuminate", "Self Polymorph"}))
+            Case magType.blight
+                options = DDUtils.union(options, New List(Of String)({"Petrify", "Turn to Frog", "Polymorph Enemy"}))
+            Case magType.flux
+                options = DDUtils.union(options, New List(Of String)({"Self Polymorph", "Polymorph Enemy", "Pandemonium Ray"}))
+        End Select
+
+        Return options.ToArray()
     End Function
     Public Overridable Function selfPolyForms() As String()
-        Return {"Dragon", "Succubus", "Slime", "Tigress", "Human"}
+        Dim options As List(Of String) = New List(Of String)({"Slime_Paladin", "Tigress_Barbarian", "Succubus_Assassin"})
+        Dim p As Player = Game.player1
+        'slime paladin
+        'tigress barbarian
+        'elf sage
+        'succubus rogue
+
+        Select Case p.perks(perk.magtype)
+            Case magType.fire
+                'phoenix
+                options = DDUtils.union(options, New List(Of String)({"Dragon"}))
+                'options = New List(Of String)({"Tigress_Barbarian"})
+            Case magType.ice
+                'ice golem
+                options = DDUtils.union(options, New List(Of String)({}))
+            Case magType.plant
+                'dryad
+                options = DDUtils.union(options, New List(Of String)({}))
+            Case magType.light
+                'dove
+                options = DDUtils.union(options, New List(Of String)({}))
+            Case magType.blight
+                'giant snake
+                options = DDUtils.union(options, New List(Of String)({}))
+            Case magType.flux
+                'oni warrior
+                'minotaur bull
+                'human
+                options = DDUtils.union(options, New List(Of String)({"Human"}))
+        End Select
+
+        Return options.ToArray()
     End Function
     Public Overridable Function enemPolyForms() As String()
-        Return {"Sheep", "Princess", "Bunny"}
+        Dim options As List(Of String) = New List(Of String)({"Sheep", "Bunny"})
+        Dim p As Player = Game.player1
+        'slime
+        'cleric
+
+        Select Case p.perks(perk.magtype)
+            Case magType.fire
+                'imp
+                options = DDUtils.union(options, New List(Of String)({}))
+            Case magType.ice
+                'snowman
+                options = DDUtils.union(options, New List(Of String)({}))
+            Case magType.plant
+                'sunflower
+                options = DDUtils.union(options, New List(Of String)({}))
+            Case magType.light
+                'dove
+                options = DDUtils.union(options, New List(Of String)({}))
+            Case magType.blight
+                'goblin
+                'newt
+                options = DDUtils.union(options, New List(Of String)({}))
+            Case magType.flux
+                'turtle
+                'bunny
+                options = DDUtils.union(options, New List(Of String)({"Princess"}))
+        End Select
+
+        Return options.ToArray()
     End Function
 
     Overrides Sub use(ByRef p As Player)
@@ -138,4 +216,86 @@
 
         Return False
     End Function
+
+    Public Overrides Sub examine()
+        If durability > 99 Then
+            TextEvent.push(getDescription() & DDUtils.RNRN &
+                           "On closer inspection, you see that you may also be able to change your magic discipline using this spellbook...", AddressOf magTypeChange)
+        Else
+            TextEvent.push(getDescription() & DDUtils.RNRN &
+                           "On closer inspection, you see that you may also be able to change your magic discipline using this spellbook..." & DDUtils.RNRN &
+                           "Durability: " & durability & " (Breaks at 0)", AddressOf magTypeChange)
+        End If
+    End Sub
+
+    Public Sub magTypeChange()
+        Dim options As List(Of Tuple(Of String, Action)) = New List(Of Tuple(Of String, Action))()
+
+        If Not (Game.player1.perks(perk.magtype) = magType.fire) Then options.Add(New Tuple(Of String, Action)("Fire", AddressOf selectFire))
+        If Not (Game.player1.perks(perk.magtype) = magType.ice) Then options.Add(New Tuple(Of String, Action)("Ice", AddressOf selectIce))
+        If Not (Game.player1.perks(perk.magtype) = magType.plant) Then options.Add(New Tuple(Of String, Action)("Plant", AddressOf selectPlant))
+        If Not (Game.player1.perks(perk.magtype) = magType.light) Then options.Add(New Tuple(Of String, Action)("Light", AddressOf selectLight))
+        If Not (Game.player1.perks(perk.magtype) = magType.blight) Then options.Add(New Tuple(Of String, Action)("Blight", AddressOf selectBlight))
+        If Not (Game.player1.perks(perk.magtype) = magType.flux) Then options.Add(New Tuple(Of String, Action)("Flux", AddressOf selectFlux))
+        'If Not (Game.player1.perks(perk.magtype) = magType.psychic) Then options.Add(New Tuple(Of String, Action)("Psychic", AddressOf selectPsychic))
+        If Not (Game.player1.perks(perk.magtype) = magType.misc) Then options.Add(New Tuple(Of String, Action)("Misc", AddressOf selectMisc))
+
+        TextEvent.pushManySelect("Select a new magic discipline?", options)
+    End Sub
+    Private Sub selectFire()
+        Game.player1.perks(perk.magType) = magType.Fire
+        count -= 1
+
+        Game.player1.inv.invNeedsUDate = True
+        Game.player1.UIupdate()
+    End Sub
+    Private Sub selectIce()
+        Game.player1.perks(perk.magType) = magType.Ice
+        count -= 1
+
+        Game.player1.inv.invNeedsUDate = True
+        Game.player1.UIupdate()
+    End Sub
+    Private Sub selectLight()
+        Game.player1.perks(perk.magType) = magType.Light
+        count -= 1
+
+        Game.player1.inv.invNeedsUDate = True
+        Game.player1.UIupdate()
+    End Sub
+    Private Sub selectPlant()
+        Game.player1.perks(perk.magType) = magType.Plant
+        count -= 1
+
+        Game.player1.inv.invNeedsUDate = True
+        Game.player1.UIupdate()
+    End Sub
+    Private Sub selectBlight()
+        Game.player1.perks(perk.magType) = magType.Blight
+        count -= 1
+
+        Game.player1.inv.invNeedsUDate = True
+        Game.player1.UIupdate()
+    End Sub
+    Private Sub selectFlux()
+        Game.player1.perks(perk.magType) = magType.Flux
+        count -= 1
+
+        Game.player1.inv.invNeedsUDate = True
+        Game.player1.UIupdate()
+    End Sub
+    Private Sub selectPsychic()
+        Game.player1.perks(perk.magType) = magType.Psychic
+        count -= 1
+
+        Game.player1.inv.invNeedsUDate = True
+        Game.player1.UIupdate()
+    End Sub
+    Private Sub selectMisc()
+        Game.player1.perks(perk.magType) = magType.misc
+        count -= 1
+
+        Game.player1.inv.invNeedsUDate = True
+        Game.player1.UIupdate()
+    End Sub
 End Class

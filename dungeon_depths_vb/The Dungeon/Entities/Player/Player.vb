@@ -110,6 +110,7 @@
     hidehat         '108
     magtype         '109
     meltype         '110
+    slimeguard      '111
 End Enum
 Public Enum stateInd
     goddState
@@ -746,6 +747,7 @@ Public Class Player
         classes.Add("Onahole", New CynnOnahole2())
         classes.Add("Mecha-Warrior", New Warrior())
         classes.Add("Mindless Bimbo", New MindlessBimbo())
+        classes.Add("Assassin", New Assassin())
     End Sub
     Private Shared Sub initForms()
         'Creates the form dictionary
@@ -824,6 +826,9 @@ Public Class Player
         polymorphs.Add("Unicorn", Nothing)
         polymorphs.Add("Cow", Nothing)
         polymorphs.Add("Human", Nothing)
+        polymorphs.Add("Succubus_Assassin", Nothing)
+        polymorphs.Add("Slime_Paladin", Nothing)
+        polymorphs.Add("Tigress_Barbarian", Nothing)
     End Sub
     Private Sub initQuests()
         quests.Clear()
@@ -1608,6 +1613,15 @@ Public Class Player
         End If
         If perks(perk.vsslimehair) > -1 Then
             PerkEffects.vslimeHairRegen(Me)
+        End If
+        '| - Slimeguard - |
+        If perks(perk.slimeguard) > 0 And getDEF() < 100 Then
+            If Not prt.skincolor.A = 200 Then
+                perks(perk.slimeguard) = -1
+                dBuff = 0
+            Else
+                dBuff = ((100 - equippedArmor.getDBoost(Me) - equippedWeapon.getDBoost(Me) - equippedAcce.getDBoost(Me) - equippedGlasses.getDBoost(Me)) / (pClass.d * pForm.d)) - defense
+            End If
         End If
         '| - Plantfolk Regen - |
         If pForm.name.Equals("Plantfolk") Then

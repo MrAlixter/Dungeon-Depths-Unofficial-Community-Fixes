@@ -83,14 +83,17 @@
     shrunken
     slime
     slimepolymorph
+    slimepaladpolymorph
     slolita
     spacebun
     spotfuse
     succubusmaid
     succubuspolymorph
+    succubusasspolymorph
     targax
     thrall
     tigresspolymorph
+    tigressbarbpolymorph
     unicornpolymorph
     valkyrie
     vialofslime
@@ -392,6 +395,9 @@ Public MustInherit Class Transformation
         ElseIf tf = tfind.slimepolymorph Then
             Return New SlimeTF(cs, n, tts, wi, cbs, tfd)
 
+        ElseIf tf = tfind.slimepaladpolymorph Then
+            Return New SlimePaladinTF(cs, n, tts, wi, cbs, tfd)
+
         ElseIf tf = tfind.slolita Then
             Return New LolitaSTF(cs, n, tts, wi, cbs, tfd)
 
@@ -407,6 +413,9 @@ Public MustInherit Class Transformation
         ElseIf tf = tfind.succubuspolymorph Then
             Return New SuccubusTF(cs, n, tts, wi, cbs, tfd)
 
+        ElseIf tf = tfind.succubusasspolymorph Then
+            Return New SuccubusAssassinTF(cs, n, tts, wi, cbs, tfd)
+
         ElseIf tf = tfind.targax Then
             Return New TargaxTF(cs, n, tts, wi, cbs, tfd)
 
@@ -415,6 +424,9 @@ Public MustInherit Class Transformation
 
         ElseIf tf = tfind.tigresspolymorph Then
             Return New TigressTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.tigressbarbpolymorph Then
+            Return New TigressBarbarianTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.unicornpolymorph Then
             Return New UnicornTF(cs, n, tts, wi, cbs, tfd)
@@ -479,6 +491,9 @@ Public MustInherit Class Transformation
     End Sub
     Sub setTurnsTilStep(i As Integer)
         turns_until_next_step = i
+    End Sub
+    Public Sub addTurnsTilStep(ByVal i As Integer)
+        turns_until_next_step += i
     End Sub
     Overridable Sub stopTF()
         tf_done = True

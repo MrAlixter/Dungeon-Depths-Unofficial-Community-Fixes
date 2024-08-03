@@ -1048,6 +1048,10 @@
             start_pos += 1
         Next
 
+        For i = perkCount To System.Enum.GetValues(GetType(perk)).Length - 1
+            perks.Add(CType(i, perk), -1)
+        Next
+
         Return perks
     End Function
 

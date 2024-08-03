@@ -251,6 +251,26 @@ Public Class Portrait
 
         Return bmp
     End Function
+
+    Shared Function faceMask(ByRef img As Image, ByRef c_mask As Image, Optional ByVal final_y As Integer = 180) As Bitmap
+        'Assumes that the two images are the same size
+        If img Is Nothing OrElse c_mask Is Nothing OrElse Not img.Size.Equals(c_mask.Size) Then Return img
+
+        Dim bmp As Bitmap = New Bitmap(img)
+        Dim b_c_mask As Bitmap = New Bitmap(c_mask)
+
+        Dim clear = Color.FromArgb(0, 0, 0, 0)
+
+        For y = 0 To Math.Min(bmp.Size.Height - 1, final_y)
+            For x = 0 To bmp.Size.Width - 1
+                If b_c_mask.GetPixel(x, y).A > 250 Then
+                    bmp.SetPixel(x, y, clear)
+                End If
+            Next
+        Next
+
+        Return bmp
+    End Function
     Shared Function getMaskInitialY(ByVal bsize As Integer, ByVal compress As Boolean)
         Select Case bsize
             Case 4
@@ -743,7 +763,14 @@ Public Class Portrait
         If renderMode <> RENDER_MODE.half Then iArr(pInd.genitalia) = recolorFunction(imgLib.atrs(pInd.genitalia).getAt(iArrInd(pInd.genitalia)), c)
 
         '| -- Face -- |
-        iArr(pInd.face) = recolorFunction(imgLib.atrs(pInd.face).getAt(iArrInd(pInd.face)), c)
+        If c.A <> 255 Then
+            iArr(pInd.clothes) = faceMask(iArr(pInd.clothes), CreateFullBodyBMP({nullImg, iArr(pInd.face)}))
+            iArr(pInd.body) = faceMask(iArr(pInd.body), CreateFullBodyBMP({nullImg, iArr(pInd.face)}))
+            iArr(pInd.face) = recolorFunction(imgLib.atrs(pInd.face).getAt(iArrInd(pInd.face)), c)
+        Else
+            iArr(pInd.face) = recolorFunction(imgLib.atrs(pInd.face).getAt(iArrInd(pInd.face)), c)
+        End If
+
         If Not p Is Nothing AndAlso Not p.pForm.getOverlayF(p).Item1 = 0 Then
             Dim form_overlay As Image = imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayF(p))
             If p.isPetrified Then form_overlay = recolorFunction(form_overlay, c)
@@ -755,6 +782,12 @@ Public Class Portrait
             iArr(pInd.wings) = recolorFunction(iArr(pInd.wings), c)
             iArr(pInd.horns) = recolorFunction(iArr(pInd.horns), c)
             iArr(pInd.tail) = recolorFunction(iArr(pInd.tail), c)
+        End If
+
+        If Not p Is Nothing AndAlso p.perks(perk.slimeguard) > 0 Then
+            Dim new_c = Color.FromArgb(255, c.R, c.B, c.G)
+            iArr(pInd.clothes) = recolorFunction(iArr(pInd.clothes), new_c)
+            iArr(pInd.clothesbtm) = recolorFunction(iArr(pInd.clothesbtm), new_c)
         End If
 
         colorEars(c)

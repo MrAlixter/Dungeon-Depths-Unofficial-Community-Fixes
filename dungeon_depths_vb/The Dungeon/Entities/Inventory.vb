@@ -462,6 +462,8 @@
         internal_inventory.Add(CollarRemoval.ITEM_NAME, New CollarRemoval)           '434
         internal_inventory.Add(SlightRestoPotion.ITEM_NAME, New SlightRestoPotion)   '435
         internal_inventory.Add(SluiceChime.ITEM_NAME, New SluiceChime)               '436
+        internal_inventory.Add(PolymExtPotion.ITEM_NAME, New PolymExtPotion)         '437
+        internal_inventory.Add(ChainBikini.ITEM_NAME, New ChainBikini)               '438
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -494,7 +496,7 @@
                  Me.item(363), Me.item(364), Me.item(384), Me.item(393),
                  Me.item(394), Me.item(398), Me.item(404), Me.item(405),
                  Me.item(413), Me.item(418), Me.item(423), Me.item(425),
-                 Me.item(429)}
+                 Me.item(429), Me.item(438)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -579,7 +581,8 @@
                    Me.item(193), Me.item(194), Me.item(231), Me.item(232),
                    Me.item(233), Me.item(234), Me.item(235), Me.item(236),
                    Me.item(241), Me.item(246), Me.item(247), Me.item(248),
-                   Me.item(378), Me.item(382), Me.item(383), Me.item(435)}
+                   Me.item(378), Me.item(382), Me.item(383), Me.item(435),
+                   Me.item(437)}
 
         Array.Sort(potions)
 

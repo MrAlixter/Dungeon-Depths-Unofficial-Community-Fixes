@@ -100,24 +100,25 @@
 
         p.polymorphs(form) = active_polymorph
         p.ongoingTFs.add(active_polymorph)
-        p.perks(perk.polymorphed) = active_polymorph.getTurnsTilNextStep()
+        p.ongoingTFs.ping()
 
-        If form = "MASBimbo" Then form = "Bimbo"
-        If Player.forms.Keys.Contains(form) Then
-            p.changeForm(form)
-        ElseIf Player.classes.Keys.Contains(form) Then
-            p.changeClass(form)
-        End If
+        'If form = "MASBimbo" Then form = "Bimbo"
+        'If form = "Succubus Assassin" Then form = "Succubus"
+
+        'If Player.forms.Keys.Contains(form) Then
+        '    p.changeForm(form)
+        'ElseIf Player.classes.Keys.Contains(form) Then
+        '    p.changeClass(form)
+        'End If
 
         '| -- Cleanup -- |
-        If Not revertText = "" & DDUtils.RNRN Then TextEvent.push(revertText & Game.lblEvent.Text.Split(vbCrLf)(0))
-
-        p.ongoingTFs.ping()
+        If Not revertText = "" & DDUtils.RNRN Then TextEvent.fpush(revertText & active_polymorph.getTFText())
 
         p.specialRoute()
         p.magicRoute()
 
         p.drawPort()
+        p.UIupdate()
     End Sub
     'NPC transform method
     Shared Sub transform(ByRef t As NPC, ByVal s As String)

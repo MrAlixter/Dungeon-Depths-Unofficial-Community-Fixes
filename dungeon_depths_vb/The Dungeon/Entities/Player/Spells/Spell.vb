@@ -37,7 +37,7 @@
         spellList.Add("Heartbreak Supernova", New HBSN(Nothing, Nothing))
         spellList.Add("Sweet Sunbeam", New CuteBeam(Nothing, Nothing))
         spellList.Add("Shiny Sparking Missile", New SSMissile(Nothing, Nothing))
-        spellList.Add("Raise Lust", New RLust(Nothing, Nothing))
+        spellList.Add("Raise Lust", New RaiseLust(Nothing, Nothing))
         spellList.Add("Puff Up", New PuffUp(Nothing, Nothing))
         spellList.Add("Flash Bolt", New FlashBolt(Nothing, Nothing))
         spellList.Add("Firestorm", New FireStorm(Nothing, Nothing))
@@ -48,7 +48,7 @@
         spellList.Add("Benediction", New Benediction(Nothing, Nothing))
         spellList.Add("Smite", New Smite(Nothing, Nothing))
         spellList.Add("Hellfireball", New Hellfireball(Nothing, Nothing))
-        spellList.Add("Reductive Mending", New SizeForLife(Nothing, Nothing))
+        spellList.Add("Reductive Mending", New ReductiveMending(Nothing, Nothing))
         spellList.Add("Summon Apple", New SummonApple(Nothing, Nothing))
         spellList.Add("Tentacle Crushcannon", New TentacleCrushcannon(Nothing, Nothing))
         spellList.Add("Flash Heal", New FlashHeal(Nothing, Nothing))
@@ -60,6 +60,7 @@
         spellList.Add("Fotia's Piercing Gaze", New FotiaGaze(Nothing, Nothing))
         spellList.Add("Slitherslice", New Slitherslice(Nothing, Nothing))
         spellList.Add("Tendrill", New Tendrill(Nothing, Nothing))
+        spellList.Add("Pandemonium Ray", New PandemoniumRay(Nothing, Nothing))
     End Sub
 
     Sub New(ByRef c As Player, ByRef t As NPC)
@@ -68,15 +69,15 @@
     End Sub
     Overridable Sub cast()
         If caster.mana < getcost() Then
-            TextEvent.pushAndLog("You don't have enough mana! (" & name & " costs " & getcost() & " mana)")
+            TextEvent.fpushAndLog("You don't have enough mana! (" & name & " costs " & getcost() & " mana)")
             Exit Sub
         End If
         If Not Game.combat_engaged And Not Game.shop_npc_engaged And Not useableOutOfCombat Then
-            TextEvent.pushAndLog("You don't have a target for that spell!")
+            TextEvent.fpushAndLog("You don't have a target for that spell!")
             Exit Sub
         End If
         If caster.equippedAcce.gag Then
-            TextEvent.pushAndLog("Your gag prevents you from casting spells!")
+            TextEvent.fpushAndLog("Your gag prevents you from casting spells!")
             Exit Sub
         End If
 
@@ -84,7 +85,7 @@
         caster.mana -= getcost()
 
         If caster.equippedAcce.getAName.Equals(FaeQueensCrown.ITEM_NAME) Then
-            TextEvent.pushAndLog("You cast " & name & "!")
+            TextEvent.fpushAndLog("You cast " & name & "!")
             effect()
             Exit Sub
         End If
@@ -92,57 +93,57 @@
         Select Case tier
             Case 2
                 If caster.passDieRoll(10, 9) Then
-                    TextEvent.pushAndLog("You cast " & name & "!")
+                    TextEvent.fpushAndLog("You cast " & name & "!")
                     effect()
                 Else
-                    TextEvent.pushAndLog("You try to cast " & name & ", but it fizzles into nothing!")
+                    TextEvent.fpushAndLog("You try to cast " & name & ", but it fizzles into nothing!")
                 End If
             Case 3
                 If caster.passDieRoll(10, 8) Then
-                    TextEvent.pushAndLog("You cast " & name & "!")
+                    TextEvent.fpushAndLog("You cast " & name & "!")
                     effect()
                 Else
                     If caster.passDieRoll(10, 5) Then
-                        TextEvent.pushAndLog("You try to cast " & name & ", but it fizzles into nothing!")
+                        TextEvent.fpushAndLog("You try to cast " & name & ", but it fizzles into nothing!")
                     Else
-                        TextEvent.pushAndLog("You try to cast " & name & ", but it backfires!")
+                        TextEvent.fpushAndLog("You try to cast " & name & ", but it backfires!")
                         backfire()
                     End If
                 End If
             Case 4
                 If caster.passDieRoll(10, 7) Then
-                    TextEvent.pushAndLog("You cast " & name & "!")
+                    TextEvent.fpushAndLog("You cast " & name & "!")
                     effect()
                 Else
                     If caster.passDieRoll(100, 35) Then
-                        TextEvent.pushAndLog("You try to cast " & name & ", but it fizzles into nothing!")
+                        TextEvent.fpushAndLog("You try to cast " & name & ", but it fizzles into nothing!")
                     Else
-                        TextEvent.pushAndLog("You try to cast " & name & ", but it backfires!")
+                        TextEvent.fpushAndLog("You try to cast " & name & ", but it backfires!")
                         backfire()
                     End If
                 End If
             Case 5
                 If caster.passDieRoll(10, 6) Then
-                    TextEvent.pushAndLog("You cast " & name & "!")
+                    TextEvent.fpushAndLog("You cast " & name & "!")
                     effect()
                 Else
                     If caster.passDieRoll(10, 2) Then
-                        TextEvent.pushAndLog("You try to cast " & name & ", but it fizzles into nothing!")
+                        TextEvent.fpushAndLog("You try to cast " & name & ", but it fizzles into nothing!")
                     Else
-                        TextEvent.pushAndLog("You try to cast " & name & ", but it backfires!")
+                        TextEvent.fpushAndLog("You try to cast " & name & ", but it backfires!")
                         backfire()
                     End If
                 End If
             Case Else
-                TextEvent.pushAndLog("You cast " & name & "!")
+                TextEvent.fpushAndLog("You cast " & name & "!")
                 effect()
         End Select
     End Sub
     Overridable Sub effect()
-        TextEvent.push("No effects.")
+        TextEvent.fpush("No effects.")
     End Sub
     Overridable Sub backfire()
-        TextEvent.push("No effects.")
+        TextEvent.fpush("No effects.")
     End Sub
 
     Sub setName(ByVal s As String)
@@ -202,7 +203,7 @@
             Exit Sub
         ElseIf s.Equals("Heal") Then
             If Game.player1.className.Equals("Soul-Lord") Then
-                TextEvent.push("You scoff at the thought of healing in this moment, instead firing off a much more agressive fireball.  Settling down slightly, you muse on what a waste of time a heal spell would be." & DDUtils.RNRN & """Only someone who cares about their mortal vessel would bother to maintain it.")
+                TextEvent.fpush("You scoff at the thought of healing in this moment, instead firing off a much more agressive fireball.  Settling down slightly, you muse on what a waste of time a heal spell would be." & DDUtils.RNRN & """Only someone who cares about their mortal vessel would bother to maintain it.")
                 s = "Fireball"
             End If
         End If
