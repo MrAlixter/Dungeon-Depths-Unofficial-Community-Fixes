@@ -56,8 +56,6 @@ Public Class NPC
         Next
     End Sub
     Public Overrides Sub update()
-        reactToTF()
-
         If (Game.player1.className = "Thrall" And Me.name.Contains("Thrall")) Or
            (Game.player1.formName = "Arachne" And Me.name.Contains("Arachne")) Or
             (Game.player1.formName = "Slime" And Me.name.Contains("Slime")) Or
@@ -72,8 +70,7 @@ Public Class NPC
                 despawn("animaltf")
                 Exit Sub
             End If
-
-            nextCombatAction = Sub(t As Entity) attackCMD(t)
+            nextCombatAction = Sub(t As Entity) Me.attackCMD(t)
         Else
             handleStun()
         End If
@@ -105,6 +102,9 @@ Public Class NPC
         End If
 
         MyBase.update()
+
+        reactToTF()
+
         TextEvent.pushLog(Trim(title & getName() & " has " & getIntHealth() & " life."))
     End Sub
     Public Overridable Sub handleStun()

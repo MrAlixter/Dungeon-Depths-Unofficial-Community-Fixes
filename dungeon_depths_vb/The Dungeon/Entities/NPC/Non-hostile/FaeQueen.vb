@@ -366,7 +366,7 @@
     Shared Sub toCombat()
         Dim m As FaeQueen = Game.fqueen
         Game.active_shop_npc = Game.fqueen
-        Game.npc_list.Add(m)
+        If Not Game.npc_list.Contains(m) Then Game.npc_list.Add(m)
 
         Game.queueSetup()
         Game.ShopNPCToCombat(m)

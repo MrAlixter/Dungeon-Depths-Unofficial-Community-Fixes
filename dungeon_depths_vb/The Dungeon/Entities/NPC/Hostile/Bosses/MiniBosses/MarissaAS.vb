@@ -27,7 +27,7 @@
         r_pronoun = "her"
 
         '|Misc|
-
+        intro_taunt = """Ooooh, who do we have here?"""
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

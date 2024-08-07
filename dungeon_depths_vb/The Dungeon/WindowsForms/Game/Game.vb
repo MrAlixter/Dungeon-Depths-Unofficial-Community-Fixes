@@ -3437,7 +3437,7 @@ Public Class Game
         '|-Set up Game-|
         cleanupPanels()
         combat_engaged = True
-        npc_list.Add(m)
+        If Not npc_list.Contains(m) Then npc_list.Add(m)
 
         '|-Set up the Player-|
         player1.canMoveFlag = False
@@ -3695,7 +3695,7 @@ Public Class Game
 
         '|-Set up NPC-|
         npc_list.Clear()
-        npc_list.Add(m)
+        If Not npc_list.Contains(m) Then npc_list.Add(m)
         m.encounter()
         picNPC.Visible = True
 

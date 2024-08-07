@@ -29,7 +29,7 @@
         '|Misc|
         turns_until_spell = 3
         enchantment_inds_used = New List(Of Integer)
-
+        intro_taunt = """I am the claws of Lady Marissa's vengance!"""
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

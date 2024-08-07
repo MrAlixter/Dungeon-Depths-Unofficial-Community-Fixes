@@ -35,7 +35,8 @@
 
         '|Misc|
         combatCounter = 0
-
+        intro_taunt = """...""" & DDUtils.RNRN &
+                      "The silent man before you is enormous; wielding an equally massive blade."
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

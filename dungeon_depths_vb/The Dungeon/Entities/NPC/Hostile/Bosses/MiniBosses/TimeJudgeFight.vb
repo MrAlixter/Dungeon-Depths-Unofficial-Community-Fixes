@@ -34,6 +34,8 @@
         If Game.player1.perks(perk.lurk) > 0 Then perks(npc_perk.stun) = 0
         If speed = Game.player1.getSPD Then speed -= 1
         pos = Game.player1.pos
+
+        intro_taunt = """For violating Time Law, you will be brought to justice!"""
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

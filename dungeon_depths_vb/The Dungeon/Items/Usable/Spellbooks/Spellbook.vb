@@ -46,8 +46,8 @@
 
         Select Case p.perks(perk.magtype)
             Case magType.fire
-                options = DDUtils.union(options, New List(Of String)({"Fireball", "Super Fireball", "Self Polymorph"}))
-                'options = New List(Of String)({"Self Polymorph"})
+                'options = DDUtils.union(options, New List(Of String)({"Fireball", "Super Fireball", "Self Polymorph"}))
+                options = New List(Of String)({"Polymorph Enemy"})
             Case magType.ice
                 options = DDUtils.union(options, New List(Of String)({"Icicle Spear", "Self Polymorph"}))
             Case magType.plant
@@ -65,10 +65,7 @@
     Public Overridable Function selfPolyForms() As String()
         Dim options As List(Of String) = New List(Of String)({"Slime_Paladin", "Tigress_Barbarian", "Succubus_Assassin"})
         Dim p As Player = Game.player1
-        'slime paladin
-        'tigress barbarian
         'elf sage
-        'succubus rogue
 
         Select Case p.perks(perk.magtype)
             Case magType.fire
@@ -90,14 +87,13 @@
             Case magType.flux
                 'oni warrior
                 'minotaur bull
-                'human
                 options = DDUtils.union(options, New List(Of String)({"Human"}))
         End Select
 
         Return options.ToArray()
     End Function
     Public Overridable Function enemPolyForms() As String()
-        Dim options As List(Of String) = New List(Of String)({"Sheep", "Bunny"})
+        Dim options As List(Of String) = New List(Of String)({"Sheep"})
         Dim p As Player = Game.player1
         'slime
         'cleric
@@ -105,7 +101,8 @@
         Select Case p.perks(perk.magtype)
             Case magType.fire
                 'imp
-                options = DDUtils.union(options, New List(Of String)({}))
+                'options = DDUtils.union(options, New List(Of String)({}))
+                options = New List(Of String)({"Cat-Girl"})
             Case magType.ice
                 'snowman
                 options = DDUtils.union(options, New List(Of String)({}))
@@ -121,8 +118,7 @@
                 options = DDUtils.union(options, New List(Of String)({}))
             Case magType.flux
                 'turtle
-                'bunny
-                options = DDUtils.union(options, New List(Of String)({"Princess"}))
+                options = DDUtils.union(options, New List(Of String)({"Princess", "Bunny"}))
         End Select
 
         Return options.ToArray()

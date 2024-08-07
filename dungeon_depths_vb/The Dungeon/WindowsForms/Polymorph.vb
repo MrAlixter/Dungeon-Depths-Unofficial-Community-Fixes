@@ -122,46 +122,16 @@
     End Sub
     'NPC transform method
     Shared Sub transform(ByRef t As NPC, ByVal s As String)
-        If s = "Giant Frog" Then                'Even Debuff
-            t.maxHealth *= 0.7
-            t.attack *= 0.2
-            t.defense *= 0.2
-            t.speed *= 0.7
-            t.will *= 0.2
-            t.perks(npc_perk.tfdur) = 5
-
-        ElseIf s = "Sheep" Then                 'Even Debuff
-            t.maxHealth *= 0.5
-            t.attack *= 0.5
-            t.defense *= 0.5
-            t.speed *= 0.5
-            t.will *= 0.5
-            t.perks(npc_perk.tfdur) = 6
-
-        ElseIf s = "Princess" Then              '+WIL Debuff
-            t.maxHealth *= 0.33
-            t.attack *= 0.33
-            t.defense *= 0.33
-            t.speed *= 0.33
-            t.will *= 1.0
-            t.perks(npc_perk.tfdur) = 6
-
-        ElseIf s = "Cat-Girl" Then              '+WIL/SPD Debuff
-            t.maxHealth *= 0.33
-            t.attack *= 0.33
-            t.defense *= 0.33
-            t.speed *= 0.33
-            t.will *= 1.0
-            t.perks(npc_perk.tfdur) = 6
-
-        ElseIf s = "Bunny" Then                 '+SPD Debuff
-            t.maxHealth *= 0.33
-            t.attack *= 0.33
-            t.defense *= 0.33
-            t.speed *= 1.0
-            t.will *= 0.33
-            t.perks(npc_perk.tfdur) = 6
-
+        If s = "Giant Frog" Then
+            PolymorphedNPC.polymorph(t, Game.player1, 5, "Giant Frog")
+        ElseIf s = "Sheep" Then
+            PolymorphedNPC.polymorph(t, Game.player1, 6, "Sheep")
+        ElseIf s = "Princess" Then
+            PolymorphedNPC.polymorph(t, Game.player1, 6, "Princess")
+        ElseIf s = "Cat-Girl" Then
+            PolymorphedNPC.polymorph(t, Game.player1, 6, "Cat-Girl")
+        ElseIf s = "Bunny" Then
+            PolymorphedNPC.polymorph(t, Game.player1, 6, "Bunny")
         ElseIf s = "Cow" Then                   '+HP Debuff
             t.maxHealth *= 1.0
             t.attack *= 0.33
@@ -222,7 +192,7 @@
             Exit Sub
         End If
 
-        t.form = s
+        TextEvent.pushAndLog(CStr("The " & t.name & " is turned into a " & s & "!"))
     End Sub
     'npc transform method
     Shared Sub transformN(ByRef t As ShopNPC, ByVal s As String)

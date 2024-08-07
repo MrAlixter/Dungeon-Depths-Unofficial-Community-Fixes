@@ -19,6 +19,13 @@
         count += 1
     End Sub
 
+    Public Sub replace(ByRef u As Updatable, ByRef new_u As Updatable)
+        If Not updatables.Contains(u) Then Exit Sub
+
+        Dim pos = updatables.IndexOf(u)
+        updatables(pos) = new_u
+    End Sub
+
     Public Sub ping()
         If isEmpty() Then Exit Sub
 

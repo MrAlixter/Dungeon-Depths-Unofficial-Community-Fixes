@@ -4,15 +4,13 @@
         MyBase.New(c, t)
         setName("Turn to Frog")
         MyBase.settier(2)
-        MyBase.setcost(5)
+        MyBase.setcost(9)
     End Sub
     Public Overrides Sub effect()
+        'If getTarget.getIntHealth > 70 Then MyBase.getTarget.health = 1
 
-        MyBase.getTarget.form = "Giant Frog"
-
-        If MyBase.getTarget.getIntHealth > 70 Then MyBase.getTarget.health = 1
-
-        Polymorph.transform(MyBase.getTarget, "Giant Frog")
+        'Polymorph.transform(MyBase.getTarget, "Giant Frog")
+        If PolymorphedNPC.polymorph(getTarget, Game.player1, 5, "Giant Frog") Is Nothing Then Exit Sub
 
         TextEvent.pushAndLog(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.r_pronoun & " into a giant frog!"))
         If MyBase.getTarget.GetType().IsSubclassOf(GetType(ShopNPC)) Then

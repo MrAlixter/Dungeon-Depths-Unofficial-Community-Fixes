@@ -23,7 +23,7 @@
         r_pronoun = "her"
 
         '|Misc|
-
+        intro_taunt = """You're going to Time Jail, buster; like it or not!"""
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

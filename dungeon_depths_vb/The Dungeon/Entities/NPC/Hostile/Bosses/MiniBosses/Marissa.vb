@@ -34,7 +34,8 @@
         r_pronoun = "her"
 
         '|Misc|
-
+        intro_taunt = """Well, well, well..." & DDUtils.RNRN &
+                      "What have we here?"""
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

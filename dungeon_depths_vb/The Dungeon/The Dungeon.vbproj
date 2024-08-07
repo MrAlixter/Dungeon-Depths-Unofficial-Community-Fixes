@@ -136,6 +136,12 @@
     <Compile Include="Entities\NPC\Hostile\Monsters\Thrall\EnthConjurer.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Thrall\EnthSwordsman.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\TimeCopAgent.vb" />
+    <Compile Include="Entities\NPC\Hostile\Polymorphed\PBunny.vb" />
+    <Compile Include="Entities\NPC\Hostile\Polymorphed\PPrincess.vb" />
+    <Compile Include="Entities\NPC\Hostile\Polymorphed\PCatGirl.vb" />
+    <Compile Include="Entities\NPC\Hostile\Polymorphed\PSheep.vb" />
+    <Compile Include="Entities\NPC\Hostile\Polymorphed\PGiantFrog.vb" />
+    <Compile Include="Entities\NPC\Hostile\Polymorphed\PolymorphedNPC.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\FaeQueen.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\FVendorTar.vb" />
     <Compile Include="Entities\Player\Classes\needPassages\Cleric.vb" />

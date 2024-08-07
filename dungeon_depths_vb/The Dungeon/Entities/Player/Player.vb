@@ -1169,7 +1169,7 @@ Public Class Player
 
         ongoingTFs.resetPolymorphs()
 
-        If Game.lblEvent.Visible = False Then TextEvent.push(out & "You return to your former form!")
+        If Game.lblEvent.Visible = False Then TextEvent.fpush(out & "You return to your former form!")
         Game.player_image = player_image
         If Settings.active(setting.textcolors) Then Game.lblEvent.ForeColor = textColor
         Game.lblNameTitle.ForeColor = textColor
@@ -1296,7 +1296,7 @@ Public Class Player
 
         revertToState(sState)
 
-        TextEvent.push("With a poof of smoke, you return to your original self!")
+        TextEvent.fpush("With a poof of smoke, you return to your original self!")
     End Sub
     Public Function revertToSState(ByVal numtorevert As Integer) As String
         Return revertToState(numtorevert, sState)
