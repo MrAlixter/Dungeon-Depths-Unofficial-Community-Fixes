@@ -4,6 +4,8 @@
     Protected caster As Player
     Protected target As NPC
 
+    Protected can_be_reacted_to As Boolean = true
+
     Public Shared spellList As Dictionary(Of String, Spell)
     Protected useableOutOfCombat As Boolean = False
     Shared Sub init()
@@ -61,6 +63,16 @@
         spellList.Add("Slitherslice", New Slitherslice(Nothing, Nothing))
         spellList.Add("Tendrill", New Tendrill(Nothing, Nothing))
         spellList.Add("Pandemonium Ray", New PandemoniumRay(Nothing, Nothing))
+        spellList.Add("Freeze", New Freeze(Nothing, Nothing))
+        spellList.Add("Icicle Flurry", New IcicleFlurry(Nothing, Nothing))
+        spellList.Add("Frostsheer", New Frostsheer(Nothing, Nothing))
+        spellList.Add("Crackboom", New Crackboom(Nothing, Nothing))
+        spellList.Add("Sunburst", New Sunburst(Nothing, Nothing))
+        spellList.Add("Moonbeam", New Moonbeam(Nothing, Nothing))
+        spellList.Add("Field of Thorns", New FieldOfThorns(Nothing, Nothing))
+        spellList.Add("Glisterfell", New Glisterfell(Nothing, Nothing))
+        spellList.Add("Venombarb", New Venombarb(Nothing, Nothing))
+        spellList.Add("Nettle Shower", New NettleShower(Nothing, Nothing))
     End Sub
 
     Sub New(ByRef c As Player, ByRef t As NPC)
@@ -183,7 +195,7 @@
         'check for a target
         If Not t Is Nothing Then
             'if we have a target, check if the spell hits them
-            If t.reactToSpell(s) Then spellroute(c, t, s)
+            If Not spellList(s).can_be_reacted_to OrElse (spellList(s).can_be_reacted_to AndAlso t.reactToSpell(s)) Then spellroute(c, t, s)
         Else
             'otherwise just cast the spell
             spellroute(c, t, s)

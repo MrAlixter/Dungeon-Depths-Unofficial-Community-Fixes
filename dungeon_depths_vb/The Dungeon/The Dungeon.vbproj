@@ -136,9 +136,20 @@
     <Compile Include="Entities\NPC\Hostile\Monsters\Thrall\EnthConjurer.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Thrall\EnthSwordsman.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\TimeCopAgent.vb" />
+    <Compile Include="Entities\NPC\Hostile\Polymorphed\needs images\PNewt.vb" />
+    <Compile Include="Entities\NPC\Hostile\Polymorphed\needs images\PDove.vb" />
+    <Compile Include="Entities\NPC\Hostile\Polymorphed\needs images\PGoblin.vb" />
     <Compile Include="Entities\NPC\Hostile\Polymorphed\PBunny.vb" />
     <Compile Include="Entities\NPC\Hostile\Polymorphed\PPrincess.vb" />
     <Compile Include="Entities\NPC\Hostile\Polymorphed\PCatGirl.vb" />
+    <Compile Include="Entities\NPC\Hostile\Polymorphed\needs images\PPyreslug.vb" />
+    <Compile Include="Entities\NPC\Hostile\Polymorphed\needs images\PBeegirl.vb" />
+    <Compile Include="Entities\NPC\Hostile\Polymorphed\needs images\PCow.vb" />
+    <Compile Include="Entities\NPC\Hostile\Polymorphed\PAmnesiac.vb" />
+    <Compile Include="Entities\NPC\Hostile\Polymorphed\needs images\PDragon.vb" />
+    <Compile Include="Entities\NPC\Hostile\Polymorphed\needs images\PSuccubus.vb" />
+    <Compile Include="Entities\NPC\Hostile\Polymorphed\needs images\PSlime.vb" />
+    <Compile Include="Entities\NPC\Hostile\Polymorphed\PTrilobite.vb" />
     <Compile Include="Entities\NPC\Hostile\Polymorphed\PSheep.vb" />
     <Compile Include="Entities\NPC\Hostile\Polymorphed\PGiantFrog.vb" />
     <Compile Include="Entities\NPC\Hostile\Polymorphed\PolymorphedNPC.vb" />
@@ -164,6 +175,7 @@
     <Compile Include="Entities\Player\Forms\needsPassages\Daemon.vb" />
     <Compile Include="Entities\Player\Forms\needsPassages\FaeBimbo.vb" />
     <Compile Include="Entities\Player\Forms\needsPassages\Demon.vb" />
+    <Compile Include="Entities\Player\Forms\Dove.vb" />
     <Compile Include="Entities\Player\Forms\needsPassages\Unicorn.vb" />
     <Compile Include="Entities\Player\Forms\needsPassages\Orc.vb" />
     <Compile Include="Entities\Player\Forms\needsPassages\Cow.vb" />
@@ -207,8 +219,16 @@
     <Compile Include="Entities\Player\Specials\Utility\CLight.vb" />
     <Compile Include="Entities\Player\Specials\Utility\Pluck.vb" />
     <Compile Include="Entities\Player\Specials\Utility\SiphonSlash.vb" />
+    <Compile Include="Entities\Player\Spells\_Combat\Blight\Glisterfell.vb" />
+    <Compile Include="Entities\Player\Spells\_Combat\Fire\Crackboom.vb" />
     <Compile Include="Entities\Player\Spells\_Combat\Flux\PandemoniumRay.vb" />
+    <Compile Include="Entities\Player\Spells\_Combat\Ice\IcicleFlurry.vb" />
+    <Compile Include="Entities\Player\Spells\_Combat\Ice\Frostsheer.vb" />
+    <Compile Include="Entities\Player\Spells\_Combat\Light\Moonbeam.vb" />
+    <Compile Include="Entities\Player\Spells\_Combat\Light\Sunburst.vb" />
     <Compile Include="Entities\Player\Spells\_Combat\Misc\Tendrill.vb" />
+    <Compile Include="Entities\Player\Spells\_Combat\Plant\FieldOfThorns.vb" />
+    <Compile Include="Entities\Player\Spells\_Combat\Plant\NettleShower.vb" />
     <Compile Include="Entities\Player\Spells\_Combat\Plant\Slitherslice.vb" />
     <Compile Include="Entities\Player\Spells\_Utility\Blight\FotiaGaze.vb" />
     <Compile Include="Entities\Player\Spells\_Combat\Ice\Hydrodart.vb" />
@@ -220,6 +240,7 @@
     <Compile Include="Entities\Player\Spells\_Combat\Fire\Hellfireball.vb" />
     <Compile Include="Entities\Player\Spells\_Combat\Light\Smite.vb" />
     <Compile Include="Entities\Player\Spells\_Combat\Fire\FlamesOfAmaraphne.vb" />
+    <Compile Include="Entities\Player\Spells\_Utility\Ice\Freeze.vb" />
     <Compile Include="Entities\Player\Spells\_Utility\Light\Benediction.vb" />
     <Compile Include="Entities\Player\Spells\_Utility\Light\CleansingLight.vb" />
     <Compile Include="Entities\Player\Spells\_Utility\Light\FlashHeal.vb" />
@@ -228,6 +249,7 @@
     <Compile Include="Entities\Player\Spells\_Utility\Light\ReductiveMending.vb" />
     <Compile Include="Entities\Player\Spells\_Utility\Misc\SummonBattery.vb" />
     <Compile Include="Entities\Player\Spells\_Utility\Flux\turnToPanties.vb" />
+    <Compile Include="Entities\Player\Spells\_Utility\Plant\Venombarb.vb" />
     <Compile Include="Entities\Player\Transformations\BimboTFs\MistBimboTF.vb" />
     <Compile Include="Entities\Player\Transformations\BimboTFs\DragonfruitBimboTF.vb" />
     <Compile Include="Entities\Player\Transformations\BimboTFs\FClericTF.vb" />
@@ -244,6 +266,7 @@
     <Compile Include="Entities\Player\Transformations\OneStepTFs\BimboMaidTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\DemonTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\SpaceBunTF.vb" />
+    <Compile Include="Entities\Player\Transformations\Polymorphs\Self Polymorph\DoveTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\Self Polymorph\HumanTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\Self Polymorph\SlimePaladinTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\Self Polymorph\SuccubusAssassinTF.vb" />
@@ -262,6 +285,7 @@
     <Compile Include="Entities\Player\Transformations\FaePrincessTF.vb" />
     <Compile Include="Entities\Player\Transformations\BeeHoneyTF.vb" />
     <Compile Include="Items\Equipment\Accesories\CynnsBimboMark.vb" />
+    <Compile Include="Items\Equipment\Accesories\ROfBirdRage.vb" />
     <Compile Include="Items\Equipment\Accesories\TidemageTattoo.vb" />
     <Compile Include="Items\Equipment\Accesories\BerserkerCursemark.vb" />
     <Compile Include="Items\Equipment\Accesories\RingOfTheRabbit.vb" />
@@ -358,6 +382,7 @@
     <Compile Include="Items\Equipment\Weapons\Daggers\RunecursedDagger.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\KestrelKnife.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\VipersFang.vb" />
+    <Compile Include="Items\Equipment\Weapons\Misc\CrackedBrick2.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\GumGun20mm.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\PixieDuster.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\CrackedBrick.vb" />
@@ -1334,8 +1359,6 @@
     <Folder Include="Entities\Player\Spells\Magical Girl\White\" />
     <Folder Include="Entities\Player\Spells\_Combat\Psychic\" />
     <Folder Include="Entities\Player\Spells\_Utility\Fire\" />
-    <Folder Include="Entities\Player\Spells\_Utility\Ice\" />
-    <Folder Include="Entities\Player\Spells\_Utility\Plant\" />
     <Folder Include="Entities\Player\Spells\_Utility\Psychic\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

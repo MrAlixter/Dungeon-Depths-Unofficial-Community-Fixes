@@ -54,12 +54,14 @@
                 Return New BUDollTFBeach()
             Case "Human"
                 Return New HumanTF()
-            Case "Succubus_Assassin"
+            Case "Succubus+"
                 Return New SuccubusAssassinTF()
-            Case "Slime_Paladin"
+            Case "Slime+"
                 Return New SlimePaladinTF()
-            Case "Tigress_Barbarian"
+            Case "Tigress+"
                 Return New TigressBarbarianTF()
+            Case "Dove"
+                Return New DoveTF()
             Case Else
                 Return Nothing
         End Select

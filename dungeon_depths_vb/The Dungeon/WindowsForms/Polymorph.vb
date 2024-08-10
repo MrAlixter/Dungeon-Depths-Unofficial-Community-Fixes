@@ -132,62 +132,28 @@
             PolymorphedNPC.polymorph(t, Game.player1, 6, "Cat-Girl")
         ElseIf s = "Bunny" Then
             PolymorphedNPC.polymorph(t, Game.player1, 6, "Bunny")
-        ElseIf s = "Cow" Then                   '+HP Debuff
-            t.maxHealth *= 1.0
-            t.attack *= 0.33
-            t.defense *= 0.33
-            t.speed *= 0.33
-            t.will *= 0.33
-            t.perks(npc_perk.tfdur) = 6
-
-        ElseIf s = "Trilobite" Then             '+DEF Debuff
-            t.maxHealth *= 0.33
-            t.attack *= 0.33
-            t.defense *= 1.0
-            t.speed *= 0.33
-            t.will *= 0.33
-            t.perks(npc_perk.tfdur) = 6
-
-        ElseIf s = "Amnesiac" Then              'Even Debuff
-            t.maxHealth *= 0.33
-            t.attack *= 0.33
-            t.defense *= 0.33
-            t.speed *= 0.33
-            t.will *= 0.33
-            t.perks(npc_perk.stun) = 1
-            t.perks(npc_perk.tfdur) = 3
-
-        ElseIf s = "Slime​" Then                 '+DEF Buff
-            t.maxHealth *= 0.5
-            t.attack *= 1.2
-            t.defense *= 2.5
-            t.speed *= 0.9
-            t.will *= 1.0
-            t.perks(npc_perk.tfdur) = 2
-
-        ElseIf s = "Succubus​" Then              '+ATK/WIL Buff
-            t.maxHealth *= 2.0
-            t.attack *= 1.5
-            t.defense *= 0.75
-            t.speed *= 1.5
-            t.will *= 1.25
-            t.perks(npc_perk.tfdur) = 2
-
-        ElseIf s = "Dragon​" Then                '+HP/ATK/DEF Buff
-            t.maxHealth *= 1.5
-            t.attack *= 1.5
-            t.defense *= 2.0
-            t.speed *= 0.5
-            t.will *= 1.25
-            t.perks(npc_perk.tfdur) = 2
-
-        ElseIf s = "Bee-Girl" Then              '+WIL/SPD Debuff
-            t.maxHealth *= 0.5
-            t.attack *= 1.5
-            t.defense *= 1.5
-            t.speed *= 3.0
-            t.will *= 0.33
-            t.perks(npc_perk.tfdur) = 6
+        ElseIf s = "Cow" Then
+            PolymorphedNPC.polymorph(t, Game.player1, 6, "Cow")
+        ElseIf s = "Trilobite" Then
+            PolymorphedNPC.polymorph(t, Game.player1, 4, "Trilobite")
+        ElseIf s = "Amnesiac" Then
+            PolymorphedNPC.polymorph(t, Game.player1, 3, "Amnesiac")
+        ElseIf s = "Slime​" Then
+            PolymorphedNPC.polymorph(t, Game.player1, 4, "Slime​")
+        ElseIf s = "Succubus​" Then
+            PolymorphedNPC.polymorph(t, Game.player1, 2, "Succubus​")
+        ElseIf s = "Dragon​" Then
+            PolymorphedNPC.polymorph(t, Game.player1, 2, "Dragon​")
+        ElseIf s = "Bee-Girl" Then
+            PolymorphedNPC.polymorph(t, Game.player1, 6, "Bee-Girl")
+        ElseIf s = "Newt" Then
+            PolymorphedNPC.polymorph(t, Game.player1, 3, "Newt")
+        ElseIf s = "Pyreslug" Then
+            PolymorphedNPC.polymorph(t, Game.player1, 6, "Pyreslug")
+        ElseIf s = "Dove" Then
+            PolymorphedNPC.polymorph(t, Game.player1, 8, "Dove")
+        ElseIf s = "Goblin" Then
+            PolymorphedNPC.polymorph(t, Game.player1, 6, "Goblin")
         Else
             Exit Sub
         End If

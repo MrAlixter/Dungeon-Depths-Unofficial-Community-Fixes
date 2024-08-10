@@ -86,7 +86,7 @@
             Return False
         End If
 
-        Dim took_dmg = MyBase.takeDMG(dmg, source)
+        Dim took_dmg = MyBase.takeDMG(Math.Min(dmg, 2), source)
 
         shouldRun = shouldRunST()
 

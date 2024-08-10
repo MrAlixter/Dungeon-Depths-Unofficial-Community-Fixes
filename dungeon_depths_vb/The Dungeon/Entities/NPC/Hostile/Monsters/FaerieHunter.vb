@@ -48,7 +48,7 @@
         '|Misc|
         maxHealth *= 0.5
         attack *= 1.5
-        defense *= 1.5
+        defense *= 0.33
         speed *= 3.0
         will *= 0.33
         perks(npc_perk.tfdur) = 3

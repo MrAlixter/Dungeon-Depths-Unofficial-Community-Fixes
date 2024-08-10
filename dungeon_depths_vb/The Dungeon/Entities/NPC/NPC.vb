@@ -21,6 +21,7 @@ Public Enum npc_perk
     poison
     burn
     bleed
+    freeze
 End Enum
 Public Class NPC
     Inherits Entity
@@ -65,7 +66,7 @@ Public Class NPC
             Exit Sub
         End If
 
-        If Not perks(npc_perk.stun) >= 0 Then
+        If Not perks(npc_perk.stun) >= 0 And Not perks(npc_perk.freeze) >= 0 Then
             If (Game.player1.formName.Equals("Frog") Or Game.player1.formName.Equals("Chicken") Or (Game.player1.formName.Equals("Cow") And Not sName = Bovinomancer.BASE_NAME) Or Game.player1.formName.Equals("Horse") Or Game.player1.formName.Equals("Unicorn")) And (Me.GetType().IsSubclassOf(GetType(Monster)) And Not Me.GetType().IsSubclassOf(GetType(MiniBoss))) Then
                 despawn("animaltf")
                 Exit Sub
@@ -108,15 +109,22 @@ Public Class NPC
         TextEvent.pushLog(Trim(title & getName() & " has " & getIntHealth() & " life."))
     End Sub
     Public Overridable Sub handleStun()
-        If Me.GetType() Is GetType(Monster) Then
-            TextEvent.pushAndLog(Trim(title & getName() & " is too stunned to react!"))
+        If perks(npc_perk.freeze) > 0 Then
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " is frozen solid!")
         Else
-            TextEvent.pushAndLog(Trim(title & getName() & " is too stunned to react!"))
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " is too stunned to react!")
         End If
+
         If perks(npc_perk.stun) <= 0 Then
             perks(npc_perk.stun) = -1
         Else
             perks(npc_perk.stun) -= 1
+        End If
+
+        If perks(npc_perk.freeze) <= 0 Then
+            perks(npc_perk.freeze) = -1
+        Else
+            perks(npc_perk.freeze) -= 1
         End If
     End Sub
     Protected Function getXPValue() As Integer
@@ -201,6 +209,8 @@ Public Class NPC
                 If Game.player1.will < 1 Then Game.player1.will = 0
                 Game.player1.UIupdate()
             End If
+        ElseIf reason = "doverun" Then
+            TextEvent.pushLog("You fly away from " & getNameWithTitle() & "!")
         ElseIf reason = "warp" Then
             TextEvent.pushAndLog("With a flash, you teleport " & getNameWithTitle() & " far away!")
         ElseIf reason = "pwarp" Then

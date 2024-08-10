@@ -760,6 +760,7 @@
         If Game.compOOT Then cbox.Items.Add("Time Cop")
         If Game.compDP Then cbox.Items.Add("Cynn's Ally")
         If Game.compWSMecha Then cbox.Items.Add("Mecha-Warrior")
+        If Game.becameDove Then cbox.Items.Add("Mad Bird")
 
         'select a class at random
         cbox.Text = cbox.Items(Int(Rnd() * cbox.Items.Count))
@@ -774,6 +775,7 @@
                 If lines.Contains("Time Cop") Then Game.compOOT = True
                 If lines.Contains("Cynn's Ally") Then Game.compDP = True
                 If lines.Contains("Mecha-Warrior") Then Game.compWSMecha = True
+                If lines.Contains("Mad Bird") Then Game.becameDove = True
             End Using
         End If
     End Sub

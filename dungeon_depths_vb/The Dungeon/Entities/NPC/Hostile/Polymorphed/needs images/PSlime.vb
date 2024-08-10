@@ -1,39 +1,32 @@
-﻿Public Class SlimeMonster
-    Inherits Monster
+﻿Public Class PSlime
+    Inherits PolymorphedNPC
 
-    Public Const BASE_NAME As String = "Slime"
-
-    Sub New()
-        '|ID Info|
-        name = BASE_NAME
-
-        '|Stats|
-        maxHealth = 30
-        attack = 17
-        defense = 60
-        speed = 6
-
-        '|Inventory|
-        setInventory({2, 3})
-
-        '|Dialog Variables|
-
-        '|Misc|
-        setupMonsterOnSpawn()
-
-        If Int(Rnd() * 45) = 0 Then
-            name = "Beautiful Slime"
-
-            inv.setCount(EyeOfTheBeholder.ITEM_NAME, 1)
-
-            intro_taunt = "This slime seems to have an... eyeball..." & DDUtils.RNRN &
-                          "A very pretty eyeball..." & DDUtils.RNRN &
-                          "Hmm..."
-        End If
+    Public Sub New(ByRef e As NPC, ByRef p As Player, ByVal duration As Integer)
+        MyBase.New(e, p, duration)
     End Sub
 
-    Public Overrides Sub attackCMD(ByRef target As Entity)
-        If Int(Rnd() * 8) = 0 Then
+    Overrides Function getHPModifier() As Double
+        Return 0.5
+    End Function
+    Overrides Function getATKModifier() As Double
+        Return 1.2
+    End Function
+    Overrides Function getDEFModifier() As Double
+        Return 2.5
+    End Function
+    Overrides Function getSPDModifier() As Double
+        Return 0.9
+    End Function
+    Overrides Function getWILModifier() As Double
+        Return 1.0
+    End Function
+
+    Public Overrides Function getFormName() As String
+        Return "Slime"
+    End Function
+
+    Public Overrides Sub newAttackCMD(ByRef target As Entity)
+        If Int(Rnd() * 16) = 0 Then
             TextEvent.push(DDUtils.capitalizeFirst(getNameWithTitle) & " just sits there, bobbing up and down menacingly...")
             TextEvent.pushLog(DDUtils.capitalizeFirst(getNameWithTitle) & " just sits there.")
         ElseIf health < 0.75 And Int(Rnd() * 2) = 0 Then
@@ -45,7 +38,7 @@
 
             If health > 1.0 Then health = 1.0
         Else
-            MyBase.attackCMD(target)
+            hit(calcDamage(getATK(), target.getDEF), target)
         End If
     End Sub
 
@@ -62,10 +55,5 @@
 
         p.ongoingTFs.add(New SlimeETF(p.perks(perk.slimetf)))
         TextEvent.push(out, AddressOf p.update)
-    End Sub
-
-    Private Sub slimeFleeP2()
-        TextEvent.push(DDUtils.capitalizeFirst(getNameWithTitle()) & " keeps bouncing in place..." & DDUtils.RNRN &
-                       "You slowly crawl away.")
     End Sub
 End Class

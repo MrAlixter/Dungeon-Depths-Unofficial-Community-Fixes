@@ -641,6 +641,15 @@ Public Class Player
             equippedWeapon = inv.item(GumGun20mm.ITEM_NAME)
             equippedGlasses = inv.item(TargetingSystem.ITEM_NAME)
 
+        ElseIf s = "Mad Bird" Then
+            pClass = classes("Cleric")
+            pForm = forms("Dove")
+
+            inv.add(ROfBirdRage.ITEM_NAME, 1)
+            inv.add(CrackedBrick.ITEM_NAME, 30)
+
+            equippedAcce = inv.item(ROfBirdRage.ITEM_NAME)
+            equippedAcce.onEquip(Me)
         ElseIf s = "Evil Mage" Then
             pClass = classes("Mage")
 
@@ -748,6 +757,7 @@ Public Class Player
         classes.Add("Mecha-Warrior", New Warrior())
         classes.Add("Mindless Bimbo", New MindlessBimbo())
         classes.Add("Assassin", New Assassin())
+        classes.Add("Mad Bird", New Cleric())
     End Sub
     Private Shared Sub initForms()
         'Creates the form dictionary
@@ -804,6 +814,7 @@ Public Class Player
         forms.Add("Faerie (B)", New FaeBimbo())
         forms.Add("Demon", New Demon())
         forms.Add("Daemon", New Daemon())
+        forms.Add("Dove", New Dove())
     End Sub
     Private Sub initPolymorphs()
         'compile list of polymorphs
@@ -826,9 +837,10 @@ Public Class Player
         polymorphs.Add("Unicorn", Nothing)
         polymorphs.Add("Cow", Nothing)
         polymorphs.Add("Human", Nothing)
-        polymorphs.Add("Succubus_Assassin", Nothing)
-        polymorphs.Add("Slime_Paladin", Nothing)
-        polymorphs.Add("Tigress_Barbarian", Nothing)
+        polymorphs.Add("Succubus+", Nothing)
+        polymorphs.Add("Slime+", Nothing)
+        polymorphs.Add("Tigress+", Nothing)
+        polymorphs.Add("Dove", Nothing)
     End Sub
     Private Sub initQuests()
         quests.Clear()
@@ -1447,6 +1459,9 @@ Public Class Player
                 CType(source, ShopNPC).playerDeath(Me)
                 setHealth(0.25)
                 Exit Sub
+            ElseIf formName() = "Dove" AndAlso Not (source.GetType.IsSubclassOf(GetType(MiniBoss)) Or source.GetType.IsSubclassOf(GetType(Boss))) Then
+                PerkEffects.doveFlee()
+                Exit Sub
             ElseIf source.GetType.IsSubclassOf(GetType(NPC)) Or source.GetType.IsSubclassOf(GetType(Monster)) Then
                 CType(source, NPC).playerDeath(Me)
                 setHealth(0.25)
@@ -1465,6 +1480,7 @@ Public Class Player
         If (perks(perk.mesmerized) > -1 Or className.Equals("Mindless")) AndAlso Int(Rnd() * 2) = 0 Then nextCombatAction = AddressOf PerkEffects.mesStun
         If perks(perk.stunned) = 1 Then nextCombatAction = AddressOf PerkEffects.stun
         If Game.currFloor.floorNumber = 13 And perks(perk.faepassangers) = 1 Or perks(perk.faepassangers) = 2 Or perks(perk.faepassangers) = 3 Then nextCombatAction = AddressOf FaeWoodsQ2A.faeAttack
+        If formName.Equals("Dove") And Not nextCombatAction Is Nothing Then nextCombatAction = AddressOf PerkEffects.doveFlee
 
         MyBase.update()
 
@@ -2870,6 +2886,9 @@ Public Class Player
                 out += "You are a small cyan blob of slime, too pliable to maintain a constant form.  While the gelatinous goo that makes up your body gives you a certain durability, one solid strike may leave you in pieces." & DDUtils.RNRN
                 Return out + outPutPerkText()
             Case "Chicken"
+            Case "Dove"
+                out += "You are a small white bird." & DDUtils.RNRN
+                Return out + outPutPerkText()
             Case "Fae"
                 out += "You are a small farie.  While you can fly using the delicate wings attached to your back, your size makes it difficult to wear or use any form of equipment designed for bigger folk." & DDUtils.RNRN
             Case "Frog"

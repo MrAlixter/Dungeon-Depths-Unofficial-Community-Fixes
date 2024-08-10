@@ -93,7 +93,7 @@
                 If Not m.getNPC Is Nothing Then m.getNPC.perks(npc_perk.burn) += 5
             ElseIf selected_ammo.getAName.Equals(MStickOfGum.ITEM_NAME) Then
                 dmg += (p.getSPD) + 65
-                If Not m.getNPC Is Nothing Then m.getNPC.perks(npc_perk.stun) += 2
+                If Not m.getNPC Is Nothing Then m.getNPC.perks(npc_perk.freeze) += 2
             ElseIf selected_ammo.getAName.Equals(BBStickOfGum.ITEM_NAME) Then
                 dmg += (p.getSPD) + 33
                 dmg = Player.calcDamage(dmg, m.getDEF)

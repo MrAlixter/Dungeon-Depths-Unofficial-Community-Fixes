@@ -22,6 +22,8 @@
     Shared Sub hardDeath()
         Dim p As Player = Game.player1
         p.isDead = True
+        p.health = 0
+
         Dim r As Integer = 0 ' CInt(Int(Rnd() * 2))
         If r = 0 Then
             Dim writer As IO.StreamWriter

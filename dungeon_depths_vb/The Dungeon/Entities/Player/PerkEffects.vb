@@ -281,6 +281,13 @@
             p.perks(perk.pinkmist) -= 1
         End If
     End Sub
+    Shared Sub doveFlee()
+        If Not Game.lblCombatEvents.Text.Contains("You throw") Then
+            If Not Game.player1.currTarget Is Nothing Then Game.player1.currTarget.despawn("doverun")
+
+            Game.fromCombat()
+        End If
+    End Sub
 
     '|TRANSFORMATION TRIGGERS|
     Shared Sub targaxSwordTF(ByRef p As Player)

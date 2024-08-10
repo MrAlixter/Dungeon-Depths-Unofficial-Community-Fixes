@@ -164,13 +164,13 @@
                 p.changeClass("Princess")
                 p.sex = "Female"
                 p.prt.skincolor = (Color.FromArgb(255, 210, 161, 140))
-                armor = New Integer() {39, 85, 99}
+                armor = New Integer() {39, 85, 99, 438}
             Case 7   'amazon warrior
                 p.changeForm("Amazon")
                 p.changeClass("Warrior")
                 p.sex = "Female"
                 p.prt.skincolor = (Color.FromArgb(255, 210, 161, 140))
-                armor = New Integer() {7, 41, 71, 85, 99, 177}
+                armor = New Integer() {7, 41, 71, 85, 99, 177, 438}
             Case 8   'succubus
                 p.changeForm("Succubus")
                 p.changeClass("Warrior")
@@ -216,7 +216,7 @@
                 p.changeForm("Angel")
                 p.changeClass("Warrior")
                 armor = New Integer() {7, 19, 83, 85, 95, 105}
-                weapon = New Integer() {6, 23, 40, 112, 177, 176}
+                weapon = New Integer() {6, 23, 40, 112, 177, 176, 438}
                 p.sex = "Female"
                 p.prt.setIAInd(pInd.wings, 1, True, False)
             Case 16   'bunny girl
@@ -230,7 +230,7 @@
                 p.changeForm("Minotaur Cow")
                 p.changeClass("Barbarian")
                 armor = New Integer() {19, 71, 101}
-                weapon = New Integer() {6, 23, 40, 118, 177}
+                weapon = New Integer() {6, 23, 40, 118, 177, 438}
                 p.sex = "Female"
                 p.prt.setIAInd(pInd.horns, 2, True, False)
             Case 18   'cow male

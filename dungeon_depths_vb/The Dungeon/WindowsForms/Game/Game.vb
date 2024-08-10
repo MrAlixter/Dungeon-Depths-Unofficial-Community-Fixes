@@ -60,6 +60,7 @@ Public Class Game
     Public compOOT As Boolean
     Public compDP As Boolean
     Public compWSMecha As Boolean
+    Public becameDove As Boolean
     Public stealEverything As Boolean  'not added yet
 
     '| -- Player(s) -- |
@@ -173,6 +174,7 @@ Public Class Game
         If compOOT Then w.WriteLine("Time Cop")
         If compDP Then w.WriteLine("Cynn's Ally")
         If compWSMecha Then w.WriteLine("Mecha-Warrior")
+        If becameDove Then w.WriteLine("Mad Bird")
         w.Close()
     End Sub
     Sub createConfigs()
@@ -1581,14 +1583,14 @@ Public Class Game
     End Function
 
     '| - PROGRESS TURN - |
-    Public Sub progressTurn()
+    Public Sub progressTurn(Optional ByVal clearEvents As Boolean = True)
         turn += 1
 
         '|-Set up the queue based on speed-|
         queueSetup()
 
         '|-Clear the previous combat logs-|
-        If combat_engaged Then lblCombatEvents.Text = ""
+        If combat_engaged And clearEvents Then lblCombatEvents.Text = ""
 
         '|-Ping the list of updatables-|
         updatable_queue.ping()
@@ -1851,11 +1853,13 @@ Public Class Game
         End If
     End Sub
     Sub selectItem(ByVal index As Integer)
+        If combat_engaged Then lblCombatEvents.Text = ""
+
         Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
         selectedItem = player1.inv.item(lstSelec.Items(index).ToString.Split(" (")(2))
         If Not selectedItem Is Nothing AndAlso selectedItem.getUsable Then selectedItem.use(player1)
 
-        progressTurn()
+        progressTurn(False)
     End Sub
     Sub selectMagic(ByVal index As Integer)
         Dim subString As String = lstSelec.Items(index).ToString.Split("-")(1)
@@ -2837,6 +2841,8 @@ Public Class Game
 
         If selectedItem Is Nothing Then Exit Sub
 
+        If combat_engaged Then lblCombatEvents.Text = ""
+
         If player1.perks(perk.astatue) > -1 And Not selectedItem.getAName.Equals(SthenoSalve.ITEM_NAME) Then
             TextEvent.push("You can't move to use any items now..." & If(player1.inv.getCountAt(SthenoSalve.ITEM_NAME) > 0, DDUtils.RNRN & "...well, other than " & SthenoSalve.ITEM_NAME.Replace("_", " ") & "...", ""))
             TextEvent.pushLog("You can't use items now!")
@@ -2868,7 +2874,7 @@ Public Class Game
             lstInventory.SelectedIndex = tind
         End If
 
-        progressTurn()
+        progressTurn(False)
 
         lblPHealth.Text = DDUtils.statBar(player1.getIntHealth, player1.getMaxHealth, lblPHealth)
     End Sub
@@ -3472,6 +3478,8 @@ Public Class Game
         btnRUN.Visible = False
         btnWait.Visible = False
         btnSpec.Visible = False
+        pnlSelection.Visible = False
+        selecting = False
 
         '|-Clean up Game-|
         combat_engaged = False

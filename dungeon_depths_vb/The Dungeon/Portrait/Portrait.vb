@@ -656,6 +656,8 @@ Public Class Portrait
             Return ol_img_lib.getImg(30)
         ElseIf pForm.Equals("Blow-Up Cynn") Then
             Return ol_img_lib.getImg(29)
+        ElseIf pForm.Equals("Dove") Then
+            Return ol_img_lib.getImg(31)
         End If
 
         Return Nothing
@@ -760,6 +762,7 @@ Public Class Portrait
         End If
 
         '| -- ;) -- |
+        If c.A <> 255 And renderMode = RENDER_MODE.full Then iArr(pInd.body) = topClothesMask(iArr(pInd.body), iArr(pInd.genitalia))
         If renderMode <> RENDER_MODE.half Then iArr(pInd.genitalia) = recolorFunction(imgLib.atrs(pInd.genitalia).getAt(iArrInd(pInd.genitalia)), c)
 
         '| -- Face -- |

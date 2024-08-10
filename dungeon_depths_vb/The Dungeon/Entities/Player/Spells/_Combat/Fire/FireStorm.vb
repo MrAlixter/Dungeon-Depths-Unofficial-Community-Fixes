@@ -8,7 +8,7 @@
     End Sub
     Public Overrides Sub effect()
         For i = 0 To Int(Rnd() * 3) + 2
-            If getCaster.mana < 5 Then Exit For
+            If i <> 0 AndAlso getCaster.mana < 5 Then Exit For
 
             'non critical hit
             Dim dmg As Integer = 35

@@ -31,6 +31,7 @@
     demon
     demonbimbo
     demonmino
+    dove
     dragonpolymorph
     dragonfruitbimbo
     faebimbo
@@ -238,6 +239,9 @@ Public MustInherit Class Transformation
 
         ElseIf tf = tfind.demonmino Then
             Return New MinoDTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.dove Then
+            Return New DoveTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.dragonpolymorph Then
             Return New DragonTF(cs, n, tts, wi, cbs, tfd)

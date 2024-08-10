@@ -3,7 +3,7 @@
     Sub New(ByRef c As Player, ByRef t As NPC)
         MyBase.New(c, t)
         setName("Icicle Spear")
-        MyBase.settier(2)
+        MyBase.settier(1)
         MyBase.setcost(5)
     End Sub
     Public Overrides Sub effect()

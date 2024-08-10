@@ -464,6 +464,8 @@
         internal_inventory.Add(SluiceChime.ITEM_NAME, New SluiceChime)               '436
         internal_inventory.Add(PolymExtPotion.ITEM_NAME, New PolymExtPotion)         '437
         internal_inventory.Add(ChainBikini.ITEM_NAME, New ChainBikini)               '438
+        internal_inventory.Add(ROfBirdRage.ITEM_NAME, New ROfBirdRage)               '439
+        internal_inventory.Add(CrackedBrick2.ITEM_NAME, New CrackedBrick2)           '440
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -520,7 +522,8 @@
                    Me.item(390), Me.item(399), Me.item(401), Me.item(412),
                    Me.item(415), Me.item(419), Me.item(420), Me.item(421),
                    Me.item(422), Me.item(426), Me.item(427), Me.item(428),
-                   Me.item(430), Me.item(431), Me.item(432), Me.item(433)}
+                   Me.item(430), Me.item(431), Me.item(432), Me.item(433),
+                   Me.item(440)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4), Me.item(65),
                    Me.item(15), Me.item(36), Me.item(37), Me.item(48),
@@ -541,7 +544,8 @@
                    Me.item(344), Me.item(350), Me.item(362), Me.item(373),
                    Me.item(375), Me.item(379), Me.item(380), Me.item(387),
                    Me.item(388), Me.item(390), Me.item(395), Me.item(410),
-                   Me.item(416), Me.item(422), Me.item(432), Me.item(436)}
+                   Me.item(416), Me.item(422), Me.item(432), Me.item(436),
+                   Me.item(440)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32),
                 Me.item(33), Me.item(34), Me.item(35), Me.item(44),
@@ -567,7 +571,7 @@
                 Me.item(344), Me.item(346), Me.item(349), Me.item(355),
                 Me.item(356), Me.item(361), Me.item(374), Me.item(375),
                 Me.item(376), Me.item(389), Me.item(391), Me.item(402),
-                Me.item(411), Me.item(414)}
+                Me.item(411), Me.item(414), Me.item(439)}
 
         services = {Me.item(87), Me.item(113), Me.item(114), Me.item(121),
                     Me.item(122), Me.item(124), Me.item(131), Me.item(245),

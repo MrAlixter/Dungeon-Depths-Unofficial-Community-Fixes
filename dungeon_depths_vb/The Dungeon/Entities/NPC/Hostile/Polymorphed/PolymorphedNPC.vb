@@ -109,16 +109,38 @@
         End If
 
         Select Case form
-            Case "Cat-Girl"
-                Return New PCatGirl(t, p, dur)
-            Case "Giant Frog"
-                Return New PGiantFrog(t, p, dur)
-            Case "Princess"
-                Return New PPrincess(t, p, dur)
-            Case "Sheep"
-                Return New PSheep(t, p, dur)
+            Case "Amnesiac"
+                Return New PAmnesiac(t, p, dur)
+            Case "Bee-Girl"
+                Return New PBeegirl(t, p, dur)
             Case "Bunny"
                 Return New PBunny(t, p, dur)
+            Case "Cat-Girl"
+                Return New PCatGirl(t, p, dur)
+            Case "Cow"
+                Return New PCow(t, p, dur)
+            Case "Dragon​"
+                Return New PDragon(t, p, dur)
+            Case "Dove"
+                Return New PDove(t, p, dur)
+            Case "Giant Frog"
+                Return New PGiantFrog(t, p, dur)
+            Case "Goblin"
+                Return New PGoblin(t, p, dur)
+            Case "Newt"
+                Return New PNewt(t, p, dur)
+            Case "Princess"
+                Return New PPrincess(t, p, dur)
+            Case "Pyreslug"
+                Return New PPyreslug(t, p, dur)
+            Case "Sheep"
+                Return New PSheep(t, p, dur)
+            Case "Slime"
+                Return New PSlime(t, p, dur)
+            Case "Succubus​"
+                Return New PSuccubus(t, p, dur)
+            Case "Trilobite"
+                Return New PTrilobite(t, p, dur)
             Case Else
                 Return Nothing
         End Select

@@ -89,6 +89,10 @@
             inv.setCount(MidasGuantlet.ITEM_NAME, 1)
         End If
 
+        If Game.player1.sState.pForm.name = "Dove" Then
+            inv.setCount(CrackedBrick.ITEM_NAME, 1)
+        End If
+
         If Game.player1.quests(qInd.helpWanted).getComplete Then
             inv.setCount(PlatinumAxe.ITEM_NAME, 1)
             inv.setCount(PlatinumDaggers.ITEM_NAME, 1)
