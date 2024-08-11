@@ -134,13 +134,17 @@
             If Not p.knownSpells.Contains(s) Then Return False
         Next
 
-        For Each sp_form In selfPolyForms()
-            If Not p.selfPolyForms.Contains(sp_form) Then Return False
-        Next
+        If spells.Contains("Self Polymorph") Then
+            For Each sp_form In selfPolyForms()
+                If Not p.selfPolyForms.Contains(sp_form) Then Return False
+            Next
+        End If
 
-        For Each ep_form In enemPolyForms()
-            If Not p.enemPolyForms.Contains(ep_form) Then Return False
-        Next
+        If spells.Contains("Polymorph Enemy") Then
+            For Each ep_form In enemPolyForms()
+                If Not p.enemPolyForms.Contains(ep_form) Then Return False
+            Next
+        End If
 
         Return True
     End Function
