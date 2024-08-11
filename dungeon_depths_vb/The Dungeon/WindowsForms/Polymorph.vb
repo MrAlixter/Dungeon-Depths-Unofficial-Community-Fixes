@@ -158,7 +158,7 @@
             Exit Sub
         End If
 
-        TextEvent.pushAndLog(CStr("The " & t.name & " is turned into a " & s & "!"))
+        TextEvent.pushAndLog(CStr(DDUtils.capitalizeFirst(t.getNameWithTitle) & " is turned into a " & s & "!"))
     End Sub
     'npc transform method
     Shared Sub transformN(ByRef t As ShopNPC, ByVal s As String)

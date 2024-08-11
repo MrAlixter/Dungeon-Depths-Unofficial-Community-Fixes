@@ -3014,6 +3014,10 @@ Public Class Player
             out += "You are disciplined in the art of the " & DDUtils.capitalizeFirst(CType(perks(perk.meltype), melType).ToString) & "." & DDUtils.RNRN
         End If
 
+        If Not perks(perk.magtype) = magType.misc Then
+            out += "You are disciplined in the path of " & DDUtils.capitalizeFirst(CType(perks(perk.magtype), magType).ToString) & " magic." & DDUtils.RNRN
+        End If
+
         out += outPutPerkText()
 
         out += listQuests()
