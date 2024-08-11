@@ -841,6 +841,7 @@ Public Class Player
         polymorphs.Add("Slime+", Nothing)
         polymorphs.Add("Tigress+", Nothing)
         polymorphs.Add("Dove", Nothing)
+        polymorphs.Add("Goo Girl", Nothing)
     End Sub
     Private Sub initQuests()
         quests.Clear()

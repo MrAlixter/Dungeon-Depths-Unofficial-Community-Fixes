@@ -73,6 +73,7 @@
     neko
     plantfolk
     plush
+    polygoogirl
     promaggirl
     promaggirlr
     prefform
@@ -365,6 +366,9 @@ Public MustInherit Class Transformation
 
         ElseIf tf = tfind.plush Then
             Return New PlushTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.polygoogirl Then
+            Return New PolyGooGirlTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.promaggirl Then
             Return New ProMagGirlTF(cs, n, tts, wi, cbs, tfd)

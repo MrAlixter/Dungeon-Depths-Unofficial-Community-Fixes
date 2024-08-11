@@ -62,6 +62,8 @@
                 Return New TigressBarbarianTF()
             Case "Dove"
                 Return New DoveTF()
+            Case "Goo Girl"
+                Return New PolyGooGirlTF()
             Case Else
                 Return Nothing
         End Select

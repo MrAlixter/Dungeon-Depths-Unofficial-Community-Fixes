@@ -47,7 +47,7 @@
         Select Case p.perks(perk.magtype)
             Case magType.fire
                 options = DDUtils.union(options, New List(Of String)({"Fireball", "Super Fireball", "Self Polymorph", "Polymorph Enemy", "Crackboom"}))
-                'options = New List(Of String)({"Fireball"})
+                'options = New List(Of String)({"Self Polymorph"})
             Case magType.ice
                 options = DDUtils.union(options, New List(Of String)({"Icicle Spear", "Freeze", "Icicle Flurry", "Frostsheer"}))
             Case magType.plant
@@ -70,7 +70,7 @@
             Case magType.fire
                 'phoenix
                 options = DDUtils.union(options, New List(Of String)({"Dragon"}))
-                'options = New List(Of String)({"Dove"})
+                'options = New List(Of String)({"Goo Girl"})
             Case magType.ice
                 'ice golem
                 options = DDUtils.union(options, New List(Of String)({}))
@@ -86,7 +86,7 @@
                 'oni warrior
                 'minotaur bull
                 'elf sage
-                options = DDUtils.union(options, New List(Of String)({"Human", "Dragon"}))
+                options = DDUtils.union(options, New List(Of String)({"Human", "Dragon", "Goo Girl"}))
         End Select
 
         Return options.ToArray()

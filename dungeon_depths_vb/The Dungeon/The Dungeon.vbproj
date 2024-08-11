@@ -267,6 +267,7 @@
     <Compile Include="Entities\Player\Transformations\OneStepTFs\DemonTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\SpaceBunTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\Self Polymorph\DoveTF.vb" />
+    <Compile Include="Entities\Player\Transformations\Polymorphs\Self Polymorph\PolyGooGirlTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\Self Polymorph\HumanTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\Self Polymorph\SlimePaladinTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\Self Polymorph\SuccubusAssassinTF.vb" />
