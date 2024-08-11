@@ -466,6 +466,8 @@
         internal_inventory.Add(ChainBikini.ITEM_NAME, New ChainBikini)               '438
         internal_inventory.Add(ROfBirdRage.ITEM_NAME, New ROfBirdRage)               '439
         internal_inventory.Add(CrackedBrick2.ITEM_NAME, New CrackedBrick2)           '440
+        internal_inventory.Add(ForgetSpell.ITEM_NAME, New ForgetSpell)               '441
+        internal_inventory.Add(ForgetSpecial.ITEM_NAME, New ForgetSpecial)           '442
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -576,7 +578,8 @@
         services = {Me.item(87), Me.item(113), Me.item(114), Me.item(121),
                     Me.item(122), Me.item(124), Me.item(131), Me.item(245),
                     Me.item(249), Me.item(263), Me.item(359), Me.item(371),
-                    Me.item(400), Me.item(403), Me.item(434)}
+                    Me.item(400), Me.item(403), Me.item(434), Me.item(441),
+                    Me.item(442)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),

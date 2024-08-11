@@ -34,6 +34,8 @@
         inv.setCount("Learn_'Focus_Up'", 1)
         inv.setCount("Basic_Class_Change", 1)
         inv.setCount("Advanced_Class_Change", 1)
+        inv.setCount(ForgetSpell.ITEM_NAME, 1)
+        inv.setCount(ForgetSpecial.ITEM_NAME, 1)
         'Pluckable
         inv.setCount(SpiralBikini.ITEM_NAME, 1)
 

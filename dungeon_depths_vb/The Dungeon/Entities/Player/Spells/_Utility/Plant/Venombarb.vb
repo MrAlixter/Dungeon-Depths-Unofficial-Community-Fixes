@@ -5,8 +5,6 @@
         setName("Venombarb")
         MyBase.settier(2)
         MyBase.setcost(8)
-
-        can_be_reacted_to = False
     End Sub
     Public Overrides Sub effect()
         Dim dmg As Integer = 2

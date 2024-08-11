@@ -1,7 +1,7 @@
 ﻿Public Class SellHellfireBlade
     Inherits Item
 
-    Public Const ITEM_NAME As String = "Sell_Hellfire_Blade"
+    Public Const ITEM_NAME As String = "Forge_Hellfire_Blade"
 
     Sub New()
         '|ID Info|

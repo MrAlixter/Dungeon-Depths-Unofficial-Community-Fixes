@@ -1657,6 +1657,9 @@ Public Class Game
                     player1.selectedSpecial = ""
                 ElseIf selectionType = "FaeQueen" Then
                     FaeQueen.playerLeaves()
+                ElseIf selectionType = "manySelect" Then
+                    If Not TextEvent.noAction Is Nothing Then TextEvent.noAction()
+                    TextEvent.noAction = Nothing
                 End If
 
                 selecting = False

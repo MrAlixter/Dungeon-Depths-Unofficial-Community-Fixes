@@ -27,7 +27,7 @@
             Case LootTable.bracket.misc
                 If floor_num = 13 Then Return 3 Else Return Nothing
             Case Else
-                Return MyBase.getTier(floor_num)
+                Return tier
         End Select
     End Function
 

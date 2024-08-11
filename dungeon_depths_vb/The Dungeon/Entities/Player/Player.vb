@@ -3142,6 +3142,7 @@ Public Class Player
         While knownSpells.Contains(spell)
             knownSpells.Remove(spell)
         End While
+
         TextEvent.pushLog(spell & " spell forgotten!")
     End Sub
     Public Sub learnSpecial(ByVal spec As String)

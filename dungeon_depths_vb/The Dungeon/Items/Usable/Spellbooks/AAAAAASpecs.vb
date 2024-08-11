@@ -30,4 +30,8 @@
     Public Overrides Function enemPolyForms() As String()
         Return {}
     End Function
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Return tier
+    End Function
 End Class

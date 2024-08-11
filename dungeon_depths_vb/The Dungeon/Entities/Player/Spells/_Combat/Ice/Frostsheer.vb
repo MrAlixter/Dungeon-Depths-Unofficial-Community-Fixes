@@ -14,6 +14,8 @@
             If getTarget.perks(npc_perk.freeze) > -1 Then dmg = Math.Min(dmg * 5, 750)
             dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, dmg)
             getCaster.hit(dmg, getTarget, "", "shatter")
+
+            getTarget.perks(npc_perk.freeze) = -1
         Else
             Dim floor = Game.currFloor
             Dim success As Boolean = False
@@ -38,7 +40,7 @@
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object
-        Return "A tier 2 offensive spell that deals a medium amount of magic damage, with a low chance of missing altogether.  If the target is frozen, deals x5 damage (with a maximum of 750 damage)." & DDUtils.RNRN &
+        Return "A tier 2 offensive spell that deals a medium amount of magic damage, with a low chance of missing altogether.  If the target is frozen, deals x5 damage (with a maximum of 750 damage) and removes all stacks of freeze." & DDUtils.RNRN &
                "Can be used outside of combat to crack open a chest without allowing mimics to activate."
     End Function
 End Class

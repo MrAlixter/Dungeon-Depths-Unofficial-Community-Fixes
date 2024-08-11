@@ -34,4 +34,8 @@
 
         count -= 1
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        Return tier
+    End Function
 End Class

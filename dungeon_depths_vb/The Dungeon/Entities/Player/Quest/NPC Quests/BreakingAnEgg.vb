@@ -12,12 +12,41 @@
     Public Overrides Sub init()
         MyBase.init()
 
-        TextEvent.pushNPCDialog("""Hey " & If(Game.player1.sex.Equals("Male"), "guy", "you") & ", do ya mind doing me a favor?  I've been scouting ahead and I can give my menu a good ol' overhaul if I can deal with some of the bigger mosters that are roaming around." & DDUtils.RNRN &
-                                "There's a sword that the guy on floor 2 used to carry around that's wicked sharp, buuuut also pretty evil.  Get it, and bring it over." & DDUtils.RNRN &
-                                "Trust me, I've got the psychic chops to handle its... well... psychic chops.""" & DDUtils.RNRN &
-                                "Quest ""Breaking an Egg"" acquired!")
+        Dim out As String = """Hey " & If(Game.player1.sex.Equals("Male"), "guy", "you") & ", d'ya mind doing me a favor?" & DDUtils.RNRN &
+                            "I've been scouting ahead, and I can give my menu an overhaul if I can deal with some of the bigger mosters that are roaming around.  I need a better weapon for that, though.  There's this cursed sword floating around on floor 2, think you can track it down?" & DDUtils.RNRN &
+                            "Trust me, I've got the psychic chops to handle its... well... psychic chops.""" & DDUtils.RNRN &
+                            "Quest 'Breaking an Egg' acquired!"
+        If Game.player1.inv.getCountAt(TargaxSword.ITEM_NAME) > 0 Then
+            TextEvent.pushNPCDialog(out & "  Press any non-movement key to continue...", AddressOf immediateComplete)
+        Else
+            TextEvent.pushNPCDialog(out)
+        End If
     End Sub
 
+    Private Sub immediateComplete()
+        Game.leaveNPC()
+
+        Game.picNPC.BackgroundImage = ShopNPC.gbl_img.atrs(0).getAt(11)
+        Game.picNPC.Visible = True
+
+        TextEvent.pushNPCDialog("""Woah, is that it in your pack now?  You sure you want to hand 'er over?""" & DDUtils.PAKTC, AddressOf complete2)
+    End Sub
+
+    Private Sub complete2()
+        TextEvent.pushYesNo("Turn over the sword?", AddressOf complete3, AddressOf Objective.fromNPC)
+    End Sub
+
+    Private Sub complete3()
+        Game.player1.inv.add(TargaxSword.ITEM_NAME, -1)
+        If Game.player1.equippedWeapon.getAName.Equals(TargaxSword.ITEM_NAME) Then EquipmentDialogBackend.equipWeapon(Game.player1, "Fists", False)
+
+        Game.player1.perks(perk.fvHasSword) = 1
+        Game.player1.addXP(1000)
+        completeEntireQuest()
+
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(11), """Nice, thanks!  Give me a sec, I'll have all sorts of new stuff to try in a little bit.""" & DDUtils.RNRN &
+                                                             "+1000 XP" & DDUtils.PAKTC, AddressOf Game.leaveNPC)
+    End Sub
     Public Overrides Function canGet() As Boolean
         Return Not getActive() And Game.currFloor.floorNumber > 3 And Not getComplete() And Not Game.player1.perks(perk.fvHasSword) > 0
     End Function
