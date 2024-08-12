@@ -83,7 +83,7 @@
         p.will -= 3
         p.UIupdate()
 
-        p.prefForm.snapShift(p)
+        If Not p.prefForm Is Nothing Then p.prefForm.snapShift(p)
 
         TextEvent.pushLog("The " & If(pronoun.Equals("he"), "sorcerer", "sorceress") & " snaps a collar around your neck, enslaving you to " & p_pronoun & " will!  -3 WIL.")
         TextEvent.push("""Ah, what a victory!"", your opponent exclaims as you collapse, defeated. ""Don't worry, I'm sure you'll make a perfect slave...""" & DDUtils.RNRN &
