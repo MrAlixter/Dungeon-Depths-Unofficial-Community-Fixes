@@ -36,7 +36,7 @@
             Dim quit As Boolean = False
 
             If fae_woods_dialog_sections.Contains(TextEvent.lblEventOnClose) OrElse fae_woods_dialog_sections.Contains(TextEvent.yesAction) OrElse fae_woods_dialog_sections.Contains(TextEvent.noAction) Then
-                Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(166), """Alright, chief, here's-""" & DDUtils.RNRN &
+                Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(167), """Alright, chief, here's-""" & DDUtils.RNRN &
                                                                       "The Fairy within the " & getName().Replace("_", " ") & " pauses, looking to the other fae you're talking too." & DDUtils.RNRN &
                                                                       """HEY!  WE'RE TRYIN' TO DO BUSINESS HERE!  SCRAM!""", AddressOf FaeWoodsQ1A.altCompleteEntireQuest)
                 quit = True
@@ -87,7 +87,7 @@
     End Sub
 
     Private Sub introToThistle()
-        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(166), """What's goin' on out here, eh?  You just like ringin' bells or-""" & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(167), """What's goin' on out here, eh?  You just like ringin' bells or-""" & DDUtils.RNRN &
                                                               "The fairy snaps to look up at you with, seemingly puzzled." & DDUtils.RNRN &
                                                               """Well- uh... you're new...""", AddressOf introToThistle2)
     End Sub

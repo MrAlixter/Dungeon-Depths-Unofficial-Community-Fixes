@@ -129,8 +129,8 @@
         TextEvent.noAction = Nothing
 
         Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(57), """Um... my bad..."" says the green-clad fairy, before flying off into the mists." & DDUtils.RNRN &
-                                                             "The other fae turns back to you, now that the two of you are alone." & DDUtils.RNRN &
-                                                             """Ok, let's try that again.""", AddressOf Objective.fromNPC)
+                                                             "The remaining sprite turns back, now that the two of you are alone." & DDUtils.RNRN &
+                                                             """Some faefolk...  Ok, let's try that again.""", AddressOf Objective.fromNPC)
 
         FaeQueen.spawn(Game.currFloor)
 
