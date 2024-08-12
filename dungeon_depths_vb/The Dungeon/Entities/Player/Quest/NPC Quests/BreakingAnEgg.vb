@@ -48,7 +48,7 @@
                                                              "+1000 XP" & DDUtils.PAKTC, AddressOf Game.leaveNPC)
     End Sub
     Public Overrides Function canGet() As Boolean
-        Return Not getActive() And Game.currFloor.floorNumber > 3 And Not getComplete() And Not Game.player1.perks(perk.fvHasSword) > 0
+        Return Not getActive() And Game.currFloor.floorNumber > 3 And Game.currFloor.floorNumber <> 13 And Not getComplete() And Not Game.player1.perks(perk.fvHasSword) > 0
     End Function
 End Class
 

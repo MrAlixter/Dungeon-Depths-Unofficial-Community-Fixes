@@ -4,6 +4,11 @@
     Public Const ITEM_NAME As String = "Sluice_Chime"
     Dim target As Player
 
+    Dim fae_woods_dialog_sections As List(Of Action) = New List(Of Action)({AddressOf FaeWoodsQ1A.askForApology, AddressOf FaeWoodsQ1A.askForClass, AddressOf FaeWoodsQ1A.askForName, AddressOf FaeWoodsQ1A.askForNameAgain,
+                                                                            AddressOf FaeWoodsQ1A.askForNameAlternate, AddressOf FaeWoodsQ1A.BimboTFEnd, AddressOf FaeWoodsQ1A.ClericTFEnd, AddressOf FaeWoodsQ1A.declineToGiveName1,
+                                                                            AddressOf FaeWoodsQ1A.declineToGiveName2, AddressOf FaeWoodsQ1A.fairyDustEnd, AddressOf FaeWoodsQ1A.giveApology, AddressOf FaeWoodsQ1A.giveName,
+                                                                            AddressOf FaeWoodsQ1A.giveTitle, AddressOf FaeWoodsQ1A.RebelEnd, AddressOf FaeWoodsQ1A.refuseApology})
+
     Public Shared inv As Inventory
     Sub New()
         '|ID Info|
@@ -27,11 +32,27 @@
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
 
+        If Game.currFloor.floorNumber = 13 AndAlso Not inv Is Nothing Then
+            Dim quit As Boolean = False
+
+            If fae_woods_dialog_sections.Contains(TextEvent.lblEventOnClose) OrElse fae_woods_dialog_sections.Contains(TextEvent.yesAction) OrElse fae_woods_dialog_sections.Contains(TextEvent.noAction) Then
+                Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(166), """Alright, chief, here's-""" & DDUtils.RNRN &
+                                                                      "The Fairy within the " & getName().Replace("_", " ") & " pauses, looking to the other fae you're talking too." & DDUtils.RNRN &
+                                                                      """HEY!  WE'RE TRYIN' TO DO BUSINESS HERE!  SCRAM!""", AddressOf FaeWoodsQ1A.altCompleteEntireQuest)
+                quit = True
+            ElseIf p.formName = "Horse" Or p.formName = "Unicorn" Then
+                TextEvent.push("The Fairy within the " & getName().Replace("_", " ") & " seems to be ignoring you...")
+                quit = True
+            End If
+
+            If quit Then Exit Sub
+        End If
+
         If inv Is Nothing Then
             inv = New Inventory()
             TextEvent.push("You ring the chime, but nothing happens... so you ring it again... and again, and again." & DDUtils.RNRN &
                            "With small *poof*, and a string of curses, a tiny fairy pops into being beside the chime...", AddressOf introToThistle)
-        Else
+        ElseIf Not Game.shop_npc_engaged Then
             Dim profit As Integer = 0
             Dim ct As Integer = 0
 
@@ -60,6 +81,8 @@
                 Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(165), """Alright, chief, here's your cut.""" & DDUtils.RNRN &
                                   "+" & profit & " gold!")
             End If
+        Else
+            TextEvent.pushAndLog("The Fairy within the " & getName().Replace("_", " ") & " seems to be ignoring you...")
         End If
     End Sub
 

@@ -314,7 +314,7 @@ Public Class ThistleMenuV3
             ct += 1
         Next
 
-        If ct > 0 Then txtDesc.Text = "You take back the selected items from thistle."
+        If ct > 0 Then txtDesc.Text = "You take back the selected items from the Fairy."
 
         RefreshScreen()
 
