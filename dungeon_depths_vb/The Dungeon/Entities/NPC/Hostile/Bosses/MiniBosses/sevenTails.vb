@@ -16,11 +16,11 @@
         setupMonsterOnSpawn(False)
 
         '|Inventory|
-        inv.setCount("Fox_Ears", 3)
-        inv.setCount("Mana_Charm", 1 + CInt(Rnd() * 2))
-        inv.setCount("Omni_Charm", 1)
-        inv.setCount("Seven_Banded_Ring", 1)
-        inv.setCount("Fox_Statue", 1)
+        inv.setCount(FoxEars.ITEM_NAME, 3)
+        inv.setCount(ManaCharm.ITEM_NAME, 1 + CInt(Rnd() * 2))
+        inv.setCount(OmniCharm.ITEM_NAME, 1)
+        inv.setCount(SevenBandedRing.ITEM_NAME, 1)
+        inv.setCount(FoxStatue.ITEM_NAME, 1)
         inv.setCount("Gold", 7000)
 
         '|Dialog Variables|

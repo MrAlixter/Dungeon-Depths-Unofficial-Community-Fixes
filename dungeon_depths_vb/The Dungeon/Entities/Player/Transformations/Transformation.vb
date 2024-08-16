@@ -113,7 +113,7 @@ Public MustInherit Class Transformation
     Protected can_be_stopped As Boolean
     Protected tf_name As tfind
     Protected tf_done As Boolean
-    Protected update_during_combat As Boolean = True
+    Public update_during_combat As Boolean = True
 
     'constuctors
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
@@ -494,6 +494,9 @@ Public MustInherit Class Transformation
     End Sub
 
     'sequential tf methods
+    Function getCurrStep() As Integer
+        Return curr_step
+    End Function
     Sub setCurrStep(i As Integer)
         curr_step = i
     End Sub

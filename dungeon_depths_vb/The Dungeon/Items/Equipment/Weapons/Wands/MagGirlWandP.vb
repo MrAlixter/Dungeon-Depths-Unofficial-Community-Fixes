@@ -11,6 +11,7 @@
 
         '|Item Flags|
         usable = False
+        can_hit_flying = True
         taughtSpells = MagGirlPTF.getTaughtSpells
         taughtSpecials = MagGirlPTF.getTaughtSpecials
 

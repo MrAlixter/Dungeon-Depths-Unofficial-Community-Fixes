@@ -1,6 +1,8 @@
 ﻿Public Class Weapon
     Inherits EquipmentItem
 
+    Public can_hit_flying As Boolean = False
+
     Overridable Function attack(ByRef p As Player, ByRef m As Entity) As Integer
         Return Player.calcDamage(p.getATK, m.getDEF)
     End Function

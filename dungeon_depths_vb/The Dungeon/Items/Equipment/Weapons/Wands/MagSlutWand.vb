@@ -12,6 +12,7 @@
         '|Item Flags|
         usable = False
         cursed = True
+        can_hit_flying = True
         taughtSpells = MagSlutTF.getTaughtSpells
         taughtSpecials = MagSlutTF.getTaughtSpecials
 

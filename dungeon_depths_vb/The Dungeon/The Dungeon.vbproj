@@ -118,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\Mayue.vb" />
+    <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\RosethrallDragon.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Elementals\IceElemental.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Elementals\PinkMistElemental.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Gorgons\BimboGorgon.vb" />
@@ -331,6 +332,7 @@
     <Compile Include="Items\Equipment\Armor\Clothing\AmaraphneVestment.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\AmaraphneRaiment.vb" />
     <Compile Include="Items\Equipment\Armor\Costumes\ChainBikini.vb" />
+    <Compile Include="Items\Equipment\Armor\Clothing\ThiefsLongcoat.vb" />
     <Compile Include="Items\Equipment\Armor\MagicCloaks\CrimsonCloak.vb" />
     <Compile Include="Items\Equipment\Armor\MagicCloaks\NecromancerRobe.vb" />
     <Compile Include="Items\Equipment\Armor\MagicCloaks\FaerieWitchRobes.vb" />
@@ -380,6 +382,7 @@
     <Compile Include="Items\Equipment\Weapons\Daggers\IronDagger.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\FeatherDagger.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\IcicleDagger.vb" />
+    <Compile Include="Items\Equipment\Weapons\Daggers\AshStiletto.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\RunecursedDagger.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\KestrelKnife.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\VipersFang.vb" />

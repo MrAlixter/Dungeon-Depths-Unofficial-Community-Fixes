@@ -12,6 +12,7 @@
         '|Item Flags|
         usable = False
         droppable = False
+        can_hit_flying = True
 
         '|Stats|
         w_boost = 26

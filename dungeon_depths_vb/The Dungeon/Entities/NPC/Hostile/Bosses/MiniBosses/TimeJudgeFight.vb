@@ -13,8 +13,8 @@
         xp_value = (maxHealth + attack + defense + speed) / 4
 
         '|Inventory|
-        inv.setCount("AAAAAA_Battery", CInt(Int(Rnd() * 20)) + 1)
-        inv.setCount("Phase_Hammer", 1)
+        inv.setCount(A6Battery.ITEM_NAME, CInt(Int(Rnd() * 20)) + 1)
+        inv.setCount(PhaseHammer.ITEM_NAME, 1)
 
         '|Dialog Variables|
         title = " The "

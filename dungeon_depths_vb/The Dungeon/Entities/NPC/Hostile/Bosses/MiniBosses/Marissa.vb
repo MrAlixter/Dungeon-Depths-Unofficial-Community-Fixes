@@ -15,12 +15,12 @@
         setupMonsterOnSpawn()
 
         '|Inventory|
-        inv.setCount("Cat_Lingerie", 1)
-        inv.setCount("Restore_Potion", 1)
-        inv.setCount("Omni_Charm", 1)
+        inv.setCount(CatLingerie.ITEM_NAME, 1)
+        inv.setCount(RestorationPotion.ITEM_NAME, 1)
+        inv.setCount(OmniCharm.ITEM_NAME, 1)
         inv.setCount("Gold", 1000)
         'random drops
-        Dim possible_drops = {"Health_Potion", "Mana_Potion", "Spellbook", "Cat_Ears", "Mana_Charm", "Sorcerer's_Robes"}
+        Dim possible_drops = {HealthPotion.ITEM_NAME, ManaPotion.ITEM_NAME, Spellbook.ITEM_NAME, CatEars.ITEM_NAME, ManaCharm.ITEM_NAME, SorcerersRobes.ITEM_NAME}
         Dim number_of_drops = Int(Rnd() * 3) + Int(Rnd() * 3) + 1
         For i = 0 To number_of_drops
             Dim r = Int(Rnd() * (possible_drops.Count))

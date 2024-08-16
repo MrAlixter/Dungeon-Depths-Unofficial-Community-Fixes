@@ -5,7 +5,8 @@
         setName("Wand")
         setDesc("A simple wand.")
         tier = Nothing
-        usable = false
+        usable = False
+        can_hit_flying = True
         MyBase.a_boost = 0
         count = 0
         value = 100

@@ -202,6 +202,7 @@ Partial Class Game
         Me.cboxCast = New System.Windows.Forms.ComboBox()
         Me.cboxSpec = New System.Windows.Forms.ComboBox()
         Me.pnlEquip = New System.Windows.Forms.Panel()
+        Me.chkShowHat = New System.Windows.Forms.CheckBox()
         Me.lblEquippedGlasses = New System.Windows.Forms.Label()
         Me.cboxGlasses = New System.Windows.Forms.ComboBox()
         Me.lblEquippedAccessory = New System.Windows.Forms.Label()
@@ -233,7 +234,6 @@ Partial Class Game
         Me.pnlSaveLoad = New System.Windows.Forms.Panel()
         Me.picBoard = New System.Windows.Forms.PictureBox()
         Me.picPinkMist = New System.Windows.Forms.PictureBox()
-        Me.chkShowHat = New System.Windows.Forms.CheckBox()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStart, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1541,12 +1541,11 @@ Partial Class Game
         '
         'lblLoadMsg
         '
-        Me.lblLoadMsg.AutoSize = True
-        Me.lblLoadMsg.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblLoadMsg.ForeColor = System.Drawing.Color.White
-        Me.lblLoadMsg.Location = New System.Drawing.Point(306, 392)
+        Me.lblLoadMsg.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblLoadMsg.ForeColor = System.Drawing.Color.LightGray
+        Me.lblLoadMsg.Location = New System.Drawing.Point(3, 553)
         Me.lblLoadMsg.Name = "lblLoadMsg"
-        Me.lblLoadMsg.Size = New System.Drawing.Size(63, 19)
+        Me.lblLoadMsg.Size = New System.Drawing.Size(999, 35)
         Me.lblLoadMsg.TabIndex = 295
         Me.lblLoadMsg.Text = "Label2"
         Me.lblLoadMsg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -2361,6 +2360,22 @@ Partial Class Game
         Me.pnlEquip.TabIndex = 323
         Me.pnlEquip.Visible = False
         '
+        'chkShowHat
+        '
+        Me.chkShowHat.AutoSize = True
+        Me.chkShowHat.BackColor = System.Drawing.Color.Black
+        Me.chkShowHat.Checked = True
+        Me.chkShowHat.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkShowHat.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.chkShowHat.Font = New System.Drawing.Font("Consolas", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkShowHat.ForeColor = System.Drawing.Color.White
+        Me.chkShowHat.Location = New System.Drawing.Point(14, 413)
+        Me.chkShowHat.Name = "chkShowHat"
+        Me.chkShowHat.Size = New System.Drawing.Size(72, 17)
+        Me.chkShowHat.TabIndex = 289
+        Me.chkShowHat.Text = "Show Hat"
+        Me.chkShowHat.UseVisualStyleBackColor = False
+        '
         'lblEquippedGlasses
         '
         Me.lblEquippedGlasses.AutoSize = True
@@ -2751,22 +2766,6 @@ Partial Class Game
         Me.picPinkMist.TabIndex = 424
         Me.picPinkMist.TabStop = False
         Me.picPinkMist.Visible = False
-        '
-        'chkShowHat
-        '
-        Me.chkShowHat.AutoSize = True
-        Me.chkShowHat.BackColor = System.Drawing.Color.Black
-        Me.chkShowHat.Checked = True
-        Me.chkShowHat.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkShowHat.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.chkShowHat.Font = New System.Drawing.Font("Consolas", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.chkShowHat.ForeColor = System.Drawing.Color.White
-        Me.chkShowHat.Location = New System.Drawing.Point(14, 413)
-        Me.chkShowHat.Name = "chkShowHat"
-        Me.chkShowHat.Size = New System.Drawing.Size(72, 17)
-        Me.chkShowHat.TabIndex = 289
-        Me.chkShowHat.Text = "Show Hat"
-        Me.chkShowHat.UseVisualStyleBackColor = False
         '
         'Game
         '

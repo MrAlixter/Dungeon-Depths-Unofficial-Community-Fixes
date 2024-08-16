@@ -468,6 +468,8 @@
         internal_inventory.Add(CrackedBrick2.ITEM_NAME, New CrackedBrick2)           '440
         internal_inventory.Add(ForgetSpell.ITEM_NAME, New ForgetSpell)               '441
         internal_inventory.Add(ForgetSpecial.ITEM_NAME, New ForgetSpecial)           '442
+        internal_inventory.Add(TheifsLongcoat.ITEM_NAME, New TheifsLongcoat)         '443
+        internal_inventory.Add(AshStiletto.ITEM_NAME, New AshStiletto)               '444
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -500,7 +502,7 @@
                  Me.item(363), Me.item(364), Me.item(384), Me.item(393),
                  Me.item(394), Me.item(398), Me.item(404), Me.item(405),
                  Me.item(413), Me.item(418), Me.item(423), Me.item(425),
-                 Me.item(429), Me.item(438)}
+                 Me.item(429), Me.item(438), Me.item(443)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -525,7 +527,7 @@
                    Me.item(415), Me.item(419), Me.item(420), Me.item(421),
                    Me.item(422), Me.item(426), Me.item(427), Me.item(428),
                    Me.item(430), Me.item(431), Me.item(432), Me.item(433),
-                   Me.item(440)}
+                   Me.item(440), Me.item(444)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4), Me.item(65),
                    Me.item(15), Me.item(36), Me.item(37), Me.item(48),

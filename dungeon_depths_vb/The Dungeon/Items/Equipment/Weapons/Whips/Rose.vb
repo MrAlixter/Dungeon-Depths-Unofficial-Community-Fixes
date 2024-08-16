@@ -20,6 +20,7 @@
         usable = False
         rando_inv_allowed = False
         npc_drop_only = True
+        can_hit_flying = True
 
         '|Stats|
         a_boost = 0

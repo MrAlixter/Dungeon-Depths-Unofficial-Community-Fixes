@@ -12,6 +12,7 @@
         '|Item Flags|
         usable = false
         rando_inv_allowed = False
+        can_hit_flying = True
 
         '|Stats|
         MyBase.a_boost = 100

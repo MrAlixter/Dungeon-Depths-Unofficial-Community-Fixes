@@ -164,6 +164,22 @@ Public Class Game
         Special.init()
 
         eventDialogBox = New EventBox(txtPNLEvents, pnlEvent)
+
+        'splash text
+        lblLoadMsg.Visible = True
+        Randomize()
+        Select Case Int(Rnd() * 5)
+            Case 0
+                lblLoadMsg.Text = "Holding Ctrl along with the Spell/Special keys (Z/C by default) will remember your choice, and use it when pressed again w/o Ctrl."
+            Case 1
+                lblLoadMsg.Text = "Holding Ctrl along with the Wait key (V by default) triggers a multi-turn wait."
+            Case 2
+                lblLoadMsg.Text = "Inspecting Spellbooks and Manuals will allow you to change your magic and melee disciplines."
+            Case 3
+                lblLoadMsg.Text = "The Adv. Settings menu has a spawn rate toggle for each randomly encountered monster."
+            Case Else
+                lblLoadMsg.Text = "You can challenge a floor boss at any time by finding the floor's staircase."
+        End Select
     End Sub
     Private Sub Game_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         If Not compOOT And Not compDP And Not compWSMecha Then Exit Sub
@@ -298,13 +314,6 @@ Public Class Game
                 End If
             Loop
         End If
-        'lblLoadMsg.Visible = True
-        Select Case Int(Rnd() * 2)
-            Case Else
-                lblLoadMsg.Text = "You can challenge a floor boss at any time by finding the stairs " & vbCrLf &
-                                  "and either clicking the ""Challenge Boss?"" button, or hitting the " & vbCrLf &
-                                  "yes key (y by default)."
-        End Select
 
         'create the dungeon
         updateLoadbar(40)
@@ -324,6 +333,7 @@ Public Class Game
         lstLog.Items.Clear()
         TextEvent.pushLog("You see before you a dungeon.")
         picStart.Visible = False
+        lblLoadMsg.Visible = False
 
         'this also updates the player's UI
         player1.UIupdate()
@@ -2461,10 +2471,7 @@ Public Class Game
         If btnEQP.Enabled = False Then btnEQP.Enabled = True
 
         If Not last_tile Is Nothing AndAlso last_tile.Item1 = "⬤" And currFloor.pinkMist Then
-            currFloor.cleanupPinkMist()
-            TextEvent.pushAndLog("You pick up the orb, and the strange mist subsides!")
-            player1.inv.add(CrackedPinkOrb.ITEM_NAME, 1)
-            last_tile = Nothing
+            ChallengeBoss(New RosethrallDragon)
         End If
 
         If currFloor.chestList.Count > 0 Then
@@ -2997,10 +3004,9 @@ Public Class Game
     Sub noKey()
 
     End Sub
-    Public Sub ChallengeBoss()
+    Public Sub challengeBoss(Optional ByRef m As MiniBoss = Nothing)
         '| - Get the Boss For a Floor - |
-        Dim m As MiniBoss
-        m = Boss.bossFactory(mDun.numCurrFloor)
+        If m Is Nothing Then m = Boss.bossFactory(mDun.numCurrFloor)
 
         '| - Pre-boss-fight dialogs - |
         If Not currFloor.bossDialog And mDun.numCurrFloor = 4 Then

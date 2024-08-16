@@ -20,7 +20,7 @@
         value = 2567
 
         '|Description|
-        setDesc("A polished staff of a light wood capped off by a gistening, vaugly woman shaped red gem.  While the ""Ash"" portion of its name might refer to the type of wood that its made of, it could also refer to the immense magical power it bears." & DDUtils.RNRN &
+        setDesc("A polished staff of a light wood capped off by a gistening, vaugly woman-shaped red gem.  While the ""Ash"" portion of its name might refer to the type of wood the staff is made of, it could also refer to the immense magical power it bears." & DDUtils.RNRN &
                 getStatInformation())
     End Sub
 End Class

@@ -16,11 +16,11 @@
         setupMonsterOnSpawn()
 
         '|Inventory|
-        inv.setCount("Sword_of_the_Brutal", 1)
-        inv.setCount("Omni_Charm", 1)
+        inv.setCount(TargaxSword.ITEM_NAME, 1)
+        inv.setCount(OmniCharm.ITEM_NAME, 1)
         inv.setCount("Gold", 2500)
         'random drops
-        Dim possible_drops = {"Combat_Manual", "Warrior's_Cuirass", "Attack_Charm"}
+        Dim possible_drops = {CombatManual.ITEM_NAME, WarriorsCuirass.ITEM_NAME, AttackCharm.ITEM_NAME}
         Dim number_of_drops = Int(Rnd() * 2) + Int(Rnd() * 2) + 1
         For i = 0 To number_of_drops
             Dim r = Int(Rnd() * (possible_drops.Count))
@@ -73,7 +73,7 @@
     End Sub
 
     Public Overrides Function reactToSpell(spell As String) As Boolean
-        If Rnd() < (0.6) Then
+        If Game.player1.passDieRoll(20, 11) Then
             Return True
         Else
             TextEvent.pushLog("The spell bounces off Targax!")

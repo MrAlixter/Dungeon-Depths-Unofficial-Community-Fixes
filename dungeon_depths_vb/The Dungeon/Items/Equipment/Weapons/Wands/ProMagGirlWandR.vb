@@ -13,6 +13,7 @@
         usable = false
         droppable = False
         rando_inv_allowed = False
+        can_hit_flying = True
         uniform_id = 211
         taughtSpells = ProMagGirlRTF.getTaughtSpells
         taughtSpecials = ProMagGirlRTF.getTaughtSpecials

@@ -18,7 +18,7 @@
         setupMonsterOnSpawn()
 
         '|Inventory|
-        setInventory({0})
+        setInventory({443})
 
         '|Misc|
 

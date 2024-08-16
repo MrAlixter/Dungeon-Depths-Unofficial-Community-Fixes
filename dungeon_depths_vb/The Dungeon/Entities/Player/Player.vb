@@ -1004,6 +1004,11 @@ Public Class Player
             perks(perk.barbarian) = 0
         End If
 
+        If Not target.getNPC Is Nothing AndAlso target.getNPC.perks(npc_perk.flying) > 0 AndAlso Not canHitFlying() Then
+            flyingmiss(target)
+            Exit Sub
+        End If
+
         Dim dmg As Integer = equippedWeapon.attack(Me, target)
 
         If dmg = -1 Then
@@ -1015,6 +1020,9 @@ Public Class Player
         End If
     End Sub
     'attacking a npc
+    Public Sub flyingmiss(target As NPC)
+        TextEvent.pushAndLog(CStr("You miss " & target.getNameWithTitle() & ", as " & target.pronoun & " " & If(target.pronoun.Trim.ToLower.Equals("they"), "are", "is") & " airborne!"))
+    End Sub
     Public Sub miss(target As NPC)
         TextEvent.pushAndLog(CStr("You miss " & target.getNameWithTitle() & "!"))
     End Sub
@@ -1041,6 +1049,10 @@ Public Class Player
         currTarget = t
         MyBase.currTarget = t
     End Sub
+    Public Function canHitFlying() As Boolean
+        Dim flyingForms = {"Dragon", "Broodmother", "Faerie (B)", "Dove"}
+        Return equippedWeapon.can_hit_flying OrElse (prt.iArrInd(pInd.wings).Item1 <> 0 And prt.iArrInd(pInd.wings).Item1 <> 4) OrElse flyingForms.Contains(formName)
+    End Function
 
     'attacking a non npc
     Private Sub miss(target As Entity)

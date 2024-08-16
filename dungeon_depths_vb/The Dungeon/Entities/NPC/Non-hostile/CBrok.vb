@@ -15,11 +15,11 @@
         isShop = True
 
         '|Inventory|
-        inv.setCount("Anti_Curse_Tag", 1)
-        inv.setCount(171, 1)
-        inv.setCount(174, 1)
-        inv.setCount(200, 1)
-        inv.setCount(245, 1)
+        inv.setCount(AntiCurseTag.ITEM_NAME, 1)
+        inv.setCount(CursedSword.ITEM_NAME, 1)
+        inv.setCount(BewitchedWand.ITEM_NAME, 1)
+        inv.setCount(JinxedWhip.ITEM_NAME, 1)
+        inv.setCount(CursePurge.ITEM_NAME, 1)
 
         '|Stats|
         maxHealth = 99999

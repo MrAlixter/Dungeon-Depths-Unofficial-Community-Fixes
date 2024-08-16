@@ -13,6 +13,7 @@
         usable = False
         droppable = False
         cursed = True
+        can_hit_flying = True
 
         '|Stats|
         count = 0

@@ -13,6 +13,7 @@
         usable = false
         droppable = False
         cursed = True
+        can_hit_flying = True
 
         '|Stats|
         MyBase.a_boost = 37

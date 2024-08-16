@@ -13,6 +13,7 @@
         usable = False
         cursed = True
         rando_inv_allowed = True
+        can_hit_flying = True
         taughtSpells = MagMimicTF.getTaughtSpells
         taughtSpecials = MagMimicTF.getTaughtSpecials
 

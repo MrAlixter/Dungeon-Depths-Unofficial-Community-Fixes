@@ -15,10 +15,10 @@
         setupMonsterOnSpawn(False)
 
         '|Inventory|
-        inv.setCount("Spellbook", 1)
-        inv.setCount("Restore_Potion", CInt(Rnd() * 2))
-        inv.setCount("Mana_Charm", 1 + CInt(Rnd() * 2))
-        inv.setCount("Witch_Cosplay", CInt(Rnd() * 2))
+        inv.setCount(Spellbook.ITEM_NAME, 1)
+        inv.setCount(RestorationPotion.ITEM_NAME, CInt(Rnd() * 2))
+        inv.setCount(ManaCharm.ITEM_NAME, 1 + CInt(Rnd() * 2))
+        inv.setCount(WitchCosplay.ITEM_NAME, CInt(Rnd() * 2))
 
         '|Dialog Variables|
         title = " "

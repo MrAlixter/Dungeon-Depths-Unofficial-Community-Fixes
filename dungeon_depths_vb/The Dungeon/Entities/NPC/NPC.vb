@@ -22,6 +22,7 @@ Public Enum npc_perk
     burn
     bleed
     freeze
+    flying
 End Enum
 Public Class NPC
     Inherits Entity
@@ -74,6 +75,12 @@ Public Class NPC
             nextCombatAction = Sub(t As Entity) Me.attackCMD(t)
         Else
             handleStun()
+        End If
+
+        If perks(npc_perk.flying) > -1 Then
+            perks(npc_perk.flying) -= 1
+
+            If perks(npc_perk.flying) = -1 Then TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " lands on the ground.")
         End If
 
         If perks(npc_perk.poison) > -1 Then
@@ -395,7 +402,7 @@ Public Class NPC
         End Select
     End Sub
     Public Overridable Sub attackSpell(ByRef target As Entity, ByVal spellName As String, ByVal dmg As Integer)
-        TextEvent.pushAndLog(Trim(title & getName() & " casts " & spellName & "!"))
+        TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " casts " & spellName & "!")
 
         Dim crit = Int(Rnd() * 20) 'roll for a critical
         Dim damage = getSpellDamage(target, dmg) 'calculate the hit

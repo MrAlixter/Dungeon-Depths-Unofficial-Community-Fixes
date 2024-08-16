@@ -17,7 +17,7 @@
         setupMonsterOnSpawn()
 
         '|Inventory|
-        inv.setCount("Extra_Life", 8)
+        inv.setCount(ExtraLife.ITEM_NAME, 8)
         inv.setCount("Gold", 1000)
 
         '|Dialog Variables|
@@ -46,8 +46,7 @@
             ElseIf turns_until_spell < 1 And getIntHealth() < 50 Then
                 Dim healvalue = Int(Rnd() * 4) + Int(Rnd() * 2) + 30
                 If getIntHealth() + healvalue > getMaxHealth() Then healvalue = getMaxHealth() - getIntHealth()
-                TextEvent.pushLog((getName() & " heals herself!  +" & healvalue & " health!"))
-                TextEvent.pushCombat((getName() & " heals herself for " & healvalue & " health!"))
+                TextEvent.pushAndLog((getName() & " heals herself!  +" & healvalue & " health!"))
                 takeDMG(-healvalue, Nothing)
 
                 turns_until_spell = 3
@@ -55,9 +54,14 @@
             End If
         End If
 
-        TextEvent.pushLog((getName() & " slashes at you!"))
-        TextEvent.pushCombat((getName() & " slashes at you!"))
-        MyBase.attackCMD(target)
+        If inv.getCountAt("Extra_Life") < 5 And Int(Rnd() * 8) < 3 Then
+            TextEvent.pushAndLog((getName() & " slashes twice!"))
+            MyBase.attackCMD(target)
+            MyBase.attackCMD(target)
+        Else
+            TextEvent.pushAndLog((getName() & " slashes at you!"))
+            MyBase.attackCMD(target)
+        End If
     End Sub
 
     Public Sub marissasEnchantment(ByRef p As Player)

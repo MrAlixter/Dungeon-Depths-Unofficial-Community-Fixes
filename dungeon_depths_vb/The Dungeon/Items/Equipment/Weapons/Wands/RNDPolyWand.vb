@@ -27,6 +27,7 @@
         '|Item Flags|
         usable = False
         droppable = False
+        can_hit_flying = True
 
         '|Stats|
         count = 0

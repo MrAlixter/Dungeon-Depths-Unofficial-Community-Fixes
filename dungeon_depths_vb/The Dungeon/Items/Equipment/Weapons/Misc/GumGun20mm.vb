@@ -13,6 +13,7 @@
         '|Item Flags|
         usable = True
         rando_inv_allowed = False
+        can_hit_flying = True
 
         '|Stats|
         s_boost = -21

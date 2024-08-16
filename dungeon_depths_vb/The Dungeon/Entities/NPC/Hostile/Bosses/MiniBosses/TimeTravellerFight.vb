@@ -14,7 +14,7 @@
         setupMonsterOnSpawn()
 
         '|Inventory|
-        inv.setCount("AAAAAA_Battery", CInt(Int(Rnd() * 2000)) + 1)
+        inv.setCount(A6Battery.ITEM_NAME, CInt(Int(Rnd() * 2000)) + 1)
 
         '|Dialog Variables|
         title = " "
