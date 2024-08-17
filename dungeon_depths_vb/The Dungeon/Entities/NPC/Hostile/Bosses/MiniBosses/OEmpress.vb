@@ -18,7 +18,7 @@
         inv.setCount(GelArmor.ITEM_NAME, 1)
         inv.setCount(OmniCharm.ITEM_NAME, 1)
         inv.setCount(SluiceChime.ITEM_NAME, 1)
-        inv.setCount(Key.ITEM_NAME, 1)
+        'inv.setCount(Key.ITEM_NAME, 1)
         inv.setCount("Gold", 5000)
         'random drops
         Dim possible_drops = {VialOfSlime.ITEM_NAME, VialOfSlime.ITEM_NAME, VialOfSlime.ITEM_NAME, ASpellbook.ITEM_NAME, DefenseCharm.ITEM_NAME, DefenseCharm.ITEM_NAME}

@@ -1,5 +1,5 @@
 ﻿Public Class MarissaAS
-    Inherits Monster
+    Inherits MiniBoss
     Dim spellCooldown = 0
     Sub New()
         '|ID Info|
@@ -11,8 +11,8 @@
         defense = 5
         speed = 30
         will = 15
-        xp_value = 75
-        setupMonsterOnSpawn(False)
+        xp_value = 917
+        setupMonsterOnSpawn(Math.Max(1, Game.player1.level + 1))
 
         '|Inventory|
         inv.setCount(Spellbook.ITEM_NAME, 1)
@@ -27,7 +27,7 @@
         r_pronoun = "her"
 
         '|Misc|
-        intro_taunt = """Ooooh, who do we have here?"""
+        intro_taunt = """Who- HEY!?!  Who are you?"""
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
@@ -77,10 +77,10 @@
         Game.player1.prt.setIAInd(pInd.ears, 1, True, False)
         Game.player1.drawPort()
 
-
-        TextEvent.push("""D-d-damn it..."" Marissa sputters, taking a shakey step backwards.  ""It looks like I u-underestimated you, but r-rest assured that it won't happen again..."" she declares, before charging a weak looking ball of energy, ""T-this one's g-going to leave you a mewing m-m-mess.""\n" &
-                          "She half heartedly casts the spell at you, and you easily turn to the side to dodge it.  As you turn back to face her with a glare, a blinding flash of light along with a deafening whine from somewhere behind you nearly knocks you to your feet.  Momentarily stunned, you lose track of your adversary as they fade silently into the milky white that has replaced your field of vision.  " &
-                          lastsentence)
+        TextEvent.push("""D-damn it..."" Marissa sputters, taking a shakey step backwards." & DDUtils.RNRN &
+                       """It looks like I underestimated you- but r-rest assured that it won't happen again..."" she declares, before charging a weak looking ball of energy, ""T-this one's g-going to leave you a mewing m-m-mess.""" & DDUtils.RNRN &
+                       "She half heartedly casts the spell at you, and you easily turn to the side to dodge it.  As you turn back to face her with a glare, a blinding flash of light along with a deafening whine from somewhere behind you nearly knocks you to your feet.  Momentarily stunned, you lose track of your adversary as they fade silently into the milky white that has replaced your field of vision." & DDUtils.RNRN &
+                       lastsentence)
 
         Game.currFloor.beatBoss = True
     End Sub

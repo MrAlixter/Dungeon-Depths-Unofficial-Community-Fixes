@@ -55,6 +55,7 @@ Public Class Dungeon
         floor_boss.Add(3, "Key")
         floor_boss.Add(4, "Key")
         floor_boss.Add(5, "Medusa")
+        floor_boss.Add(91017, "Marissa, Aspiring Sorceress")
         floor_boss.Add(91018, "???")
     End Sub
     Private Sub initFloorCodes()

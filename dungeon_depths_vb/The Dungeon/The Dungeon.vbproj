@@ -122,6 +122,9 @@
     <Compile Include="Entities\NPC\Hostile\Monsters\Elementals\IceElemental.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Elementals\PinkMistElemental.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Gorgons\BimboGorgon.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\LegacyFloor\OozeScion.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\LegacyFloor\InnumerableBugs.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\LegacyFloor\TargaxianCultist.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Witches\MarissasStudent.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Slime\LeporineOoze.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\TimeJudgeFight.vb" />
@@ -313,7 +316,8 @@
     <Compile Include="Items\Equipment\Accesories\MOTOx.vb" />
     <Compile Include="Items\Equipment\Accesories\HallowedTalisman.vb" />
     <Compile Include="Items\Equipment\Accesories\Ballgag.vb" />
-    <Compile Include="Items\Equipment\Armor\Costumes\NotColdWeatherGarb.vb" />
+    <Compile Include="Items\Equipment\Armor\Clothing\BlackTShirt.vb" />
+    <Compile Include="Items\Equipment\Armor\SlutVar\NotColdWeatherGarb.vb" />
     <Compile Include="Items\Equipment\Armor\Costumes\SpiralBikini.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\NanosilkQipaoP.vb" />
     <Compile Include="Items\Equipment\Armor\Costumes\BunnySuitS.vb" />
@@ -895,7 +899,7 @@
     <Compile Include="Items\Usable\Gems\GemOfFlame.vb" />
     <Compile Include="Items\Usable\Gems\GemOfPink.vb" />
     <Compile Include="Items\Usable\Gems\GemOfDark.vb" />
-    <Compile Include="Items\Usable\ManaHibiscus.vb" />
+    <Compile Include="Items\Equipment\Accesories\ManaHibiscus.vb" />
     <Compile Include="Items\Usable\CryoGrenade.vb" />
     <Compile Include="Items\Usable\Food\WFeast.vb" />
     <Compile Include="Items\Usable\Food\MDelicacy.vb" />

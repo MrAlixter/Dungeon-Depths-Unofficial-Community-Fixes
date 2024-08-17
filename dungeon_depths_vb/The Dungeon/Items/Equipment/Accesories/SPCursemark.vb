@@ -13,6 +13,7 @@
         usable = False
         cursed = True
         under_b_clothes = True
+        rando_inv_allowed = False
 
         '|Stats|
         m_boost = 6

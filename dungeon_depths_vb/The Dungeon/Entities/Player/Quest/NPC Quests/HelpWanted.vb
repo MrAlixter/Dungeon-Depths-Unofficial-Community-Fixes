@@ -20,7 +20,7 @@
     End Sub
 
     Public Overrides Function canGet() As Boolean
-        Return Not getActive() And Game.currFloor.floorNumber > 2 And Not getComplete()
+        Return Not getActive() And Game.currFloor.floorNumber > 2 And Not Game.currFloor.floorNumber = 91017 And Not getComplete()
     End Function
 End Class
 

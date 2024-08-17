@@ -41,7 +41,7 @@
     End Sub
 
     Protected Friend Shared Function getBracket(ByVal floor_num As Integer) As bracket
-        If Settings.active(setting.oldloot) Then Return bracket.misc
+        If Settings.active(setting.oldloot) Or floor_num = 91017 Then Return bracket.misc
 
         Select Case floor_num
             Case 1, 2

@@ -470,6 +470,7 @@
         internal_inventory.Add(ForgetSpecial.ITEM_NAME, New ForgetSpecial)           '442
         internal_inventory.Add(TheifsLongcoat.ITEM_NAME, New TheifsLongcoat)         '443
         internal_inventory.Add(AshStiletto.ITEM_NAME, New AshStiletto)               '444
+        internal_inventory.Add(BlackTShirt.ITEM_NAME, New BlackTShirt)               '445
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -502,7 +503,7 @@
                  Me.item(363), Me.item(364), Me.item(384), Me.item(393),
                  Me.item(394), Me.item(398), Me.item(404), Me.item(405),
                  Me.item(413), Me.item(418), Me.item(423), Me.item(425),
-                 Me.item(429), Me.item(438), Me.item(443)}
+                 Me.item(429), Me.item(438), Me.item(443), Me.item(445)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),

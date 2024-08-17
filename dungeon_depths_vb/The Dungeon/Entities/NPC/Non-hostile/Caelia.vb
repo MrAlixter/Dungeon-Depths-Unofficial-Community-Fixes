@@ -57,10 +57,12 @@
     End Sub
     Shared Sub teleportPlayer()
         Game.leaveNPC()
-        Game.mDun.jumpTo(91017)
-        Game.mDun.setFloor(Game.currFloor)
-        Game.player1.setPlayerImage()
-        Game.drawBoard()
+        'Game.mDun.jumpTo(91017)
+        'Game.mDun.setFloor(Game.currFloor)
+        'Game.player1.setPlayerImage()
+        'Game.drawBoard()
+
+        TextEvent.pushLog("You seem to be in the past...")
     End Sub
 
     '| - MISC - |

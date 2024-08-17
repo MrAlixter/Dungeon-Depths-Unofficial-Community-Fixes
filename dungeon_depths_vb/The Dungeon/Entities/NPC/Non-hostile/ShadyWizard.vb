@@ -3,7 +3,7 @@
 
     Public Shared ReadOnly SECRET_INV_CLASSES() As String = {"Bimbo", "Magical Slut", "Maid", "Bunny Girl", "Bimbo++"}
     Public Shared ReadOnly NORMAL_INV() As String = {CurseBGone.ITEM_NAME, HPStickOfGum.ITEM_NAME, MPStickOfGum.ITEM_NAME, CrystalBikini.ITEM_NAME, ScepterOfAsh.ITEM_NAME, AshStiletto.ITEM_NAME, SWRestoration.ITEM_NAME, Lepanacea.ITEM_NAME, CynnTonic.ITEM_NAME}
-    Public Shared ReadOnly SECRET_INV() As String = {HPStickOfGum.ITEM_NAME, MPStickOfGum.ITEM_NAME, CrystalBikini.ITEM_NAME, BrawlerCosplay.ITEM_NAME, BronzeBikini.ITEM_NAME, CowCosplay.ITEM_NAME, CultistCloak.ITEM_NAME, MaidLingerie.ITEM_NAME, BunnySuit.ITEM_NAME, ReverseBunnySuit.ITEM_NAME, SkimpyClothes.ITEM_NAME, SteelBikini.ITEM_NAME, WitchCosplay.ITEM_NAME, SportBra.ITEM_NAME}
+    Public Shared ReadOnly SECRET_INV() As String = {HPStickOfGum.ITEM_NAME, MPStickOfGum.ITEM_NAME, CrystalBikini.ITEM_NAME, BrawlerCosplay.ITEM_NAME, BronzeBikini.ITEM_NAME, CowCosplay.ITEM_NAME, CultistCloak.ITEM_NAME, MaidLingerie.ITEM_NAME, BunnySuit.ITEM_NAME, ReverseBunnySuit.ITEM_NAME, SkimpyClothes.ITEM_NAME, SteelBikini.ITEM_NAME, WitchCosplay.ITEM_NAME, SportBra.ITEM_NAME, ChainBikini.ITEM_NAME, DarkplateBikini.ITEM_NAME}
     Public Shared ReadOnly RANDOMIZED_INV() As String = {PApple.ITEM_NAME, Bowtie.ITEM_NAME, Cowbell.ITEM_NAME, ScaleTalisman.ITEM_NAME, MaidDuster.ITEM_NAME, CAttackCharm.ITEM_NAME, CDefenseCharm.ITEM_NAME, MagSlutWand.ITEM_NAME}
 
     Private use_secret_inv As Boolean = SECRET_INV_CLASSES.Contains(Game.player1.className)

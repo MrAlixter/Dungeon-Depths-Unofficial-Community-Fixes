@@ -1,7 +1,7 @@
 ﻿Public Class AshStiletto
     Inherits Dagger
 
-    Public Const ITEM_NAME As String = "Twisted_Ash_Stiletto"
+    Public Const ITEM_NAME As String = "Twist-Ash_Stiletto"
 
     Sub New()
         '|ID Info|

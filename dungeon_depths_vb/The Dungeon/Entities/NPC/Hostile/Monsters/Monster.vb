@@ -33,6 +33,9 @@
     bewitched_ration
     pink_mist_elem
     ice_elemental
+    innumerable_bugs
+    targaxian_cultist
+    ooze_scion
 End Enum
 
 Public Class Monster
@@ -80,6 +83,36 @@ Public Class Monster
                     scaleStats(1 + (0.08 * Game.mDun.numCurrFloor))
             End Select
         End If
+
+        If xp_value < 20 Then xp_value = (maxHealth + attack + defense + speed) / 4
+
+        health = 1.0
+
+        title = " The "
+
+        sName = name
+        sMaxHealth = maxHealth
+        sMaxMana = maxMana
+        mana = maxMana
+        sAttack = attack
+        sDefense = defense
+        sWill = will
+        sSpeed = speed
+
+        If Game.player1.perks(perk.lurk) > 0 Then perks(npc_perk.stun) = 0
+
+        If speed = Game.player1.getSPD Then speed -= 1
+        pos = Game.player1.pos
+
+        initPerks()
+    End Sub
+    Sub setupMonsterOnSpawn(ByVal scaleTo As Integer)
+        Select Case scaleTo
+            Case 1
+                scaleStats(1.0)
+            Case Else
+                scaleStats(1 + (0.08 * scaleTo))
+        End Select
 
         If xp_value < 20 Then xp_value = (maxHealth + attack + defense + speed) / 4
 
@@ -182,6 +215,12 @@ Public Class Monster
                 Return m
             Case mInd.ice_elemental
                 Return New IceElemental
+            Case mInd.innumerable_bugs
+                Return New InnumerableBugs
+            Case mInd.targaxian_cultist
+                Return New TargaxianCultist
+            Case mInd.ooze_scion
+                Return New OozeScion
         End Select
 
         Return New Monster()
@@ -205,6 +244,9 @@ Public Class Monster
                 tier = {mInd.goo_girl, mInd.pink_mist_elem}
             Case 13
                 tier = {mInd.faerie, mInd.alraune, mInd.archwitch_recluse, mInd.namestealer_faerie}
+            Case 91017
+                tier = {mInd.innumerable_bugs, mInd.innumerable_bugs, mInd.innumerable_bugs, mInd.targaxian_cultist, mInd.ooze_scion}
+                Return tier
             Case 10000, 91018
                 tier = {}
             Case Else

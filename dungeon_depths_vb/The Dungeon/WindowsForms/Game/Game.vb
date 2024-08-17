@@ -174,7 +174,7 @@ Public Class Game
             Case 1
                 lblLoadMsg.Text = "Holding Ctrl along with the Wait key (V by default) triggers a multi-turn wait."
             Case 2
-                lblLoadMsg.Text = "Inspecting Spellbooks and Manuals will allow you to change your magic and melee disciplines."
+                lblLoadMsg.Text = "Inspecting Spellbooks and Manuals will allow you to change magic and melee disciplines."
             Case 3
                 lblLoadMsg.Text = "The Adv. Settings menu has a spawn rate toggle for each randomly encountered monster."
             Case Else
@@ -1197,10 +1197,16 @@ Public Class Game
                 Return player1.player_image
             Case 5
                 Return mTile.imgLib.getImg(tSet.legacy, tile.chest)
+            Case 6
+                Return mTile.imgLib.getImg(tSet.legacy, tile.sk)
             Case 7
                 Return mTile.imgLib.getImg(tSet.legacy, tile.crystal)
             Case 8
                 Return mTile.imgLib.getImg(tSet.legacy, tile.trap)
+            Case 9
+                Return mTile.imgLib.getImg(tSet.legacy, tile.stairslock)
+            Case 10
+                Return mTile.imgLib.getImg(tSet.legacy, tile.stairsboss)
             Case 12
                 Return mTile.imgLib.getImg(tSet.legacy, tile.crystal)
             Case 13
@@ -2308,16 +2314,16 @@ Public Class Game
         End If
 
         '|-Legacy Floor (91017) Events-|
-        If mDun.numCurrFloor = 91017 Then
-            If Int(Rnd() * 100) = 0 Then
-                Dim m = Monster.monsterFactory(11)
-                m.currTarget = player1
-                toCombat(m)
-                TextEvent.pushLog(DDUtils.capitalizeFirst(m.getNameWithTitle) & " attacks!")
-                eClock = eClockResetVal
-            End If
-            Exit Sub
-        End If
+        'If mDun.numCurrFloor = 91017 Then
+        '    If Int(Rnd() * 100) = 0 Then
+        '        Dim m = Monster.monsterFactory(11)
+        '        m.currTarget = player1
+        '        toCombat(m)
+        '        TextEvent.pushLog(DDUtils.capitalizeFirst(m.getNameWithTitle) & " attacks!")
+        '        eClock = eClockResetVal
+        '    End If
+        '    Exit Sub
+        'End If
 
         '|-Fae Floor (13) Events-|
         If mDun.numCurrFloor = 13 Then

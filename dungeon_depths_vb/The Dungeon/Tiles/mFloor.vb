@@ -1574,13 +1574,13 @@ Public Class mFloor
         Dim floorLayout As String() = {"_____________________________",
                                        "_############################",
                                        "____####____________#@#_____#",
-                                       "____####____________###_____#",
+                                       "____#^##____________###_____#",
                                        "____####____________________#",
                                        "#############################",
-                                       "#___________########_________",
+                                       "#___________###^####_________",
                                        "#___________###########______",
                                        "#_____________###__#####______",
-                                       "#############################",
+                                       "#####################$#######",
                                        "______#####___###__#####____#",
                                        "______#####___###__#####____#",
                                        "______##^##___###___________#",
@@ -1589,7 +1589,7 @@ Public Class mFloor
                                        "#_____________#########______",
                                        "#_____________#########______",
                                        "##################%##########",
-                                       "______________#########_____#",
+                                       "______________######^##_____#",
                                        "______________#########______"}
 
         If mBoardHeight < 20 Then mBoardHeight = 20
@@ -1603,27 +1603,29 @@ Public Class mFloor
                     stairs = New Point(x, y)
                 ElseIf line(x) = "^"c Then
                     Dim chestPoint = New Point(x, y)
-                    genLegacyChest(chestPoint)
+                    Dim chest As Chest = DDConst.BASE_CHEST.Create(chestPoint, floorCode)
+                    addChest(chest, chestPoint)
                 ElseIf line(x) = "@"c Then
                     Game.player1.pos = New Point(x, y)
+                ElseIf line(x) = "$"c Then
+                    Game.shopkeeper.pos = New Point(x, y)
                 End If
             Next
         Next
+
+        populateLegacyChests()
     End Sub
-    Sub genLegacyChest(ByVal p As Point)
-        Dim c1 As Chest
-        Dim inv = New Inventory(False)
+    Sub populateLegacyChests()
+        Dim itemsItemsToPlace As List(Of Tuple(Of String, Integer)) = New List(Of Tuple(Of String, Integer))
 
-        inv.add("Chicken_Suit", 1)
-        inv.add("Bunny_Ears", 1)
-        inv.add(LanceOfSFury.ITEM_NAME, 1)
-        inv.add(150, 1)
+        itemsItemsToPlace.Add(New Tuple(Of String, Integer)(ChickenSuit.ITEM_NAME, 1))
+        itemsItemsToPlace.Add(New Tuple(Of String, Integer)(BunnyEars.ITEM_NAME, 1))
+        itemsItemsToPlace.Add(New Tuple(Of String, Integer)(LanceOfSFury.ITEM_NAME, 1))
+        itemsItemsToPlace.Add(New Tuple(Of String, Integer)(TwinBlades.ITEM_NAME, 1))
 
-        c1 = DDConst.BASE_CHEST.Create(inv, p, False)
-
-        chestList.Add(c1)
-        mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
-        mBoard(p.Y, p.X).Text = "#"
+        For Each i In itemsItemsToPlace
+            chestList(Int(Rnd() * chestList.Count)).contents.add(i.Item1, i.Item2)
+        Next
     End Sub
 
     '|---OBJECT PLACEMENT---|

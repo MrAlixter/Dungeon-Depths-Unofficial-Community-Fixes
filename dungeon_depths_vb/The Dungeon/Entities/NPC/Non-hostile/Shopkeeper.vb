@@ -15,31 +15,7 @@
         isShop = True
 
         '|Inventory|
-        inv.setCount(Spellbook.ITEM_NAME, 1)
-        inv.setCount(AntiCurseTag.ITEM_NAME, 1)
-        inv.item(AntiCurseTag.ITEM_NAME).value *= 2.5
-        'Potions
-        inv.setCount(HealthPotion.ITEM_NAME, 1)
-        inv.setCount(MajHealthPotion.ITEM_NAME, 1)
-        inv.setCount(ManaPotion.ITEM_NAME, 1)
-        inv.setCount(AntiVenom.ITEM_NAME, 1)
-        inv.setCount(SlightRestoPotion.ITEM_NAME, 1)
-        'Food
-        inv.setCount(ChickenLeg.ITEM_NAME, 1)
-        'Armor/Accesories
-        inv.setCount(BronzeArmor.ITEM_NAME, 1)
-        inv.setCount(SteelArmor.ITEM_NAME, 1)
-        'Weapons
-        inv.setCount(SteelSword.ITEM_NAME, 1)
-        inv.setCount(SteelAxe.ITEM_NAME, 1)
-        inv.setCount(OakStaff.ITEM_NAME, 1)
-        inv.setCount(GoldSword.ITEM_NAME, 1)
-        inv.setCount(GoldAxe.ITEM_NAME, 1)
-        inv.setCount(GoldenStaff.ITEM_NAME, 1)
-        If DDDateTime.isSummer Then inv.setCount(TidemageStaff.ITEM_NAME, 1)
-        'Services
-        inv.setCount(CollarRemoval.ITEM_NAME, 1)
-
+        setStandardInv()
 
         '|Stats|
         maxHealth = 9999
@@ -71,6 +47,7 @@
         local_img.Add(LocalImgInd.beegirl, ShopNPC.gbl_img.atrs(0).getAt(148))
         local_img.Add(LocalImgInd.bimbo, ShopNPC.gbl_img.atrs(0).getAt(153))
         local_img.Add(LocalImgInd.alt1, ShopNPC.gbl_img.atrs(0).getAt(140))
+        local_img.Add(LocalImgInd.alt2, ShopNPC.gbl_img.atrs(0).getAt(168))
     End Sub
 
     Public Overrides Sub encounter()
@@ -79,32 +56,91 @@
         MyBase.encounter()
     End Sub
     Public Overrides Sub inventoryUpdate()
-        If Game.mDun.numCurrFloor < 2 Then
-            inv.setCount(ScaleArmor.ITEM_NAME, 1)
-            inv.setCount(GoldArmor.ITEM_NAME, 0)
-            inv.setCount(MidasGuantlet.ITEM_NAME, 0)
+        If Game.currFloor.floorNumber = 91017 Then
+            inv = New Inventory
+
+            setLegacyInv()
         Else
-            inv.setCount(ScaleArmor.ITEM_NAME, 0)
-            inv.setCount(GoldArmor.ITEM_NAME, 1)
-            inv.setCount(MidasGuantlet.ITEM_NAME, 1)
-        End If
+            If Not inv.getCountAt(CollarRemoval.ITEM_NAME) > 0 Then
+                setStandardInv()
+            End If
 
-        If Game.player1.sState.pForm.name = "Dove" Then
-            inv.setCount(CrackedBrick.ITEM_NAME, 1)
-        End If
+            If Game.mDun.numCurrFloor < 2 Then
+                inv.setCount(ScaleArmor.ITEM_NAME, 1)
+                inv.setCount(GoldArmor.ITEM_NAME, 0)
+                inv.setCount(MidasGuantlet.ITEM_NAME, 0)
+            Else
+                inv.setCount(ScaleArmor.ITEM_NAME, 0)
+                inv.setCount(GoldArmor.ITEM_NAME, 1)
+                inv.setCount(MidasGuantlet.ITEM_NAME, 1)
+            End If
 
-        If Game.player1.quests(qInd.helpWanted).getComplete Then
-            inv.setCount(PlatinumAxe.ITEM_NAME, 1)
-            inv.setCount(PlatinumDaggers.ITEM_NAME, 1)
-            inv.setCount(PlatinumStaff.ITEM_NAME, 1)
-            inv.setCount(PlatArmor.ITEM_NAME, 1)
-            inv.setCount(CrimsonCloak.ITEM_NAME, 1)
-            inv.setCount(OakStaff.ITEM_NAME, 0)
-            inv.setCount(SteelSword.ITEM_NAME, 0)
-            inv.setCount(SteelAxe.ITEM_NAME, 0)
-            inv.setCount(BronzeArmor.ITEM_NAME, 0)
-            inv.setCount(SteelArmor.ITEM_NAME, 0)
+            If Game.player1.sState.pForm.name = "Dove" Then
+                inv.setCount(CrackedBrick.ITEM_NAME, 1)
+            End If
+
+            If Game.player1.quests(qInd.helpWanted).getComplete Then
+                setHelpWantedInv()
+            End If
         End If
+    End Sub
+    Sub setLegacyInv()
+        'Useables
+        inv.setCount(Compass.ITEM_NAME, 1)
+        inv.setCount(Spellbook.ITEM_NAME, 1)
+        inv.setCount(HealthCharm.ITEM_NAME, 1)
+        inv.setCount(ManaCharm.ITEM_NAME, 1)
+        'Potions
+        inv.setCount(HealthPotion.ITEM_NAME, 1)
+        inv.setCount(ManaPotion.ITEM_NAME, 1)
+        'Armor/Accesories
+        inv.setCount(SteelArmor.ITEM_NAME, 1)
+        inv.setCount(GoldArmor.ITEM_NAME, 1)
+        'Weapons
+        inv.setCount(SteelSword.ITEM_NAME, 1)
+        inv.setCount(OakStaff.ITEM_NAME, 1)
+        inv.setCount(GoldSword.ITEM_NAME, 1)
+        inv.setCount(GoldenStaff.ITEM_NAME, 1)
+        inv.setCount(MidasGuantlet.ITEM_NAME, 1)
+    End Sub
+    Sub setStandardInv()
+        'Useables
+        inv.setCount(Spellbook.ITEM_NAME, 1)
+        inv.setCount(AntiCurseTag.ITEM_NAME, 1)
+        inv.item(AntiCurseTag.ITEM_NAME).value *= 2.5
+        'Potions
+        inv.setCount(HealthPotion.ITEM_NAME, 1)
+        inv.setCount(MajHealthPotion.ITEM_NAME, 1)
+        inv.setCount(ManaPotion.ITEM_NAME, 1)
+        inv.setCount(AntiVenom.ITEM_NAME, 1)
+        inv.setCount(SlightRestoPotion.ITEM_NAME, 1)
+        'Food
+        inv.setCount(ChickenLeg.ITEM_NAME, 1)
+        'Armor/Accesories
+        inv.setCount(BronzeArmor.ITEM_NAME, 1)
+        inv.setCount(SteelArmor.ITEM_NAME, 1)
+        'Weapons
+        inv.setCount(SteelSword.ITEM_NAME, 1)
+        inv.setCount(SteelAxe.ITEM_NAME, 1)
+        inv.setCount(OakStaff.ITEM_NAME, 1)
+        inv.setCount(GoldSword.ITEM_NAME, 1)
+        inv.setCount(GoldAxe.ITEM_NAME, 1)
+        inv.setCount(GoldenStaff.ITEM_NAME, 1)
+        If DDDateTime.isSummer Then inv.setCount(TidemageStaff.ITEM_NAME, 1)
+        'Services
+        inv.setCount(CollarRemoval.ITEM_NAME, 1)
+    End Sub
+    Sub setHelpWantedInv()
+        inv.setCount(PlatinumAxe.ITEM_NAME, 1)
+        inv.setCount(PlatinumDaggers.ITEM_NAME, 1)
+        inv.setCount(PlatinumStaff.ITEM_NAME, 1)
+        inv.setCount(PlatArmor.ITEM_NAME, 1)
+        inv.setCount(CrimsonCloak.ITEM_NAME, 1)
+        inv.setCount(OakStaff.ITEM_NAME, 0)
+        inv.setCount(SteelSword.ITEM_NAME, 0)
+        inv.setCount(SteelAxe.ITEM_NAME, 0)
+        inv.setCount(BronzeArmor.ITEM_NAME, 0)
+        inv.setCount(SteelArmor.ITEM_NAME, 0)
     End Sub
 
     '| - COMBAT - |
@@ -162,7 +198,13 @@
             Return ""
         End If
 
-        Return "Hey, what's up?"
+        If Game.currFloor.floorNumber = 91017 Then
+            If img_index = 0 Then img_index = LocalImgInd.alt2
+
+            Return "Hey, what's up?"
+        End If
+
+        Return "Hello!  What can I get for you today?"
     End Function
     Protected Overrides Function bunnyDialog(ByRef p As Player)
         Return "*giggle* Hey!"

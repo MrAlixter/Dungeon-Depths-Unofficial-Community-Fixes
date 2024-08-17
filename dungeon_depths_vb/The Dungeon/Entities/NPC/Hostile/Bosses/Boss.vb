@@ -5,6 +5,8 @@
         Select Case mIndex
             Case 5
                 Return New Medusa
+            Case 91017
+                Return New MarissaAS
             Case 91018
                 Return New TarFoodVend
             Case Else
