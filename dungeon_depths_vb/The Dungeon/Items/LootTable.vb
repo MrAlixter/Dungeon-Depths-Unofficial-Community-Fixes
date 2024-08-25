@@ -58,4 +58,17 @@
                 Return bracket.f14fXX
         End Select
     End Function
+
+    Public Shared Function getSpaceChest1Contents() As List(Of String)
+        Return New List(Of String)({PhotonArmor.ITEM_NAME, Labcoat.ITEM_NAME, Generator.ITEM_NAME, ManaDisharge.ITEM_NAME, PhotonBlade.ITEM_NAME, BitGold.ITEM_NAME, SAJumpsuit.ITEM_NAME})
+    End Function
+    Public Shared Function getSpaceChest2Contents() As List(Of String)
+        Return New List(Of String)({ShrinkRay.ITEM_NAME, GalaxyDye.ITEM_NAME, CryoGrenade.ITEM_NAME, CombatModule.ITEM_NAME, SpaceBun.ITEM_NAME, VialOfBimbo.ITEM_NAME})
+    End Function
+    Public Shared Function getSpaceChest3Contents() As List(Of String)
+        Return New List(Of String)({"BitGold", "Galaxy_Dye", "CryoGrenade", "Photon_Armor", "Vial_of_BIM_II", "Mobile_Powerbank", "Discharge_Gauntlets", "Photon_Blade", "Phase_Rifle", "Phase_Hammer", "Phase_Drill", "Paleomancer's_Diary", "Marissa's_Notes", "AAAAAA_Specification", "BitGold", "AAAAAA_Battery"})
+    End Function
+    Public Shared Function getSpaceChest4Contents() As List(Of String)
+        Return New List(Of String)({"Phase_Pistol", "Phase_Deflector", "Phase_Vibrator", "AAAAAA_Battery"})
+    End Function
 End Class

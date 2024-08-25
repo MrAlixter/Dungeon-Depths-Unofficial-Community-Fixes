@@ -76,35 +76,10 @@ Public Class Monster
     End Sub
     Sub setupMonsterOnSpawn(Optional ByVal scaleToFloor As Boolean = True)
         If scaleToFloor Then
-            Select Case Game.mDun.numCurrFloor 'sets the multiplier for enemy stats based on floor
-                Case 1
-                    scaleStats(1.0)
-                Case Else
-                    scaleStats(1 + (0.08 * Game.mDun.numCurrFloor))
-            End Select
+            setupMonsterOnSpawn(CType(Game.currFloor.floorNumber, Integer))
+        Else
+            setupMonsterOnSpawn(CType(1, Integer))
         End If
-
-        If xp_value < 20 Then xp_value = (maxHealth + attack + defense + speed) / 4
-
-        health = 1.0
-
-        title = " The "
-
-        sName = name
-        sMaxHealth = maxHealth
-        sMaxMana = maxMana
-        mana = maxMana
-        sAttack = attack
-        sDefense = defense
-        sWill = will
-        sSpeed = speed
-
-        If Game.player1.perks(perk.lurk) > 0 Then perks(npc_perk.stun) = 0
-
-        If speed = Game.player1.getSPD Then speed -= 1
-        pos = Game.player1.pos
-
-        initPerks()
     End Sub
     Sub setupMonsterOnSpawn(ByVal scaleTo As Integer)
         Select Case scaleTo
@@ -244,10 +219,16 @@ Public Class Monster
                 tier = {mInd.goo_girl, mInd.pink_mist_elem}
             Case 13
                 tier = {mInd.faerie, mInd.alraune, mInd.archwitch_recluse, mInd.namestealer_faerie}
+            Case 10000
+                If Game.player1.perks(perk.enemyoftime) > 0 Then
+                    Return {mInd.time_cop_agent, mInd.time_cop_agent, mInd.time_cop_agent}
+                Else
+                    tier = {}
+                End If
             Case 91017
                 tier = {mInd.innumerable_bugs, mInd.innumerable_bugs, mInd.innumerable_bugs, mInd.targaxian_cultist, mInd.ooze_scion}
                 Return tier
-            Case 10000, 91018
+            Case 91018
                 tier = {}
             Case Else
                 If Int(Rnd() * 3) = 0 Then
@@ -283,9 +264,6 @@ Public Class Monster
         '| --- Time Cops --- |
         If Game.player1.perks(perk.enemyoftime) > 0 Then
             DDUtils.append(tier, mInd.time_cop_agent)
-            DDUtils.append(tier, mInd.time_cop_agent)
-
-            If Game.currFloor.floorNumber = 10000 Then Return tier
         End If
 
         '| --- Succubi --- |

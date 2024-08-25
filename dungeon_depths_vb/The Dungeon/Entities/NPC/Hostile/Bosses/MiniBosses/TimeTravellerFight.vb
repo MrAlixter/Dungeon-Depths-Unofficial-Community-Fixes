@@ -17,13 +17,13 @@
         inv.setCount(A6Battery.ITEM_NAME, CInt(Int(Rnd() * 2000)) + 1)
 
         '|Dialog Variables|
-        title = " "
+        title = " The "
         pronoun = "she"
         p_pronoun = "her"
         r_pronoun = "her"
 
         '|Misc|
-        intro_taunt = """You're going to Time Jail, buster; like it or not!"""
+        intro_taunt = """You're going to Time Jail- like it or not!"""
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
@@ -42,10 +42,10 @@
 
 
             TextEvent.pushAndLog("The Time Traveler tosses a cryogrenade at you!")
-            Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(42), "Alright, easy there.  Let's just put you on ice for a bit...", AddressOf OutOfTime.hostileArrest)
+            Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(42), "The Time Traveler tosses a cryogrenade at you!" & DDUtils.RNRN &
+                                                                 """Alright, easy there.  Let's just put you on ice for a bit...""", AddressOf OutOfTime.hostileArrest)
             Exit Sub
         End If
-
 
         '|Basic Attack|
         Dim dmg = Entity.calcDamage(getATK, target.getDEF)
@@ -58,10 +58,10 @@
     Public Overrides Sub reactToTF()
         If perks(npc_perk.tfdur) >= 0 Then
             perks(npc_perk.tfdur) = -1
-            revert()
+            Game.player1.currTarget.revert()
 
             TextEvent.push("A rippling aura surrounds the time traveler..." & DDUtils.RNRN &
-                              "The " & name & " return to " & p_pronoun & " original self!")
+                           DDUtils.capitalizeFirst(getNameWithTitle()) & " return to " & p_pronoun & " original self!")
         End If
     End Sub
 

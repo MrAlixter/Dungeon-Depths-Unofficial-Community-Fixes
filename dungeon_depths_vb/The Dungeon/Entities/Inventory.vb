@@ -471,6 +471,10 @@
         internal_inventory.Add(TheifsLongcoat.ITEM_NAME, New TheifsLongcoat)         '443
         internal_inventory.Add(AshStiletto.ITEM_NAME, New AshStiletto)               '444
         internal_inventory.Add(BlackTShirt.ITEM_NAME, New BlackTShirt)               '445
+        internal_inventory.Add(GalGarb.ITEM_NAME, New GalGarb)                       '446
+        internal_inventory.Add(AllSeeingShadesOrig.ITEM_NAME, New AllSeeingShadesOrig) '447
+        internal_inventory.Add(SevenfoldStaff.ITEM_NAME, New SevenfoldStaff)         '448
+        internal_inventory.Add(OtherVialOfBimbo.ITEM_NAME, New OtherVialOfBimbo)     '449
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -503,7 +507,8 @@
                  Me.item(363), Me.item(364), Me.item(384), Me.item(393),
                  Me.item(394), Me.item(398), Me.item(404), Me.item(405),
                  Me.item(413), Me.item(418), Me.item(423), Me.item(425),
-                 Me.item(429), Me.item(438), Me.item(443), Me.item(445)}
+                 Me.item(429), Me.item(438), Me.item(443), Me.item(445),
+                 Me.item(446)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -528,7 +533,7 @@
                    Me.item(415), Me.item(419), Me.item(420), Me.item(421),
                    Me.item(422), Me.item(426), Me.item(427), Me.item(428),
                    Me.item(430), Me.item(431), Me.item(432), Me.item(433),
-                   Me.item(440), Me.item(444)}
+                   Me.item(440), Me.item(444), Me.item(448)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4), Me.item(65),
                    Me.item(15), Me.item(36), Me.item(37), Me.item(48),
@@ -550,7 +555,7 @@
                    Me.item(375), Me.item(379), Me.item(380), Me.item(387),
                    Me.item(388), Me.item(390), Me.item(395), Me.item(410),
                    Me.item(416), Me.item(422), Me.item(432), Me.item(436),
-                   Me.item(440)}
+                   Me.item(440), Me.item(449)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32),
                 Me.item(33), Me.item(34), Me.item(35), Me.item(44),
@@ -605,7 +610,7 @@
                    Me.item(310), Me.item(311), Me.item(312), Me.item(313),
                    Me.item(314), Me.item(315), Me.item(316), Me.item(317),
                    Me.item(318), Me.item(319), Me.item(329), Me.item(396),
-                   Me.item(397)}
+                   Me.item(397), Me.item(447)}
 
         invIDorder = New List(Of Integer)
 

@@ -1338,18 +1338,13 @@ Public Class mFloor
         Dim inv = New Inventory(False)
 
         Dim r = 0
-        If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
-        inv.add(PhotonArmor.ITEM_NAME, r)
-        If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
-        inv.add(Labcoat.ITEM_NAME, r)
-        If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
-        inv.add(Generator.ITEM_NAME, r)
-        If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
-        inv.add(ManaDisharge.ITEM_NAME, r)
-        If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
-        inv.add(PhotonBlade.ITEM_NAME, r)
-        If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
-        inv.add(BitGold.ITEM_NAME, r)
+
+        For Each itm In LootTable.getSpaceChest1Contents
+            If Not itm.Equals(SAJumpsuit.ITEM_NAME) Then
+                If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
+                inv.add(itm, r)
+            End If
+        Next
 
         inv.add(SAJumpsuit.ITEM_NAME, 1)
         c1 = DDConst.BASE_CHEST.Create(inv, p, False)
@@ -1363,14 +1358,14 @@ Public Class mFloor
         Dim inv = New Inventory(False)
 
         Dim r = 0
-        If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
-        inv.add(ShrinkRay.ITEM_NAME, r)
-        If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
-        inv.add(GalaxyDye.ITEM_NAME, r)
-        If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
-        inv.add(CryoGrenade.ITEM_NAME, r)
-        If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
-        inv.add(CombatModule.ITEM_NAME, r)
+
+        For Each itm In LootTable.getSpaceChest2Contents
+            If Not itm.Equals(VialOfBimbo.ITEM_NAME) And Not itm.Equals(SpaceBun.ITEM_NAME) Then
+                If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
+                inv.add(itm, r)
+            End If
+        Next
+
         If Int(Rnd() * 3) = 0 Then r = 3 Else r = 0
         inv.add(SpaceBun.ITEM_NAME, r)
 
@@ -1393,9 +1388,9 @@ Public Class mFloor
                                        "__________________###_______________________#####________________________###_____________",
                                        "__________________###________________________###_________________________###_____________",
                                        "__________________###____________________________________________________###_____________",
-                                       "__________________###______LLL___________________________LLL_____________###_____________",
-                                       "__________________########|LLL___________________________LLLLLLLLLLLLLLLL###_____________",
-                                       "__________________###______LLL___________________________LLL_____________###_____________",
+                                       "__________________###______LLL___________________________###_____________###_____________",
+                                       "__________________#########LLL___________________________###|LLLLLLLLLLLL###_____________",
+                                       "__________________###______LLL___________________________###_____________###_____________",
                                        "__________________###____________________________________________________###_____________",
                                        "__________________###______###___________________________###_____________###_____________",
                                        "__________________##########$#___________________________#!#################_____________",
@@ -1499,29 +1494,23 @@ Public Class mFloor
 
         Dim r = 0
 
+        For Each itm In LootTable.getSpaceChest3Contents
+            If Not itm.Equals(BitGold.ITEM_NAME) And
+                Not itm.Equals(A6Battery.ITEM_NAME) And
+                Not itm.Equals(CryoGrenade.ITEM_NAME) And
+                Not itm.Equals(PhaseHammer.ITEM_NAME) And
+                Not itm.Equals(PhaseDrill.ITEM_NAME) And
+                Not itm.Equals(PhaseRifle.ITEM_NAME) Then
+                If Int(Rnd() * 6) = 0 Then r = 1 Else r = 0
+                inv.add(itm, r)
+            End If
+        Next
+
         If Int(Rnd() * 6) = 0 Then r = Int(Rnd() * 3) + 1 Else r = 0
         inv.add("BitGold", r)
 
-        If Int(Rnd() * 8) = 0 Then r = 1 Else r = 0
-        inv.add("Galaxy_Dye", r)
-
         If Int(Rnd() * 6) = 0 Then r = Int(Rnd() * 5) + 1 Else r = 0
         inv.add("CryoGrenade", r)
-
-        If Int(Rnd() * 8) = 0 Then r = 1 Else r = 0
-        inv.add("Photon_Armor", r)
-
-        If Int(Rnd() * 8) = 0 Then r = 1 Else r = 0
-        inv.add("Vial_of_BIM_II", r)
-
-        If Int(Rnd() * 8) = 0 Then r = 1 Else r = 0
-        inv.add("Mobile_Powerbank", r)
-
-        If Int(Rnd() * 8) = 0 Then r = 1 Else r = 0
-        inv.add("Discharge_Gauntlets", r)
-
-        If Int(Rnd() * 8) = 0 Then r = 1 Else r = 0
-        inv.add("Photon_Blade", r)
 
         If Int(Rnd() * 2) = 0 Then
             Select Case Int(Rnd() * 3)
@@ -1531,17 +1520,6 @@ Public Class mFloor
                     inv.add("Phase_Hammer", 1)
                 Case 2
                     inv.add("Phase_Drill", 1)
-            End Select
-        Else
-            Select Case Int(Rnd() * 4)
-                Case 0
-                    inv.add("Paleomancer's_Diary", 1)
-                Case 1
-                    inv.add("Marissa's_Notes", 1)
-                Case 2
-                    inv.add("AAAAAA_Specification", 1)
-                Case 3
-                    inv.add("BitGold", 1)
             End Select
         End If
 
@@ -1557,10 +1535,13 @@ Public Class mFloor
         Dim c1 As Chest
         Dim inv = New Inventory(False)
 
-        inv.add("Phase_Pistol", 1)
-        inv.add("Phase_Deflector", 1)
-        inv.add("Phase_Vibrator", 1)
-        inv.add("AAAAAA_Battery", CInt(Rnd() * 10) + 5)
+        For Each itm In LootTable.getSpaceChest4Contents
+            If Not itm.Equals(A6Battery.ITEM_NAME) Then
+                inv.add(itm, 1)
+            End If
+        Next
+
+        inv.add(A6Battery.ITEM_NAME, CInt(Rnd() * 10) + 5)
 
         c1 = DDConst.BASE_CHEST.Create(inv, p, False)
 
@@ -1618,10 +1599,18 @@ Public Class mFloor
     Sub populateLegacyChests()
         Dim itemsItemsToPlace As List(Of Tuple(Of String, Integer)) = New List(Of Tuple(Of String, Integer))
 
+        'Armors
         itemsItemsToPlace.Add(New Tuple(Of String, Integer)(ChickenSuit.ITEM_NAME, 1))
-        itemsItemsToPlace.Add(New Tuple(Of String, Integer)(BunnyEars.ITEM_NAME, 1))
-        itemsItemsToPlace.Add(New Tuple(Of String, Integer)(LanceOfSFury.ITEM_NAME, 1))
+        itemsItemsToPlace.Add(New Tuple(Of String, Integer)(GalGarb.ITEM_NAME, 1))
+
+        'Weapons
         itemsItemsToPlace.Add(New Tuple(Of String, Integer)(TwinBlades.ITEM_NAME, 1))
+        itemsItemsToPlace.Add(New Tuple(Of String, Integer)(SevenfoldStaff.ITEM_NAME, 1))
+
+        'Other
+        itemsItemsToPlace.Add(New Tuple(Of String, Integer)(BunnyEars.ITEM_NAME, 1))
+        itemsItemsToPlace.Add(New Tuple(Of String, Integer)(AllSeeingShadesOrig.ITEM_NAME, 1))
+        itemsItemsToPlace.Add(New Tuple(Of String, Integer)(OtherVialOfBimbo.ITEM_NAME, 1))
 
         For Each i In itemsItemsToPlace
             chestList(Int(Rnd() * chestList.Count)).contents.add(i.Item1, i.Item2)

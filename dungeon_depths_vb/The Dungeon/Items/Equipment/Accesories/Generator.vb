@@ -11,7 +11,6 @@
 
         '|Item Flags|
         usable = False
-        under_m_hair = True
         rando_inv_allowed = False
 
         '|Stats|

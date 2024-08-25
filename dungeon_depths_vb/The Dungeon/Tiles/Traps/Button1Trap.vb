@@ -16,8 +16,8 @@
         Game.currFloor.mBoard(5, 49).Tag = DDConst.TILE_SEEN
         Game.currFloor.mBoard(5, 49).Text = ""
         'Contraband Locker
-        Game.currFloor.mBoard(10, 26).Tag = DDConst.TILE_SEEN
-        Game.currFloor.mBoard(10, 26).Text = ""
+        Game.currFloor.mBoard(10, 60).Tag = DDConst.TILE_SEEN
+        Game.currFloor.mBoard(10, 60).Text = ""
         'Staff Area
         Game.currFloor.mBoard(17, 17).Tag = DDConst.TILE_SEEN
         Game.currFloor.mBoard(17, 17).Text = ""

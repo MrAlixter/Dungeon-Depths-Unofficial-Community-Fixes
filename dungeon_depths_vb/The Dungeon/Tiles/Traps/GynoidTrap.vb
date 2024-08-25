@@ -14,7 +14,7 @@
     End Sub
 
     Shared Sub gcuCancel()
-        TextEvent.push("The lid slams tightly shut, and the system begins whatever it was going to do.  You can not get in anymore.")
+        TextEvent.push("The lid slams tightly shut, and the system begins whatever it was going to do.  You cannot get in anymore.")
     End Sub
     Shared Sub gConvChamb()
         Dim out = "You climb into the chamber, mere seconds until the timer hits zero." & DDUtils.RNRN &

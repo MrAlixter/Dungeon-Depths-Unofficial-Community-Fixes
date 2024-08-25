@@ -2283,8 +2283,10 @@ Public Class Game
         If eClock > 0 Then eClock -= 1
 
         '|-Should we check for events?-|
-        If mDun.numCurrFloor = 5 Or mDun.numCurrFloor = 75 Or mDun.numCurrFloor = 9999 Or mDun.numCurrFloor = 10000 Or combat_engaged = True Or shop_npc_engaged = True Or eClock <> 0 Or Not player1.canMoveFlag Then
+        If mDun.numCurrFloor = 5 Or mDun.numCurrFloor = 75 Or mDun.numCurrFloor = 9999 Or (mDun.numCurrFloor = 10000 And player1.perks(perk.enemyoftime) < 0) Or combat_engaged = True Or shop_npc_engaged = True Or eClock <> 0 Or Not player1.canMoveFlag Then
             Exit Sub
+        ElseIf mDun.numCurrFloor = 10000 And player1.perks(perk.enemyoftime) > 0 Then
+            doRndMonsterEncounters()
         End If
 
         '|-Quest Aquisition-|
@@ -2348,6 +2350,9 @@ Public Class Game
         End If
 
         '|-Monster Encounters-|
+        doRndMonsterEncounters()
+    End Sub
+    Sub doRndMonsterEncounters()
         Dim enemyTable As Integer() = Monster.floorMonsterTier(mDun.numCurrFloor)
 
         Dim encounterRoll As Integer = CInt(Int(Rnd() * 1000))

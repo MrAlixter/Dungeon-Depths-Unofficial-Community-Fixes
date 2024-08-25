@@ -23,6 +23,7 @@
 
         '|Description|
         setDesc("A shiny chrome wristband that projects the energy from a AAAAAA battery into a shimmering field that reverts all changes to its wearer." & DDUtils.RNRN &
+                "Requires AAAAAA Batteries to function." & DDUtils.RNRN &
                 getStatInformation())
     End Sub
     Public Overrides Sub onEquip(ByRef p As Player)

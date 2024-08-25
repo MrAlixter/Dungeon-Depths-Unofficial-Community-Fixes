@@ -53,6 +53,8 @@
                 TextEvent.pushLog("You cut through the wall in front of you!")
                 Game.closeLblEvent()
                 Game.drawBoard()
+
+                If Not OutOfTime.canBreakWalls(p) Then OutOfTimeS3.alert(False)
             Else
                 TextEvent.fpushAndLog("Your drill spins through the air in front of you, but there isn't anything to cut...")
                 p.stamina += getCost() - 5

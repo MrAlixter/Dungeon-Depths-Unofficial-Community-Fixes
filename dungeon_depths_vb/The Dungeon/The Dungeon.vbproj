@@ -317,6 +317,7 @@
     <Compile Include="Items\Equipment\Accesories\HallowedTalisman.vb" />
     <Compile Include="Items\Equipment\Accesories\Ballgag.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\BlackTShirt.vb" />
+    <Compile Include="Items\Equipment\Armor\Clothing\GalGarb.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\NotColdWeatherGarb.vb" />
     <Compile Include="Items\Equipment\Armor\Costumes\SpiralBikini.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\NanosilkQipaoP.vb" />
@@ -359,6 +360,7 @@
     <Compile Include="Items\Equipment\Armor\SlutVar\SkimpyClothesG.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\RegalLingerieF.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\CrystalBikini.vb" />
+    <Compile Include="Items\Equipment\Glasses\AllSeeingShadesOrig.vb" />
     <Compile Include="Items\Equipment\Glasses\BimbovisionGoggles.vb" />
     <Compile Include="Items\Equipment\Glasses\CircularGlasses.vb" />
     <Compile Include="Items\Equipment\Glasses\CyberVisorG.vb" />
@@ -397,6 +399,7 @@
     <Compile Include="Items\Equipment\Weapons\Spears\HeronSpear.vb" />
     <Compile Include="Items\Equipment\Weapons\Spears\IcespikeSpear.vb" />
     <Compile Include="Items\Equipment\Weapons\Staffs\Hyacinth.vb" />
+    <Compile Include="Items\Equipment\Weapons\Staffs\SevenfoldStaff.vb" />
     <Compile Include="Items\Equipment\Weapons\Swords\CyberValkyrieSword.vb" />
     <Compile Include="Items\Equipment\Weapons\Swords\PeregrineFalchion.vb" />
     <Compile Include="Items\Equipment\Weapons\Swords\HellflamingSword.vb" />
@@ -481,6 +484,7 @@
     <Compile Include="Items\Usable\Spellbooks\AAAAAASpecs.vb" />
     <Compile Include="Items\Usable\Vials\CynnTonic.vb" />
     <Compile Include="Items\Usable\Vials\SthenoSalve.vb" />
+    <Compile Include="Items\Usable\Vials\OtherVialOfBimbo.vb" />
     <Compile Include="Items\Usable\Vials\VialOfManyNames.vb" />
     <Compile Include="Items\Usable\Vials\VialOfRockJuice.vb" />
     <Compile Include="Items\Usable\Vials\VialOfSuccubus.vb" />

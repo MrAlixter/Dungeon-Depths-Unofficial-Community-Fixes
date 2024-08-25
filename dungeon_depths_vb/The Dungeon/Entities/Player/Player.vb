@@ -1013,7 +1013,7 @@ Public Class Player
 
         If dmg = -1 Then
             miss(target)
-        ElseIf dmg = -2 Then
+        ElseIf dmg = -2 Or (equippedGlasses.getAName.Equals(AllSeeingShadesOrig.ITEM_NAME) And passDieRoll(2, 1)) Then
             cHit(Me.getATK, target)
         ElseIf dmg <> -3 Then
             hit(Math.Max(dmg, 1), target)

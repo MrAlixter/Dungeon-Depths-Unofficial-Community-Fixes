@@ -54,6 +54,8 @@
             Else
                 TextEvent.fpushAndLog("You explode the air in front of you, but there isn't a wall to destroy...")
             End If
+
+            If Not OutOfTime.canBreakWalls(p) Then OutOfTimeS3.alert(False)
         End If
     End Sub
 

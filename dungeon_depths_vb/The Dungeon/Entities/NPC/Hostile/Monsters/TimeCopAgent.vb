@@ -20,33 +20,7 @@
         '|Dialog Variables|
 
         '|Misc|
-        If Game.currFloor.floorNumber <> 10000 Then
-            setupMonsterOnSpawn()
-        Else
-            maxHealth *= 3.0
-            attack *= 3.0
-            defense *= 3.0
-            speed *= 3.0
-            will = Math.Max(1, will) * 3.0
-
-            xp_value = (maxHealth + attack + defense + speed) / 4
-
-            health = 1.0
-
-            title = " The "
-            sName = name
-            sMaxHealth = maxHealth
-            sMaxMana = maxMana
-            sAttack = attack
-            sDefense = defense
-            sWill = will
-            sSpeed = speed
-
-            If Game.player1.perks(perk.lurk) > 0 Then perks(npc_perk.stun) = 0
-
-            If speed = Game.player1.getSPD Then speed -= 1
-            pos = Game.player1.pos
-        End If
+        setupMonsterOnSpawn(Game.player1.level + 1)
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

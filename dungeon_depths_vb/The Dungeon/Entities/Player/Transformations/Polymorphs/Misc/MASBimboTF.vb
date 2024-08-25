@@ -80,4 +80,45 @@
                        "Part of you wants to get down on your hands and knees and crawl back to her, though more of you is glad this version of Marissa seemed to be so inexperienced.")
         p.drawPort()
     End Sub
+
+    Public Shared Sub step1Alt(ByRef p As Player)
+        Dim out = ""
+
+        '| - Change Clothes - |
+        If Not p.equippedArmor.getName.Equals("Naked") Then
+            If p.equippedArmor.getSlutVarInd = -1 And Not p.equippedArmor.is_sexy Then
+                If p.inv.item(SkimpyTT.ITEM_NAME).count < 1 Then p.inv.add(SkimpyTT.ITEM_NAME, 1)
+                EquipmentDialogBackend.armorChange(p, SkimpyTT.ITEM_NAME)
+            ElseIf p.equippedArmor.getAntiSlutInd = -1 Then
+                Equipment.clothingCurse1(p)
+            End If
+        End If
+
+        out += "Drinking the pink contents of the vial causes a dizzy calm wash to over you..." & DDUtils.RNRN &
+               "In a haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine." & DDUtils.RNRN &
+               "Your hair shifts to a platinum blonde, and your clothes finish changing to match your new figure."
+
+        '| -- Transformation -- |
+        p.setName(Polymorph.bimboizeName(p.getName))
+        p.changeClass("Bimbo")
+
+        '| - Hair - |
+        p.prt.haircolor = Color.FromArgb(255, 255, 245, 200)
+        p.prt.setIAInd(pInd.eyebrows, 0, True, False)
+
+        '| - Face - |
+        p.prt.setIAInd(pInd.face, 0, True, False)
+        p.prt.setIAInd(pInd.nose, 0, True, False)
+        p.prt.setIAInd(pInd.mouth, 6, True, True)
+        p.prt.setIAInd(pInd.eyes, 69, True, True)
+
+        '| - Body - |
+        If Not p.prt.sexBool Then p.MtF()
+        If p.breastSize < 3 Then p.breastSize = 3
+        p.prt.setIAInd(pInd.cloak, 0, True, False)
+
+        'transformation description push
+        p.textColor = Color.FromArgb(255, 255, 235, 240)
+        TextEvent.push(out)
+    End Sub
 End Class

@@ -34,7 +34,7 @@
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(263, True, True)
 
         '|Description|
-        setDesc("A grey tanktop made of a breathable fabric for the athletic." & DDUtils.RNRN &
+        setDesc("A grey tanktop made of a breathable fabric, for an athlete." & DDUtils.RNRN &
                 getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 

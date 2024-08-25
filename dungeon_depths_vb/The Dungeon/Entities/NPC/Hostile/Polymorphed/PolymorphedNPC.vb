@@ -73,6 +73,10 @@
 
     MustOverride Sub newAttackCMD(ByRef target As Entity)
 
+    Public Overrides Sub reactToTF()
+        originalShape.reactToTF()
+    End Sub
+
     Public Overrides Sub revert()
         originalShape.health = health
         originalShape.mana = mana
