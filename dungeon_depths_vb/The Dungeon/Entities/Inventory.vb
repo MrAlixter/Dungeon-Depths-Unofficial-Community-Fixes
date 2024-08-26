@@ -475,6 +475,7 @@
         internal_inventory.Add(AllSeeingShadesOrig.ITEM_NAME, New AllSeeingShadesOrig) '447
         internal_inventory.Add(SevenfoldStaff.ITEM_NAME, New SevenfoldStaff)         '448
         internal_inventory.Add(OtherVialOfBimbo.ITEM_NAME, New OtherVialOfBimbo)     '449
+        internal_inventory.Add(RingOfWarForm.ITEM_NAME, New RingOfWarForm)           '450
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -581,7 +582,7 @@
                 Me.item(344), Me.item(346), Me.item(349), Me.item(355),
                 Me.item(356), Me.item(361), Me.item(374), Me.item(375),
                 Me.item(376), Me.item(389), Me.item(391), Me.item(402),
-                Me.item(411), Me.item(414), Me.item(439)}
+                Me.item(411), Me.item(414), Me.item(439), Me.item(450)}
 
         services = {Me.item(87), Me.item(113), Me.item(114), Me.item(121),
                     Me.item(122), Me.item(124), Me.item(131), Me.item(245),

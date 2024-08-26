@@ -40,7 +40,7 @@
 
     Public Overrides Sub onUnequip(ByRef p As Player, ByRef w As Weapon)
         If (p.className.Equals("Mecha Valkyrie") Or p.perks(perk.tfedbyweapon) > 0) And Not w Is Nothing AndAlso Not w.GetType.IsSubclassOf(GetType(Sword)) And p.perks(perk.tfcausingsword) = id Then
-            TextEvent.push("Sighing, you sheath your blade and revert to your base form.")
+            If Not Game.lblEvent.Visible Then TextEvent.fpush("Sighing, you sheath your blade and revert to your base form.")
 
             p.inv.add(uniform_id, -1)
 

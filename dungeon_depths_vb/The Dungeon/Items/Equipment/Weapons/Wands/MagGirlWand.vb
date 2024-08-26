@@ -62,7 +62,7 @@
 
     Public Overrides Sub onUnequip(ByRef p As Player, ByRef w As Weapon)
         If (p.className.Equals("Magical Girl") Or p.perks(perk.tfedbyweapon) > 0) And Not w Is Nothing AndAlso Not w.GetType.IsSubclassOf(GetType(Wand)) And p.perks(perk.tfcausingwand) = id Then
-            TextEvent.push("Sighing, you stow away your wand and revert to your base form.")
+            TextEvent.fpush("Sighing, you stow away your wand and revert to your base form.")
 
             p.inv.setCount(uniform_id, 0)
 

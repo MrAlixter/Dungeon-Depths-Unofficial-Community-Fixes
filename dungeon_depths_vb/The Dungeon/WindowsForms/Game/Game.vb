@@ -71,6 +71,7 @@ Public Class Game
     Public updatable_queue As UpdatableQueue = New UpdatableQueue
     Public npc_list As List(Of NPC) = New List(Of NPC)  '(NOT SAVED)
     Public combat_engaged As Boolean = False            '(NOT SAVED)
+    Public shouldRevertWarform As Boolean = False       '(NOT SAVED)
 
     '| -- Shop NPCs -- |
     Public shop_npc_list As List(Of ShopNPC) = New List(Of ShopNPC)
@@ -3485,6 +3486,22 @@ Public Class Game
         btnWait.Visible = True
         btnRUN.Visible = True
         btnSpec.Visible = True
+
+        '|-Warform-|
+        If player1.equippedAcce.getAName.Equals(RingOfWarForm.ITEM_NAME) AndAlso Transformation.canBeTFed(player1) Then
+            If player1.formStates(stateInd.preWarformState) Is Nothing OrElse Not player1.formStates(stateInd.preWarformState).initFlag Then
+                Dim pre_state As State = New State(player1)
+                pre_state.initFlag = True
+                player1.formStates(stateInd.preWarformState) = pre_state
+            End If
+
+            player1.saveXState(player1.formStates(stateInd.preWarformState))
+
+            If PerkEffects.warformSwap(player1, player1.formStates(stateInd.warformState)) Then
+                TextEvent.fpushAndLog("You shift into your combat form!")
+                shouldRevertWarform = True
+            End If
+        End If
     End Sub
     Public Sub fromCombat()
         '|-Combat Dialog Box-|
@@ -3505,6 +3522,12 @@ Public Class Game
         combat_engaged = False
         npc_list.Clear()
         updatable_queue.clear()
+
+        '|-Warform-|
+        If shouldRevertWarform Then
+            shouldRevertWarform = False       
+            If PerkEffects.warformSwap(player1, player1.formStates(stateInd.preWarformState)) Then TextEvent.pushLog("You revert from your combat form!")
+        End If
 
         '|-Clean up the Player-|
         If player1.perks(perk.astatue) < 0 Then player1.canMoveFlag = True

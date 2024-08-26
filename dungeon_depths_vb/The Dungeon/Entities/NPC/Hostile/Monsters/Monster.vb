@@ -347,6 +347,5 @@ Public Class Monster
     End Sub
     Shared Sub targetRoute(ByRef m As Monster)
         m.currTarget = Game.player1
-        Game.toCombat(m)
     End Sub
 End Class

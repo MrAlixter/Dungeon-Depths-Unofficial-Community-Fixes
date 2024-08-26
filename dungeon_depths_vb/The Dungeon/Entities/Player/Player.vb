@@ -111,6 +111,7 @@
     magtype         '109
     meltype         '110
     slimeguard      '111
+    prevweapon      '112
 End Enum
 Public Enum stateInd
     goddState
@@ -123,6 +124,8 @@ Public Enum stateInd
     succDisgState
     preBSBody
     preBSStartState
+    warformState
+    preWarformState
 End Enum
 Public Enum magType
     fire
@@ -184,7 +187,7 @@ Public Class Player
 
     'player & form states
     Public currState, pState, sState As State
-    Public formStates(9)
+    Public formStates(11) As State
 
     Public solFlag = False
     Public prefForm As PreferredForm
@@ -590,6 +593,7 @@ Public Class Player
             inv.add(HealthPotion.ITEM_NAME, 3)
             inv.add(CombatManual.ITEM_NAME, 1)
             inv.add(ValkyrieSword.ITEM_NAME, 1)
+            'inv.add(RingOfWarForm.ITEM_NAME, 1)
 
             perks(perk.meltype) = melType.sword
 
@@ -1150,7 +1154,7 @@ Public Class Player
     End Sub
 
     '|TRANSFORMATION METHODS|
-    Public Sub revertToState(ByRef s As State)
+    Public Sub revertToState(ByRef s As State, Optional ByVal overwriteGear As Boolean = True)
         Dim tMna As Integer = mana + mBuff
         Dim tHun As Integer = stamina
         Dim tGold As Integer = gold
@@ -1168,8 +1172,11 @@ Public Class Player
         mana = tMna
         gold = tGold
 
-        If inv.getCountAt(t_equip_armor) > 0 Then EquipmentDialogBackend.armorChange(Me, t_equip_armor, False)
-        If inv.getCountAt(t_equip_weapon) > 0 Then EquipmentDialogBackend.weaponChange(Me, t_equip_weapon, False)
+        If overwriteGear Then
+            If inv.getCountAt(t_equip_armor) > 0 Then EquipmentDialogBackend.armorChange(Me, t_equip_armor, False)
+            If inv.getCountAt(t_equip_weapon) > 0 Then EquipmentDialogBackend.weaponChange(Me, t_equip_weapon, False)
+        End If
+
         If inv.getCountAt(t_equip_acc) > 0 Then EquipmentDialogBackend.accessoryChange(Me, t_equip_acc, False)
         If inv.getCountAt(t_equip_glasses) > 0 Then EquipmentDialogBackend.equipGlasses(Me, t_equip_glasses, False)
 
@@ -1194,7 +1201,6 @@ Public Class Player
 
         ongoingTFs.resetPolymorphs()
 
-        If Game.lblEvent.Visible = False Then TextEvent.fpush(out & "You return to your former form!")
         Game.player_image = player_image
         If Settings.active(setting.textcolors) Then Game.lblEvent.ForeColor = textColor
         Game.lblNameTitle.ForeColor = textColor
@@ -1321,13 +1327,14 @@ Public Class Player
 
         revertToState(sState)
 
-        TextEvent.fpush("With a poof of smoke, you return to your original self!")
+        If Game.lblEvent.Visible = False And Game.pnlEvent.Visible = False Then TextEvent.fpushAndLog("With a poof of smoke, you return to your original self!")
     End Sub
     Public Function revertToSState(ByVal numtorevert As Integer) As String
         Return revertToState(numtorevert, sState)
     End Function
     Public Sub revertToPState()
         revertToState(pState)
+        If Game.lblEvent.Visible = False And Game.pnlEvent.Visible = False Then TextEvent.fpushAndLog("You return to your former form!")
     End Sub
     Public Function revertToPState(ByVal numtorevert As Integer) As String
         Return revertToState(numtorevert, pState)
@@ -1443,10 +1450,12 @@ Public Class Player
             Exit Sub
         End If
 
-        Game.fromCombat()
-        Game.pnlCombat.Visible = False
-        canMoveFlag = False
+        If Game.pnlCombat.Visible Then
+            Game.fromCombat()
+            Game.pnlCombat.Visible = False
+        End If
 
+        canMoveFlag = False
         resetPerks()
 
         If source Is Nothing Then
@@ -1481,6 +1490,11 @@ Public Class Player
                 Exit Sub
             End If
         End If
+
+        'If equippedAcce.getAName.Equals(RingOfWarForm.ITEM_NAME) Then
+        '    saveXState(formStates(stateInd.warformState))
+        '    If PerkEffects.warformSwap(Me, formStates(stateInd.preWarformState)) Then TextEvent.pushLog("You revert from your combat form!")
+        'End If
 
         DeathEffects.hardDeath()
         Game.npc_list.Clear()

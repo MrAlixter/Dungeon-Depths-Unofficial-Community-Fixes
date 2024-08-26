@@ -19,6 +19,7 @@
         inv.setCount(CursedSword.ITEM_NAME, 1)
         inv.setCount(BewitchedWand.ITEM_NAME, 1)
         inv.setCount(JinxedWhip.ITEM_NAME, 1)
+        inv.setCount(RingOfWarForm.ITEM_NAME, 1)
         inv.setCount(CursePurge.ITEM_NAME, 1)
 
         '|Stats|

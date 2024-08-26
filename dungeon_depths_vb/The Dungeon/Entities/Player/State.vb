@@ -21,7 +21,7 @@
     Public isPetrified = False
 
     'constructs a state from an instance of a player
-    Sub New(ByRef p As Player)
+    Sub New(ByVal p As Player)
         name = p.name
         sex = p.sex
         pClass = Player.classes(p.className)
@@ -41,16 +41,16 @@
         dickSize = p.dickSize
         buttSize = p.buttSize
         stamina = p.stamina
-        equippedWeapon = p.equippedWeapon
-        equippedArmor = p.equippedArmor
-        equippedAcce = p.equippedAcce
-        equippedGlasses = p.equippedGlasses
+        equippedWeapon = If(p.equippedWeapon.getAName.Equals("Fists"), New BareFists, p.inv.item(p.equippedWeapon.getId))
+        equippedArmor = If(p.equippedArmor.getAName.Equals("Naked"), New Naked, p.inv.item(p.equippedArmor.getId))
+        equippedAcce = If(p.equippedAcce.getAName.Equals("Nothing"), New noAcce, p.inv.item(p.equippedAcce.getId))
+        equippedGlasses = If(p.equippedGlasses.getAName.Equals("Nothing"), New noGlasses, p.inv.item(p.equippedGlasses.getId))
         iArrInd = p.prt.iArrInd.Clone
         perks = DDUtils.copyDictionary(p.perks)
         invNeedsUDate = p.inv.invNeedsUDate
         haircolor = p.prt.haircolor
         skincolor = p.prt.skincolor
-        textColor = p.TextColor
+        textColor = p.textColor
         initFlag = True
     End Sub
     'constructs a state with placeholder values
@@ -127,11 +127,11 @@
         p.inv.invNeedsUDate = invNeedsUDate
         p.prt.haircolor = haircolor
         p.prt.skincolor = skincolor
-        p.TextColor = textColor
+        p.textColor = textColor
         p.isPetrified = isPetrified
     End Sub
     'save applies a given instance of a player to a state
-    Public Sub save(ByRef p As Player)
+    Public Sub save(ByVal p As Player)
         name = p.name
         sex = p.sex
         pClass = Player.classes(p.className)
@@ -151,16 +151,16 @@
         dickSize = p.dickSize
         buttSize = p.buttSize
         stamina = p.stamina
-        equippedWeapon = p.equippedWeapon
-        equippedArmor = p.equippedArmor
-        equippedAcce = p.equippedAcce
-        equippedGlasses = p.equippedGlasses
+        equippedWeapon = If(p.equippedWeapon.getAName.Equals("Fists"), New BareFists, p.inv.item(p.equippedWeapon.getId))
+        equippedArmor = If(p.equippedArmor.getAName.Equals("Naked"), New Naked, p.inv.item(p.equippedArmor.getId))
+        equippedAcce = If(p.equippedAcce.getAName.Equals("Nothing"), New noAcce, p.inv.item(p.equippedAcce.getId))
+        equippedGlasses = If(p.equippedGlasses.getAName.Equals("Nothing"), New noGlasses, p.inv.item(p.equippedGlasses.getId))
         iArrInd = p.prt.iArrInd.Clone
         perks = DDUtils.copyDictionary(p.perks)
         invNeedsUDate = p.inv.invNeedsUDate
         haircolor = p.prt.haircolor
         skincolor = p.prt.skincolor
-        textColor = p.TextColor
+        textColor = p.textColor
         isPetrified = p.isPetrified
     End Sub
 

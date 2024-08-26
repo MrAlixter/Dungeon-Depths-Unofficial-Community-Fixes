@@ -323,6 +323,7 @@
             If sWeapon Is Nothing Then Exit Sub
 
             'equip the specified weapon
+            p.perks(perk.prevweapon) = p.equippedWeapon.getId
             p.equippedWeapon = sWeapon
             If doEquipHandlers Then p.equippedWeapon.onEquip(p)
             If p.perks(perk.amazon) > -15 Then PerkEffects.amazon(p)
@@ -455,6 +456,13 @@
         If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
 
         Return True
+    End Function
+    Public Shared Function equipLastWeapon(ByRef p As Player, Optional ByVal considerCurse As Boolean = True) As Boolean
+        Dim last_weapon As Item = p.inv.item(CInt(p.perks(perk.prevweapon)))
+
+        If p.inv.getCountAt(last_weapon.getName) < 1 Then last_weapon = New BareFists
+
+        Return equipWeapon(p, last_weapon.getAName(), considerCurse)
     End Function
     Public Shared Function equipAcce(ByRef p As Player, ByVal acce As String, Optional ByVal considerCurse As Boolean = True) As Boolean
         'if clothes offer resistance on the way off, this handles that

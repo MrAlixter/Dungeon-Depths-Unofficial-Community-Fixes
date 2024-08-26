@@ -384,6 +384,27 @@
             p.perks(perk.bimbotf) = -1
         End If
     End Sub
+    Shared Function warformSwap(ByRef p As Player, ByRef s As State) As Boolean
+        If p.className.Equals(s.pClass.name) Or p.isDead Then Return False
+        'MsgBox(s.equippedWeapon.getAName & DDUtils.RNRN &
+        '       s.perks(perk.tfedbyweapon) & DDUtils.RNRN &
+        '       s.perks(perk.tfcausingsword) & DDUtils.RNRN &
+        '       s.Equals(p.pState) & DDUtils.RNRN &
+        '       s.Equals(p.formStates(stateInd.combatState)))
+
+        If s.Equals(p.pState) And p.perks(perk.tfedbyweapon) > 0 Then
+            EquipmentDialogBackend.equipLastWeapon(p, False)
+        ElseIf s.Equals(p.formStates(stateInd.warformState)) And s.perks(perk.tfedbyweapon) > 0 Then
+            EquipmentDialogBackend.equipWeapon(p, s.equippedWeapon.getAName, False)
+        Else
+            p.revertToState(s, False)
+        End If
+
+        'p.perks(perk.tfedbyweapon) = s.perks(perk.tfedbyweapon)
+        'p.perks(perk.tfcausingwand) = s.perks(perk.tfcausingwand)
+        'p.perks(perk.tfcausingsword) = s.perks(perk.tfcausingsword)
+        Return True
+    End Function
 
     '|SPECIAL MOVE HANDLERS|
     Shared Sub berserkerRage(ByRef p As Player)

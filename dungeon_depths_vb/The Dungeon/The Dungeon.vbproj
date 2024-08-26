@@ -290,6 +290,7 @@
     <Compile Include="Entities\Player\Transformations\FaePrincessTF.vb" />
     <Compile Include="Entities\Player\Transformations\BeeHoneyTF.vb" />
     <Compile Include="Items\Equipment\Accesories\CynnsBimboMark.vb" />
+    <Compile Include="Items\Equipment\Accesories\RingOfWarForm.vb" />
     <Compile Include="Items\Equipment\Accesories\ROfBirdRage.vb" />
     <Compile Include="Items\Equipment\Accesories\TidemageTattoo.vb" />
     <Compile Include="Items\Equipment\Accesories\BerserkerCursemark.vb" />

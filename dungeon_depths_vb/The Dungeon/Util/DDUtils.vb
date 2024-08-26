@@ -63,7 +63,13 @@
         Return out
     End Function
     Public Shared Function copyDictionary(ByVal dic As Dictionary(Of perk, Integer)) As Dictionary(Of perk, Integer)
-        Return dic
+        Dim newDic As Dictionary(Of perk, Integer) = New Dictionary(Of perk, Integer)
+
+        For Each d In dic.Keys
+            newDic.Add(d, dic(d))
+        Next
+
+        Return newDic
     End Function
     Public Shared Sub shuffle(ByRef a As String())
         For i = 1 To UBound(a)
