@@ -385,14 +385,16 @@
         End If
     End Sub
     Shared Function warformSwap(ByRef p As Player, ByRef s As State) As Boolean
-        If p.className.Equals(s.pClass.name) Or p.isDead Then Return False
+        'MsgBox((p.className.Equals(s.pClass.name) And p.formName.Equals(s.pForm.name)) & DDUtils.RNRN & p.isDead & DDUtils.RNRN & Not s.initFlag)
+
+        If (p.className.Equals(s.pClass.name) And p.formName.Equals(s.pForm.name)) Or p.isDead Or Not s.initFlag Then Return False
         'MsgBox(s.equippedWeapon.getAName & DDUtils.RNRN &
         '       s.perks(perk.tfedbyweapon) & DDUtils.RNRN &
         '       s.perks(perk.tfcausingsword) & DDUtils.RNRN &
         '       s.Equals(p.pState) & DDUtils.RNRN &
         '       s.Equals(p.formStates(stateInd.combatState)))
 
-        If s.Equals(p.pState) And p.perks(perk.tfedbyweapon) > 0 Then
+        If (s.Equals(p.pState) Or s.Equals(p.formStates(stateInd.preWarformState))) And p.perks(perk.tfedbyweapon) > 0 Then
             EquipmentDialogBackend.equipLastWeapon(p, False)
         ElseIf s.Equals(p.formStates(stateInd.warformState)) And s.perks(perk.tfedbyweapon) > 0 Then
             EquipmentDialogBackend.equipWeapon(p, s.equippedWeapon.getAName, False)

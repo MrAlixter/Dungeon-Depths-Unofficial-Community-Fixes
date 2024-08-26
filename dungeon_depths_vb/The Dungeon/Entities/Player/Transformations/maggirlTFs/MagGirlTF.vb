@@ -59,7 +59,14 @@ Public Class MagGirlTF
     End Sub
 
     Sub step1combat()
-        step1()
+        Dim p As Player = Game.player1
+
+        HumanTF.change(p)
+        p.specialRoute()
+        p.magicRoute()
+
+        TextEvent.fpushAndLog("You activate your magical girl transformation!")
+
         step2()
     End Sub
 

@@ -1,7 +1,7 @@
 ﻿Public Class RingOfWarForm
     Inherits Accessory
 
-    Public Const ITEM_NAME As String = "Ring_of_Twin_Phases"
+    Public Const ITEM_NAME As String = "Ring_of_Two_Phases"
 
     Sub New()
         '|ID Info|
@@ -23,7 +23,7 @@
         '|Description|
         setDesc("A clear crystal ring that pulses with soft light." & DDUtils.RNRN &
                 "Saves the player's transformed state (including Valkyries and Magical Girls).  When the wearer enters combat, restores them to that transformed state.  When they leave combat, returns them to their untransformed state." & DDUtils.RNRN &
-                "Cannot be equipped if the user's form is unstable and they are not a Valkyrie or Magical Girl." & DDUtils.RNRN &
+                "Cannot be equipped if the user's form is unstable and they are not a Valkyrie or Magical Girl.  Cannot be equipped if the user's class and form are the same as their last revert point." & DDUtils.RNRN &
                 "Reverts transformations on equip, if the player is not in combat." & DDUtils.RNRN &
                 getStatInformation())
     End Sub
@@ -40,18 +40,20 @@
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
 
-        If Game.solFlag Then Exit Sub
+        If p.solFlag Then Exit Sub
 
-        If (Transformation.canBeTFed(p) Or p.className.Contains("Valkyrie") Or p.className.Contains("Magical Girl")) And Not p.perks(perk.succubuscurse) > 0 And Not p.className.Contains("​") Then
-
-            Dim wf_state As State = New State(p)
-            wf_state.initFlag = True
-            p.formStates(stateInd.warformState) = wf_state
+        'MsgBox(Transformation.canBeTFed(p) & DDUtils.RNRN & p.className.Contains("Valkyrie") & DDUtils.RNRN & p.className.Contains("Magical Girl"))
+        If (Transformation.canBeTFed(p) Or p.className.Contains("Valkyrie") Or p.className.Contains("Magical Girl")) And Not p.perks(perk.succubuscurse) > 0 And Not p.className.Contains("​") And Not (p.pState.pClass.name = p.className And p.pState.pForm.name = p.formName) Then
+            p.formStates(stateInd.warformState) = New State(p)
 
             If Not Game.combat_engaged Then
                 TextEvent.fpushAndLog("You revert from your combat form!")
+                p.pState.equippedAcce = p.equippedAcce
                 PerkEffects.warformSwap(p, p.pState)
             End If
+        ElseIf p.pState.pClass.name = p.className And p.pState.pForm.name = p.formName Then
+            If Not Game.lblEvent.Visible And Not Game.pnlEvent.Visible Then TextEvent.fpushAndLog("Your form has not gone through enough of a change since you last remember, and the ring slides off your finger.") Else TextEvent.pushLog("Your form too stable, and the ring slides off your finger.")
+            EquipmentDialogBackend.accessoryChange(p, "Nothing", False)
         Else
             If Not Game.lblEvent.Visible And Not Game.pnlEvent.Visible Then TextEvent.fpushAndLog("Your form is unstable, and the ring slides off your finger.") Else TextEvent.pushLog("Your form is unstable, and the ring slides off your finger.")
             EquipmentDialogBackend.accessoryChange(p, "Nothing", False)
@@ -60,6 +62,8 @@
 
     Public Overrides Sub onUnequip(ByRef p As Player)
         MyBase.onUnequip(p)
+
+        If p.solFlag Then Exit Sub
 
         If Game.combat_engaged Then
             TextEvent.fpushAndLog("You revert from your combat form!")

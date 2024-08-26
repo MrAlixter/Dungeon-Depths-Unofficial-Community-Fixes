@@ -710,13 +710,18 @@ Public Class Game
 
                     If in_pink_mist Then viewArray(y, x) += DDConst.PINK_MIST_OFFSET
                 Else
-                    If Settings.active(setting.isotiles) AndAlso player1.pos.X + indX = -1 AndAlso currFloor.ptInBounds(New Point(0, player1.pos.Y + indY)) AndAlso currFloor.mBoard(player1.pos.Y + indY, 0).Tag <> 0 Then
-                        viewArray(y, x) = 53
-                    ElseIf Settings.active(setting.isotiles) AndAlso player1.pos.X + indX = -1 AndAlso currFloor.ptInBounds(New Point(0, player1.pos.Y + indY)) AndAlso currFloor.mBoard(player1.pos.Y + indY, 0).Text = "═" Then
-                        viewArray(y, x) = 55
-                    Else
+                    Try
+                        If Settings.active(setting.isotiles) AndAlso player1.pos.X + indX = -1 AndAlso currFloor.ptInBounds(New Point(0, player1.pos.Y + indY)) AndAlso currFloor.mBoard(player1.pos.Y + indY, 0).Tag <> 0 Then
+                            viewArray(y, x) = 53
+                        ElseIf Settings.active(setting.isotiles) AndAlso player1.pos.X + indX = -1 AndAlso currFloor.ptInBounds(New Point(0, player1.pos.Y + indY)) AndAlso currFloor.mBoard(player1.pos.Y + indY, 0).Text = "═" Then
+                            viewArray(y, x) = 55
+                        Else
+                            viewArray(y, x) = 0
+                        End If
+                    Catch ex As Exception
                         viewArray(y, x) = 0
-                    End If
+                        Console.WriteLine("Bad time writing tile: " & x & ", " & y)
+                    End Try
                 End If
 
                 x += 1
@@ -3279,6 +3284,7 @@ Public Class Game
                         loadSave("saves/s" & fileNum & ".avex")
                     End If
                     player1.solFlag = False
+                    solFlag = False
                 Catch ex As System.IO.FileNotFoundException
                     DDError.noSaveDetectedError()
                 Catch ex2 As Exception
@@ -3418,7 +3424,7 @@ Public Class Game
         If Not mDun Is Nothing Then picStart.Visible = False
         If player1.isDead Then formReset()
         player1.canMoveFlag = True
-
+        solFlag = False
     End Sub
     'save access files
     Shared Function getPlayerFromFile(ByVal a As String) As Tuple(Of Player, Double)
@@ -3525,7 +3531,12 @@ Public Class Game
 
         '|-Warform-|
         If shouldRevertWarform Then
-            shouldRevertWarform = False       
+            shouldRevertWarform = False
+            'If player1.formStates(stateInd.warformState).perks(perk.tfedbyweapon) < 0 Then
+            '    player1.formStates(stateInd.warformState).equippedArmor = player1.equippedArmor
+            '    player1.formStates(stateInd.warformState).equippedWeapon = player1.equippedWeapon
+            'End If
+
             If PerkEffects.warformSwap(player1, player1.formStates(stateInd.preWarformState)) Then TextEvent.pushLog("You revert from your combat form!")
         End If
 

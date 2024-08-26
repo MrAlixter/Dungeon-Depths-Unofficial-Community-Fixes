@@ -340,6 +340,7 @@
                 If accessory.Equals(k) Then
                     'MsgBox("{" & cmbobxaccessory.SelectedItem & "}&[") ' & aNameList(i) & "]")
                     sAccessory = accessory_list(k)
+                    'MsgBox(doEquipHandlers & DDUtils.RNRN & accessory)
                     If Not p.equippedAcce Is Nothing And doEquipHandlers Then p.equippedAcce.onUnequip(p)
                     Exit For
                 End If
