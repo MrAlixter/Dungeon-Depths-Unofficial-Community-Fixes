@@ -15,22 +15,37 @@
         isShop = True
 
         '|Inventory|
-        inv.setCount("Chicken_Leg", 1)
-        inv.item("Chicken_Leg").value -= 0.2 * inv.item("Chicken_Leg").value
-        inv.setCount("Apple", 1)
-        inv.item("Apple").value -= 0.2 * inv.item("Apple").value
-        inv.setCount("Heavy_Cream", 1)
-        inv.item("Heavy_Cream").value -= 0.2 * inv.item("Heavy_Cream").value
-        inv.setCount("Medicinal_Tea", 1)
-        inv.item("Medicinal_Tea").value -= 0.2 * inv.item("Medicinal_Tea").value
-        inv.setCount("Panacea", 1)
-        inv.setCount("Cherry_Stick_of_Gum", 1)
-        inv.setCount("Mint_Stick_of_Gum", 1)
-        inv.setCount("Spatial_Shroom", 1)
-        inv.setCount("Garden_Salad", 1)
-        inv.setCount("Warrior's_Feast", 1)
-        inv.setCount("Mage's_Delicacy", 1)
-        inv.setCount("Tavern_Special", 1)
+        inv.setCount(ChickenLeg.ITEM_NAME, 1)
+        inv.item(ChickenLeg.ITEM_NAME).value -= 0.2 * inv.item(ChickenLeg.ITEM_NAME).value
+        inv.setCount(Apple.ITEM_NAME, 1)
+        inv.item(Apple.ITEM_NAME).value -= 0.2 * inv.item(Apple.ITEM_NAME).value
+        inv.setCount(SShroom.ITEM_NAME, 1)
+
+        '| - Resoration - |
+        inv.setCount(Herbs.ITEM_NAME, 1)
+        inv.item(Herbs.ITEM_NAME).value -= 0.2 * inv.item(Herbs.ITEM_NAME).value
+        inv.setCount(Panacea.ITEM_NAME, 1)
+        inv.setCount(GardenSalad.ITEM_NAME, 1)
+
+        '| - Boosting - |
+        inv.setCount(WFeast.ITEM_NAME, 1)
+        inv.setCount(MDelicacy.ITEM_NAME, 1)
+        inv.setCount(TSpecial.ITEM_NAME, 1)
+
+        '| - Transformative - |
+        Select Case Int(Rnd() * 6)
+            Case 0
+                inv.setCount(CStickOfGum.ITEM_NAME, 1)
+            Case 1
+                inv.setCount(MStickOfGum.ITEM_NAME, 1)
+            Case 2
+                inv.setCount(BBStickOfGum.ITEM_NAME, 1)
+            Case 3
+                inv.setCount(WStickOfGum.ITEM_NAME, 1)
+            Case Else
+                inv.setCount(HeavyCream.ITEM_NAME, 1)
+                inv.item(HeavyCream.ITEM_NAME).value -= 0.2 * inv.item(HeavyCream.ITEM_NAME).value
+        End Select
 
         '|Stats|
         maxHealth = 9999

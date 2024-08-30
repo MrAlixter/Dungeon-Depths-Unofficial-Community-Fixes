@@ -19,6 +19,6 @@
 
         '|Description|
         setDesc("A roasted and seasoned chicken leg, served steaming hot!" & DDUtils.RNRN &
-                       "+25 Stamina")
+                "+25 Stamina")
     End Sub
 End Class

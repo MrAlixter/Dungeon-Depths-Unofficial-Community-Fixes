@@ -27,13 +27,15 @@
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
-        TextEvent.pushCombat("The " & getName() & " casts Ice Wind!")
-        TextEvent.pushLog("The " & getName() & " casts Ice Wind!")
+        TextEvent.fpushAndLog("The " & getName() & " casts Ice Wind!")
         Dim dmg = calcDamage(Me.getATK, target.getDEF * 0.7)
         hit(dmg, target)
 
         If Not target.getPlayer Is Nothing And target.getPlayer.lust > 0 Then
+            Dim ldif = Math.Min(target.getLust, 21)
+
             target.getPlayer.addLust(-21)
+            TextEvent.fpushAndLog("-" & ldif & " lust.")
         End If
     End Sub
 

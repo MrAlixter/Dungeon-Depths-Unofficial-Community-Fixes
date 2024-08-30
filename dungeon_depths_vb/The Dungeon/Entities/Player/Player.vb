@@ -2824,6 +2824,8 @@ Public Class Player
         If out.Equals("Beige ") Or out.Equals("Wheat ") Then out = "Light Blonde "
         If c.Equals(DirtyBlonde) Then out = "Dirty Blonde "
 
+        If Game.player1.className = "Trophy" And out.Equals("Dirty Blonde ") Then out = "Metallic Gold "
+
         Return out.ToLower
     End Function
     Shared Function isShadeOf(ByVal r As Integer, ByVal g As Integer, ByVal b As Integer, ByVal c As Color) As Double
@@ -3036,11 +3038,11 @@ Public Class Player
                 End If
         End Select
 
-        If Not perks(perk.meltype) = melType.misc Then
+        If Not perks(perk.meltype) = melType.misc And Not perks(perk.meltype) = -1 Then
             out += "You are disciplined in the art of the " & DDUtils.capitalizeFirst(CType(perks(perk.meltype), melType).ToString) & "." & DDUtils.RNRN
         End If
 
-        If Not perks(perk.magtype) = magType.misc Then
+        If Not perks(perk.magtype) = magType.misc And Not perks(perk.magtype) = -1 Then
             out += "You are disciplined in the path of " & DDUtils.capitalizeFirst(CType(perks(perk.magtype), magType).ToString) & " magic." & DDUtils.RNRN
         End If
 
