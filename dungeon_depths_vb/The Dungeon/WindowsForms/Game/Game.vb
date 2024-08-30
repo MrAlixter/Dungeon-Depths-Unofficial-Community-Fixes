@@ -3436,16 +3436,21 @@ Public Class Game
         Dim player1 As Player = Nothing
         Dim vers As Double = CDbl(reader.ReadLine().Replace(SaveFile.SEGMENT_DELIMITER, ""))
 
-        If a.EndsWith(".ave") Then
-            reader.ReadLine()
-            reader.ReadLine()
-            reader.ReadLine()
-            reader.ReadLine()
-            player1 = New Player(reader.ReadLine, vers)
-        ElseIf a.EndsWith(".avex") Then
-            Dim lines As List(Of String) = reader.ReadToEnd().Replace(vbCrLf, "").Split(SaveFile.SEGMENT_DELIMITER).ToList
-            player1 = SaveFile.loadPlayerLoop(lines, SaveFile.findFirstPlayerLoop(lines, 0))
-        End If
+        Try
+            If a.EndsWith(".ave") Then
+                reader.ReadLine()
+                reader.ReadLine()
+                reader.ReadLine()
+                reader.ReadLine()
+                player1 = New Player(reader.ReadLine, vers)
+            ElseIf a.EndsWith(".avex") Then
+                Dim lines As List(Of String) = reader.ReadToEnd().Replace(vbCrLf, "").Split(SaveFile.SEGMENT_DELIMITER).ToList
+                player1 = SaveFile.loadPlayerLoop(lines, SaveFile.findFirstPlayerLoop(lines, 0))
+            End If
+        Catch ex As Exception
+            reader.Close()
+            Return Nothing
+        End Try
 
         reader.Close()
         Return New Tuple(Of Player, Double)(player1, vers)

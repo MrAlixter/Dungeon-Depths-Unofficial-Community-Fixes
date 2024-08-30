@@ -86,6 +86,7 @@ Public Class FusionDialogBackend
 
         EquipmentDialogBackend.armorChange(fuPlay, "Naked", False)
 
+        Game.lblFusionLVL.Text = "Level " & fuPlay.level
         Game.lblFusionHP.Text = "Max HP = " & fuPlay.getMaxHealth
         Game.lblFusionMP.Text = "Max MP = " & fuPlay.getMaxMana
         Game.lblFusionATK.Text = "ATK = " & fuPlay.getATK
@@ -110,6 +111,8 @@ Public Class FusionDialogBackend
             If Not System.IO.File.Exists(saveName) And Not System.IO.File.Exists(saveName + "x") Then Continue For
 
             Dim save = Game.getPlayerFromFile(saveName)
+            If save Is Nothing Then Continue For
+
             Dim p2 As Player = save.Item1
 
             If save.Item2 <> Game.version Or
