@@ -385,8 +385,6 @@
         End If
     End Sub
     Shared Function warformSwap(ByRef p As Player, ByRef s As State) As Boolean
-        'MsgBox((p.className.Equals(s.pClass.name) And p.formName.Equals(s.pForm.name)) & DDUtils.RNRN & p.isDead & DDUtils.RNRN & Not s.initFlag)
-
         If (p.className.Equals(s.pClass.name) And p.formName.Equals(s.pForm.name)) Or p.isDead Or Not s.initFlag Then Return False
         'MsgBox(s.equippedWeapon.getAName & DDUtils.RNRN &
         '       s.perks(perk.tfedbyweapon) & DDUtils.RNRN &
@@ -402,9 +400,6 @@
             p.revertToState(s, False)
         End If
 
-        'p.perks(perk.tfedbyweapon) = s.perks(perk.tfedbyweapon)
-        'p.perks(perk.tfcausingwand) = s.perks(perk.tfcausingwand)
-        'p.perks(perk.tfcausingsword) = s.perks(perk.tfcausingsword)
         Return True
     End Function
 
