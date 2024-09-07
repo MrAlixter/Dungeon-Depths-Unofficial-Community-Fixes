@@ -53,9 +53,9 @@
 
         p.prt.setIAInd(pInd.hairacc, 7, True, False)
 
-        Equipment.accChange(p, "Nothing")
         EquipmentDialogBackend.armorChange(p, "Mag._Girl_Outfit_(P)")
 
+        p.name = "Pink"
         p.textColor = Color.Pink
     End Sub
 End Class

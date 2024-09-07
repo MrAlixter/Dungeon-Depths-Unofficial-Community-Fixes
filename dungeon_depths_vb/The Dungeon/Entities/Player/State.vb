@@ -119,10 +119,10 @@
         p.breastSize = breastSize
         p.dickSize = dickSize
         p.buttSize = buttSize
-        If p.perks(perk.tfedbyweapon) < 0 And p.inv.getCountAt(equippedWeapon.getAName) > 0 Then p.equippedWeapon = equippedWeapon
-        If p.inv.getCountAt(equippedArmor.getAName) > 0 Then EquipmentDialogBackend.equipArmor(p, equippedArmor.getAName)
-        If p.inv.getCountAt(equippedAcce.getAName) > 0 Then EquipmentDialogBackend.equipAcce(p, equippedAcce.getAName)
-        If p.inv.getCountAt(equippedGlasses.getAName) > 0 Then EquipmentDialogBackend.equipGlasses(p, equippedGlasses.getAName)
+        If p.perks(perk.tfedbyweapon) < 0 And p.inv.getCountAt(equippedWeapon.getAName) > 0 And Not p.equippedWeapon.getAName.Equals(equippedWeapon.getAName) Then p.equippedWeapon = equippedWeapon
+        If p.inv.getCountAt(equippedArmor.getAName) > 0 And Not p.equippedArmor.getAName.Equals(equippedArmor.getAName) Then EquipmentDialogBackend.equipArmor(p, equippedArmor.getAName)
+        If p.inv.getCountAt(equippedAcce.getAName) > 0 And Not p.equippedAcce.getAName.Equals(equippedAcce.getAName) Then EquipmentDialogBackend.equipAcce(p, equippedAcce.getAName)
+        If p.inv.getCountAt(equippedGlasses.getAName) > 0 And Not p.equippedGlasses.getAName.Equals(equippedGlasses.getAName) Then EquipmentDialogBackend.equipGlasses(p, equippedGlasses.getAName)
         p.prt.iArrInd = iArrInd.Clone
         p.inv.invNeedsUDate = invNeedsUDate
         p.prt.haircolor = haircolor

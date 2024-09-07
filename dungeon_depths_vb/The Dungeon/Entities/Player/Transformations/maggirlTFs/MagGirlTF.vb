@@ -104,15 +104,15 @@ Public Class MagGirlTF
 
         p.prt.setIAInd(pInd.hairacc, 2, True, False)
 
-        Equipment.accChange(p, "Nothing")
         EquipmentDialogBackend.armorChange(p, "Magical_Girl_Outfit")
 
+        p.name = "Blue"
         p.textColor = Color.CornflowerBlue
     End Sub
     Overridable Sub step2()
         Dim p As Player = Game.player1
         If p.formStates(stateInd.magGState).initFlag And (p.perks(perk.mgind) = MG_IND Or p.perks(perk.mgind) = -1) Then
-            revertPToState(p, p.formStates(stateInd.magGState))
+            p.revertToState(p.formStates(stateInd.magGState), False)
         Else
             tfBody(p)
             p.changeClass(className)
@@ -135,22 +135,6 @@ Public Class MagGirlTF
         p.drawPort()
 
         stopTF()
-    End Sub
-
-    Protected Sub revertPToState(ByRef p As Player, ByRef s As State)
-        Dim tHth As Double = p.health
-        Dim tMna As Integer = p.mana
-        Dim tHun As Integer = p.stamina
-        Dim tGold As Integer = p.gold
-
-        s.load(p, False)
-
-        p.health = tHth
-        p.mana = tMna
-        p.stamina = tHun
-        p.gold = tGold
-
-        p.UIupdate()
     End Sub
 
     Shared Sub halfRevert(ByRef p As Player)

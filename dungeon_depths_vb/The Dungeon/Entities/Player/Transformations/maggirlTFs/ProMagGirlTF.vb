@@ -36,9 +36,9 @@
 
         p.prt.setIAInd(pInd.hairacc, 2, True, False)
 
-        Equipment.accChange(p, "Nothing")
         EquipmentDialogBackend.armorChange(p, "Pro_Mag._Girl_Outfit")
 
+        p.name = "Blue"
         p.textColor = Color.CornflowerBlue
     End Sub
 End Class

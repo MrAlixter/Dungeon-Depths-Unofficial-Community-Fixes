@@ -50,7 +50,6 @@
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
         If Not p.className.Equals("Magical Girl") And Not p.perks(perk.tfedbyweapon) > 0 Then
-
             Dim magicGirlTF = New MagGirlTF(2, 0, 0, False)
             magicGirlTF.update()
             p.ongoingTFs.add(magicGirlTF)
@@ -86,7 +85,7 @@
 
             p.formStates(stateInd.magGState).save(p)
             p.revertToPState()
-        ElseIf (p.className.Equals("Magical Girl") Or p.perks(perk.tfedbyweapon) > 0) And Not w Is Nothing AndAlso Not w.GetType.IsSubclassOf(GetType(Wand)) Then
+        ElseIf (p.className.Equals("Magical Girl") Or p.perks(perk.tfedbyweapon) > 0) And p.perks(perk.tfcausingwand) > -1 And Not w Is Nothing AndAlso Not w.GetType.IsSubclassOf(GetType(Wand)) Then
             CType(p.inv.item(p.perks(perk.tfcausingwand)), MagGirlWand).onUnequip(p, w)
         End If
     End Sub

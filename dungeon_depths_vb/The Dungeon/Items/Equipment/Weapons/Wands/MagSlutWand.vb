@@ -37,7 +37,6 @@
 
             p.perks(perk.tfcausingwand) = id
             p.perks(perk.tfedbyweapon) = 1
-
         End If
     End Sub
     Public Overloads Overrides Sub onUnequip(ByRef p As Player, ByRef w As Weapon)
@@ -66,7 +65,7 @@
 
             p.formStates(stateInd.magGState).save(p)
             p.revertToPState()
-        ElseIf (p.className.Equals("Magical Slut") Or p.perks(perk.tfedbyweapon) > 0) And Not w Is Nothing AndAlso Not w.GetType.IsSubclassOf(GetType(Wand)) Then
+        ElseIf (p.className.Equals("Magical Slut") Or p.perks(perk.tfedbyweapon) > 0) And p.perks(perk.tfcausingwand) > -1 And Not w Is Nothing AndAlso Not w.GetType.IsSubclassOf(GetType(Wand)) Then
             CType(p.inv.item(p.perks(perk.tfcausingwand)), MagGirlWand).onUnequip(p, w)
         End If
     End Sub

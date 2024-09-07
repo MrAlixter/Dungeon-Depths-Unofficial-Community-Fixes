@@ -56,7 +56,6 @@
 
         p.prt.setIAInd(pInd.hairacc, 3, True, False)
 
-        Equipment.accChange(p, "Nothing")
         EquipmentDialogBackend.armorChange(p, "Magical_Slut_Outfit")
 
         p.textColor = Color.HotPink

@@ -38,7 +38,6 @@
 
             p.perks(perk.tfcausingwand) = id
             p.perks(perk.tfedbyweapon) = 1
-
         End If
     End Sub
 

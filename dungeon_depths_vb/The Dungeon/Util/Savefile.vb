@@ -410,7 +410,7 @@
         floor.playerPosition = playerPosition
         floor.bossDialog = bossDialog
         floor.beatBoss = beatBoss
-        If Game.version >= 13 Then floor.pinkMist = CBool(subseg(16))
+        If Game.version >= 13 And UBound(subseg) >= 16 Then floor.pinkMist = CBool(subseg(16))
 
         start_pos += 1
         For y = 0 To mBoardHeight - 1
@@ -1138,10 +1138,10 @@
         ste.initFlag = CBool(subseg(20))
         ste.invNeedsUDate = CBool(subseg(21))
         ste.isPetrified = CBool(subseg(22))
-        ste.equippedArmor = EquipmentDialogBackend.armor_list(subseg(23))
-        ste.equippedWeapon = EquipmentDialogBackend.weapon_list(subseg(24))
-        ste.equippedAcce = EquipmentDialogBackend.accessory_list(subseg(25))
-        ste.equippedGlasses = EquipmentDialogBackend.glasses_list(subseg(26))
+        If EquipmentDialogBackend.armor_list.ContainsKey(subseg(23)) Then ste.equippedArmor = EquipmentDialogBackend.armor_list(subseg(23))
+        If EquipmentDialogBackend.weapon_list.ContainsKey(subseg(24)) Then ste.equippedWeapon = EquipmentDialogBackend.weapon_list(subseg(24))
+        If EquipmentDialogBackend.accessory_list.ContainsKey(subseg(25)) Then ste.equippedAcce = EquipmentDialogBackend.accessory_list(subseg(25))
+        If EquipmentDialogBackend.glasses_list.ContainsKey(subseg(26)) Then ste.equippedGlasses = EquipmentDialogBackend.glasses_list(subseg(26))
         start_pos += 1
 
         ste.haircolor = loadColorSegment(save(start_pos))
@@ -1254,12 +1254,12 @@
         Dim subseg = seg.Split(VALUE_DELIMITER)
 
         Dim itmName = subseg(1)
-        Dim itmId = subseg(2)
+        Dim itmId = CInt(subseg(2))
         Dim itmCount = CInt(subseg(3))
         Dim itmDura = CInt(subseg(4))
 
-        inv.add(itmName, itmCount)
-        inv.item(itmName).durability = itmDura
+        inv.add(itmId, itmCount)
+        inv.item(itmId).durability = itmDura
     End Sub
     Protected Shared Sub loadMysteryPot(ByVal seg As String, ByRef inv As Inventory)
         seg = seg.Replace(SEGMENT_DELIMITER, "")

@@ -51,9 +51,9 @@
     Overrides Sub tfClothes(ByRef p As Player)
         If p.inv.item(210).count < 1 Then p.inv.add(210, 1)
 
-        Equipment.accChange(p, "Nothing")
         EquipmentDialogBackend.armorChange(p, "Mag._Girl_Outfit_(R)")
 
+        p.name = "Red"
         p.textColor = Color.IndianRed
     End Sub
 End Class

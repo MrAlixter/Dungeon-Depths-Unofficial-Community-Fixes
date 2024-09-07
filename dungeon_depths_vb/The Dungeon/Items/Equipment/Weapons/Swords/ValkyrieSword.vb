@@ -61,7 +61,7 @@
             p.perks(perk.tfedbyweapon) = -1
 
             p.revertToPState()
-        ElseIf (p.className.Equals("Valkyrie") Or p.perks(perk.tfedbyweapon) > 0) And Not w Is Nothing AndAlso Not w.GetType.IsSubclassOf(GetType(Sword)) Then
+        ElseIf (p.className.Equals("Valkyrie") Or p.perks(perk.tfedbyweapon) > 0) And p.perks(perk.tfcausingsword) > -1 And Not w Is Nothing AndAlso Not w.GetType.IsSubclassOf(GetType(Sword)) Then
             CType(p.inv.item(p.perks(perk.tfcausingsword)), Sword).onUnequip(p, w)
         End If
     End Sub

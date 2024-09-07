@@ -1173,12 +1173,12 @@ Public Class Player
         gold = tGold
 
         If overwriteGear Then
-            If inv.getCountAt(t_equip_armor) > 0 Then EquipmentDialogBackend.armorChange(Me, t_equip_armor, False)
-            If inv.getCountAt(t_equip_weapon) > 0 Then EquipmentDialogBackend.weaponChange(Me, t_equip_weapon, False)
+            If inv.getCountAt(t_equip_armor) > 0 And Not equippedArmor.getAName.Equals(t_equip_armor) Then EquipmentDialogBackend.armorChange(Me, t_equip_armor, False)
+            If inv.getCountAt(t_equip_weapon) > 0 And Not equippedWeapon.getAName.Equals(t_equip_weapon) Then EquipmentDialogBackend.weaponChange(Me, t_equip_weapon, False)
         End If
 
-        If inv.getCountAt(t_equip_acc) > 0 Then EquipmentDialogBackend.accessoryChange(Me, t_equip_acc, False)
-        If inv.getCountAt(t_equip_glasses) > 0 Then EquipmentDialogBackend.equipGlasses(Me, t_equip_glasses, False)
+        If inv.getCountAt(t_equip_acc) > 0 And Not equippedAcce.getAName.Equals(t_equip_acc) Then EquipmentDialogBackend.accessoryChange(Me, t_equip_acc, False)
+        If inv.getCountAt(t_equip_glasses) > 0 And Not equippedGlasses.getAName.Equals(t_equip_glasses) Then EquipmentDialogBackend.equipGlasses(Me, t_equip_glasses, False)
 
         currState.save(Me)
         savePState()
