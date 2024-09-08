@@ -58,6 +58,7 @@
 
         EquipmentDialogBackend.armorChange(p, "Magical_Slut_Outfit")
 
+        p.setName(Polymorph.bimboizeName(p.getName))
         p.textColor = Color.HotPink
     End Sub
 
