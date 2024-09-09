@@ -636,7 +636,7 @@ Partial Class Game
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.HelpToolStripMenuItem, Me.SettingsToolStripMenuItem, Me.DebugToolStripMenuItem1})
         Me.MenuStrip1.Location = New System.Drawing.Point(3, 4)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(156, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(231, 24)
         Me.MenuStrip1.TabIndex = 140
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -655,7 +655,7 @@ Partial Class Game
         Me.SaveToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.SaveToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
-        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
+        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.SaveToolStripMenuItem.Text = "Save"
         '
         'LoadToolStripMenuItem
@@ -663,7 +663,7 @@ Partial Class Game
         Me.LoadToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.LoadToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.LoadToolStripMenuItem.Name = "LoadToolStripMenuItem"
-        Me.LoadToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
+        Me.LoadToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.LoadToolStripMenuItem.Text = "Load"
         '
         'NewGameToolStripMenuItem
@@ -671,7 +671,7 @@ Partial Class Game
         Me.NewGameToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.NewGameToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.NewGameToolStripMenuItem.Name = "NewGameToolStripMenuItem"
-        Me.NewGameToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
+        Me.NewGameToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.NewGameToolStripMenuItem.Text = "New Game"
         '
         'ExitToolStripMenuItem
@@ -679,7 +679,7 @@ Partial Class Game
         Me.ExitToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.ExitToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'HelpToolStripMenuItem
@@ -839,7 +839,6 @@ Partial Class Game
         Me.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem"
         Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(75, 20)
         Me.SettingsToolStripMenuItem.Text = "Settings"
-        Me.SettingsToolStripMenuItem.Visible = False
         '
         'DebugToolStripMenuItem1
         '

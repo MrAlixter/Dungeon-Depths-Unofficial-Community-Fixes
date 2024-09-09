@@ -11,7 +11,6 @@
         tier = Nothing
 
         '|Item Flags|
-        usable = True
         rando_inv_allowed = False
         can_hit_flying = True
 
@@ -67,13 +66,6 @@
         Return out
     End Function
 
-    Public Overrides Sub use(ByRef p As Player)
-        MyBase.use(p)
-
-        owner = p
-
-        selectActiveAmmo()
-    End Sub
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer
         If selected_ammo Is Nothing Then selected_ammo = getActiveAmmo()
 
@@ -218,6 +210,16 @@
     End Sub
 
     '| - AMMO Selection - |
+    Public Overrides Sub examine()
+        If durability > 99 Then
+            TextEvent.push(getDescription() & DDUtils.RNRN &
+                           "On closer inspection, you see that you can also cycle through the types of ammo this weapon uses...", AddressOf selectActiveAmmo)
+        Else
+            TextEvent.push(getDescription() & DDUtils.RNRN &
+                           "On closer inspection, you see that you can also cycle through the types of ammo this weapon uses..." & DDUtils.RNRN &
+                           "Durability: " & durability & " (Breaks at 0)", AddressOf selectActiveAmmo)
+        End If
+    End Sub
     Public Sub selectActiveAmmo()
         Dim sog As Action = Nothing
         Dim csog As Action = Nothing
@@ -243,7 +245,7 @@
         If owner.inv.getCountAt(HPStickOfGum.ITEM_NAME) > 0 Then options.Add(New Tuple(Of String, Action)(HPStickOfGum.ITEM_NAME, AddressOf selectHPStickOfGum))
         If owner.inv.getCountAt(MPStickOfGum.ITEM_NAME) > 0 Then options.Add(New Tuple(Of String, Action)(MPStickOfGum.ITEM_NAME, AddressOf selectMPStickOfGum))
 
-        TextEvent.pushManySelect("Select ammo for the cannon...", options)
+        TextEvent.pushManySelect("Select ammo for the cannon:", options)
     End Sub
     Private Sub selectStickOfGum()
         selected_ammo = owner.inv.item(StickOfGum.ITEM_NAME)

@@ -122,6 +122,8 @@
     End Sub
     'NPC transform method
     Shared Sub transform(ByRef t As NPC, ByVal s As String)
+        Dim original_name As String = CStr(DDUtils.capitalizeFirst(t.getNameWithTitle))
+
         If s = "Giant Frog" Then
             PolymorphedNPC.polymorph(t, Game.player1, 5, "Giant Frog")
         ElseIf s = "Sheep" Then
@@ -158,7 +160,7 @@
             Exit Sub
         End If
 
-        TextEvent.pushAndLog(CStr(DDUtils.capitalizeFirst(t.getNameWithTitle) & " is turned into a " & s & "!"))
+        TextEvent.pushAndLog(original_name & " is turned into a " & s & "!")
     End Sub
     'npc transform method
     Shared Sub transformN(ByRef t As ShopNPC, ByVal s As String)

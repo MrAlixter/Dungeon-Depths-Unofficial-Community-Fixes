@@ -179,7 +179,7 @@ Public Class Portrait
         End If
 
         Dim hatMask As Image = If(iArrInd(pInd.hat).Item1 = 0, imgLib.atrs(pInd.hat).getAt(armor.hood), imgLib.atrs(pInd.hat).getAt(iArrInd(pInd.hat)))
-        If Not hatMask Is Nothing AndAlso Not hatMask.Equals(nullImg) Then
+        If ent.getPlayer.perks(perk.hidehat) < 0 And Not hatMask Is Nothing AndAlso Not hatMask.Equals(nullImg) Then
             iArr(pInd.rearhair) = hoodHairMask(iArr(pInd.rearhair), hatMask, 150, True)
             iArr(pInd.midhair) = hoodHairMask(iArr(pInd.midhair), hatMask)
             iArr(pInd.fronthair) = hoodHairMask(iArr(pInd.fronthair), hatMask, 150, True)
@@ -320,7 +320,7 @@ Public Class Portrait
         If Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing Then
             Dim armor = ent.getPlayer().equippedArmor
             Dim hatMask As Image = If(iArrInd(pInd.hat).Item1 = 0, imgLib.atrs(pInd.hat).getAt(armor.hood), imgLib.atrs(pInd.hat).getAt(iArrInd(pInd.hat)))
-            If Not hatMask Is Nothing AndAlso Not hatMask.Equals(nullImg) Then
+            If ent.getPlayer.perks(perk.hidehat) < 0 And Not hatMask Is Nothing AndAlso Not hatMask.Equals(nullImg) Then
                 iArr(pInd.ears) = hoodHairMask(iArr(pInd.ears), hatMask, 150, True)
             End If
         End If

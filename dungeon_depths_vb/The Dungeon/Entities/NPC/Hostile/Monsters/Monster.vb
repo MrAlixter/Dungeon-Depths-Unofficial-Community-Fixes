@@ -340,6 +340,7 @@ Public Class Monster
 
         'adds the mimmic to combat queues
         targetRoute(m)
+        Game.toCombat(m)
 
         TextEvent.pushAndLog(DDUtils.capitalizeFirst(m.getNameWithTitle) & " attacks!")
 

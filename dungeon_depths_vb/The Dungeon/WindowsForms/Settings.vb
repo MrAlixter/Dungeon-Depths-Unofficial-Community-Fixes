@@ -147,6 +147,8 @@ Public Class Settings
         DDUtils.resizeForm(Me)
         Me.CenterToParent()
 
+        If Game.btnSettings.Visible Then cboxScreenSize.Enabled = True Else cboxScreenSize.Enabled = False
+
         'load all possible settings
         loadSettings()
 

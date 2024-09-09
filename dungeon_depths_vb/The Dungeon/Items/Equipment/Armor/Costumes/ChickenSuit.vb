@@ -9,7 +9,7 @@
         '|ID Info|
         setName(ITEM_NAME)
         id = 8
-        If DDDateTime.isAni Then tier = 2 Else tier = Nothing
+        tier = Nothing
 
         '|Item Flags|
         usable = False

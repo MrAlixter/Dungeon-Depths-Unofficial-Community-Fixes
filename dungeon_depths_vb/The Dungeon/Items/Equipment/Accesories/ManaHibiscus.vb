@@ -11,6 +11,7 @@
 
         '|Item Flags|
         usable = True
+        only_drop_one = True
 
         '|Stats|
         MyBase.m_boost = 17
@@ -25,6 +26,29 @@
         setDesc("This magenta flower is covered in runes that pulse with the glowing aura of magic.  With verdant leaves that never curl with age, there's no telling what would happen if someone were to add a little more mana to the mix...")
 
     End Sub
+
+    Public Overrides Function getTier(floor_num As Integer) As Integer
+        If DDDateTime.isAni Then
+            Select Case LootTable.getBracket(floor_num)
+                Case LootTable.bracket.f1f2
+                    Return 4
+                Case LootTable.bracket.f3f5
+                    Return 3
+                Case LootTable.bracket.f6f9
+                    Return 2
+                Case LootTable.bracket.f10f12
+                    Return 2
+                Case LootTable.bracket.f13
+                    Return Nothing
+                Case LootTable.bracket.f14fXX
+                    Return 2
+                Case Else
+                    Return MyBase.getTier(floor_num)
+            End Select
+        End If
+
+        Return Nothing
+    End Function
 
     Overrides Sub use(ByRef p As Player)
         If Not (mFloor.nonRandomFloors.Contains(Game.currFloor.floorNumber) Or Game.combat_engaged Or Game.shop_npc_engaged) Then

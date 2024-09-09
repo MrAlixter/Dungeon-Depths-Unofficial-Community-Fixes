@@ -3963,6 +3963,11 @@ Public Class Game
         player1.sex = If(ibox.Length < 1, player1.sex, ibox)
         toDesc()
     End Sub
+    Private Sub SettingsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SettingsToolStripMenuItem.Click
+        Dim s As Settings = New Settings
+        s.ShowDialog()
+        s.Dispose()
+    End Sub
 
     '| - UI TOOLSTRIP - |
     Private Sub NewGameToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NewGameToolStripMenuItem.Click

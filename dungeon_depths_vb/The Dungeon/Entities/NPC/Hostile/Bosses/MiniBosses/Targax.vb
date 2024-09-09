@@ -43,7 +43,7 @@
 
         If combatCounter Mod 6 = 0 And health < 0.66 Then
             If Int(Rnd() * 2) = 0 Then
-                TextEvent.pushLog((getName() & " focuses their energy!"))
+                TextEvent.pushLog((getName() & " focuses " & p_pronoun & " energy!"))
                 TextEvent.pushCombat((getName() & " focuses all " & p_pronoun & " energy into " & p_pronoun & " blade!"))
 
                 attack *= 1.2
