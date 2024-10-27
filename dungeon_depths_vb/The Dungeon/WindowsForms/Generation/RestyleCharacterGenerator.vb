@@ -22,13 +22,13 @@
         DDUtils.resizeForm(Me)
         Me.CenterToParent()
 
+        changeHC(Game.player1.prt.haircolor)
+        changeSC(Game.player1.prt.skincolor)
         btnFHair_Click(sender, e)
 
         portrait = Game.player1.prt.Clone
         If Not portrait.sexBool Then default_d_size = Game.player1.dickSize
         picPort.BackgroundImage = portrait.draw()
-
-        getPresets()
     End Sub
     Private Sub CharacterGenerator_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         'set the player's image, name, and class
@@ -65,6 +65,21 @@
         cd.ShowDialog()
         If Not cd.sc.A < 255 Then changeSC(cd.sc)
         cd.Dispose()
+        updateOptions(sender, e)
+    End Sub
+
+    Private Sub btnMale_Click(sender As Object, e As EventArgs) Handles btnMale.Click
+        portrait.ent.getPlayer.dickSize = default_d_size
+        btnMale.Enabled = False
+        btnFemale.Enabled = True
+
+        updateOptions(sender, e)
+    End Sub
+    Private Sub btnFemale_Click(sender As Object, e As EventArgs) Handles btnFemale.Click
+        portrait.ent.getPlayer.dickSize = -1
+        btnMale.Enabled = True
+        btnFemale.Enabled = False
+
         updateOptions(sender, e)
     End Sub
 
@@ -431,31 +446,14 @@
         p.buttSize = portrait.ent.getPlayer.buttSize
     End Sub
 
-    '| - PLAYER CHARACTER PRESETS - |
-    Sub getPresets()
-        Dim dir = New IO.DirectoryInfo("Presets")
-        Try
-            Dim presets = dir.GetFiles("*.pset", IO.SearchOption.AllDirectories).ToList
-            For Each pset In presets.OrderBy(Function(i) i.Name)
-                cboxPresets.Items.Add(pset.Name)
-            Next
-        Catch e As Exception
-        End Try
-    End Sub
+    '| - MISC - |
+    Public Sub hideNonHairOptions()
+        btnEars.Visible = False
+        btnEyes.Visible = False
+        btnFace.Visible = false
+        btnMark.Visible = False
+        btnMouth.Visible = False
 
-    Private Sub btnMale_Click(sender As Object, e As EventArgs) Handles btnMale.Click
-        portrait.ent.getPlayer.dickSize = default_d_size
-        btnMale.Enabled = False
-        btnFemale.Enabled = True
-
-        updateOptions(sender, e)
-    End Sub
-
-    Private Sub btnFemale_Click(sender As Object, e As EventArgs) Handles btnFemale.Click
-        portrait.ent.getPlayer.dickSize = -1
-        btnMale.Enabled = True
-        btnFemale.Enabled = False
-
-        updateOptions(sender, e)
+        btnSC.Visible = False
     End Sub
 End Class

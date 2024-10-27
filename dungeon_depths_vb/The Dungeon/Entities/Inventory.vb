@@ -476,6 +476,7 @@
         internal_inventory.Add(SevenfoldStaff.ITEM_NAME, New SevenfoldStaff)         '448
         internal_inventory.Add(OtherVialOfBimbo.ITEM_NAME, New OtherVialOfBimbo)     '449
         internal_inventory.Add(RingOfWarForm.ITEM_NAME, New RingOfWarForm)           '450
+        internal_inventory.Add(ScarletComb.ITEM_NAME, New ScarletComb)               '451
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -556,7 +557,7 @@
                    Me.item(375), Me.item(379), Me.item(380), Me.item(387),
                    Me.item(388), Me.item(390), Me.item(395), Me.item(410),
                    Me.item(416), Me.item(422), Me.item(432), Me.item(436),
-                   Me.item(440), Me.item(449)}
+                   Me.item(440), Me.item(449), Me.item(451)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32),
                 Me.item(33), Me.item(34), Me.item(35), Me.item(44),

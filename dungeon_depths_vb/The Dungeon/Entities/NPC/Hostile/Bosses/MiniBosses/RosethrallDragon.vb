@@ -8,7 +8,7 @@
         name = "Rosethrall Dragon"
 
         '|Stats|
-        maxHealth = 266
+        maxHealth = 466
         attack = 52
         defense = 32
         speed = 15

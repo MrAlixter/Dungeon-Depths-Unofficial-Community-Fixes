@@ -31,7 +31,7 @@
         lustToIncrease = Int(Rnd() * 6) + 6
 
         '|Inventory|
-        setInventory({25, 74, 168, 194, 182, 205, 214, 218, 226, 227})
+        setInventory({25, 74, 168, 194, 182, 205, 214, 218, 226, 227, 410})
 
         '|Dialog Variables|
         pref_mode = getPrefMode()

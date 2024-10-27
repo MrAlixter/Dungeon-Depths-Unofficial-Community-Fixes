@@ -66,7 +66,7 @@
             Case 4
                 excuse = "Someone wants to grow a tasteful beard, but is a bit unclear on what that looks like."
             Case Else
-                excuse = "Someone wants to be a blonde, but, like, just for a little bit."
+                excuse = "Someone wants to be a blonde, but- like... just for a little bit."
         End Select
 
         Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(163), """Wow... you look great!"" the spectral stylist says, as she drifts around to get a better look at you." & DDUtils.RNRN &

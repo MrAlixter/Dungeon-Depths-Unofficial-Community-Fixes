@@ -56,7 +56,7 @@
             Exit Sub
         End If
 
-        If p.passDieRoll(8, 5) Then
+        If 0 = 1 And p.passDieRoll(8, 5) Then
             TextEvent.pushLog("The " & If(pronoun.Equals("he"), "sorcerer", "sorceress") & " snaps " & p_pronoun & " fingers, dropping you into a trance!  -2 WIL.")
             Game.player1.will -= 2
             Game.player1.UIupdate()

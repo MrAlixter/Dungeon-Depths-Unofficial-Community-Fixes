@@ -27,7 +27,7 @@
         lustToIncrease = Int(Rnd() * 6) + 6
 
         '|Inventory|
-        setInventory({74, 194, 217, 226, 227})
+        setInventory({74, 194, 217, 226, 227, 451})
 
         '|Dialog Variables|
         pronoun = "she"
