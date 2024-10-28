@@ -1,14 +1,7 @@
 ﻿Public Class Chameleon
     Inherits Special
 
-    Private Enum mode
-        blackhair
-        blonde
-        brunette
-        neonhair
-        pastelhair
-        redhead
-    End Enum
+    Private mode As String = ""
 
     Sub New(ByRef u As Player, ByRef t As NPC)
         MyBase.New(u, t)
@@ -16,15 +9,40 @@
         MyBase.setUOC(True)
         MyBase.setcost(5)
     End Sub
+    Sub New(ByRef u As Player, ByRef t As NPC, ByVal m As String)
+        Me.New(u, t)
+
+        mode = m
+    End Sub
+
     Public Overrides Sub effect()
+        If Not DDUtils.isEmpty(mode) Then
+            Select Case mode
+                Case "bla"
+                    blackhairEffect()
+                Case "blo"
+                    blondeEffect()
+                Case "bru"
+                    brunetteEffect()
+                Case "neo"
+                    neonhairEffect()
+                Case "pst"
+                    pastelhairEffect()
+                Case "red"
+                    redheadEffect()
+            End Select
+
+            Exit Sub
+        End If
+
         Dim modes As List(Of Tuple(Of String, Action)) = New List(Of Tuple(Of String, Action))()
 
         Dim bh = New Tuple(Of String, Action)("Black Hair", AddressOf blackhairEffect)
         Dim bl = New Tuple(Of String, Action)("Blonde Hair", AddressOf blondeEffect)
         Dim br = New Tuple(Of String, Action)("Brunette Hair", AddressOf brunetteEffect)
+        Dim rh = New Tuple(Of String, Action)("Red Hair", AddressOf redheadEffect)
         Dim nh = New Tuple(Of String, Action)("Neon Hair", AddressOf neonhairEffect)
         Dim ph = New Tuple(Of String, Action)("Pastel Hair", AddressOf pastelhairEffect)
-        Dim rh = New Tuple(Of String, Action)("Red Hair", AddressOf redheadEffect)
 
         modes.AddRange({bh, bl, br, nh, ph, rh})
 

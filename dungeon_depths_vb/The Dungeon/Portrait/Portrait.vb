@@ -644,8 +644,8 @@ Public Class Portrait
             Return ol_img_lib.getImg(11)
         ElseIf pForm.Equals("Unicorn") Then
             Return ol_img_lib.getImg(12)
-        ElseIf pForm.Equals("Oni") Then
-            Return ol_img_lib.getImg(13)
+            'ElseIf pForm.Equals("Oni") Then
+            '    Return ol_img_lib.getImg(13)
         ElseIf pForm.Equals("Blob") And Not sexBool() Then
             Return ol_img_lib.getImg(9)
         ElseIf pForm.Equals("Blob") And sexBool() Then

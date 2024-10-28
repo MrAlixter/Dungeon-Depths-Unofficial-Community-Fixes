@@ -62,7 +62,7 @@
     End Sub
 
     Public Overrides Function getTFText() As String
-        Dim out = "Hellfire engulfs you, as you pirouette before before your foe.  ""Are you ready..."" you ask with a toothy grin, ""...for some fun?"""
+        Dim out = "Hellfire engulfs you, as you pirouette before your foe.  ""Are you ready..."" you ask with a toothy grin, ""...for some fun?"""
 
         If neededMTF Then out = "Your body becomes daintier, and you are soon fully female.  " & out
 

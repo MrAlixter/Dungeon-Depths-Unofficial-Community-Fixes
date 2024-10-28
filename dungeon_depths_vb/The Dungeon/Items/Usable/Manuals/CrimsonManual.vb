@@ -20,11 +20,22 @@
         setDesc("A smoldering leather-bound book that contains something practical written by a succubus.")
     End Sub
 
-    Public Shared Shadows Function getSpecials() As String()
-        Return New CrimsonManual().specials
-    End Function
     Public Overrides Function specials() As String()
-        Return {"Tits Up", "Tits Down", "Ass Up", "Ass Down", "Dick Up", "Dick Down", "Chameleon"}
+        Dim options As List(Of String) = New List(Of String)({"Shapeshift", "Chameleon", "Enskimpen"})
+        Dim p As Player = Game.player1
+
+        Select Case p.perks(perk.meltype)
+            Case melType.dagger
+                options = DDUtils.union(options, New List(Of String)({"Beelzebodkin"}))
+            Case melType.spear
+                options = DDUtils.union(options, New List(Of String)({"Lucifork"}))
+            Case melType.whip
+                options = DDUtils.union(options, New List(Of String)({"Lililash"}))
+            Case melType.fist
+                options = DDUtils.union(options, New List(Of String)({"Blade of Nails"}))
+        End Select
+
+        Return options.ToArray()
     End Function
 
     Public Overrides Function getTier(ByVal floor_num As Integer) As Integer

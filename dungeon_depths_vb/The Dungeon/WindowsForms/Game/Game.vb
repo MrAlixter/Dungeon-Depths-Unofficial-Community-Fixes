@@ -169,7 +169,7 @@ Public Class Game
         'splash text
         lblLoadMsg.Visible = True
         Randomize()
-        Select Case Int(Rnd() * 5)
+        Select Case Int(Rnd() * 6)
             Case 0
                 lblLoadMsg.Text = "Holding Ctrl along with the Spell/Special keys (Z/C by default) will remember your choice, and use it when pressed again w/o Ctrl."
             Case 1
@@ -178,6 +178,8 @@ Public Class Game
                 lblLoadMsg.Text = "Inspecting Spellbooks and Manuals will allow you to change magic and melee disciplines."
             Case 3
                 lblLoadMsg.Text = "The Adv. Settings menu has a spawn rate toggle for each randomly encountered monster."
+            Case 4
+                lblLoadMsg.Text = "Your selected magic and melee disciplines will change what skills can be learned from spellbooks and manuals."
             Case Else
                 lblLoadMsg.Text = "You can challenge a floor boss at any time by finding the floor's staircase."
         End Select
@@ -1629,6 +1631,7 @@ Public Class Game
         'handleKeyPress handles the players pressed keys, and is the driver function for each one
         'Dim startTime As Double = DDDateTime.getTimeNow()
         'Dim endTime As Double = startTime
+        If player1 Is Nothing Then Return True
 
         If Not selecting Then
             If shouldReturnEarly(Keydata) Then Return True

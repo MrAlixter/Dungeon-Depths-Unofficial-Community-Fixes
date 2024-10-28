@@ -846,6 +846,7 @@ Public Class Player
         polymorphs.Add("Tigress+", Nothing)
         polymorphs.Add("Dove", Nothing)
         polymorphs.Add("Goo Girl", Nothing)
+        polymorphs.Add("Oni+", Nothing)
     End Sub
     Private Sub initQuests()
         quests.Clear()
@@ -1028,13 +1029,13 @@ Public Class Player
         TextEvent.pushAndLog(CStr("You miss " & target.getNameWithTitle() & ", as " & target.pronoun & " " & If(target.pronoun.Trim.ToLower.Equals("they"), "are", "is") & " airborne!"))
     End Sub
     Public Sub miss(target As NPC)
-        TextEvent.pushAndLog(CStr("You miss " & target.getNameWithTitle() & "!"))
+        TextEvent.fpushAndLog(CStr("You miss " & target.getNameWithTitle() & "!"))
     End Sub
     Public Sub hit(dmg As Integer, target As NPC, Optional postfix As String = "", Optional verb As String = "hit")
         Dim t_took_dmg = target.takeDMG(dmg, Me)
 
         If t_took_dmg And Not target.isDead Then
-            TextEvent.pushAndLog(CStr("You " & verb & " " & target.getNameWithTitle() & " for " & DDUtils.formatBigNumber(dmg) & " damage!" & postfix))
+            TextEvent.fpushAndLog(CStr("You " & verb & " " & target.getNameWithTitle() & " for " & DDUtils.formatBigNumber(dmg) & " damage!" & postfix))
         ElseIf t_took_dmg Then
             TextEvent.push3rdLastLog(CStr("You " & verb & " " & target.getNameWithTitle() & " for " & DDUtils.formatBigNumber(dmg) & " damage!" & postfix))
         End If
@@ -1044,7 +1045,7 @@ Public Class Player
 
         If t_took_dmg And Not target.isDead Then
             target.perks(npc_perk.stun) = 0
-            TextEvent.pushAndLog(CStr("You hit " & target.getNameWithTitle() & " for " & DDUtils.formatBigNumber(dmg * 2) & " damage!  Critical hit!"))
+            TextEvent.fpushAndLog(CStr("You hit " & target.getNameWithTitle() & " for " & DDUtils.formatBigNumber(dmg * 2) & " damage!  Critical hit!"))
         ElseIf t_took_dmg Then
             TextEvent.push3rdLastLog(CStr("You hit " & target.getNameWithTitle() & " for " & DDUtils.formatBigNumber(dmg * 2) & " damage!  Critical hit!"))
         End If
@@ -1065,7 +1066,7 @@ Public Class Player
             Exit Sub
         End If
 
-        TextEvent.pushAndLog(CStr("You miss " & Trim(target.getName()) & "!"))
+        TextEvent.fpushAndLog(CStr("You miss " & Trim(target.getName()) & "!"))
     End Sub
     Private Sub hit(dmg As Integer, target As Entity)
         If target.GetType() Is GetType(NPC) Or target.GetType.IsSubclassOf(GetType(NPC)) Then
@@ -1073,7 +1074,7 @@ Public Class Player
             Exit Sub
         End If
 
-        TextEvent.pushAndLog(CStr("You hit " & Trim(target.getName()) & " for " & DDUtils.formatBigNumber(dmg) & " damage!"))
+        TextEvent.fpushAndLog(CStr("You hit " & Trim(target.getName()) & " for " & DDUtils.formatBigNumber(dmg) & " damage!"))
         target.takeDMG(dmg, Me)
     End Sub
     Private Sub cHit(dmg As Integer, target As Entity)
@@ -1082,7 +1083,7 @@ Public Class Player
             Exit Sub
         End If
 
-        TextEvent.pushAndLog(CStr("You hit " & Trim(target.getName()) & " for " & DDUtils.formatBigNumber(dmg * 2) & " damage!  Critical hit!"))
+        TextEvent.fpushAndLog(CStr("You hit " & Trim(target.getName()) & " for " & DDUtils.formatBigNumber(dmg * 2) & " damage!  Critical hit!"))
         target.takeDMG(dmg * 2, Me)
     End Sub
     'taking damage
@@ -1091,14 +1092,14 @@ Public Class Player
 
         Game.lblPHealtDiff.Tag -= dmg
 
-        TextEvent.pushAndLog(CStr("You got hit! -" & DDUtils.formatBigNumber(dmg) & " health!"))
+        TextEvent.fpushAndLog(CStr("You got hit! -" & DDUtils.formatBigNumber(dmg) & " health!"))
 
         Return MyBase.takeDMG(dmg, source)
     End Function
     Public Sub takeUnconditionalDMG(ByVal dmg As Integer, ByRef source As Entity)
         Game.lblPHealtDiff.Tag -= dmg
 
-        TextEvent.pushAndLog(CStr("You got hit! -" & DDUtils.formatBigNumber(dmg) & " health!"))
+        TextEvent.fpushAndLog(CStr("You got hit! -" & DDUtils.formatBigNumber(dmg) & " health!"))
 
         MyBase.takeDMG(dmg, source)
     End Sub
@@ -1108,7 +1109,7 @@ Public Class Player
 
         Game.lblPHealtDiff.Tag -= dmg
 
-        TextEvent.pushAndLog(CStr("You got hit!  Critical hit!  -" & DDUtils.formatBigNumber(dmg) & " health!"))
+        TextEvent.fpushAndLog(CStr("You got hit!  Critical hit!  -" & DDUtils.formatBigNumber(dmg) & " health!"))
 
         Return MyBase.takeDMG(dmg, source)
     End Function
@@ -1117,7 +1118,7 @@ Public Class Player
 
         Game.lblPHealtDiff.Tag -= dmg
 
-        TextEvent.pushAndLog(CStr("You got hit!  Critical hit!  -" & DDUtils.formatBigNumber(dmg) & " health!"))
+        TextEvent.fpushAndLog(CStr("You got hit!  Critical hit!  -" & DDUtils.formatBigNumber(dmg) & " health!"))
 
         MyBase.takeDMG(dmg, source)
     End Sub
@@ -2755,6 +2756,9 @@ Public Class Player
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Or equippedAcce Is Nothing Then Return CInt(attack * pForm.a * pClass.a) + aBuff
         Return CInt((attack + aBuff) * pForm.a * pClass.a) + equippedArmor.getABoost(Me) + equippedWeapon.getABoost(Me) + equippedAcce.getABoost(Me) + equippedGlasses.getABoost(Me)
     End Function
+    Public Function getATKWithoutWeapon() As Integer
+        Return getATK() - equippedWeapon.getABoost(Me)
+    End Function
     Overrides Function getDEF() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Or equippedAcce Is Nothing Then Return CInt(defense * pClass.d * pForm.d) + dBuff
         Return CInt((defense + dBuff) * pClass.d * pForm.d) + equippedArmor.getDBoost(Me) + equippedWeapon.getDBoost(Me) + equippedAcce.getDBoost(Me) + equippedGlasses.getDBoost(Me)
@@ -2768,11 +2772,18 @@ Public Class Player
         Return CInt((will + wBuff) * pClass.w * pForm.w) + equippedArmor.getWBoost(Me) + equippedWeapon.getWBoost(Me) + equippedAcce.getWBoost(Me) + equippedGlasses.getWBoost(Me)
     End Function
     Public Function passDieRoll(ByVal d As Integer, Optional ByVal lessthanPass As Integer = 1, Optional ByVal savingThrow As Boolean = False) As Boolean
-        Dim rollPassed As Boolean = (Int(Rnd() * d) + 1) <= lessthanPass
+        Dim roll = (Int(Rnd() * d) + 1)
+        Dim rollPassed As Boolean = roll <= lessthanPass
 
-        If Not rollPassed AndAlso (perks(perk.lucky7) > -1 Or savingThrow) Then Return (passDieRoll(d, lessthanPass, False))
+        If Not rollPassed AndAlso (savingThrow) Then rollPassed = (passDieRoll(d, lessthanPass, False))
 
+        If Not rollPassed AndAlso (perks(perk.lucky7) > -1) Then rollPassed = (finalDieRoll(d, lessthanPass))
+
+        'MsgBox("Rolled a D" & d & ", got a " & roll & ", needed less than a " & lessthanPass & " to pass.")
         Return rollPassed
+    End Function
+    Private Function finalDieRoll(ByVal d As Integer, ByVal lessthanpass As Integer) As Boolean
+        Return (Int(Rnd() * d) + 1) <= lessthanpass
     End Function
     Public Function className() As String
         Return pClass.name

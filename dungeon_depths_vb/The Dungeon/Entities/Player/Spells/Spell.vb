@@ -73,6 +73,7 @@
         spellList.Add("Glisterfell", New Glisterfell(Nothing, Nothing))
         spellList.Add("Venombarb", New Venombarb(Nothing, Nothing))
         spellList.Add("Nettle Shower", New NettleShower(Nothing, Nothing))
+        spellList.Add("Cynn's Braid", New CynnsBraid(Nothing, Nothing))
     End Sub
 
     Sub New(ByRef c As Player, ByRef t As NPC)

@@ -19,7 +19,7 @@
             lReduction = MyBase.getCaster.getLust / 2
             MyBase.getCaster.addLust(-lReduction)
 
-            getCaster.hit(dmg, getTarget, "  -" & lReduction & " Lust.", "burn")
+            getCaster.hit(dmg, getTarget, If(lReduction > 0, "  -" & lReduction & " Lust.", ""), "burn")
         End If
     End Sub
 

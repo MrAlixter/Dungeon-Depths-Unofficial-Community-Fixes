@@ -21,13 +21,41 @@
     End Sub
 
     Public Overrides Function spells() As String()
-        Return {"Raise Lust", "Puff Up", "Hellfireball", "Reductive Mending"}
+        Dim options As List(Of String) = New List(Of String)({"Raise Lust", "Hellfireball", "Reductive Mending"})
+        Dim p As Player = Game.player1
+
+        Select Case p.perks(perk.magtype)
+            Case magType.fire
+                options = DDUtils.union(options, New List(Of String)({"Cynn's Braid"}))
+            Case magType.blight
+                options = DDUtils.union(options, New List(Of String)({"Puff Up"}))
+            Case magType.flux
+                options = DDUtils.union(options, New List(Of String)({"Self Polymorph", "Polymorph Enemy"}))
+        End Select
+
+        Return options.ToArray()
     End Function
     Public Overrides Function selfPolyForms() As String()
-        Return {}
+        Dim options As List(Of String) = New List(Of String)({})
+        Dim p As Player = Game.player1
+
+        Select Case p.perks(perk.magtype)
+            Case magType.flux
+                options = DDUtils.union(options, New List(Of String)({"Oni+"}))
+        End Select
+
+        Return options.ToArray()
     End Function
     Public Overrides Function enemPolyForms() As String()
-        Return {}
+        Dim options As List(Of String) = New List(Of String)({})
+        Dim p As Player = Game.player1
+
+        Select Case p.perks(perk.magtype)
+            Case magType.flux
+                options = DDUtils.union(options, New List(Of String)({"Hellhound"}))
+        End Select
+
+        Return options.ToArray()
     End Function
 
     Public Overrides Function getTier(ByVal floor_num As Integer) As Integer

@@ -7,7 +7,7 @@
         MyBase.setcost(9)
     End Sub
     Public Overrides Sub effect()
-        Dim dmg As Integer = MyBase.getUser.getATK + 20
+        Dim dmg As Integer = getUser.getATKWithoutWeapon + 20
         Dim d31 = Int(Rnd() * 6)
         Dim d32 = Int(Rnd() * 6)
         If 1 = 0 Then

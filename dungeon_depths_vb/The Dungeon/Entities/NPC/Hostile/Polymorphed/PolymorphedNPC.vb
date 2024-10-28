@@ -131,6 +131,8 @@
                 Return New PGiantFrog(t, p, dur)
             Case "Goblin"
                 Return New PGoblin(t, p, dur)
+            Case "Hellhound"
+                Return New PHellhound(t, p, dur)
             Case "Newt"
                 Return New PNewt(t, p, dur)
             Case "Princess"

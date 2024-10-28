@@ -71,6 +71,7 @@
     mistbimbo
     mpbimbo
     neko
+    oniwarrior
     plantfolk
     plush
     polygoogirl
@@ -360,6 +361,9 @@ Public MustInherit Class Transformation
 
         ElseIf tf = tfind.neko Then
             Return New NekoTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.oniwarrior Then
+            Return New OniWarriorTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.plantfolk Then
             Return New PlantfolkTF(cs, n, tts, wi, cbs, tfd)

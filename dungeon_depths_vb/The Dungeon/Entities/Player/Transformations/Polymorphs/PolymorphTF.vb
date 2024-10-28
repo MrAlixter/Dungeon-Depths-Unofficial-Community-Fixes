@@ -64,6 +64,8 @@
                 Return New DoveTF()
             Case "Goo Girl"
                 Return New PolyGooGirlTF()
+            Case "Oni+"
+                Return New OniWarriorTF()
             Case Else
                 Return Nothing
         End Select

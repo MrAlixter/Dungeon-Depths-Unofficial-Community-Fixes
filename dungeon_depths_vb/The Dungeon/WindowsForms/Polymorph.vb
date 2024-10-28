@@ -156,6 +156,8 @@
             PolymorphedNPC.polymorph(t, Game.player1, 8, "Dove")
         ElseIf s = "Goblin" Then
             PolymorphedNPC.polymorph(t, Game.player1, 6, "Goblin")
+        ElseIf s = "Hellhound" Then
+            PolymorphedNPC.polymorph(t, Game.player1, 6, "Hellhound")
         Else
             Exit Sub
         End If

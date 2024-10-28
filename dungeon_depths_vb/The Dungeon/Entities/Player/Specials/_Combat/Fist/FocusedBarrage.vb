@@ -14,9 +14,8 @@
         TextEvent.pushCombat("Focused Barrage!")
 
         For i = 0 To Int(Rnd() * 4) + 4
-            Dim dmg As Integer = (p.attack + p.aBuff) * p.pClass.a * p.pForm.a * 0.65
-            dmg += Int(Rnd() * 2 * ((p.attack + p.aBuff) * p.pClass.a * p.pForm.a * 0.65 * 0.05)) -
-                ((p.attack + p.aBuff) * p.pClass.a * p.pForm.a * 0.65 * 0.05)
+            Dim dmg As Integer = p.getATKWithoutWeapon * 0.65
+            dmg += Int(Rnd() * 2 * (p.getATKWithoutWeapon * 0.65 * 0.05)) - (p.getATKWithoutWeapon * 0.65 * 0.05)
 
             dmg = Entity.calcDamage(dmg, m.defense)
 
@@ -30,6 +29,6 @@
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object
-        Return "A flurry of 4-7 quick strikes that deal physical damage and don't factor in the user's equipment."
+        Return "A flurry of 4-7 quick strikes that deal physical damage and don't factor in the user's weapon."
     End Function
 End Class
