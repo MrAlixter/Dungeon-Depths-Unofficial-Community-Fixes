@@ -36,6 +36,7 @@
 
             target.getPlayer.addLust(-21)
             TextEvent.fpushAndLog("-" & ldif & " lust.")
+            target.getPlayer.UIupdate()
         End If
     End Sub
 

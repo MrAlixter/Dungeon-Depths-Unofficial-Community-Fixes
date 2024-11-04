@@ -58,7 +58,7 @@
         tf2s.Add("Targax", AddressOf TargaxTF.instantTF)
         tf2s.Add("Succubus (Q)", AddressOf DarkPactTF.step1alt)
         tf2s.Add("Inversion", AddressOf InversionTF.snapTF)
-        tf2s.Add("Bimbo (Gold)", AddressOf GBimboTF.snapTF)
+        tf2s.Add("Bimbo (Gold)", AddressOf GoldBimboTF.snapTF)
         tf2s.Add("Bunny Girl", AddressOf DancerTF.step1)
         tf2s.Add("Apple", AddressOf FaePApple.appleTF)
         tf2s.Add("Bee Girl", AddressOf BeeHoneyTF.fullTF)

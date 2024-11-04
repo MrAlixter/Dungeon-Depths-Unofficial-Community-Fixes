@@ -1,4 +1,4 @@
-﻿Public NotInheritable Class FBimboTF
+﻿Public NotInheritable Class FaeBimboTF
     Inherits BimboTF
 
     Private Const TF_IND As tfind = tfind.faebimbo

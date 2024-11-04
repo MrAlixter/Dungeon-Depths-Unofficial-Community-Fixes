@@ -57,7 +57,7 @@
         Dim c As Integer = Int(Rnd() * 35) + 15
         p.prt.haircolor = Color.FromArgb(p.prt.haircolor.A, c - Int(Rnd() * 5), c - Int(Rnd() * 5), c - Int(Rnd() * 5))
 
-        TextEvent.push("CHAMELEON!  You now have black hair...")
+        TextEvent.fpush("CHAMELEON!  You now have black hair...")
 
         p.addLust(10)
 
@@ -71,7 +71,7 @@
         Dim c As Integer = Int(Rnd() * 75) + 180
         p.prt.haircolor = Color.FromArgb(p.prt.haircolor.A, c, c - 25, 40)
 
-        TextEvent.push("CHAMELEON!  You now have blonde hair...")
+        TextEvent.fpush("CHAMELEON!  You now have blonde hair...")
 
         p.addLust(10)
 
@@ -88,7 +88,7 @@
 
         p.prt.haircolor = Color.FromArgb(p.prt.haircolor.A, r, 80, b)
 
-        TextEvent.push("CHAMELEON!  You now have brunette hair...")
+        TextEvent.fpush("CHAMELEON!  You now have brunette hair...")
 
         p.addLust(10)
 
@@ -103,7 +103,7 @@
 
         p.prt.haircolor = colors(Int(Rnd() * colors.Length))
 
-        TextEvent.push("CHAMELEON!  You now have neon hair...")
+        TextEvent.fpush("CHAMELEON!  You now have neon hair...")
 
         p.addLust(10)
 
@@ -118,7 +118,7 @@
 
         p.prt.haircolor = colors(Int(Rnd() * colors.Length))
 
-        TextEvent.push("CHAMELEON!  You now have pastel hair...")
+        TextEvent.fpush("CHAMELEON!  You now have pastel hair...")
 
         p.addLust(10)
 
@@ -135,7 +135,7 @@
 
         p.prt.haircolor = Color.FromArgb(p.prt.haircolor.A, r, g, b)
 
-        TextEvent.push("CHAMELEON!  You now have red hair...")
+        TextEvent.fpush("CHAMELEON!  You now have red hair...")
 
         p.addLust(10)
 

@@ -34,7 +34,7 @@
     Overrides Sub effect(ByRef p As Player)
         If (p.perks(perk.bimbotf) = -1 And Not p.className.Contains("Bimbo") And Not p.className.Equals("Princess")) Then
             TextEvent.push("Chewing the gum sends a tingly shock through your mouth.  You hear a far-off giggle ring through the air...")
-            p.ongoingTFs.add(New GABimboTF(2, 5, 0.25, True))
+            p.ongoingTFs.add(New GreenAppleBimboTF(2, 5, 0.25, True))
             p.perks(perk.bimbotf) = 0
         Else
             TextEvent.push("Chewing the gum leaves you feeling a little more princess-y. You like, totally, love this gum!" & DDUtils.RNRN &

@@ -24,7 +24,7 @@
     End Sub
 
     Public Overrides Sub tfEffect(ByRef p As Player)
-        p.ongoingTFs.add(New CBimboTF(2, 5, 0.25, True))
+        p.ongoingTFs.add(New CherryBimboTF(2, 5, 0.25, True))
         p.perks(perk.bimbotf) = 0
     End Sub
 End Class

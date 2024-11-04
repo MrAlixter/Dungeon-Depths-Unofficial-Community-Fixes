@@ -57,7 +57,7 @@
         p.ds()
         p.lust += 10
 
-        TextEvent.push("Dick Down!  Your cock squeezes uncomfortably...")
+        TextEvent.fpush("Dick Down!  Your cock squeezes uncomfortably...")
 
         p.drawPort()
     End Sub
@@ -65,7 +65,7 @@
         p.de()
         p.lust += 10
 
-        TextEvent.push("Dick Up!  Your cock tingles plesently...")
+        TextEvent.fpush("Dick Up!  Your cock tingles plesently...")
 
         p.drawPort()
     End Sub
@@ -73,7 +73,7 @@
         p.bs()
         p.lust += 10
 
-        TextEvent.push("Tits Down!  Your breasts squeeze uncomfortably...")
+        TextEvent.fpush("Tits Down!  Your breasts squeeze uncomfortably...")
 
         p.drawPort()
     End Sub
@@ -81,7 +81,7 @@
         p.be()
         p.lust += 10
 
-        TextEvent.push("Tits Up!  Your breasts tingle plesently...")
+        TextEvent.fpush("Tits Up!  Your breasts tingle plesently...")
 
         p.drawPort()
     End Sub
@@ -89,7 +89,7 @@
         p.us()
         p.lust += 10
 
-        TextEvent.push("Ass Down!  Your butt squeezes uncomfortably...")
+        TextEvent.fpush("Ass Down!  Your butt squeezes uncomfortably...")
 
         p.drawPort()
     End Sub
@@ -97,7 +97,7 @@
         p.ue()
         p.lust += 10
 
-        TextEvent.push("Ass Up!  Your butt tingles plesently...")
+        TextEvent.fpush("Ass Up!  Your butt tingles plesently...")
 
         p.drawPort()
     End Sub

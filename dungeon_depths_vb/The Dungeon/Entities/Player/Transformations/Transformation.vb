@@ -20,6 +20,7 @@
     bunnygirlbackfire
     cakebackfire
     cherrybimbo
+    cinnamonbimbo
     combatmod
     coserv
     cow
@@ -168,7 +169,7 @@ Public MustInherit Class Transformation
             Return New BeeHoneyTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.berrybimbo Then
-            Return New BBBimboTF(cs, n, tts, wi, cbs, tfd)
+            Return New BerryBimboTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.blindness Then
             Return New Blindness(cs, n, tts, wi, cbs, tfd)
@@ -207,7 +208,10 @@ Public MustInherit Class Transformation
             Return New TTCCBF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.cherrybimbo Then
-            Return New CBimboTF(cs, n, tts, wi, cbs, tfd)
+            Return New CherryBimboTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.cinnamonbimbo Then
+            Return New CinnamonBimboTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.combatmod Then
             Return New CombatModTF(cs, n, tts, wi, cbs, tfd)
@@ -237,7 +241,7 @@ Public MustInherit Class Transformation
             Return New DemonTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.demonbimbo Then
-            Return New DemBimboTF(cs, n, tts, wi, cbs, tfd)
+            Return New DemonBimboTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.demonmino Then
             Return New MinoDTF(cs, n, tts, wi, cbs, tfd)
@@ -252,10 +256,10 @@ Public MustInherit Class Transformation
             Return New DragonfruitBimboTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.faebimbo Then
-            Return New FBimboTF(cs, n, tts, wi, cbs, tfd)
+            Return New FaeBimboTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.faecleric Then
-            Return New FClericTF(cs, n, tts, wi, cbs, tfd)
+            Return New FaeClericTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.faepie Then
             Return New FaePieTF(cs, n, tts, wi, cbs, tfd)
@@ -273,13 +277,13 @@ Public MustInherit Class Transformation
             Return New MinotaurCowTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.gabimbo Then
-            Return New GABimboTF(cs, n, tts, wi, cbs, tfd)
+            Return New GreenAppleBimboTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.goddess Then
             Return New GoddessTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.goldbimbo Then
-            Return New GBimboTF(cs, n, tts, wi, cbs, tfd)
+            Return New GoldBimboTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.googirl Then
             Return New GooGirlTF(cs, n, tts, wi, cbs, tfd)
@@ -351,7 +355,7 @@ Public MustInherit Class Transformation
             Return New MindlessTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.mintbimbo Then
-            Return New MBimboTF(cs, n, tts, wi, cbs, tfd)
+            Return New MintBimboTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.mistbimbo Then
             Return New MistBimboTF(cs, n, tts, wi, cbs, tfd)
@@ -450,7 +454,7 @@ Public MustInherit Class Transformation
             Return New VialOfslimetf(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.watermelonbimbo Then
-            Return New WBimboTF(cs, n, tts, wi, cbs, tfd)
+            Return New WatermelonBimboTF(cs, n, tts, wi, cbs, tfd)
 
         Else
             Return Nothing

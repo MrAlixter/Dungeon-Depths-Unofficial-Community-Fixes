@@ -255,6 +255,9 @@
 
         MyBase.die(cause)
     End Sub
+    Public Overrides Sub playerDeath(ByRef p As Player)
+        despawn("p-death")
+    End Sub
 
     '| - MISC - |
     Private Function getPrefMode() As mode

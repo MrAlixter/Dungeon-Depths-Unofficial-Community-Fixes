@@ -52,4 +52,21 @@
         e.speed *= 0.8
         e.will *= 0.8
     End Sub
+
+    Public Overrides Sub playerDeath(ByRef p As Player)
+        despawn("p-death")
+
+        Dim p1 As Player = p
+
+        TextEvent.fpush(DDUtils.capitalizeFirst(getNameWithTitle) & " cackles as you collapse, defeated." & DDUtils.RNRN &
+                        """Wow, you sure didn't put up much of a fight.  You sure know how to make an imp feel special, eh?""" & DDUtils.RNRN &
+                        DDUtils.capitalizeFirst(pronoun) & " looks to your belongings, with a cocky grin.  ""Now, let's see if you've got anything good on ya...""", Sub() playerDeathP2(p1))
+    End Sub
+
+    Public Sub playerDeathP2(ByRef p As Player)
+        'turn vial of slime into pink slime, cover the player in it
+        'turn any stick of gum into cinnimon stick of gum
+        'turn cowbell/bimbell into ring of the cow
+        CinnamonBimboTF.impTFPlayer(p)
+    End Sub
 End Class

@@ -1,6 +1,6 @@
-﻿Public NotInheritable Class DemBimboTF
+﻿Public NotInheritable Class CinnamonBimboTF
     Inherits BimboTF
-    Public Shared bimbop As Color = Color.FromArgb(255, 255, 184, 222)
+    Public Shared bimboblonde As Color = Color.FromArgb(255, 253, 200, 134)
 
     Private Const TF_IND As tfind = tfind.demonbimbo
 
@@ -19,14 +19,14 @@
 
     'Hair Color Shift
     Overrides Sub hairColorShift()
-        Game.player1.prt.haircolor = DDUtils.cShift(Game.player1.prt.haircolor, bimbop, 200)
-        If Not Game.player1.getHairColor.Equals(bimbop) Then curr_step -= 1
-        TextEvent.fpush("Your hair rapidly becomes lighter, brightening towards a pastel pink.")
+        Game.player1.prt.haircolor = DDUtils.cShift(Game.player1.prt.haircolor, bimboblonde, 200)
+        If Not Game.player1.getHairColor.Equals(bimboblonde) Then curr_step -= 1
+        TextEvent.fpush("Your hair rapidly becomes lighter, brightening towards a sandy blonde.")
     End Sub
 
     'Step 1
     Public Overrides Sub s1BimboHairChange(ByRef p As Player)
-        p.prt.haircolor = bimbop
+        p.prt.haircolor = bimboblonde
         p.prt.setIAInd(pInd.rearhair, 5, True, True)
         p.prt.setIAInd(pInd.midhair, 5, True, True)
         p.prt.setIAInd(pInd.fronthair, 6, True, True)
@@ -34,21 +34,24 @@
 
     'Step 2
     Public Overrides Sub s2M2F(ByRef p As Player, ByRef out As String, ByRef haircolor As String)
-        MyBase.s2M2F(p, out, "pastel pink")
+        MyBase.s2M2F(p, out, "sandy blonde")
     End Sub
     Public Overrides Sub s2HairChange(ByRef p As Player)
-        p.prt.haircolor = bimbop
-        p.prt.setIAInd(pInd.rearhair, 12, True, True)
-        p.prt.setIAInd(pInd.midhair, 32, True, True)
-        p.prt.setIAInd(pInd.fronthair, 19, True, True)
+        p.prt.haircolor = bimboblonde
+        p.prt.setIAInd(pInd.rearhair, 42, True, True)
+        p.prt.setIAInd(pInd.midhair, 21, True, True)
+        p.prt.setIAInd(pInd.fronthair, 2, True, False)
     End Sub
     Public Overrides Sub s2FaceChange(ByRef p As Player)
         If p.name <> "Targax" Then
-            p.prt.setIAInd(pInd.eyes, 49, True, True)
+            p.prt.setIAInd(pInd.eyes, 26, True, True)
         Else
             p.prt.setIAInd(pInd.eyes, 29, True, True)  'eyes
         End If
-        p.prt.setIAInd(pInd.mouth, 25, True, True)  'mouth
+        p.prt.setIAInd(pInd.mouth, 36, True, True)  'mouth
+
+        p.prt.tanSkin()
+        p.addLust(50)
     End Sub
     Overrides Sub s2ClothesChange(ByRef p As Player)
         If Not p.equippedArmor.getName.Equals("Naked") And Not p.className.Equals("Magical Girl") Then
@@ -58,29 +61,15 @@
     End Sub
 
     Public Overrides Function hasBimboHair(p As Player) As Boolean
-        Return p.prt.haircolor.Equals(bimbop)
+        Return p.prt.haircolor.Equals(bimboblonde)
     End Function
 
-    Public Overrides Function getNextStep(stage As Integer) As Action
-        Select Case stage
-            Case 1
-                Return AddressOf hairColorShift
-            Case 2
-                Return AddressOf step1
-            Case 3
-                Return AddressOf step2
-            Case Else
-                Return AddressOf stopTF
-        End Select
-    End Function
+    Shared Sub impTFPlayer(ByRef p As Player)
+        Dim bTF As CinnamonBimboTF = New CinnamonBimboTF(3, 0, 0, False)
 
-    Shared Sub tfPlayer(ByVal stepNum As Integer, ByRef p As Player)
+        bTF.step2()
+        bTF.stopTF()
 
-
-        Dim bTF As DemBimboTF = New DemBimboTF(3, 0, 0, False)
-        bTF.next_step = bTF.getNextStep(stepNum)
-
-        bTF.next_step()
         p.UIupdate()
         p.drawPort()
     End Sub

@@ -1,9 +1,9 @@
-﻿Public NotInheritable Class BBBimboTF
+﻿Public NotInheritable Class WatermelonBimboTF
     Inherits BimboTF
-    Public Shared bimbovi1 As Color = Color.FromArgb(255, 131, 58, 113)
-    Public Shared bimbovi2 As Color = Color.FromArgb(255, 111, 26, 79)
+    Public Shared bimbog1 As Color = Color.FromArgb(255, 102, 217, 64)
+    Public Shared bimbog2 As Color = Color.FromArgb(255, 82, 209, 41)
 
-    Private Const TF_IND As tfind = tfind.berrybimbo
+    Private Const TF_IND As tfind = tfind.watermelonbimbo
 
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
@@ -18,16 +18,16 @@
         next_step = getNextStep(cs)
     End Sub
 
-    'Hair color shifting
+    'Hair Color Shift
     Overrides Sub hairColorShift()
-        Game.player1.prt.haircolor = DDUtils.cShift(Game.player1.prt.haircolor, bimbovi1, 25)
-        If Not Game.player1.getHairColor.Equals(bimbovi1) Then curr_step -= 1
-        TextEvent.fpush("Your hair becomes slightly darker, deepening towards a deep purple.")
+        Game.player1.prt.haircolor = DDUtils.cShift(Game.player1.prt.haircolor, bimbog1, 25)
+        If Not Game.player1.getHairColor.Equals(bimbog1) Then curr_step -= 1
+        TextEvent.fpush("Your hair becomes slightly lighter, brightening towards a lime green.")
     End Sub
 
     'Step 1
     Public Overrides Sub s1BimboHairChange(ByRef p As Player)
-        p.prt.haircolor = bimbovi1
+        p.prt.haircolor = bimbog1
         p.prt.setIAInd(pInd.rearhair, 5, True, True)
         p.prt.setIAInd(pInd.midhair, 5, True, True)
         p.prt.setIAInd(pInd.fronthair, 6, True, True)
@@ -35,22 +35,20 @@
 
     'Step 2
     Public Overrides Sub s2M2F(ByRef p As Player, ByRef out As String, ByRef haircolor As String)
-        MyBase.s2M2F(p, out, "two-toned purple")
+        MyBase.s2M2F(p, out, "lime green")
     End Sub
     Public Overrides Sub s2HairChange(ByRef p As Player)
-        p.prt.haircolor = bimbovi2
-        p.prt.setIAInd(pInd.rearhair, 22, True, True)  'rearhair1
-        p.prt.setIAInd(pInd.midhair, 25, True, True)  'rearhair2
-        p.prt.setIAInd(pInd.fronthair, 23, True, True) 'fronthair
+        p.prt.haircolor = bimbog2
+        p.prt.setIAInd(pInd.rearhair, 25, True, True)
+        p.prt.setIAInd(pInd.midhair, 28, True, True)
+        p.prt.setIAInd(pInd.fronthair, 26, True, True)
     End Sub
     Public Overrides Sub s2FaceChange(ByRef p As Player)
-        p.prt.setIAInd(pInd.eyes, 28, True, True)
-     
-        p.prt.setIAInd(pInd.mouth, 14, True, True)  'mouth
+        p.prt.setIAInd(pInd.eyes, 29, True, True)  'eyes
+        p.prt.setIAInd(pInd.mouth, 15, True, True)  'mouth
     End Sub
 
-
     Public Overrides Function hasBimboHair(p As Player) As Boolean
-        Return p.prt.haircolor.Equals(bimbovi1) Or p.prt.haircolor.Equals(bimbovi2)
+        Return p.prt.haircolor.Equals(bimbog1) Or p.prt.haircolor.Equals(bimbog2)
     End Function
 End Class

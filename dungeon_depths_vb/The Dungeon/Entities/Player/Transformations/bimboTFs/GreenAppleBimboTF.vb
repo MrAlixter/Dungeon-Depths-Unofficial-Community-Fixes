@@ -1,4 +1,4 @@
-﻿Public NotInheritable Class GABimboTF
+﻿Public NotInheritable Class GreenAppleBimboTF
     Inherits BimboTF
     Public Shared bimboyellowg1 As Color = Color.FromArgb(255, 228, 255, 83)
     Public Shared bimboyellowg2 As Color = Color.FromArgb(255, 244, 255, 184)

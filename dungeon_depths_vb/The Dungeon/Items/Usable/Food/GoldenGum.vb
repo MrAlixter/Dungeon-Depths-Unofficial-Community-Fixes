@@ -26,7 +26,7 @@
     End Sub
 
     Public Overrides Sub tfEffect(ByRef p As Player)
-        GBimboTF.snapTF(p)
+        GoldBimboTF.snapTF(p)
 
         TextEvent.push("As you unwrap the stick of gum, you can feel your hair growing out.  As your bangs, now a bright blonde, drop in front of your eyes, you pop the gum into your mouth and begin to chew.  Almost immediately, a massive rush of magical energy staggers you and a glittery cloud settling into your mind." & DDUtils.RNRN &
                        "Through the mental haze, you look down at your tits. You, like, never noticed how round and big they had got. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine and your clothing shifts into a skimpy outfit." & DDUtils.RNRN &

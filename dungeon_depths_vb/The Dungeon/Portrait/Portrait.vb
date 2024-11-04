@@ -34,7 +34,7 @@ End Enum
 Public Class Portrait
     Public Const NUM_IMG_LAYERS As Integer = 26
     Protected Friend Shared STARTING_INDEX() As Integer = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0} 'the starting indexes of each catagory
-    Protected Friend Shared SKIP_RECOLOR_REARHAIR_INDS() As Integer = {25, 26, 32, 34, 35, 36}
+    Protected Friend Shared SKIP_RECOLOR_REARHAIR_INDS() As Integer = {25, 26, 32, 34, 35, 36, 42}
     Protected Friend Shared SKIP_RECOLOR_MIDHAIR_INDS() As Integer = {28, 29, 38, 40, 41, 42}
     Protected Friend Shared SKIP_RECOLOR_FRONTHAIR_INDS() As Integer = {26, 27, 36, 38, 39, 40}
 
@@ -794,6 +794,26 @@ Public Class Portrait
         End If
 
         colorEars(c)
+    End Sub
+    Public Sub tanSkin()
+        Dim newColor = DDUtils.cShift(skincolor, Color.SaddleBrown, 50)
+
+        Select Case skincolor.GetHashCode
+            Case Color.AntiqueWhite.GetHashCode
+                newColor = Color.FromArgb(255, 247, 219, 195)
+            Case Color.FromArgb(255, 247, 219, 195).GetHashCode
+                newColor = Color.FromArgb(255, 240, 184, 160)
+            Case Color.FromArgb(255, 240, 184, 160).GetHashCode
+                newColor = Color.FromArgb(255, 210, 161, 140)
+            Case Color.FromArgb(255, 210, 161, 140).GetHashCode
+                newColor = Color.FromArgb(255, 180, 138, 120)
+            Case Color.FromArgb(255, 180, 138, 120).GetHashCode
+                newColor = Color.FromArgb(255, 105, 80, 70)
+            Case Color.FromArgb(255, 105, 80, 70).GetHashCode
+                newColor = Color.FromArgb(255, 105, 80, 70)
+        End Select
+
+        changeSkinColor(newColor)
     End Sub
 
     Shared Function mkIAInd(ByVal i As Integer, ByVal fem As Boolean, ByVal non_def As Boolean) As Tuple(Of Integer, Boolean, Boolean)

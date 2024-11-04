@@ -1,4 +1,4 @@
-﻿Public NotInheritable Class FClericTF
+﻿Public NotInheritable Class FaeClericTF
     Inherits BimboTF
 
     Public Shared clericbrown As Color = Color.FromArgb(255, 139, 89, 54)

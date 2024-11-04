@@ -1721,7 +1721,7 @@ Public Class Player
         '| - Golden Gum TF - |
         If inv.getCountAt("Golden_Gum") > 0 And Not ongoingTFs.contains(tfind.goldbimbo) And Not className.Equals("Bimbo") Then
             TextEvent.push("A dizzy calm washes over you...")
-            ongoingTFs.add(New GBimboTF(2, 20, 0.25, True))
+            ongoingTFs.add(New GoldBimboTF(2, 20, 0.25, True))
         End If
         '| - Fae Blossom - |
         If equippedAcce.getAName.Equals(FaerieBlossom.ITEM_NAME) And Int(Rnd() * 200) = 0 Then

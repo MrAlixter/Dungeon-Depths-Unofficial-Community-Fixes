@@ -563,7 +563,7 @@
         ElseIf p.getLust < 33 Then
             If p.perks(perk.succubuscurse) < 1 Then
                 p.perks(perk.succubuscurse) = 1
-                DemBimboTF.tfPlayer(1, p)
+                DemonBimboTF.tfPlayer(1, p)
             ElseIf p.perks(perk.succubuscurse) > 1 Then
                 p.revertToState(p.formStates(stateInd.dembimState1))
                 p.perks(perk.succubuscurse) = 1
@@ -573,7 +573,7 @@
             If p.perks(perk.succubuscurse) < 2 Then
                 p.formStates(stateInd.dembimState1).save(p)
                 p.perks(perk.succubuscurse) = 2
-                DemBimboTF.tfPlayer(2, p)
+                DemonBimboTF.tfPlayer(2, p)
             ElseIf p.perks(perk.succubuscurse) > 2 Then
                 p.revertToState(p.formStates(stateInd.dembimState2))
                 p.perks(perk.succubuscurse) = 2
@@ -582,7 +582,7 @@
         Else
             If p.perks(perk.succubuscurse) < 3 Then
                 p.formStates(stateInd.dembimState2).save(p)
-                DemBimboTF.tfPlayer(3, p)
+                DemonBimboTF.tfPlayer(3, p)
                 p.perks(perk.succubuscurse) = 3
             End If
         End If

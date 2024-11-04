@@ -95,7 +95,7 @@
                 "You seem a bit too airheaded to be a " & Game.player1.className & ", not to mention your slutty clothes!" & DDUtils.RNRN &
                 "Clearly you're " & Game.player1.name & " the Bimbo, right?", AddressOf fairyDustEnd)
 
-        Game.player1.ongoingTFs.add(New FBimboTF(2, 5, 0.25, True))
+        Game.player1.ongoingTFs.add(New FaeBimboTF(2, 5, 0.25, True))
         Game.player1.perks(perk.bimbotf) = 0
     End Sub
     Public Shared Sub ClericTFEnd()
@@ -103,7 +103,7 @@
                                                             "You're way too calm and collected to be a " & Game.player1.className & ", not to mention that you don't have the figure for it!" & DDUtils.RNRN &
                                                             "Clearly you're " & Game.player1.name & " the Cleric, right?", AddressOf fairyDustEnd)
 
-        Game.player1.ongoingTFs.add(New FClericTF(2, 5, 0.25, True))
+        Game.player1.ongoingTFs.add(New FaeClericTF(2, 5, 0.25, True))
         Game.player1.perks(perk.bimbotf) = 0
     End Sub
     Public Shared Sub RebelEnd()
