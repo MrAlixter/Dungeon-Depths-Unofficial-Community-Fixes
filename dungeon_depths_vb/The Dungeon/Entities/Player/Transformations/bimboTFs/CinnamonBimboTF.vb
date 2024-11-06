@@ -39,8 +39,8 @@
     Public Overrides Sub s2HairChange(ByRef p As Player)
         p.prt.haircolor = bimboblonde
         p.prt.setIAInd(pInd.rearhair, 42, True, True)
-        p.prt.setIAInd(pInd.midhair, 21, True, True)
-        p.prt.setIAInd(pInd.fronthair, 2, True, False)
+        p.prt.setIAInd(pInd.midhair, 50, True, True)
+        p.prt.setIAInd(pInd.fronthair, 45, True, True)
     End Sub
     Public Overrides Sub s2FaceChange(ByRef p As Player)
         If p.name <> "Targax" Then
@@ -69,6 +69,36 @@
 
         bTF.step2()
         bTF.stopTF()
+
+        p.UIupdate()
+        p.drawPort()
+    End Sub
+    Shared Sub impTFPlayer2(ByRef p As Player)
+        Dim bTF As CinnamonBimboTF = New CinnamonBimboTF(3, 0, 0, False)
+
+        bTF.s2M2F(p, "", "platinum blonde")
+        bTF.s2HairChange(p)
+        bTF.s2FaceChange(p)
+        bTF.s2BodyChange(p)
+
+        bTF.stopTF()
+
+        'unequips
+        p.changeForm("Goo Girl")
+
+        'transformation
+        p.breastSize = 4
+        p.buttSize = 3
+
+        p.prt.setIAInd(pInd.ears, 5, True, True)
+        p.prt.setIAInd(pInd.eyes, 35, True, True)
+        p.prt.setIAInd(pInd.fronthair, 46, True, True)
+        p.prt.setIAInd(pInd.eyebrows, 0, True, False)
+        p.prt.setIAInd(pInd.cloak, 0, True, False)
+        p.prt.setIAInd(pInd.hat, 0, True, False)
+
+        p.prt.haircolor = Color.FromArgb(180, 253, 230, 164)
+        p.prt.skincolor = Color.FromArgb(200, 255, 115, 95)
 
         p.UIupdate()
         p.drawPort()

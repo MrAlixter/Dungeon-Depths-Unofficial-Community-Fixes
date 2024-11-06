@@ -156,33 +156,37 @@
         If selected_ammo Is Nothing OrElse selected_ammo.getCount < 1 Then
             If System.IO.File.Exists("items\" & Game.sessionID & "_" & id & ".itm") Then loadSavedItem(Game.sessionID, id)
             If selected_ammo Is Nothing OrElse selected_ammo.getCount < 1 Then
-                If owner.inv.getCountAt(StickOfGum.ITEM_NAME) > 0 Then
-                    selected_ammo = owner.inv.item(StickOfGum.ITEM_NAME)
-                ElseIf owner.inv.getCountAt(CStickOfGum.ITEM_NAME) > 0 Then
-                    selected_ammo = owner.inv.item(CStickOfGum.ITEM_NAME)
-                ElseIf owner.inv.getCountAt(MStickOfGum.ITEM_NAME) > 0 Then
-                    selected_ammo = owner.inv.item(MStickOfGum.ITEM_NAME)
-                ElseIf owner.inv.getCountAt(BBStickOfGum.ITEM_NAME) > 0 Then
-                    selected_ammo = owner.inv.item(BBStickOfGum.ITEM_NAME)
-                ElseIf owner.inv.getCountAt(WStickOfGum.ITEM_NAME) > 0 Then
-                    selected_ammo = owner.inv.item(WStickOfGum.ITEM_NAME)
-                ElseIf owner.inv.getCountAt(DFStickOfGum.ITEM_NAME) > 0 Then
-                    selected_ammo = owner.inv.item(DFStickOfGum.ITEM_NAME)
-                ElseIf owner.inv.getCountAt(GoldenGum.ITEM_NAME) > 0 Then
-                    selected_ammo = owner.inv.item(GoldenGum.ITEM_NAME)
-                ElseIf owner.inv.getCountAt(GAStickOfGum.ITEM_NAME) > 0 Then
-                    selected_ammo = owner.inv.item(GAStickOfGum.ITEM_NAME)
-                ElseIf owner.inv.getCountAt(HPStickOfGum.ITEM_NAME) > 0 Then
-                    selected_ammo = owner.inv.item(HPStickOfGum.ITEM_NAME)
-                ElseIf owner.inv.getCountAt(MPStickOfGum.ITEM_NAME) > 0 Then
-                    selected_ammo = owner.inv.item(MPStickOfGum.ITEM_NAME)
-                Else
-                    selected_ammo = owner.inv.item(StickOfGum.ITEM_NAME)
-                End If
+                selected_ammo = getSelectedGum(owner)
             End If
         End If
 
         Return selected_ammo
+    End Function
+
+    Public Shared Function getSelectedGum(ByRef owner As Player) As Item
+        If owner.inv.getCountAt(StickOfGum.ITEM_NAME) > 0 Then
+            Return owner.inv.item(StickOfGum.ITEM_NAME)
+        ElseIf owner.inv.getCountAt(CStickOfGum.ITEM_NAME) > 0 Then
+            Return owner.inv.item(CStickOfGum.ITEM_NAME)
+        ElseIf owner.inv.getCountAt(MStickOfGum.ITEM_NAME) > 0 Then
+            Return owner.inv.item(MStickOfGum.ITEM_NAME)
+        ElseIf owner.inv.getCountAt(BBStickOfGum.ITEM_NAME) > 0 Then
+            Return owner.inv.item(BBStickOfGum.ITEM_NAME)
+        ElseIf owner.inv.getCountAt(WStickOfGum.ITEM_NAME) > 0 Then
+            Return owner.inv.item(WStickOfGum.ITEM_NAME)
+        ElseIf owner.inv.getCountAt(DFStickOfGum.ITEM_NAME) > 0 Then
+            Return owner.inv.item(DFStickOfGum.ITEM_NAME)
+        ElseIf owner.inv.getCountAt(GoldenGum.ITEM_NAME) > 0 Then
+            Return owner.inv.item(GoldenGum.ITEM_NAME)
+        ElseIf owner.inv.getCountAt(GAStickOfGum.ITEM_NAME) > 0 Then
+            Return owner.inv.item(GAStickOfGum.ITEM_NAME)
+        ElseIf owner.inv.getCountAt(HPStickOfGum.ITEM_NAME) > 0 Then
+            Return owner.inv.item(HPStickOfGum.ITEM_NAME)
+        ElseIf owner.inv.getCountAt(MPStickOfGum.ITEM_NAME) > 0 Then
+            Return owner.inv.item(MPStickOfGum.ITEM_NAME)
+        Else
+            Return owner.inv.item(StickOfGum.ITEM_NAME)
+        End If
     End Function
 
     Public Overrides Sub toSavedItem(ByRef ent As Entity)

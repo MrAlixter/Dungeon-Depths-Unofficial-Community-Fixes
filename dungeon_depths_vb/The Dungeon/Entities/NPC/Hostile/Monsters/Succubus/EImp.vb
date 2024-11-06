@@ -59,7 +59,7 @@
         Dim p1 As Player = p
 
         TextEvent.fpush(DDUtils.capitalizeFirst(getNameWithTitle) & " cackles as you collapse, defeated." & DDUtils.RNRN &
-                        """Wow, you sure didn't put up much of a fight.  You sure know how to make an imp feel special, eh?""" & DDUtils.RNRN &
+                        """Wow, you sure didn't put up much of a fight.  Really know how to make an imp feel special, yeah?""" & DDUtils.RNRN &
                         DDUtils.capitalizeFirst(pronoun) & " looks to your belongings, with a cocky grin.  ""Now, let's see if you've got anything good on ya...""", Sub() playerDeathP2(p1))
     End Sub
 
@@ -67,6 +67,18 @@
         'turn vial of slime into pink slime, cover the player in it
         'turn any stick of gum into cinnimon stick of gum
         'turn cowbell/bimbell into ring of the cow
-        CinnamonBimboTF.impTFPlayer(p)
+        Dim out As String = "Eh... so what's this here?" & DDUtils.RNRN
+        If GumGun20mm.getSelectedGum(p).count > 0 Then
+
+            GumGun20mm.getSelectedGum(p).add(-1)
+
+            p.ongoingTFs.add(New CinnamonBimboTF(2, 5, 0.25, True))
+            p.perks(perk.bimbotf) = 0
+        Else
+            out += "Or should I say- why isn't there anything in here?  "
+
+            CinnamonBimboTF.impTFPlayer2(p)
+        End If
+
     End Sub
 End Class
