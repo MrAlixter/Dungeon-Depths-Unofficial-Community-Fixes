@@ -237,56 +237,56 @@
         TextEvent.pushManySelect("Select a new magic discipline?", options)
     End Sub
     Private Sub selectFire()
-        Game.player1.perks(perk.magType) = magType.Fire
+        Game.player1.perks(perk.magtype) = magType.fire
         count -= 1
 
         Game.player1.inv.invNeedsUDate = True
         Game.player1.UIupdate()
     End Sub
     Private Sub selectIce()
-        Game.player1.perks(perk.magType) = magType.Ice
+        Game.player1.perks(perk.magtype) = magType.ice
         count -= 1
 
         Game.player1.inv.invNeedsUDate = True
         Game.player1.UIupdate()
     End Sub
     Private Sub selectLight()
-        Game.player1.perks(perk.magType) = magType.Light
+        Game.player1.perks(perk.magtype) = magType.light
         count -= 1
 
         Game.player1.inv.invNeedsUDate = True
         Game.player1.UIupdate()
     End Sub
     Private Sub selectPlant()
-        Game.player1.perks(perk.magType) = magType.Plant
+        Game.player1.perks(perk.magtype) = magType.plant
         count -= 1
 
         Game.player1.inv.invNeedsUDate = True
         Game.player1.UIupdate()
     End Sub
     Private Sub selectBlight()
-        Game.player1.perks(perk.magType) = magType.Blight
+        Game.player1.perks(perk.magtype) = magType.blight
         count -= 1
 
         Game.player1.inv.invNeedsUDate = True
         Game.player1.UIupdate()
     End Sub
     Private Sub selectFlux()
-        Game.player1.perks(perk.magType) = magType.Flux
+        Game.player1.perks(perk.magtype) = magType.flux
         count -= 1
 
         Game.player1.inv.invNeedsUDate = True
         Game.player1.UIupdate()
     End Sub
     Private Sub selectPsychic()
-        Game.player1.perks(perk.magType) = magType.Psychic
+        Game.player1.perks(perk.magtype) = magType.psychic
         count -= 1
 
         Game.player1.inv.invNeedsUDate = True
         Game.player1.UIupdate()
     End Sub
     Private Sub selectMisc()
-        Game.player1.perks(perk.magType) = magType.misc
+        Game.player1.perks(perk.magtype) = magType.misc
         count -= 1
 
         Game.player1.inv.invNeedsUDate = True

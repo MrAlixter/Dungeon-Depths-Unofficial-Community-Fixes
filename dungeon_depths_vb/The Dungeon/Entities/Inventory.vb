@@ -461,7 +461,7 @@
         internal_inventory.Add(IcicleDagger.ITEM_NAME, New IcicleDagger)             '433
         internal_inventory.Add(CollarRemoval.ITEM_NAME, New CollarRemoval)           '434
         internal_inventory.Add(SlightRestoPotion.ITEM_NAME, New SlightRestoPotion)   '435
-        internal_inventory.Add(SluiceChime.ITEM_NAME, New SluiceChime)               '436
+        internal_inventory.Add(JunkChime.ITEM_NAME, New JunkChime)               '436
         internal_inventory.Add(PolymExtPotion.ITEM_NAME, New PolymExtPotion)         '437
         internal_inventory.Add(ChainBikini.ITEM_NAME, New ChainBikini)               '438
         internal_inventory.Add(ROfBirdRage.ITEM_NAME, New ROfBirdRage)               '439
@@ -477,6 +477,7 @@
         internal_inventory.Add(OtherVialOfBimbo.ITEM_NAME, New OtherVialOfBimbo)     '449
         internal_inventory.Add(RingOfWarForm.ITEM_NAME, New RingOfWarForm)           '450
         internal_inventory.Add(ScarletComb.ITEM_NAME, New ScarletComb)               '451
+        internal_inventory.Add(ImpsDraught.ITEM_NAME, New ImpsDraught)               '452
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -599,7 +600,7 @@
                    Me.item(233), Me.item(234), Me.item(235), Me.item(236),
                    Me.item(241), Me.item(246), Me.item(247), Me.item(248),
                    Me.item(378), Me.item(382), Me.item(383), Me.item(435),
-                   Me.item(437)}
+                   Me.item(437), Me.item(452)}
 
         Array.Sort(potions)
 

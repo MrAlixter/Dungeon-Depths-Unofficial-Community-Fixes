@@ -23,18 +23,18 @@ Public Class ThistleMenuV3
 
         'update the player's inventory
         For Each itm In getFormattedInventory(p.inv, inv_type.player)
-            If Not p.inv.item(itm) Is Nothing AndAlso Not itm.EndsWith(":") AndAlso Not itm.Equals("") AndAlso Not itm.Equals(SluiceChime.ITEM_NAME) AndAlso Not SluiceChime.inv.getCountAt(itm) > 0 Then
+            If Not p.inv.item(itm) Is Nothing AndAlso Not itm.EndsWith(":") AndAlso Not itm.Equals("") AndAlso Not itm.Equals(JunkChime.ITEM_NAME) AndAlso Not JunkChime.inv.getCountAt(itm) > 0 Then
                 boxInventory.Items.Add(lineup(p.inv.item(itm).getName(), ((p.inv.item(itm).value / 2) * 0.45), p.inv.item(itm).count))
                 pInventory.Add(itm)
-            ElseIf Not itm.Equals(SluiceChime.ITEM_NAME) AndAlso Not SluiceChime.inv.getCountAt(itm) > 0 Then
+            ElseIf Not itm.Equals(JunkChime.ITEM_NAME) AndAlso Not JunkChime.inv.getCountAt(itm) > 0 Then
                 boxInventory.Items.Add(itm)
             End If
         Next
 
         'update the shopkeeper's inventory
-        For Each itm In getFormattedInventory(SluiceChime.inv, inv_type.shopkeeper)
-            If Not SluiceChime.inv.item(itm) Is Nothing AndAlso Not itm.EndsWith(":") And Not itm.Equals("") Then
-                boxShop.Items.Add(lineupSeller(SluiceChime.inv.item(itm).getAName()))
+        For Each itm In getFormattedInventory(JunkChime.inv, inv_type.shopkeeper)
+            If Not JunkChime.inv.item(itm) Is Nothing AndAlso Not itm.EndsWith(":") And Not itm.Equals("") Then
+                boxShop.Items.Add(lineupSeller(JunkChime.inv.item(itm).getAName()))
                 skInventory.Add(itm)
             Else
                 boxShop.Items.Add(itm)
@@ -121,7 +121,7 @@ Public Class ThistleMenuV3
 
     '| - EVENT HANDLERS - |
     Private Sub Shop_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If SluiceChime.inv Is Nothing Then
+        If JunkChime.inv Is Nothing Then
             TextEvent.pushLog("The chime rings, but nothing happens...")
             Me.Close()
             Exit Sub
@@ -138,7 +138,7 @@ Public Class ThistleMenuV3
         RefreshScreen()
     End Sub
     Private Sub inventory_SelectedIndexChange(sender As Object, e As EventArgs) Handles boxInventory.SelectedIndexChanged, boxShop.SelectedIndexChanged
-        If sender.SelectedItem Is Nothing Or sender.SelectedItem.endsWith(":") Or sender.SelectedItem.Equals("") Or sender.SelectedItem.Equals(SluiceChime.ITEM_NAME) Then Exit Sub
+        If sender.SelectedItem Is Nothing Or sender.SelectedItem.endsWith(":") Or sender.SelectedItem.Equals("") Or sender.SelectedItem.Equals(JunkChime.ITEM_NAME) Then Exit Sub
 
         Dim ind As Integer
         Dim name As String = Replace(sender.SelectedItem.ToString.Substring(0, P_ITEMNAME_LENGTH).TrimEnd, " ", "_")
@@ -232,7 +232,7 @@ Public Class ThistleMenuV3
         Dim items = boxInventory.SelectedItems
 
         For Each itm In items
-            If itm.ToString.EndsWith(":") Or itm.ToString.Equals("") Or itm.Equals(SluiceChime.ITEM_NAME) Then Continue For
+            If itm.ToString.EndsWith(":") Or itm.ToString.Equals("") Or itm.Equals(JunkChime.ITEM_NAME) Then Continue For
 
             Dim item_index As Integer
             Dim name As String = Replace(itm.ToString.Substring(0, P_ITEMNAME_LENGTH).TrimEnd, " ", "_")
@@ -260,12 +260,12 @@ Public Class ThistleMenuV3
             If item.getName().Contains(p.equippedArmor.getName()) Or item.getName().Contains(p.equippedWeapon.getName()) Or item.getName().Contains(p.equippedAcce.getName()) Or item.getName().Contains(p.equippedGlasses.getName()) Then
                 If item.count - 1 >= 1 Then
                     p.inv.add(index, -1)
-                    SluiceChime.inv.add(index, 1)
+                    JunkChime.inv.add(index, 1)
                     ct += 1
                 End If
             ElseIf item.count >= 1 Then
                 p.inv.add(index, -1)
-                SluiceChime.inv.add(index, 1)
+                JunkChime.inv.add(index, 1)
                 ct += 1
             End If
         Next
@@ -310,7 +310,7 @@ Public Class ThistleMenuV3
         For Each index In item_indexes_to_buy
             Dim item = p.inv.item(index)
             p.inv.add(index, 1)
-            SluiceChime.inv.add(index, -1)
+            JunkChime.inv.add(index, -1)
             ct += 1
         Next
 
@@ -357,7 +357,7 @@ Public Class ThistleMenuV3
 
         boxShop.Items.Clear()
 
-        Dim skInv = SluiceChime.inv
+        Dim skInv = JunkChime.inv
 
         For i As Integer = 0 To skInventory.Count - 1
             Dim ind As Integer

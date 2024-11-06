@@ -67,7 +67,7 @@
         'turn vial of slime into pink slime, cover the player in it
         'turn any stick of gum into cinnimon stick of gum
         'turn cowbell/bimbell into ring of the cow
-        Dim out As String = "Eh... so what's this here?" & DDUtils.RNRN
+        Dim out As String = """Eh... so what's this here?" & DDUtils.RNRN
         If GumGun20mm.getSelectedGum(p).count > 0 Then
 
             GumGun20mm.getSelectedGum(p).add(-1)
@@ -75,9 +75,11 @@
             p.ongoingTFs.add(New CinnamonBimboTF(2, 5, 0.25, True))
             p.perks(perk.bimbotf) = 0
         Else
-            out += "Or should I say- why isn't there anything in here?  "
+            out += "Or should I say- why isn't there anything in here?  How the hell have you picked up nothing?!?!""" & DDUtils.RNRN &
+                   DDUtils.capitalizeFirst(getNameWithTitle) & " draws forth a silver flask, and places it into your belongings." & DDUtils.RNRN &
+                   """That oughta make you more fun.  Give it a shot when it call to ya, yeah?"""
 
-            CinnamonBimboTF.impTFPlayer2(p)
+            p.inv.add(ImpsDraught.ITEM_NAME, 1)
         End If
 
     End Sub

@@ -1,7 +1,7 @@
-﻿Public Class SluiceChime
+﻿Public Class JunkChime
     Inherits Item
 
-    Public Const ITEM_NAME As String = "Sluice_Chime"
+    Public Const ITEM_NAME As String = "Junk_Chime"
     Dim target As Player
 
     Dim fae_woods_dialog_sections As List(Of Action) = New List(Of Action)({AddressOf FaeWoodsQ1A.askForApology, AddressOf FaeWoodsQ1A.askForClass, AddressOf FaeWoodsQ1A.askForName, AddressOf FaeWoodsQ1A.askForNameAgain,
@@ -26,7 +26,7 @@
         value = 4
 
         '|Description|
-        setDesc("A small metal gate that rings melodically when opened or closed.")
+        setDesc("A small, dinged-up piece of metal that rings out a melodic note when struck.  It seems to glint unnaturally in the dungeon's ambient light.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

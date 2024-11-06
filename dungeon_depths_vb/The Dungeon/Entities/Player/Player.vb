@@ -1719,9 +1719,19 @@ Public Class Player
             PerkEffects.bunnyEarsEff(Me)
         End If
         '| - Golden Gum TF - |
-        If inv.getCountAt("Golden_Gum") > 0 And Not ongoingTFs.contains(tfind.goldbimbo) And Not className.Equals("Bimbo") Then
+        If inv.getCountAt(GoldenGum.ITEM_NAME) > 0 And Not ongoingTFs.contains(tfind.goldbimbo) And Not className.Equals("Bimbo") Then
             TextEvent.push("A dizzy calm washes over you...")
             ongoingTFs.add(New GoldBimboTF(2, 20, 0.25, True))
+        End If
+        '| - Imp Draught TF - |
+        If inv.getCountAt(ImpsDraught.ITEM_NAME) > 0 And Not formName.Equals("Goo Girl") And getWIL() > 7 And Not passDieRoll(20, 19) Then
+            TextEvent.pushLog("Your will wavers, as you glance to the flask amongst your potions.")
+            If will > 0 Then wBuff -= 1
+        ElseIf inv.getCountAt(ImpsDraught.ITEM_NAME) > 0 And Not formName.Equals("Goo Girl") And getWIL() <= 7 Then
+            TextEvent.pushLog("You pull the infernal flask from your belongings, and drink it all in one gulp.")
+
+            inv.add(ImpsDraught.ITEM_NAME, -1)
+            CinnamonBimboTF.impTFPlayer2(Me)
         End If
         '| - Fae Blossom - |
         If equippedAcce.getAName.Equals(FaerieBlossom.ITEM_NAME) And Int(Rnd() * 200) = 0 Then

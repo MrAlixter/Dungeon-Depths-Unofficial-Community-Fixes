@@ -17,7 +17,7 @@
         '|Inventory|
         inv.setCount(GelArmor.ITEM_NAME, 1)
         inv.setCount(OmniCharm.ITEM_NAME, 1)
-        inv.setCount(SluiceChime.ITEM_NAME, 1)
+        inv.setCount(JunkChime.ITEM_NAME, 1)
         'inv.setCount(Key.ITEM_NAME, 1)
         inv.setCount("Gold", 5000)
         'random drops
