@@ -105,7 +105,7 @@
 
         For i = 0 To player.inv.upperBound
             player.inv.item(i).setName(p1.inv.item(i).getName)
-            player.inv.item(i).add(p1.inv.item(i).count + p2.inv.item(i).count)
+            player.inv.item(i).add(p1.inv.item(i).count + p2.inv.item(i).Count)
         Next
 
         player.inv.add(0, -1)
@@ -145,9 +145,9 @@
     Shared Function alUnion(ByVal a As List(Of String), ByVal b As List(Of String)) As List(Of String)
         Dim c = New List(Of String)
 
-        For i = 0 To Math.Max(a.Count, b.Count) - 1
-            If i < a.Count AndAlso Not c.Contains(a.Item(i)) Then c.Add(a.Item(i))
-            If i < b.Count AndAlso Not c.Contains(b.Item(i)) Then c.Add(b.Item(i))
+        For i = 0 To Math.Max(a.count, b.Count) - 1
+            If i < a.count AndAlso Not c.Contains(a.Item(i)) Then c.Add(a.Item(i))
+            If i < b.count AndAlso Not c.Contains(b.Item(i)) Then c.Add(b.Item(i))
         Next
         Return c
     End Function

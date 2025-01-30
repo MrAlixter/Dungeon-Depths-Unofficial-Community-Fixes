@@ -617,7 +617,7 @@ Public MustInherit Class ShopNPC
         End Select
     End Function
     Public Shared Function getAdjustedValue(ByRef sk As ShopNPC, ByRef itm As String) As Integer
-        Return (sk.inv.item(itm).value) - (sk.discount * (sk.inv.item(itm).value))
+        Return (sk.inv.item(itm).getValue()) - (sk.discount * (sk.inv.item(itm).getValue()))
     End Function
     Public Overridable Sub buildShopArea(ByRef floor As mFloor)
         Dim area = {New Point(pos.X - 1, pos.Y - 1), New Point(pos.X, pos.Y - 1), New Point(pos.X + 1, pos.Y - 1),

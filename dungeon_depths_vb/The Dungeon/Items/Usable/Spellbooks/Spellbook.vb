@@ -155,7 +155,7 @@
         Dim learnable_spells = New List(Of String)(spells)
         Dim learned_spell As String = ""
 
-        While learnable_spells.Count > 0 And learned_spell = ""
+        While learnable_spells.count > 0 And learned_spell = ""
             Dim spell As String = learnable_spells(Int(Rnd() * learnable_spells.Count))
 
             If Not p.knownSpells.Contains(spell) Or spell.Equals("Polymorph Enemy") Or spell.Equals("Self Polymorph") Then
@@ -177,7 +177,7 @@
         Dim poly_forms = New List(Of String)(selfPolyForms)
         Dim poly_form = ""
 
-        While poly_forms.Count > 0
+        While poly_forms.count > 0
             Dim form As String = poly_forms(Int(Rnd() * poly_forms.Count))
 
             If Not p.selfPolyForms.Contains(form) Then
@@ -196,7 +196,7 @@
         Dim poly_forms = New List(Of String)(enemPolyForms)
         Dim poly_form = ""
 
-        While poly_forms.Count > 0
+        While poly_forms.count > 0
             Dim form As String = poly_forms(Int(Rnd() * poly_forms.Count))
 
             If Not p.enemPolyForms.Contains(form) Then

@@ -138,14 +138,14 @@
         reader.Close()
     End Sub
     Protected Shared Function findNextResumableSeg(ByVal save As List(Of String), ByVal cursor As Integer)
-        For i = cursor To save.Count - 1
+        For i = cursor To save.count - 1
             If resumableSegments.Contains(save(i).Split(VALUE_DELIMITER)(0)) Then Return i
         Next
 
         Return cursor + 1
     End Function
     Public Shared Function findFirstPlayerLoop(ByVal save As List(Of String), ByVal cursor As Integer) As Integer
-        For i = cursor To save.Count - 1
+        For i = cursor To save.count - 1
             If PLAYER_HEADER_SEG.Equals(save(i).Split(VALUE_DELIMITER)(0)) Then Return i
         Next
 
@@ -208,10 +208,10 @@
     '| - Dungeon Map Loop - |
     Protected Shared Function saveDungeonLoop(ByRef d As Dungeon)
         Dim dungeon_loop = DUNGEON_HEADER_SEG & VALUE_DELIMITER &
-                           d.world_flags.Count() & VALUE_DELIMITER &
-                           d.floor_boss.Count() & VALUE_DELIMITER &
-                           d.floor_codes.Count() & VALUE_DELIMITER &
-                           d.floors.Count() & VALUE_DELIMITER &
+                           d.world_flags.count() & VALUE_DELIMITER &
+                           d.floor_boss.count() & VALUE_DELIMITER &
+                           d.floor_codes.count() & VALUE_DELIMITER &
+                           d.floors.count() & VALUE_DELIMITER &
                            d.numCurrFloor & VALUE_DELIMITER &
                            d.lastVisitedFloor & SEGMENT_DELIMITER
 
@@ -344,10 +344,10 @@
                          f.playerPosition.Y & VALUE_DELIMITER &
                          f.bossDialog & VALUE_DELIMITER &
                          f.beatBoss & VALUE_DELIMITER &
-                         f.chestList.Count & VALUE_DELIMITER &
-                         f.statueList.Count & VALUE_DELIMITER &
-                         f.trapList.Count & VALUE_DELIMITER &
-                         f.npcPositions.Count & VALUE_DELIMITER &
+                         f.chestList.count & VALUE_DELIMITER &
+                         f.statueList.count & VALUE_DELIMITER &
+                         f.trapList.count & VALUE_DELIMITER &
+                         f.npcPositions.count & VALUE_DELIMITER &
                          f.pinkMist & SEGMENT_DELIMITER
 
         For y = 0 To f.mBoardHeight - 1
@@ -580,7 +580,7 @@
     Protected Shared Function saveNPCSLoop() As String
         'npcs header segment
         Dim npcs_loop = NPCS_HEADER_SEG & VALUE_DELIMITER &
-                        Game.shop_npc_list.Count & SEGMENT_DELIMITER
+                        Game.shop_npc_list.count & SEGMENT_DELIMITER
 
         For Each npc In Game.shop_npc_list
             npcs_loop += vbCrLf & saveNPCSegment(npc)
@@ -655,11 +655,11 @@
                p.nextLevelXp & VALUE_DELIMITER &
                CType(p.inv.item(69), ThrallCollar).save() & VALUE_DELIMITER &
                p.ongoingTFs.count & VALUE_DELIMITER &
-               p.selfPolyForms.Count & VALUE_DELIMITER &
-               p.enemPolyForms.Count & VALUE_DELIMITER &
-               p.knownSpells.Count & VALUE_DELIMITER &
-               p.knownSpecials.Count & VALUE_DELIMITER &
-               p.quests.Count & VALUE_DELIMITER &
+               p.selfPolyForms.count & VALUE_DELIMITER &
+               p.enemPolyForms.count & VALUE_DELIMITER &
+               p.knownSpells.count & VALUE_DELIMITER &
+               p.knownSpecials.count & VALUE_DELIMITER &
+               p.quests.count & VALUE_DELIMITER &
                p.ongoingQuests.count & VALUE_DELIMITER &
                If(p.forcedPath Is Nothing, 0, p.forcedPath.Count) & VALUE_DELIMITER &
                (Not p.prefForm Is Nothing) & VALUE_DELIMITER &
@@ -814,7 +814,7 @@
             forced_path.Add(loadForcedPathSegment(save(start_pos)))
             start_pos += 1
         Next
-        If forced_path.Count > 0 Then p.forcedPath = forced_path.ToArray
+        If forced_path.count > 0 Then p.forcedPath = forced_path.ToArray
 
         If CBool(subseg(24)) Then
             p.prefForm = loadPreferedFormSegment(save(start_pos))
@@ -973,7 +973,7 @@
     Protected Shared Function savePortraitLoop(ByRef prt As Tuple(Of Integer, Boolean, Boolean)()) As String
         'portrait header segment
         Dim prt_loop = PORTRAIT_HEADER_SEG & VALUE_DELIMITER &
-                       prt.Count & SEGMENT_DELIMITER
+                       prt.count & SEGMENT_DELIMITER
 
         For i = 0 To UBound(prt)
             prt_loop += vbCrLf & saveImageLayerSegment(i, prt(i))
@@ -1026,7 +1026,7 @@
     Protected Shared Function savePerkLoop(ByRef perks As Dictionary(Of perk, Integer)) As String
         'portrait header segment
         Dim perk_loop = PERK_COUNT_SEG & VALUE_DELIMITER &
-                        perks.Count & SEGMENT_DELIMITER & vbCrLf
+                        perks.count & SEGMENT_DELIMITER & vbCrLf
 
         For Each p In perks.Keys
             perk_loop += savePerkSegment(New Tuple(Of perk, Integer)(p, perks(p))) & vbCrLf
@@ -1214,7 +1214,7 @@
         Return ITEM_SEG & VALUE_DELIMITER &
                i.getAName() & VALUE_DELIMITER &
                i.getId() & VALUE_DELIMITER &
-               i.getCount() & VALUE_DELIMITER &
+               i.count & VALUE_DELIMITER &
                i.durability & SEGMENT_DELIMITER
     End Function
     Protected Shared Function saveInvMysteryPotionDataSegment(ByRef m_pot As MysteryPotion) As String
@@ -1306,7 +1306,7 @@
     Protected Shared Function saveTempInvSegment(ByRef l As ArrayList)
         Dim segment As String = TEMP_INVENTORY_HEADER_SEG
 
-        segment += VALUE_DELIMITER & l.Count()
+        segment += VALUE_DELIMITER & l.count()
 
         For Each itm In l
             segment += VALUE_DELIMITER & itm

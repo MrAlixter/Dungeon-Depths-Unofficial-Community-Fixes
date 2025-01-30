@@ -101,7 +101,7 @@
     End Sub
 
     Overrides Sub tfClothes(ByRef p As Player)
-        If p.inv.item(CowCosplay.ITEM_NAME).getCount > 0 Then p.inv.add(CowCosplay.ITEM_NAME, 1)
+        If p.inv.item(CowCosplay.ITEM_NAME).count > 0 Then p.inv.add(CowCosplay.ITEM_NAME, 1)
         EquipmentDialogBackend.equipArmor(p, CowCosplay.ITEM_NAME, False)
     End Sub
     Overrides Sub tfDialogStep9()

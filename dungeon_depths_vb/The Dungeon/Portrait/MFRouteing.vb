@@ -10,14 +10,14 @@
     Public Function getMfromF(ByVal f As Tuple(Of Integer, Boolean, Boolean)) As Tuple(Of Integer, Boolean, Boolean)
         Dim i = fInds.IndexOf(f)
 
-        If i >= 0 And i < mInds.Count Then Return mInds(i)
+        If i >= 0 And i < mInds.count Then Return mInds(i)
 
         Return f
     End Function
     Public Function getFfromM(ByVal m As Tuple(Of Integer, Boolean, Boolean)) As Tuple(Of Integer, Boolean, Boolean)
         Dim i = mInds.IndexOf(m)
 
-        If i >= 0 And i < fInds.Count Then Return fInds(i)
+        If i >= 0 And i < fInds.count Then Return fInds(i)
 
         Return m
     End Function

@@ -246,7 +246,7 @@
                 If p.count > 0 Then ownedPotions.Add(p)
             Next
 
-            If ownedPotions.Count > 0 Then
+            If ownedPotions.count > 0 Then
                 Dim i = Int(Rnd() * ownedPotions.Count)
                 out += "  As you stumble backwards, you fall, landing on your " &
                     ownedPotions(i).getAName & ", which breaks open!"

@@ -251,7 +251,7 @@
             sexAttrList3 = default_img_lib.atrs(pInd.genitalia).getM
             sexAttrList4 = default_img_lib.atrs(pInd.chest).getM
         End If
-        For i = 0 To sexAttrList1.Count - 1
+        For i = 0 To sexAttrList1.count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
@@ -284,7 +284,7 @@
         Else
             sexAttrList = default_img_lib.atrs(pInd.fronthair).getM
         End If
-        For i = 0 To sexAttrList.Count - 1
+        For i = 0 To sexAttrList.count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
@@ -310,7 +310,7 @@
         Else
             sexAttrList = default_img_lib.atrs(pInd.eyes).getM
         End If
-        For i = 0 To sexAttrList.Count - 1
+        For i = 0 To sexAttrList.count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
@@ -336,7 +336,7 @@
         Else
             sexAttrList = default_img_lib.atrs(pInd.mouth).getM
         End If
-        For i = 0 To sexAttrList.Count - 1
+        For i = 0 To sexAttrList.count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
@@ -363,7 +363,7 @@
             sexAttrList1 = default_img_lib.atrs(pInd.facemark).getM
         End If
 
-        For i = 0 To sexAttrList1.Count - 1
+        For i = 0 To sexAttrList1.count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
@@ -389,7 +389,7 @@
         Else
             sexAttrList = default_img_lib.atrs(pInd.accessory).getM
         End If
-        For i = 0 To sexAttrList.Count - 1
+        For i = 0 To sexAttrList.count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
@@ -415,7 +415,7 @@
         Else
             sexAttrList = default_img_lib.atrs(pInd.face).getM
         End If
-        For i = 0 To sexAttrList.Count - 1
+        For i = 0 To sexAttrList.count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
@@ -443,7 +443,7 @@
             sexAttrList1 = default_img_lib.atrs(pInd.rearhair).getM
             sexAttrList2 = default_img_lib.atrs(pInd.midhair).getM
         End If
-        For i = 0 To sexAttrList1.Count - 1
+        For i = 0 To sexAttrList1.count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
@@ -474,7 +474,7 @@
         Else
             sexAttrList = default_img_lib.atrs(pInd.eyebrows).getM
         End If
-        For i = 0 To sexAttrList.Count - 1
+        For i = 0 To sexAttrList.count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
@@ -500,7 +500,7 @@
         Else
             sexAttrList = default_img_lib.atrs(pInd.ears).getM
         End If
-        For i = 0 To sexAttrList.Count - 1
+        For i = 0 To sexAttrList.count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
@@ -528,7 +528,7 @@
             sexAttrList1 = default_img_lib.atrs(pInd.clothes).getM
             sexAttrList2 = default_img_lib.atrs(pInd.clothesbtm).getM
         End If
-        For i = 0 To sexAttrList1.Count - 1
+        For i = 0 To sexAttrList1.count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
@@ -561,7 +561,7 @@
         Else
             sexAttrList = default_img_lib.atrs(pInd.glasses).getM
         End If
-        For i = 0 To sexAttrList.Count - 1
+        For i = 0 To sexAttrList.count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
@@ -587,7 +587,7 @@
         Else
             sexAttrList = default_img_lib.atrs(pInd.cloak).getM
         End If
-        For i = 0 To sexAttrList.Count - 1
+        For i = 0 To sexAttrList.count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
@@ -613,7 +613,7 @@
         Else
             sexAttrList = default_img_lib.atrs(pInd.hat).getM
         End If
-        For i = 0 To sexAttrList.Count - 1
+        For i = 0 To sexAttrList.count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
@@ -639,7 +639,7 @@
         Else
             sexAttrList = default_img_lib.atrs(pInd.chest).getM
         End If
-        For i = 0 To sexAttrList.Count - 1
+        For i = 0 To sexAttrList.count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
@@ -665,7 +665,7 @@
         Else
             sexAttrList = default_img_lib.atrs(pInd.shoulders).getM
         End If
-        For i = 0 To sexAttrList.Count - 1
+        For i = 0 To sexAttrList.count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox

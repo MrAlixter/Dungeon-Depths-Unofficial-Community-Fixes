@@ -695,7 +695,6 @@ Public Class Player
     End Sub
     Public Sub createInvPerks()
         inv = New Inventory(True)
-        If System.IO.File.Exists("items\" & Game.sessionID & "_9.itm") Then inv.item(SoulBlade.ITEM_NAME).loadSavedItem(Game.sessionID, 9)
 
         initPerks()
         initPolymorphs()
@@ -981,7 +980,7 @@ Public Class Player
     Public Sub wander(ByRef board(,) As mTile)
         Dim points As List(Of Point) = New List(Of Point)({New Point(pos.X, pos.Y - 1), New Point(pos.X, pos.Y + 1), New Point(pos.X - 1, pos.Y), New Point(pos.X + 1, pos.Y)})
 
-        While points.Count > 0
+        While points.count > 0
             Dim i As Integer = Int(Rnd() * points.Count)
 
             If Game.currFloor.ptInBounds(points(i)) And board(points(i).Y, points(i).X).Tag > 0 Then
@@ -1316,11 +1315,11 @@ Public Class Player
         reverseAllRoute()
         drawPort()
 
-        Dim out = reverted_attributes.Count & " changes were reverted." & vbCrLf & "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        Dim out = reverted_attributes.count & " changes were reverted." & vbCrLf & "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         For Each atr In reverted_attributes
             out += vbCrLf & atr & " reverted."
         Next
-        If reverted_attributes.Count > 0 Then out += vbCrLf & "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        If reverted_attributes.count > 0 Then out += vbCrLf & "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         Return out
     End Function
     Public Sub revertToSState()
@@ -1728,7 +1727,7 @@ Public Class Player
             TextEvent.pushLog("Your will wavers, as you glance to the flask amongst your potions.")
             If will > 0 Then wBuff -= 1
         ElseIf inv.getCountAt(ImpsDraught.ITEM_NAME) > 0 And Not formName.Equals("Goo Girl") And getWIL() <= 7 Then
-            TextEvent.pushLog("You pull the infernal flask from your belongings, and drink it all in one gulp.")
+            TextEvent.pushLog("You pull the infernal flask from your potions, and drink it all in one gulp.")
 
             inv.add(ImpsDraught.ITEM_NAME, -1)
             CinnamonBimboTF.impTFPlayer2(Me)
@@ -1887,7 +1886,7 @@ Public Class Player
 
         If do_inv Then
             inv.invIDorder.Clear()
-            Dim numItems As Integer = Game.lstInventory.Items.Count
+            Dim numItems As Integer = Game.lstInventory.Items.count
             Dim tArr(inv.count + 16) As String
             Dim ct As Integer = 0
             If InventoryFilterBackend.invFilters(0) Then
@@ -1940,7 +1939,7 @@ Public Class Player
         'Add all items for the given category that the player has at least one copy of
         Array.Sort(list)
         For i = 0 To UBound(list)
-            If list(i).getCount > 0 And Not (heading = "-USEABLES:" And Not list(i).getUsable) Then
+            If list(i).count > 0 And Not (heading = "-USEABLES:" And Not list(i).getUsable) Then
                 tArr(ct) = " " & list(i).getName().Replace("_", " ") & " x" & list(i).count
                 inv.invIDorder.Add(list(i).getId)
                 ct += 1
@@ -1952,11 +1951,11 @@ Public Class Player
             tArr(ct) = ""
 
             If ct = 2 Then
-                inv.invIDorder.RemoveAt(inv.invIDorder.Count() - 1)
-                inv.invIDorder.RemoveAt(inv.invIDorder.Count() - 1)
+                inv.invIDorder.RemoveAt(inv.invIDorder.count() - 1)
+                inv.invIDorder.RemoveAt(inv.invIDorder.count() - 1)
                 ct -= 2
             ElseIf ct = 1 Then
-                inv.invIDorder.RemoveAt(inv.invIDorder.Count() - 1)
+                inv.invIDorder.RemoveAt(inv.invIDorder.count() - 1)
                 ct -= 1
             End If
 

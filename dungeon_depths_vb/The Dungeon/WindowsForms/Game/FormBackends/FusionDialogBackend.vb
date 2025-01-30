@@ -182,7 +182,7 @@ Public Class FusionDialogBackend
     End Function
 
     Shared Function isFusionPossible(ByVal p As Player)
-        Return possibleFusions.Count > 0 And Transformation.canBeTFed(p)
+        Return possibleFusions.count > 0 And Transformation.canBeTFed(p)
     End Function
     Shared Sub toPNL(ByRef p As Player, ByVal fusionType As TypeOfFusion)
         Game.closeLblEvent()

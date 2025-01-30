@@ -428,6 +428,10 @@ Public Class Portrait
                     iArr(pInd.clothes) = CreateFullBodyBMP({iArr(pInd.clothes), imgLib.atrs(pInd.hairacc).getAt(33)})
             End Select
         End If
+
+        If ent.getPlayer.equippedArmor.boobs_over_clothesbtm Then
+            iArr(pInd.clothesbtm) = topClothesMask(iArr(pInd.clothesbtm), imgLib.atrs(pInd.chest).getAt(iArrInd(pInd.chest)), 0)
+        End If
     End Sub
 
     '| - OTHER LAYERS - |

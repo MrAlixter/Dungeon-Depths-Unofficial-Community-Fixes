@@ -23,7 +23,7 @@
     Sub setCalories(ByVal i As Integer)
         calories = i
     End Sub
-    Function getCalories()
+    Overridable Function getCalories()
         Return calories
     End Function
 End Class

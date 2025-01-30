@@ -12,7 +12,7 @@ Public Class Controls
         keys.Clear()
 
         'scale to the screen size
-        For i = 0 To Me.Controls.Count - 1
+        For i = 0 To Me.Controls.count - 1
             If Me.Controls(i).GetType Is GetType(TextBox) And Not Me.Controls(i).Name.Contains("Selection") Then
                 AddHandler Me.Controls(i).KeyDown, AddressOf txtChanged
                 AddHandler Me.Controls(i).Click, AddressOf txt_Click
@@ -28,7 +28,7 @@ Public Class Controls
         Dim sw As StreamWriter
         sw = File.CreateText("configs.ave")
         Dim used As New List(Of String)
-        For i = 0 To keys.Count - 1
+        For i = 0 To keys.count - 1
             If keys(i).Text.Equals("Invalid") Or keys(i).Text.Equals("") Then
                 DDError.invalidControlKeyError()
                 sw.Close()

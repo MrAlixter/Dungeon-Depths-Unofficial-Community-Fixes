@@ -223,7 +223,7 @@ Public Class NPC
         ElseIf reason = "pwarp" Then
             TextEvent.pushAndLog("With a flash, you teleport away!")
         ElseIf reason = "p-death" Then
-            If Game.lstLog.Items(Game.lstLog.Items.Count - 1).Equals("You are defeated!") Then Game.lstLog.Items.RemoveAt(Game.lstLog.Items.Count - 1)
+            If Game.lstLog.Items(Game.lstLog.Items.count - 1).Equals("You are defeated!") Then Game.lstLog.Items.RemoveAt(Game.lstLog.Items.count - 1)
             TextEvent.pushLog("You are defeated by " & getNameWithTitle() & "...")
         ElseIf reason = "friend" Then
             If Int(Rnd() * 3) = 0 Then

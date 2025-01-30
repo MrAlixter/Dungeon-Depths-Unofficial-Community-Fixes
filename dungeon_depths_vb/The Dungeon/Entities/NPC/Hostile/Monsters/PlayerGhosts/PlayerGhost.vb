@@ -76,9 +76,9 @@
         checked_items.Add(43)
 
         Do While number_of_drops > 0
-            If checked_items.Count = inv.count Then Exit Do
+            If checked_items.count = inv.count Then Exit Do
 
-            Dim rnd_ind As Integer = Int(Rnd() * inv.count)
+            Dim rnd_ind As Integer = Int(Rnd() * inv.Count)
 
             If Not checked_items.Contains(rnd_ind) AndAlso old_inventory.item(rnd_ind).count > 0 Then
                 inv.item(rnd_ind).count = old_inventory.item(rnd_ind).count

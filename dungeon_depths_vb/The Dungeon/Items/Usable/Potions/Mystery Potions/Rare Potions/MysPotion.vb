@@ -64,7 +64,7 @@
         If numSideEffects < 0 Then numSideEffects = 0
 
         Do While numMainEffects > 0
-            If mainEffects.Count > 0 Then
+            If mainEffects.count > 0 Then
                 Dim r = Int(Rnd() * mainEffects.Count)
                 effectList.Add(mainEffects(r))
                 mainEffects.RemoveAt(r)
@@ -72,7 +72,7 @@
             numMainEffects -= 1
         Loop
         Do While numSideEffects > 0
-            If sideEffects.Count > 0 Then
+            If sideEffects.count > 0 Then
                 Dim r = Int(Rnd() * sideEffects.Count)
                 effectList.Add(sideEffects(r))
                 sideEffects.RemoveAt(r)

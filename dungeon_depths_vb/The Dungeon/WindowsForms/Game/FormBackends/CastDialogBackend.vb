@@ -19,7 +19,7 @@
 
             Dim knownSpecials = DDUtils.union(p.knownSpecials, DDUtils.cboxToList(Game.cboxSpec.Items))
 
-            If knownSpecials.Count <= 0 Then TextEvent.push("You don't know any specials!") : Exit Sub
+            If knownSpecials.count <= 0 Then TextEvent.push("You don't know any specials!") : Exit Sub
             For Each s In knownSpecials
                 If Not sosDescs.ContainsKey(s) Then sosDescs.Add(s, Special.specialList(s).getDesc(p, p.currTarget)) : Game.cboxCast.Items.Add(s)
             Next
@@ -29,7 +29,7 @@
         ElseIf sos = SpellOrSpec.SPELL Then
             p.magicRoute()
 
-            If p.knownSpells.Count <= 0 Then TextEvent.push("You don't know any spells!") : Exit Sub
+            If p.knownSpells.count <= 0 Then TextEvent.push("You don't know any spells!") : Exit Sub
             For Each s In p.knownSpells
                 If Not sosDescs.ContainsKey(s) Then sosDescs.Add(s, Spell.spellList(s).getDesc(p, p.currTarget)) : Game.cboxCast.Items.Add(s)
             Next

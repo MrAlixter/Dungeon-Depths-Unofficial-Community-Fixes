@@ -10,10 +10,10 @@
         Dim potentialSteals As List(Of Item) = New List(Of Item)
 
         For i = 0 To getTarget.inv.upperBound()
-            If getTarget.inv.item(i).getCount > 0 And Not getTarget.inv.item(i).getName = "Gold" And getTarget.inv.item(i).can_be_stolen Then potentialSteals.Add(getTarget.inv.item(i))
+            If getTarget.inv.item(i).count > 0 And Not getTarget.inv.item(i).getName = "Gold" And getTarget.inv.item(i).can_be_stolen Then potentialSteals.Add(getTarget.inv.item(i))
         Next
 
-        If potentialSteals.Count < 1 Then
+        If potentialSteals.count < 1 Then
             TextEvent.pushAndLog(CStr("Pluck! " & getTarget.title & MyBase.getTarget.getName & " doesn't really have anything to steal..."))
         Else
             Dim i As Item = potentialSteals(Int(Rnd() * potentialSteals.Count))

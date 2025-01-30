@@ -36,7 +36,7 @@
         If target.GetType() Is GetType(Player) Then
             turns_until_spell -= 1
 
-            If turns_until_spell < 1 And inv.getCountAt("Extra_Life") < 4 And Not target.getPlayer Is Nothing And enchantment_inds_used.Count < 5 Then
+            If turns_until_spell < 1 And inv.getCountAt("Extra_Life") < 4 And Not target.getPlayer Is Nothing And enchantment_inds_used.count < 5 Then
                 TextEvent.pushAndLog(getName() & " casts Marissa's Enchantment!")
 
                 marissasEnchantment(target.getPlayer)

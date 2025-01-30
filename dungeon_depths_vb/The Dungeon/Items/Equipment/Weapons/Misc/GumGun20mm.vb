@@ -135,7 +135,7 @@
             TextEvent.pushLog(out_dsc)
         End If
 
-        If selected_ammo.getCount < 1 And getActiveAmmo.getCount > 0 Then
+        If selected_ammo.count < 1 And getActiveAmmo.count > 0 Then
             selected_ammo = getActiveAmmo()
             TextEvent.pushLog("The cannon begins loading " & selected_ammo.getAName() & " rounds.")
         End If
@@ -153,9 +153,9 @@
     Private Function getActiveAmmo() As StickOfGum
         If owner Is Nothing Then owner = Game.player1
 
-        If selected_ammo Is Nothing OrElse selected_ammo.getCount < 1 Then
+        If selected_ammo Is Nothing OrElse selected_ammo.count < 1 Then
             If System.IO.File.Exists("items\" & Game.sessionID & "_" & id & ".itm") Then loadSavedItem(Game.sessionID, id)
-            If selected_ammo Is Nothing OrElse selected_ammo.getCount < 1 Then
+            If selected_ammo Is Nothing OrElse selected_ammo.count < 1 Then
                 selected_ammo = getSelectedGum(owner)
             End If
         End If

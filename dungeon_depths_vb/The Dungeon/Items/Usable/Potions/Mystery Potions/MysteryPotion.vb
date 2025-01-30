@@ -100,7 +100,7 @@
     End Function
     Public Overridable Sub setEffectList()
         effectList = New List(Of PEffect)
-        If effectList.Count <> 0 Then effectList.Clear()
+        If effectList.count <> 0 Then effectList.Clear()
     End Sub
     Public Overrides Function getName() As String
         If hasBeenUsed Then

@@ -102,5 +102,9 @@
 
         p.UIupdate()
         p.drawPort()
+
+        TextEvent.fpush("You glance to the flask amongst your potions, and your will cracks." & DDUtils.RNRN &
+                        "It looks delectable; beckoning you to drink it with an invisible aura that promises so much.  It'll taste so good, right?  And it'll probably be enchanted in some way too- there's no telling what will happen to you if you drink it..." & DDUtils.TODO & DDUtils.RNRN &
+                        "You turn into a goo-girl bimbo!")
     End Sub
 End Class

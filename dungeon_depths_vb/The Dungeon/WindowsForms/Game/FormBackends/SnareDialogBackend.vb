@@ -8,7 +8,7 @@
         baitItemsInd.Add(-1)
         Game.cboxBait.Items.Add("Nothing")
         For i = 0 To p.inv.count
-            If Not p.inv.item(i) Is Nothing AndAlso p.inv.item(i).getCount > 0 Then
+            If Not p.inv.item(i) Is Nothing AndAlso p.inv.item(i).count > 0 Then
                 Game.cboxBait.Items.Add(p.inv.item(i).getName)
                 baitItemsInd.Add(p.inv.item(i).id)
             End If
@@ -34,7 +34,7 @@
                 p.perks(perk.snarednpc) = 3
             ElseIf i.GetType.IsSubclassOf(GetType(Weapon)) And Not Game.wsmith.form.Equals("Arachne") Then
                 p.perks(perk.snarednpc) = 4
-            ElseIf (i.value) > 1000 And Not Game.shopkeeper.form.Equals("Arachne") Then
+            ElseIf (i.getValue()) > 1000 And Not Game.shopkeeper.form.Equals("Arachne") Then
                 p.perks(perk.snarednpc) = 0
             End If
             TextEvent.push(If(p.perks(perk.snarednpc) > -1, "The previous snare you set withers away..." & DDUtils.RNRN, "") & "You expertly weave a snare, leaving the " & i.getName & " dangling by a nearly invisible thread." & DDUtils.RNRN &

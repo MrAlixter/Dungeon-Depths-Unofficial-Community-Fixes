@@ -24,7 +24,7 @@ Public Class ThistleMenuV3
         'update the player's inventory
         For Each itm In getFormattedInventory(p.inv, inv_type.player)
             If Not p.inv.item(itm) Is Nothing AndAlso Not itm.EndsWith(":") AndAlso Not itm.Equals("") AndAlso Not itm.Equals(JunkChime.ITEM_NAME) AndAlso Not JunkChime.inv.getCountAt(itm) > 0 Then
-                boxInventory.Items.Add(lineup(p.inv.item(itm).getName(), ((p.inv.item(itm).value / 2) * 0.45), p.inv.item(itm).count))
+                boxInventory.Items.Add(lineup(p.inv.item(itm).getName(), ((p.inv.item(itm).getValue() / 2) * 0.45), p.inv.item(itm).Count))
                 pInventory.Add(itm)
             ElseIf Not itm.Equals(JunkChime.ITEM_NAME) AndAlso Not JunkChime.inv.getCountAt(itm) > 0 Then
                 boxInventory.Items.Add(itm)
@@ -48,73 +48,73 @@ Public Class ThistleMenuV3
         formattedInventory.Add("-USEABLES:")
         Array.Sort(inv.getUseable)
         For Each itm In inv.getUseable
-            If itm.getCount > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
+            If itm.count > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
         Next
-        If formattedInventory(formattedInventory.Count - 1).Equals("-USEABLES:") Then formattedInventory.Remove("-USEABLES:") Else formattedInventory.Add("")
+        If formattedInventory(formattedInventory.count - 1).Equals("-USEABLES:") Then formattedInventory.Remove("-USEABLES:") Else formattedInventory.Add("")
 
         '| -- Potions -- |
         formattedInventory.Add("-POTIONS:")
         Array.Sort(inv.getPotions)
         For Each itm In inv.getPotions
-            If itm.getCount > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
+            If itm.count > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
         Next
-        If formattedInventory(formattedInventory.Count - 1).Equals("-POTIONS:") Then formattedInventory.Remove("-POTIONS:") Else formattedInventory.Add("")
+        If formattedInventory(formattedInventory.count - 1).Equals("-POTIONS:") Then formattedInventory.Remove("-POTIONS:") Else formattedInventory.Add("")
 
         '| -- Food -- |
         formattedInventory.Add("-FOOD:")
         Array.Sort(inv.getFood)
         For Each itm In inv.getFood
-            If itm.getCount > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
+            If itm.count > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
         Next
-        If formattedInventory(formattedInventory.Count - 1).Equals("-FOOD:") Then formattedInventory.Remove("-FOOD:") Else formattedInventory.Add("")
+        If formattedInventory(formattedInventory.count - 1).Equals("-FOOD:") Then formattedInventory.Remove("-FOOD:") Else formattedInventory.Add("")
 
         '| -- Armor -- |
         formattedInventory.Add("-ARMOR:")
         Array.Sort(inv.getArmors.Item2)
         For Each itm In inv.getArmors.Item2
-            If itm.getCount > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
+            If itm.count > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
         Next
-        If formattedInventory(formattedInventory.Count - 1).Equals("-ARMOR:") Then formattedInventory.Remove("-ARMOR:") Else formattedInventory.Add("")
+        If formattedInventory(formattedInventory.count - 1).Equals("-ARMOR:") Then formattedInventory.Remove("-ARMOR:") Else formattedInventory.Add("")
 
         '| -- Weapons -- |
         formattedInventory.Add("-WEAPONS:")
         Array.Sort(inv.getWeapons.Item2)
         For Each itm In inv.getWeapons.Item2
-            If itm.getCount > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
+            If itm.count > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
         Next
-        If formattedInventory(formattedInventory.Count - 1).Equals("-WEAPONS:") Then formattedInventory.Remove("-WEAPONS:") Else formattedInventory.Add("")
+        If formattedInventory(formattedInventory.count - 1).Equals("-WEAPONS:") Then formattedInventory.Remove("-WEAPONS:") Else formattedInventory.Add("")
 
         '| -- Accessories -- |
         formattedInventory.Add("-ACCESSORIES:")
         Array.Sort(inv.getAccesories.Item2)
         For Each itm In inv.getAccesories.Item2
-            If itm.getCount > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
+            If itm.count > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
         Next
-        If formattedInventory(formattedInventory.Count - 1).Equals("-ACCESSORIES:") Then formattedInventory.Remove("-ACCESSORIES:") Else formattedInventory.Add("")
+        If formattedInventory(formattedInventory.count - 1).Equals("-ACCESSORIES:") Then formattedInventory.Remove("-ACCESSORIES:") Else formattedInventory.Add("")
 
         '| -- Glasses -- |
         formattedInventory.Add("-GLASSES:")
         Array.Sort(inv.getGlasses.Item2)
         For Each itm In inv.getGlasses.Item2
-            If itm.getCount > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
+            If itm.count > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
         Next
-        If formattedInventory(formattedInventory.Count - 1).Equals("-GLASSES:") Then formattedInventory.Remove("-GLASSES:") Else formattedInventory.Add("")
+        If formattedInventory(formattedInventory.count - 1).Equals("-GLASSES:") Then formattedInventory.Remove("-GLASSES:") Else formattedInventory.Add("")
 
         '| -- Services -- |
         formattedInventory.Add("-SERVICES:")
         Array.Sort(inv.getServices)
         For Each itm In inv.getServices
-            If itm.getCount > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
+            If itm.count > 0 And itm.list_in_shop Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
         Next
-        If formattedInventory(formattedInventory.Count - 1).Equals("-SERVICES:") Then formattedInventory.Remove("-SERVICES:") Else formattedInventory.Add("")
+        If formattedInventory(formattedInventory.count - 1).Equals("-SERVICES:") Then formattedInventory.Remove("-SERVICES:") Else formattedInventory.Add("")
 
         '| -- Misc -- |
         formattedInventory.Add("-MISC:")
         Array.Sort(inv.getMisc)
         For Each itm In inv.getMisc
-            If itm.getCount > 0 And itm.list_in_shop And itm.getId <> 43 Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
+            If itm.count > 0 And itm.list_in_shop And itm.getId <> 43 Then formattedInventory.Add(If(type = inv_type.shopkeeper, itm.getAName(), itm.getName()))
         Next
-        If formattedInventory(formattedInventory.Count - 1).Equals("-MISC:") Then formattedInventory.Remove("-MISC:") Else formattedInventory.Add("")
+        If formattedInventory(formattedInventory.count - 1).Equals("-MISC:") Then formattedInventory.Remove("-MISC:") Else formattedInventory.Add("")
 
         Return formattedInventory
     End Function
@@ -162,9 +162,9 @@ Public Class ThistleMenuV3
     Private Sub btnInspect_Click(sender As Object, e As EventArgs) Handles btnInspect.Click
         Dim name As String = Nothing
 
-        If boxInventory.SelectedItems.Count > 0 Then
+        If boxInventory.SelectedItems.count > 0 Then
             name = Regex.Split(boxInventory.SelectedItems(0), ChrW(8203))(0).Trim()
-        ElseIf boxShop.SelectedItems.Count > 0 Then
+        ElseIf boxShop.SelectedItems.count > 0 Then
             name = Regex.Split(boxShop.SelectedItems(0), ChrW(8203))(0).Trim()
         End If
 
@@ -334,7 +334,7 @@ Public Class ThistleMenuV3
 
         boxInventory.Items.Clear()
 
-        For i As Integer = 0 To pInventory.Count - 1
+        For i As Integer = 0 To pInventory.count - 1
             If pInventory(i).IndexOf(boxInventoryFilter.Text, 0, StringComparison.CurrentCultureIgnoreCase) > -1 Then
                 Dim ind As Integer
                 For ind = 0 To p.inv.upperBound
@@ -344,10 +344,10 @@ Public Class ThistleMenuV3
                 Next
                 If pInventory(i).Equals(p.equippedArmor.getAName()) Or pInventory(i).Equals(p.equippedWeapon.getAName()) Then
                     If p.inv.item(ind).count > 1 Then
-                        boxInventory.Items.Add(lineup(p.inv.item(ind).getName(), Int(p.inv.item(ind).value / 2), p.inv.item(ind).count - 1))
+                        boxInventory.Items.Add(lineup(p.inv.item(ind).getName(), Int(p.inv.item(ind).getValue() / 2), p.inv.item(ind).count - 1))
                     End If
                 Else
-                    boxInventory.Items.Add(lineup(p.inv.item(ind).getName(), Int(p.inv.item(ind).value / 2), p.inv.item(ind).count))
+                    boxInventory.Items.Add(lineup(p.inv.item(ind).getName(), Int(p.inv.item(ind).getValue() / 2), p.inv.item(ind).Count))
                 End If
             End If
         Next
@@ -359,7 +359,7 @@ Public Class ThistleMenuV3
 
         Dim skInv = JunkChime.inv
 
-        For i As Integer = 0 To skInventory.Count - 1
+        For i As Integer = 0 To skInventory.count - 1
             Dim ind As Integer
             For ind = 0 To skInv.upperBound
                 If skInv.item(ind).getAName() = skInventory(i) Then

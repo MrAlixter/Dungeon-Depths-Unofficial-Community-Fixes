@@ -9,6 +9,7 @@
         dick
         slut
         angel
+        lingerie
     End Enum
 
     Dim pref_mode As mode = mode.none
@@ -257,6 +258,18 @@
     End Sub
     Public Overrides Sub playerDeath(ByRef p As Player)
         despawn("p-death")
+        Select Case pref_mode
+            Case mode.cow
+                'cowbell tf
+            Case mode.dick
+                'dildo tf
+            Case mode.slut
+                '
+            Case mode.lingerie
+                'finalize inanimate tf
+            Case Else
+
+        End Select
     End Sub
 
     '| - MISC - |

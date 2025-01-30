@@ -620,9 +620,9 @@
         tfs.Add(randomPolymorph.faerie, AddressOf New FaerieTF().step1)
         tfs.Add(randomPolymorph.beegirl, AddressOf BeeHoneyTF.fullTF)
 
-        Dim form = tfs.Keys(Int(Rnd() * (tfs.Keys.Count - 1)))
+        Dim form = tfs.Keys(Int(Rnd() * (tfs.Keys.count - 1)))
         While Game.player1.formName.Equals(form)
-            form = tfs.Keys(Int(Rnd() * (tfs.Keys.Count - 1)))
+            form = tfs.Keys(Int(Rnd() * (tfs.Keys.count - 1)))
         End While
 
         Game.player1.perks(perk.polymorphed) = 999

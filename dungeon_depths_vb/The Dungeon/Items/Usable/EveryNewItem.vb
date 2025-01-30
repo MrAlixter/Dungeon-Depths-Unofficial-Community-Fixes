@@ -42,7 +42,7 @@
 
         For i = 0 To (Game.player1.inv.count - 1)
             Dim itm = Game.player1.inv.item(i)
-            writer.WriteLine(itm.getAName & "," & itm.getId & ",TIER:" & itm.getTier(Game.currFloor.floorNumber) & "," & itm.value)
+            writer.WriteLine(itm.getAName & "," & itm.getId & ",TIER:" & itm.getTier(Game.currFloor.floorNumber) & "," & itm.getValue())
         Next
 
         writer.Flush()

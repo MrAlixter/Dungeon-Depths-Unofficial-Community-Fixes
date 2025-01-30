@@ -25,7 +25,7 @@ Public Class Testing
         Dim successes = 0
         Dim failures = 0
         out.WriteLine(vbCrLf & "-||UNIT TESTS:")
-        For i = 0 To testQueue.Count - 1
+        For i = 0 To testQueue.count - 1
             Dim result As Tuple(Of Boolean, String) = testQueue(i).Invoke
             If Not result.Item1 Then
                 out.WriteLine(vbCrLf & "Test Failed!:")
@@ -84,8 +84,8 @@ Public Class Testing
 
         For i = 0 To Portrait.NUM_IMG_LAYERS
             Dim diCT, aiCT As Integer
-            diCT = defimgcol.atrs(defimgcol.atrs.Keys(i)).Count
-            aiCT = allimgcol.atrs(allimgcol.atrs.Keys(i)).Count
+            diCT = defimgcol.atrs(defimgcol.atrs.Keys(i)).count
+            aiCT = allimgcol.atrs(allimgcol.atrs.Keys(i)).count
 
             Dim test3 As Tuple(Of Boolean, String) = expectEQ("for i = " & i & ", diCT <= aiCT", True, diCT <= aiCT)
             If Not test3.Item1 Then Return test3
@@ -174,17 +174,17 @@ Public Class Testing
 
         testInventory1.merge(testInventory2)
 
-        Dim test1 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(0)", 3, testInventory1.item(0).count)
+        Dim test1 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(0)", 3, testInventory1.item(0).Count)
         If Not test1.Item1 Then Return test1
-        Dim test2 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(1)", 2, testInventory1.item(1).count)
+        Dim test2 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(1)", 2, testInventory1.item(1).Count)
         If Not test2.Item1 Then Return test2
-        Dim test3 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(4)", 2, testInventory1.item(4).count)
+        Dim test3 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(4)", 2, testInventory1.item(4).Count)
         If Not test3.Item1 Then Return test3
-        Dim test4 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(34)", 4, testInventory1.item(34).count)
+        Dim test4 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(34)", 4, testInventory1.item(34).Count)
         If Not test4.Item1 Then Return test4
-        Dim test5 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(40)", 5, testInventory1.item(40).count)
+        Dim test5 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(40)", 5, testInventory1.item(40).Count)
         If Not test5.Item1 Then Return test5
-        Dim test6 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(56)", 1, testInventory1.item(56).count)
+        Dim test6 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(56)", 1, testInventory1.item(56).Count)
         If Not test6.Item1 Then Return test6
 
         Return New Tuple(Of Boolean, String)(True, "Inventory.merge tests successful.")
@@ -198,13 +198,13 @@ Public Class Testing
         testInventory1.add(45, 1)
         testInventory1.add(56, 6)
 
-        Dim test1 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(0)", 4, testInventory1.item(0).count)
+        Dim test1 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(0)", 4, testInventory1.item(0).Count)
         If Not test1.Item1 Then Return test1
-        Dim test2 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(4)", 3, testInventory1.item(4).count)
+        Dim test2 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(4)", 3, testInventory1.item(4).Count)
         If Not test2.Item1 Then Return test2
-        Dim test3 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(""Feather_Duster"")", 1, testInventory1.item("Feather_Duster").count)
+        Dim test3 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(""Feather_Duster"")", 1, testInventory1.item("Feather_Duster").Count)
         If Not test3.Item1 Then Return test3
-        Dim test4 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(""Living_Lingerie"")", 6, testInventory1.item("Living_Lingerie").count)
+        Dim test4 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(""Living_Lingerie"")", 6, testInventory1.item("Living_Lingerie").Count)
         If Not test4.Item1 Then Return test4
 
         Return New Tuple(Of Boolean, String)(True, "Inventory.add tests successful.")
@@ -234,23 +234,23 @@ Public Class Testing
             Return New Tuple(Of Boolean, String)(False, ex.ToString & " thrown during Inventory.load")
         End Try
 
-        Dim test1 As Tuple(Of Boolean, String) = expectEQ("Inventory.getCountAt(""Compass"")", 2, testInventory1.getCountAt("Compass"))
+        Dim test1 As Tuple(Of Boolean, String) = expectEQ("Inventory.count(""Compass"")", 2, testInventory1.getCountAt("Compass"))
         If Not test1.Item1 Then Return test1
 
-        Dim test2 As Tuple(Of Boolean, String) = expectEQ("Inventory.getCountAt(""Spellbook"")", 3, testInventory1.getCountAt("Spellbook"))
+        Dim test2 As Tuple(Of Boolean, String) = expectEQ("Inventory.count(""Spellbook"")", 3, testInventory1.getCountAt("Spellbook"))
         If Not test2.Item1 Then Return test2
 
-        Dim test3 As Tuple(Of Boolean, String) = expectEQ("Inventory.getCountAt(""Witch_Cosplay"")", 1, testInventory1.getCountAt("Witch_Cosplay"))
+        Dim test3 As Tuple(Of Boolean, String) = expectEQ("Inventory.count(""Witch_Cosplay"")", 1, testInventory1.getCountAt("Witch_Cosplay"))
         If Not test3.Item1 Then Return test3
 
-        Dim test4 As Tuple(Of Boolean, String) = expectEQ("Inventory.getCountAt(""Key"")", 4, testInventory1.getCountAt("Key"))
+        Dim test4 As Tuple(Of Boolean, String) = expectEQ("Inventory.count(""Key"")", 4, testInventory1.getCountAt("Key"))
         If Not test4.Item1 Then Return test4
 
         For i = 0 To testInventory1.upperBound()
             Dim keyi = testInventory1.getKeyByID(i)
             Dim outputi = testInventory1.getCountAt(i)
             If Not keyi.Equals("Compass") And Not keyi.Equals("Spellbook") And Not keyi.Equals("Witch_Cosplay") And Not keyi.Equals("Key") Then
-                Dim testi As Tuple(Of Boolean, String) = expectEQ("Inventory.getCountAt(""" & i & """)", 0, outputi)
+                Dim testi As Tuple(Of Boolean, String) = expectEQ("Inventory.count(""" & i & """)", 0, outputi)
                 If Not testi.Item1 Then Return testi
             End If
         Next

@@ -300,6 +300,7 @@
     <Compile Include="Entities\Player\Transformations\FaePrincessTF.vb" />
     <Compile Include="Entities\Player\Transformations\BeeHoneyTF.vb" />
     <Compile Include="Items\Equipment\Accesories\CynnsBimboMark.vb" />
+    <Compile Include="Items\Equipment\Accesories\PinkPantiesPLR.vb" />
     <Compile Include="Items\Equipment\Accesories\RingOfWarForm.vb" />
     <Compile Include="Items\Equipment\Accesories\ROfBirdRage.vb" />
     <Compile Include="Items\Equipment\Accesories\TidemageTattoo.vb" />
@@ -327,6 +328,7 @@
     <Compile Include="Items\Equipment\Accesories\MOTOx.vb" />
     <Compile Include="Items\Equipment\Accesories\HallowedTalisman.vb" />
     <Compile Include="Items\Equipment\Accesories\Ballgag.vb" />
+    <Compile Include="Items\Equipment\Armor\Clothing\GlitteryDress.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\BlackTShirt.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\GalGarb.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\NotColdWeatherGarb.vb" />
@@ -434,6 +436,7 @@
     <Compile Include="Items\Equipment\Weapons\Wands\StickWand.vb" />
     <Compile Include="Items\Equipment\Weapons\Wands\HBSWand.vb" />
     <Compile Include="Items\Equipment\Weapons\Wands\LepSlimeWhip.vb" />
+    <Compile Include="Entities\InanimateEntity.vb" />
     <Compile Include="Items\LootTable.vb" />
     <Compile Include="Items\Misc\ArmorFragments.vb" />
     <Compile Include="Items\Misc\ExtraLife.vb" />
@@ -464,6 +467,7 @@
     <Compile Include="Items\Usable\Food\MPStickOfGum.vb" />
     <Compile Include="Items\Usable\Food\HPStickOfGum.vb" />
     <Compile Include="Items\Usable\Food\SpaceBun.vb" />
+    <Compile Include="Items\Usable\Potions\PotionOfPanties.vb" />
     <Compile Include="Items\Usable\Potions\ImpsDraught.vb" />
     <Compile Include="Items\Usable\Potions\PolymExtPotion.vb" />
     <Compile Include="Items\Usable\ScarletComb.vb" />
@@ -770,7 +774,7 @@
     <Compile Include="Entities\Player\Spells\_Utility\Flux\UvonasFugue.vb" />
     <Compile Include="Entities\Player\Spells\_Utility\Misc\Warp.vb" />
     <Compile Include="Entities\Player\Spells\_Combat\Fire\SuperFireball.vb" />
-    <Compile Include="Entities\Player\Spells\_Utility\Blight\turnToBlade.vb" />
+    <Compile Include="Entities\Player\Spells\_Utility\Flux\turnToBlade.vb" />
     <Compile Include="Entities\Player\Spells\_Utility\Flux\turnToCupcake.vb" />
     <Compile Include="Entities\Player\Spells\_Utility\Blight\turnToFrog.vb" />
     <Compile Include="Entities\Player\Transformations\AmazonTF.vb" />

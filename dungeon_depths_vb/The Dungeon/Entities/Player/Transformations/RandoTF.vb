@@ -343,7 +343,7 @@
         p.formStates(stateInd.preBSBody).load(p)
         p.pState.save(p)
         p.revertToPState()
-        For i = 0 To Game.floor_4_starting_inv.Count - 1
+        For i = 0 To Game.floor_4_starting_inv.count - 1
             p.inv.add(i, Game.floor_4_starting_inv(i))
         Next
         p.canMoveFlag = True
@@ -353,7 +353,7 @@
     End Sub
     Shared Sub floor4keep()
         Dim p As player = Game.player1
-        For i = 0 To Game.floor_4_starting_inv.Count - 1
+        For i = 0 To Game.floor_4_starting_inv.count - 1
             p.inv.add(i, Game.floor_4_starting_inv(i))
         Next
         p.canMoveFlag = True

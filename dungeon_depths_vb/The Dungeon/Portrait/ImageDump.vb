@@ -46,10 +46,10 @@ Public Class ImageDump
         images.AddRange(b.getImages)
     End Sub
     Public Function Count() As Integer
-        Return images.Count
+        Return images.count
     End Function
     Public Function UBound() As Integer
-        Return images.Count - 1
+        Return images.count - 1
     End Function
 
     'getImg reads all .png files in a directory into a List data structure

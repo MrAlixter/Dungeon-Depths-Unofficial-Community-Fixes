@@ -40,7 +40,7 @@
                 TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " heals " & r_pronoun & "self for " & hdif & " health!")
                 mana -= 3
                 Exit Sub
-            ElseIf mana > 17 And Not (enchantment_inds_used.Count <= 4) Then
+            ElseIf mana > 17 And Not (enchantment_inds_used.count <= 4) Then
                 TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " casts Marissa's Enchantment!")
                 marissasEnchantment(target.getPlayer)
                 mana -= 17

@@ -18,6 +18,8 @@
         '|Item Flags|
         usable = false
         compress_breast = True
+        show_underboob = False
+        boobs_over_clothesbtm = True
         rando_inv_allowed = False
 
         '|Stats|

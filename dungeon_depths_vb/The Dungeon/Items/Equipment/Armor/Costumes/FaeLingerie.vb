@@ -3,9 +3,6 @@
 
     Public Const ITEM_NAME As String = "Fae-Touched_Lingerie"
 
-    Private Shared soul_name As String
-    Private Shared h_color As Color
-
     Private Shared img_ind_bsizeneg1 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
     Private Shared img_ind_bsize0 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
     Private Shared img_ind_bsize1 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
@@ -30,6 +27,7 @@
         compress_breast = True
         only_drop_one = True
         rando_inv_allowed = False
+        stores_inanimate_ent = True
         is_sexy = True
 
         '|Stats|
@@ -52,21 +50,19 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(440, True, True)
 
         '|Description|
-        setDesc("A slinky set of underwear, radiating with magical energy.  Stitched into the bustier is the name """"..." & DDUtils.RNRN &
+        setDesc("A slinky set of underwear, radiating with magical energy.  Stitched into the bustier is no name..." & DDUtils.RNRN &
                 getSizeInformation() & DDUtils.RNRN &
                 getStatInformation())
-
-        If DDUtils.fileExistsWC("items\", "*_" & id & ".itm") And soul_name = "" Then loadSavedItem(DDUtils.getSessionID(DDUtils.getPathUsingWC("items\", "*_" & id & ".itm")), id)
     End Sub
 
     Public Overrides Function getTier(ByVal floor_num As Integer) As Integer
-        If soul_name = "" Or Game.player1.inv.getCountAt(ITEM_NAME) > 0 Then Return Nothing
+        If getInanimateEnt() Is Nothing OrElse Game.player1.inv.getCountAt(ITEM_NAME) > 0 Then Return Nothing
 
         Return 2
     End Function
 
     Public Overrides Function getDescription() As Object
-        Return "A slinky set of underwear, radiating with magical energy.  Stitched into the bustier is the name """ & soul_name & """..." & DDUtils.RNRN &
+        Return "A level " & If(getInanimateEnt() Is Nothing, 0, getInanimateEnt.level) & " set of slinky underwear, radiating with magical energy.  Stitched into the bustier is the name """ & If(getInanimateEnt() Is Nothing, "Sasha", getInanimateEnt.name) & """..." & DDUtils.RNRN &
                 getSizeInformation() & DDUtils.RNRN &
                 getStatInformation()
     End Function
@@ -74,63 +70,16 @@
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
 
-        If soul_name = "" Then
+        If getInanimateEnt() Is Nothing Then
             Equipment.clothesChange(p, "Naked")
             count = 0
             TextEvent.pushAndLog("The lingerie crumbles to dust...")
         End If
     End Sub
 
-    Public Overrides Sub toSavedItem(ByRef ent As Entity)
-        If ent.getPlayer Is Nothing Then
-            MyBase.toSavedItem(ent)
-        Else
-            Dim output = CStr(
-                ent.name & "*" &
-                getAName() & "*" &
-                id & "*" &
-                Game.sessionID & "*" &
-                Game.currFloor.floorCode & "*" &
-                ent.getPlayer.breastSize & "*" &
-                ent.getMaxHealth() & "*" &
-                ent.getMaxMana() & "*" &
-                ent.getPlayer.prt.haircolor.A & ":" & ent.getPlayer.prt.haircolor.R & ":" & ent.getPlayer.prt.haircolor.G & ":" & ent.getPlayer.prt.haircolor.B & "*" &
-                ent.getPlayer.prt.skincolor.A & ":" & ent.getPlayer.prt.skincolor.R & ":" & ent.getPlayer.prt.skincolor.G & ":" & ent.getPlayer.prt.skincolor.B & "*" &
-                ent.getSPD() & "*" &
-                ent.getWIL() & "*")
-
-            Dim writer As IO.StreamWriter
-            Dim filename As String = "items\" & Game.sessionID & "_" & id & ".itm"
-            For Each file In IO.Directory.GetFiles("items\", "*_" & id & ".itm")
-                IO.File.Delete(file)
-            Next
-            writer = IO.File.CreateText(filename)
-            writer.WriteLine(output)
-            writer.Flush()
-            writer.Close()
-        End If
-    End Sub
-    Public Overrides Sub loadSavedItem(ByVal sessionID As String, ByVal itmid As Integer)
-        Dim filename As String = "items\" & sessionID & "_" & itmid & ".itm"
-
-        Dim reader As IO.StreamReader
-        reader = IO.File.OpenText(filename)
-
-        Try
-            Dim item_array() As String = reader.ReadLine().Split("*")
-            soul_name = item_array(0)
-            value = item_array(6)
-
-            Dim h_color_array() As String = item_array(8).Split(":")
-            h_color = Color.FromArgb(h_color_array(0), h_color_array(1), h_color_array(2), h_color_array(3))
-        Finally
-            reader.Close()
-        End Try
-
-        makeClothesImg()
-    End Sub
-
     Public Sub makeClothesImg()
+        Dim h_color As Color = getInanimateEnt().prt.haircolor
+
         Dim img_bneg1 = Portrait.hairRecolor(Portrait.imgLib.atrs(pInd.clothes).getAt(bsizeneg1), h_color)
         Dim img_b0 = Portrait.hairRecolor(Portrait.imgLib.atrs(pInd.clothes).getAt(bsize0), h_color)
         Dim img_b1 = Portrait.hairRecolor(Portrait.imgLib.atrs(pInd.clothes).getAt(bsize1), h_color)
@@ -190,6 +139,7 @@
     End Sub
 
     Public Overrides Function getClothesIMGTop(ByRef p As Player) As Tuple(Of Integer, Boolean, Boolean)
+        If Not getInanimateEnt() Is Nothing AndAlso img_ind_bsizeneg1.Item1 = 0 Then makeClothesImg()
         Select Case p.breastSize
             Case -1
                 Return img_ind_bsizeneg1
@@ -206,6 +156,7 @@
         End Select
     End Function
     Public Overrides Function getClothesIMGBtm(ByRef p As Player) As Tuple(Of Integer, Boolean, Boolean)
+        If Not getInanimateEnt() Is Nothing AndAlso img_ind_bsizeneg1.Item1 = 0 Then makeClothesImg()
         Select Case p.buttSize
             Case -1
                 Return img_ind_usizeneg1

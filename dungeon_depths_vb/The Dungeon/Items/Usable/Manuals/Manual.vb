@@ -28,7 +28,7 @@
         Dim learnable_specials = New List(Of String)(specials)
         Dim learned_special As String = ""
 
-        While learnable_specials.Count > 0 And learned_special = ""
+        While learnable_specials.count > 0 And learned_special = ""
             Dim spec As String = learnable_specials(Int(Rnd() * learnable_specials.Count))
 
             If Not p.knownSpecials.Contains(spec) Then learned_special = spec

@@ -30,7 +30,7 @@ Public Class TileSelector
     End Sub
 
     Private Sub unselectMapControlButtons()
-        For i = 0 To boxMapControls.Controls.Count - 1
+        For i = 0 To boxMapControls.Controls.count - 1
             If TypeOf (boxMapControls.Controls(i)) Is RadioButton Then
                 CType(boxMapControls.Controls(i), RadioButton).Checked = False
             End If

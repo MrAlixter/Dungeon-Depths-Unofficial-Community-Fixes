@@ -35,7 +35,7 @@
         TextEvent.pushLog("You drink the " & getName())
 
         p.perks(perk.polymorphed) += 100
-        For i = p.ongoingTFs.getTFs.Count - 1 To 0 Step -1
+        For i = p.ongoingTFs.getTFs.count - 1 To 0 Step -1
             tf = p.ongoingTFs.getTFs(i)
             If tf.GetType().IsSubclassOf(GetType(PolymorphTF)) Then tf.addTurnsTilStep(100)
         Next

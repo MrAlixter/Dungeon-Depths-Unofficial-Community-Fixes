@@ -11,7 +11,7 @@
     End Sub
 
     Sub ping(Optional ByRef pUpdateFlag = False)
-        For i = internalList.Count - 1 To 0 Step -1
+        For i = internalList.count - 1 To 0 Step -1
             tf = internalList.Values(i)
 
             If tf Is Nothing Then Continue For
@@ -45,7 +45,7 @@
     End Sub
 
     Function containsPolymorph() As Boolean
-        For i = internalList.Count - 1 To 0 Step -1
+        For i = internalList.count - 1 To 0 Step -1
             tf = internalList.Values(i)
             If tf.GetType().IsSubclassOf(GetType(PolymorphTF)) Then Return True
         Next
@@ -53,7 +53,7 @@
         Return False
     End Function
     Sub resetPolymorphs()
-        For i = internalList.Count - 1 To 0 Step -1
+        For i = internalList.count - 1 To 0 Step -1
             Dim tf As Transformation = internalList.Values(i)
             If tf.GetType().IsSubclassOf(GetType(PolymorphTF)) Then tf.removeFromTFList() : internalList.Remove(tf.getTFName)
         Next
@@ -69,6 +69,6 @@
     End Function
 
     Function count() As Integer
-        Return internalList.Count
+        Return internalList.count
     End Function
 End Class

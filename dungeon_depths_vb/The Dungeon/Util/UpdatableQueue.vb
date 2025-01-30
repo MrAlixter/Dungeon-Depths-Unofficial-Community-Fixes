@@ -32,12 +32,12 @@
         'Dim startTime As Double = DDDateTime.getTimeNow()
         Dim sortedKeys = sortMaxToMin(indexes)
 
-        For i = 0 To sortedKeys.Count - 1
-            If updatables.Count < 1 Then Exit For
+        For i = 0 To sortedKeys.count - 1
+            If updatables.count < 1 Then Exit For
             updatables(sortedKeys(i)).update()
         Next
         'Dim endTime As Double = DDDateTime.getTimeNow()
-        'Console.WriteLine(" - UPDATE TIME (" & updatables.Count & "): " + (endTime - startTime).ToString())
+        'Console.WriteLine(" - UPDATE TIME (" & updatables.count & "): " + (endTime - startTime).ToString())
         clear()
     End Sub
 
@@ -49,7 +49,7 @@
     End Sub
 
     Public Function isEmpty() As Boolean
-        Return indexes Is Nothing Or indexes.Count < 1
+        Return indexes Is Nothing Or indexes.count < 1
     End Function
 
 
@@ -60,13 +60,13 @@
     End Function
     Private Function sortMaxToMin(ByVal l As Dictionary(Of Integer, Integer)) As List(Of Integer)
 
-        If l.Count < 2 Then
+        If l.count < 2 Then
             Return l.Keys.ToList
         Else
             Dim max As Integer = -999999999
             Dim indMax As Integer = 0
 
-            For i = 0 To l.Count - 1
+            For i = 0 To l.count - 1
                 If l(l.Keys(i)) > max Then
                     max = l(l.Keys(i))
                     indMax = l.Keys(i)

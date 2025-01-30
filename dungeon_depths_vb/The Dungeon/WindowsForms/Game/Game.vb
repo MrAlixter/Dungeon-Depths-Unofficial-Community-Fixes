@@ -89,7 +89,7 @@ Public Class Game
     '| -- Misc. Variables -- |
     Public turn As Integer = 0                          '(NOT SAVED)
     Public version As Double = 13.0
-    Public sessionID As Integer = DateTime.Now.GetHashCode
+    Public sessionID As Integer = Math.Abs(DateTime.Now.GetHashCode)
     Dim imagesWorker As BackgroundWorker
     Public boardWorker As BackgroundWorker
     Dim cKeys As List(Of System.Windows.Forms.Keys) = New List(Of Keys)
@@ -1666,10 +1666,10 @@ Public Class Game
                 If selectionType = "SelfTF" Or selectionType = "EnemyTF" Then
                     player1.mana += 12
                 ElseIf selectionType = "BasicClassChange" Then
-                    player1.gold += New BasicClassChange().value
+                    player1.gold += New BasicClassChange().getValue()
                     leaveNPC()
                 ElseIf selectionType = "AdvClassChange" Then
-                    player1.gold += New AdvClassChange().value
+                    player1.gold += New AdvClassChange().getValue()
                     leaveNPC()
                 ElseIf selectionType = "yesNo" Then
                     If Not TextEvent.noAction Is Nothing Then TextEvent.noAction()
@@ -1829,7 +1829,7 @@ Public Class Game
         Dim indexes = "abcdefghijklmnopqrstuvwxyz".ToCharArray.ToList
         If indexes.Contains(Keydata.ToString.ToLower) Then
             Dim index As Integer = indexes.IndexOf(Keydata.ToString.ToLower)
-            If index > lstSelec.Items.Count - 1 Then
+            If index > lstSelec.Items.count - 1 Then
                 lblInstruc.Text = "Invalid selection:" & DDUtils.RNRN &
                                   "Please select" & vbCrLf &
                                   "another letter." & DDUtils.RNRN
@@ -1981,7 +1981,7 @@ Public Class Game
         updatePnlCombat(player1, player1.currTarget)
     End Sub
     Sub finishSelectSpecial()
-        If cboxSpec.Items.Count = 0 Then
+        If cboxSpec.Items.count = 0 Then
             cboxSpec.Visible = False
             btnSpec.Visible = False
         End If
@@ -2072,19 +2072,19 @@ Public Class Game
     Sub fillLstSelec(ByVal l As List(Of String), Optional ByVal o As Integer = 0)
         Dim ct = 0
 
-        For i = DDConst.SELECT_INDS.Count * o To (DDConst.SELECT_INDS.Count * (o + 1)) - 1
-            If i >= l.Count Then Exit For
+        For i = DDConst.SELECT_INDS.count * o To (DDConst.SELECT_INDS.count * (o + 1)) - 1
+            If i >= l.count Then Exit For
             lstSelec.Items.Add(DDConst.SELECT_INDS(ct) & " - " & l(i).ToString)
 
             ct += 1
         Next
 
-        maxSelectionPages = Math.Ceiling(l.Count / DDConst.SELECT_INDS.Count)
+        maxSelectionPages = Math.Ceiling(l.count / DDConst.SELECT_INDS.Count)
     End Sub
     Sub fillLstSelecItem(ByVal l As List(Of Item), Optional ByVal o As Integer = 0)
         Dim itemNames = New List(Of String)
         For Each i In l
-            If i.getCount > 0 Then itemNames.Add(i.getName)
+            If i.count > 0 Then itemNames.Add(i.getName)
         Next
 
         fillLstSelec(itemNames, o)
@@ -2127,21 +2127,21 @@ Public Class Game
             l.Add("Naked")
             Equipment.defaultClothesOptions(l)
             For Each i In player1.inv.getArmors.Item2
-                If i.getCount > 0 Then l.Add(i.getName)
+                If i.count > 0 Then l.Add(i.getName)
             Next
             fillLstSelec(l, lstSelec.Tag)
         ElseIf selectionType = "Other" Then
             Dim l = New List(Of String)
             l.Add("Nothing")
             For Each i In player1.inv.getAccesories.Item2
-                If i.getCount > 0 Then l.Add(i.getName)
+                If i.count > 0 Then l.Add(i.getName)
             Next
             fillLstSelec(l, lstSelec.Tag)
         ElseIf selectionType = "Weapon" Then
             Dim l = New List(Of String)
             l.Add("Fists")
             For Each i In player1.inv.getWeapons.Item2
-                If i.getCount > 0 Then l.Add(i.getName)
+                If i.count > 0 Then l.Add(i.getName)
             Next
             fillLstSelec(l, lstSelec.Tag)
         ElseIf selectionType = "yesNo" Then
@@ -2159,7 +2159,7 @@ Public Class Game
         selecting = True
         pnlSelection.BringToFront()
         If selectItemSize < 0 Then
-            If lstSelec.Items.Count < 1 Then lstSelec.Items.Add("test")
+            If lstSelec.Items.count < 1 Then lstSelec.Items.Add("test")
             selectItemSize = lstSelec.GetItemRectangle(0).Size.Height * 1.090909
             If lstSelec.Size.Height < (selectItemSize * DDConst.SELECT_INDS.Length) * 1.03 Then lstSelec.Size = New Size(lstSelec.Size.Width, (selectItemSize * DDConst.SELECT_INDS.Length) * 1.03)
         End If
@@ -2220,7 +2220,7 @@ Public Class Game
                 l.Add("Naked")
                 Equipment.defaultClothesOptions(l)
                 For Each i In player1.inv.getArmors.Item2
-                    If i.getCount > 0 Then l.Add(i.getName)
+                    If i.count > 0 Then l.Add(i.getName)
                 Next
                 fillLstSelec(l)
             Case "Other"
@@ -2228,7 +2228,7 @@ Public Class Game
                 Dim l = New List(Of String)
                 l.Add("Nothing")
                 For Each i In player1.inv.getAccesories.Item2
-                    If i.getCount > 0 Then l.Add(i.getName)
+                    If i.count > 0 Then l.Add(i.getName)
                 Next
                 fillLstSelec(l)
             Case "Weapon"
@@ -2236,7 +2236,7 @@ Public Class Game
                 Dim l = New List(Of String)
                 l.Add("Fists")
                 For Each i In player1.inv.getWeapons.Item2
-                    If i.getCount > 0 Then l.Add(i.getName)
+                    If i.count > 0 Then l.Add(i.getName)
                 Next
                 fillLstSelec(l)
             Case "manySelect"
@@ -2278,8 +2278,8 @@ Public Class Game
     '| -- Utilities for Command Drivers -- |
     Sub queueSetup()
         'This sets up the update list
-        If npc_list.Count > 0 Then
-            For i = 0 To npc_list.Count - 1
+        If npc_list.count > 0 Then
+            For i = 0 To npc_list.count - 1
                 updatable_queue.add(npc_list.Item(i), npc_list.Item(i).getSPD)
             Next
         End If
@@ -2319,7 +2319,7 @@ Public Class Game
             Exit Sub
         End If
 
-        If currFloor.chestList.Count < 1 And player1.quests(qInd.faewoods2a).canGet Then
+        If currFloor.chestList.count < 1 And player1.quests(qInd.faewoods2a).canGet Then
             player1.quests(qInd.faewoods2a).init()
             Exit Sub
         End If
@@ -2494,8 +2494,8 @@ Public Class Game
             ChallengeBoss(New RosethrallDragon)
         End If
 
-        If currFloor.chestList.Count > 0 Then
-            For i = 0 To currFloor.chestList.Count - 1
+        If currFloor.chestList.count > 0 Then
+            For i = 0 To currFloor.chestList.count - 1
                 If player1.pos = currFloor.chestList.Item(i).pos Then
                     currFloor.chestList.Item(i).open()
                     If currFloor.floorNumber = 13 AndAlso player1.quests(qInd.faewoods2a).canGet Then TextEvent.lblEventOnClose = AddressOf FaeWoodsQ2A.altInit
@@ -2561,8 +2561,8 @@ Public Class Game
             player1.canMoveFlag = True
         End If
 
-        If currFloor.statueList.Count > 0 Then
-            For i = 0 To currFloor.statueList.Count - 1
+        If currFloor.statueList.count > 0 Then
+            For i = 0 To currFloor.statueList.count - 1
                 If player1.pos = currFloor.statueList.Item(i).pos Then
                     currFloor.statueList.Item(i).examine()
                     Exit For
@@ -2846,10 +2846,10 @@ Public Class Game
 
         'Standard run procedure
         Dim run As Integer = Int(Rnd() * 4)
-        For i = 0 To npc_list.Count() - 1
-            If (npc_list.Count() < 1) Then
+        For i = 0 To npc_list.count() - 1
+            If (npc_list.count() < 1) Then
                 Exit Sub
-            ElseIf i < npc_list.Count And Not (npc_list.Item(i).GetType() Is GetType(Boss)) And run <> 1 Then
+            ElseIf i < npc_list.count And Not (npc_list.Item(i).GetType() Is GetType(Boss)) And run <> 1 Then
                 npc_list.Item(i).despawn("run")
                 updatable_queue.clear()
             Else
@@ -3078,16 +3078,16 @@ Public Class Game
         'If (mDun.numCurrFloor = 4 And mDun.floor_boss(4) = "Ooze Empress") Then
         '    writer.WriteLine("placeholder")
         '    writer.WriteLine("placeholder")
-        '    writer.WriteLine(floor_4_starting_inv.Count - 1)
-        '    For i = 0 To floor_4_starting_inv.Count - 1
+        '    writer.WriteLine(floor_4_starting_inv.count - 1)
+        '    For i = 0 To floor_4_starting_inv.count - 1
         '        writer.WriteLine(floor_4_starting_inv.Item(i))
         '    Next
         'End If
 
         ''save the shop NPCs
         'writer.WriteLine("---------------------------------SHOP NPCs-----------------------------------")
-        'writer.WriteLine(shop_npc_list.Count - 1)
-        'For i = 0 To shop_npc_list.Count - 1
+        'writer.WriteLine(shop_npc_list.count - 1)
+        'For i = 0 To shop_npc_list.count - 1
         '    writer.WriteLine(shop_npc_list(i).saveNPC)
         'Next
 
@@ -3132,7 +3132,7 @@ Public Class Game
             End If
             Exit Sub
         ElseIf v < 13.0 Then
-            sessionID = CInt(reader.ReadLine)
+            sessionID = Math.Abs(CInt(reader.ReadLine))
 
             Debug_Window.clear()
             cboxNPCMG.Items.Clear()
@@ -3461,7 +3461,7 @@ Public Class Game
 
     '|COMBAT|
     Function getCombatTarget(ByRef p As Player) As NPC
-        For i = 0 To npc_list.Count() - 1
+        For i = 0 To npc_list.count() - 1
             If npc_list.Item(i).GetType().IsSubclassOf(GetType(NPC)) Or npc_list.Item(i).GetType() Is GetType(NPC) Then
                 Return npc_list.Item(i)
             End If
@@ -3801,7 +3801,7 @@ Public Class Game
 
         '|-Clean up NPC-|
         Dim m As ShopNPC = Nothing
-        For i = 0 To npc_list.Count() - 1
+        For i = 0 To npc_list.count() - 1
             If npc_list.Item(i).GetType().IsSubclassOf(GetType(ShopNPC)) Then
                 m = npc_list.Item(i)
                 Exit For

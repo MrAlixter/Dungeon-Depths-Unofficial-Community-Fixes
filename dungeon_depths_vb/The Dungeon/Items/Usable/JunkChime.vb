@@ -58,14 +58,14 @@
 
             For i = 0 To p.inv.count - 1
                 If p.inv.item(i).getName().Contains(p.equippedArmor.getName()) Or p.inv.item(i).getName().Contains(p.equippedWeapon.getName()) Or p.inv.item(i).getName().Contains(p.equippedAcce.getName()) Or p.inv.item(i).getName().Contains(p.equippedGlasses.getName()) Then
-                    If p.inv.item(i).getCount > 1 And inv.item(i).getCount > 0 Then
-                        profit += (p.inv.item(i).getCount - 1 * p.inv.item(i).value * 0.45) / 2
+                    If p.inv.item(i).count > 1 And inv.item(i).count > 0 Then
+                        profit += (p.inv.item(i).count - 1 * p.inv.item(i).getValue() * 0.45) / 2
                         p.inv.setCount(i, 1)
                         ct += 1
                     End If
                 Else
-                    If p.inv.item(i).getCount > 0 And inv.item(i).getCount > 0 Then
-                        profit += (p.inv.item(i).getCount * p.inv.item(i).value * 0.45) / 2
+                    If p.inv.item(i).count > 0 And inv.item(i).count > 0 Then
+                        profit += (p.inv.item(i).count * p.inv.item(i).getValue() * 0.45) / 2
                         p.inv.setCount(i, 0)
                         ct += 1
                     End If
@@ -129,7 +129,7 @@
 
         Dim menu = ThistleMenuV3
         menu.ShowDialog()
-        'If Game.floor_4_starting_inv.Count > 0 Then
+        'If Game.floor_4_starting_inv.count > 0 Then
         '    menu.txtDesc.Text = """Woah..."" says the fairy, ""We doin' some fraud today?"""
         'End If
 

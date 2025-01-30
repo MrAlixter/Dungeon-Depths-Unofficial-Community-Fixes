@@ -72,10 +72,10 @@
         Dim ctTFs As Integer = 0
         Dim oddsToTF As Double = 1.0
         For Each itm In DDUtils.ishuffle(p.inv.getPotions)
-            If itm.getCount() > 0 And Rnd() <= oddsToTF And Not itm.getAName.Equals(DitzyPotion.ITEM_NAME) Then
-                p.inv.item(DitzyPotion.ITEM_NAME).add(itm.getCount())
-                ctTFs += itm.getCount()
-                p.inv.add(itm.getId(), -itm.getCount())
+            If itm.count > 0 And Rnd() <= oddsToTF And Not itm.getAName.Equals(DitzyPotion.ITEM_NAME) Then
+                p.inv.item(DitzyPotion.ITEM_NAME).add(itm.Count)
+                ctTFs += itm.count
+                p.inv.add(itm.getId(), -itm.Count)
                 oddsToTF *= 0.95
             End If
         Next
@@ -124,20 +124,20 @@
 
         For Each itm In DDUtils.ishuffle(p.inv.getArmors.Item2)
             Dim hold_itm = CType(itm, Armor)
-            If (itm.getCount > 0 AndAlso hold_itm.getSlutVarInd() > 0 AndAlso p.equippedArmor.getId <> itm.getId) OrElse (itm.getCount > 1 AndAlso hold_itm.getSlutVarInd() > 0 AndAlso p.equippedArmor.getId = itm.getId) And Rnd() <= oddsToTF Then
+            If (itm.count > 0 AndAlso hold_itm.getSlutVarInd() > 0 AndAlso p.equippedArmor.getId <> itm.getId) OrElse (itm.count > 1 AndAlso hold_itm.getSlutVarInd() > 0 AndAlso p.equippedArmor.getId = itm.getId) And Rnd() <= oddsToTF Then
                 idsToTF.Add(itm.getId())
-                ctTFClothes += itm.getCount
+                ctTFClothes += itm.count
                 oddsToTF *= 0.95
             End If
         Next
 
         For Each id In idsToTF
             If id = p.equippedArmor.getId Then
-                p.inv.add(CType(p.inv.item(id), Armor).getSlutVarInd, (p.inv.item(id).getCount - 1))
-                p.inv.add(id, -(p.inv.item(id).getCount - 1))
+                p.inv.add(CType(p.inv.item(id), Armor).getSlutVarInd, (p.inv.item(id).count - 1))
+                p.inv.add(id, -(p.inv.item(id).count - 1))
             Else
-                p.inv.add(CType(p.inv.item(id), Armor).getSlutVarInd, p.inv.item(id).getCount)
-                p.inv.add(id, -p.inv.item(id).getCount)
+                p.inv.add(CType(p.inv.item(id), Armor).getSlutVarInd, p.inv.item(id).Count)
+                p.inv.add(id, -p.inv.item(id).Count)
             End If
         Next
 

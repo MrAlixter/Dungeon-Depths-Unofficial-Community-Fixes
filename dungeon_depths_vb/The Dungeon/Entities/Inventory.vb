@@ -478,6 +478,9 @@
         internal_inventory.Add(RingOfWarForm.ITEM_NAME, New RingOfWarForm)           '450
         internal_inventory.Add(ScarletComb.ITEM_NAME, New ScarletComb)               '451
         internal_inventory.Add(ImpsDraught.ITEM_NAME, New ImpsDraught)               '452
+        internal_inventory.Add(PinkPantiesPLR.ITEM_NAME, New PinkPantiesPLR)         '453
+        internal_inventory.Add(PotionOfPanties.ITEM_NAME, New PotionOfPanties)       '454
+        internal_inventory.Add(GlitteryDress.ITEM_NAME, New GlitteryDress)           '455
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -511,7 +514,7 @@
                  Me.item(394), Me.item(398), Me.item(404), Me.item(405),
                  Me.item(413), Me.item(418), Me.item(423), Me.item(425),
                  Me.item(429), Me.item(438), Me.item(443), Me.item(445),
-                 Me.item(446)}
+                 Me.item(446), Me.item(455)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -584,7 +587,8 @@
                 Me.item(344), Me.item(346), Me.item(349), Me.item(355),
                 Me.item(356), Me.item(361), Me.item(374), Me.item(375),
                 Me.item(376), Me.item(389), Me.item(391), Me.item(402),
-                Me.item(411), Me.item(414), Me.item(439), Me.item(450)}
+                Me.item(411), Me.item(414), Me.item(439), Me.item(450),
+                Me.item(453)}
 
         services = {Me.item(87), Me.item(113), Me.item(114), Me.item(121),
                     Me.item(122), Me.item(124), Me.item(131), Me.item(245),
@@ -600,7 +604,7 @@
                    Me.item(233), Me.item(234), Me.item(235), Me.item(236),
                    Me.item(241), Me.item(246), Me.item(247), Me.item(248),
                    Me.item(378), Me.item(382), Me.item(383), Me.item(435),
-                   Me.item(437), Me.item(452)}
+                   Me.item(437), Me.item(452), Me.item(454)}
 
         Array.Sort(potions)
 
@@ -643,14 +647,14 @@
     '|UTILITY|
     Sub merge(ByRef inv As Inventory)
         For i = 0 To upperBound()
-            item(i).add(inv.item(i).count)
+            item(i).add(inv.item(i).Count)
         Next
         invNeedsUDate = True
     End Sub
     Sub mergeRevalue(ByRef inv As Inventory)
         For i = 0 To upperBound()
-            item(i).value = inv.item(i).value
-            item(i).add(inv.item(i).count)
+            item(i).value = inv.item(i).getValue()
+            item(i).add(inv.item(i).Count)
         Next
     End Sub
     Sub add(ByVal key As String, ByVal count As Integer)
@@ -693,8 +697,8 @@
         Next
 
         If Not mPotions Is Nothing Then
-            out += CStr(mPotions.Count - 1) & ":"
-            For i = 0 To mPotions.Count - 1
+            out += CStr(mPotions.count - 1) & ":"
+            For i = 0 To mPotions.count - 1
                 out += mPotions(i).getName() & "~" & mPotions(i).hasBeenUsed & ":"
             Next
         Else
@@ -757,11 +761,11 @@
     End Function
     Public Function getCountAt(ByVal i As Integer) As Integer
         If item(i) Is Nothing Then Return 0
-        Return item(i).getCount()
+        Return item(i).count
     End Function
     Public Function getCountAt(ByVal n As String) As Integer
         If item(n) Is Nothing Then Return 0
-        Return item(n).getCount()
+        Return item(n).count
     End Function
     Public Function calcSum() As Integer
         Dim totalSum As Integer = 0

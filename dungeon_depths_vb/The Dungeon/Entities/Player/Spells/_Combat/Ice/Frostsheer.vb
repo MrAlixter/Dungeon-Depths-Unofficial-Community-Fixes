@@ -20,8 +20,8 @@
             Dim floor = Game.currFloor
             Dim success As Boolean = False
 
-            If floor.chestList.Count > 0 Then
-                For i = 0 To floor.chestList.Count - 1
+            If floor.chestList.count > 0 Then
+                For i = 0 To floor.chestList.count - 1
                     If getCaster.pos = floor.chestList.Item(i).pos Then
                         TextEvent.pushLog("You crack the chest open with ice magic.")
                         floor.chestList.Item(i).open(False)

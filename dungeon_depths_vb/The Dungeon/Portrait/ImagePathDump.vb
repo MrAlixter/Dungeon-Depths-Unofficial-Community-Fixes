@@ -28,10 +28,10 @@ Public Class ImagePathDump
         paths.AddRange(b.getPaths)
     End Sub
     Public Function Count() As Integer
-        Return paths.Count
+        Return paths.count
     End Function
     Public Function UBound() As Integer
-        Return paths.Count - 1
+        Return paths.count - 1
     End Function
 
     'getImg reads all .png files in a directory into a List data structure

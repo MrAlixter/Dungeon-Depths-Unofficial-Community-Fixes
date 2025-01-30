@@ -244,7 +244,7 @@ Public Class Settings
 
         Dim l = Monster.getRNGMonsters()
 
-        For i = 0 To l.Count - 1
+        For i = 0 To l.count - 1
             If Not Settings.monsterSpawns.ContainsKey(l.Item(i).Item1) Then Settings.monsterSpawns.Add(l.Item(i).Item1, 2)
             createSpawnRatePanel(l.Item(i).Item2, l.Item(i).Item1, i)
         Next

@@ -21,17 +21,20 @@
     Public value As Integer
     Protected tier As Integer = Nothing
     Public id As Integer = -1
+
     Public npc_drop_only As Boolean = False
     Public rando_inv_allowed = True
     Public can_be_stolen As Boolean = True
     Public only_drop_one As Boolean = False
     Public list_in_shop As Boolean = True
     Public list_in_debug As Boolean = True
+    Public stores_inanimate_ent As Boolean = False
 
     Public saleLim As Integer = 999
     Public onSell As Action = Nothing
     Public onBuy As Action = Nothing
     Public durability As Integer = 100
+    Private inanimate_ent As InanimateEntity = Nothing
 
     '| -- Comparable -- |
     Overloads Function CompareTo(ByVal obj As Object) As Integer Implements IComparable.CompareTo
@@ -50,30 +53,45 @@
     Sub setName(ByVal s As String)
         name = s
     End Sub
-    Sub setDesc(ByVal s As String)
-        description = s
-    End Sub
-    Public Overridable Function getTier(ByVal floor_num As Integer) As Integer
-        Return tier
-    End Function
-    Public Function getId()
-        Return id
-    End Function
+
     Public Overridable Function getDescription()
         Return description
     End Function
-    Function getCount()
-        Return count
+    Sub setDesc(ByVal s As String)
+        description = s
+    End Sub
+
+    Public Overridable Function getInanimateEnt(Optional ByVal useSessionID As Boolean = False) As InanimateEntity
+        If stores_inanimate_ent And inanimate_ent Is Nothing Then
+            loadInanimateEntity(useSessionID)
+        End If
+
+        Return inanimate_ent
+    End Function
+    Public Overridable Sub setInanimateEnt(ByRef ent As InanimateEntity, ByRef source As Entity)
+        inanimate_ent = ent
+    End Sub
+
+    Public Overridable Function getTier(ByVal floor_num As Integer) As Integer
+        Return tier
+    End Function
+    Public Overridable Function getId()
+        Return id
+    End Function
+    Public Overridable Function getValue() As Integer
+        Return value
     End Function
     Public Overridable Function getUsable() As Boolean
         Return usable
     End Function
 
+
     '| -- Inventory -- |
     Sub addOne()
-        count += 1
+        add(1)
     End Sub
     Overridable Sub add(ByVal i As Integer)
+        'If stores_inanimate_ent Then If Not inanimate_ent Is Nothing Then i = 0
         count += i
     End Sub
     Overridable Sub discard()
@@ -165,5 +183,12 @@
         Finally
             reader.Close()
         End Try
+    End Sub
+    Private Sub loadInanimateEntity(ByVal useSessionID As Boolean)
+        If useSessionID AndAlso System.IO.File.Exists("items\" & Game.sessionID & "_" & id & ".itm") Then
+            inanimate_ent = InanimateEntity.loadFromFile(id, Game.sessionID)
+        ElseIf Not useSessionID AndAlso DDUtils.fileExistsWC("items\", "*_" & id & ".itm") Then
+            inanimate_ent = InanimateEntity.loadFromFile(id)
+        End If
     End Sub
 End Class

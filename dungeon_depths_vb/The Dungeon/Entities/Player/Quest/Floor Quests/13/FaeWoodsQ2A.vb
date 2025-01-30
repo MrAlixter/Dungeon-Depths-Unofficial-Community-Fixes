@@ -36,7 +36,7 @@
                Game.player1.perks(perk.faecurse) < 0 AndAlso
                (Not Game.fqueen Is Nothing AndAlso Game.fqueen.pos.X = -1) AndAlso
                p.quests(qInd.faewoods1a).getComplete AndAlso
-               ((Game.currFloor.chestList.Count < 1 And Int(Rnd() * 3) = 0) Or Game.currFloor.chestList.Count > 0) AndAlso
+               ((Game.currFloor.chestList.count < 1 And Int(Rnd() * 3) = 0) Or Game.currFloor.chestList.count > 0) AndAlso
                (Not p.ongoingTFs Is Nothing AndAlso Not p.ongoingTFs.contains(tfind.faebimbo) AndAlso Not p.ongoingTFs.contains(tfind.faecleric)) AndAlso
                Not getComplete() AndAlso
                Not Game.combat_engaged AndAlso

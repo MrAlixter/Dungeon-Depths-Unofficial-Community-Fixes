@@ -11,7 +11,7 @@
     End Sub
 
     Sub ping(Optional ByRef pUpdateFlag = False)
-        For i = internalList.Count - 1 To 0 Step -1
+        For i = internalList.count - 1 To 0 Step -1
             Dim q = internalList.Values(i)
             If q Is Nothing Then Continue For
             If q.getComplete Or q.getCurrObj Is Nothing Then
@@ -46,18 +46,18 @@
         Return internalList(s)
     End Function
     Function getAt(ByVal i As Integer) As Quest
-        If i >= internalList.Count() Or i < 0 Then Return Nothing
+        If i >= internalList.count() Or i < 0 Then Return Nothing
 
         Return internalList(internalList.Keys(i))
     End Function
 
     Function count() As Integer
-        Return internalList.Count
+        Return internalList.count
     End Function
 
     Function save() As String
         Dim output = ""
-        output += internalList.Count - 1 & "Ͱ"
+        output += internalList.count - 1 & "Ͱ"
 
         For Each q In internalList
             output += q.Value.getQInd & "Ͱ"

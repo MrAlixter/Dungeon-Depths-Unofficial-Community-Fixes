@@ -281,14 +281,14 @@
 
     Private Sub removeItem()
         If t.Text = "#" Then
-            For i = 0 To Game.currfloor.chestList.Count - 1
+            For i = 0 To Game.currfloor.chestList.count - 1
                 If p = CType(Game.currfloor.chestList(i), Chest).pos Then
                     Game.currfloor.chestList.RemoveAt(i)
                     Exit Sub
                 End If
             Next
         ElseIf t.Text = "+" Then
-            For i = 0 To Game.currfloor.trapList.Count - 1
+            For i = 0 To Game.currfloor.trapList.count - 1
                 If p = CType(Game.currfloor.trapList(i), Trap).pos Then
                     Game.currfloor.trapList.RemoveAt(i)
                     Exit Sub

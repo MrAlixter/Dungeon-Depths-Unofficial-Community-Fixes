@@ -8,7 +8,7 @@
     End Sub
     Public Overrides Sub effect()
         Dim p = MyBase.getUser
-        If p.knownSpecials.Count >= Special.specialList.Count And p.knownSpells.Count >= Spell.spellList.Count Then TextEvent.push("Nothing happens...") : Exit Sub
+        If p.knownSpecials.count >= Special.specialList.count And p.knownSpells.count >= Spell.spellList.count Then TextEvent.push("Nothing happens...") : Exit Sub
 
         Dim forgottenS As String = "none"
         Dim learnedS As String = "none"
@@ -18,7 +18,7 @@
 
         If coin = 0 Then
             Dim omniSpells() As String = ASpellbook.getSpells.Union(Spellbook.getSpells).ToArray
-            If omniSpells.Count = p.knownSpells.Count Then
+            If omniSpells.count = p.knownSpells.count Then
                 errorout()
                 Exit Sub
             End If
@@ -29,7 +29,7 @@
             End While
         Else
             Dim omniSpec() As String = CombatManual.getSpecials.Union(UtilityManual.getSpecials).ToArray
-            If omniSpec.Count = p.knownSpecials.Count Then
+            If omniSpec.count = p.knownSpecials.count Then
                 errorout()
                 Exit Sub
             End If
@@ -61,8 +61,8 @@
 
         If coin = 0 Then
             p.knownSpells.Add(learnedS)
-            If learnedS.Equals("Self Polymorph") And p.selfPolyForms.Count = 0 Then p.selfPolyForms.Add("Succubus")
-            If learnedS.Equals("Polymorph Enemy") And p.enemPolyForms.Count = 0 Then p.enemPolyForms.Add("Cat-Girl")
+            If learnedS.Equals("Self Polymorph") And p.selfPolyForms.count = 0 Then p.selfPolyForms.Add("Succubus")
+            If learnedS.Equals("Polymorph Enemy") And p.enemPolyForms.count = 0 Then p.enemPolyForms.Add("Cat-Girl")
         Else
             p.knownSpecials.Add(learnedS)
         End If

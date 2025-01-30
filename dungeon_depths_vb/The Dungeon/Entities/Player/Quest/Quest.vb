@@ -32,17 +32,17 @@ Public MustInherit Class Quest
     End Sub
 
     Public Function getProgress() As String
-        Return curr_step + 1 & "/" & objectives.Count
+        Return curr_step + 1 & "/" & objectives.count
     End Function
 
     Public Sub complete(ByVal objId As Integer)
-        If objId > -1 And objId < objectives.Count Then
+        If objId > -1 And objId < objectives.count Then
             objectives(objId).complete()
         End If
 
         curr_step += 1
 
-        If curr_step >= objectives.Count Then
+        If curr_step >= objectives.count Then
             completed = True
             active = False
         End If
@@ -58,7 +58,7 @@ Public MustInherit Class Quest
         curr_step = i
     End Sub
     Public Function getCurrObj() As Objective
-        If curr_step > -1 And curr_step < objectives.Count Then
+        If curr_step > -1 And curr_step < objectives.count Then
             Return objectives(curr_step)
         End If
         Return Nothing

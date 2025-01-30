@@ -96,15 +96,15 @@
     End Sub
     Public Shared Sub pushLog(ByVal s As String)
         Game.lstLog.Items.Add(s)
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.lstLog.TopIndex = Game.lstLog.Items.count - 1
     End Sub
     Public Shared Sub push2ndLastLog(ByVal s As String)
-        Game.lstLog.Items.Insert(Game.lstLog.Items.Count - 1, s)
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.lstLog.Items.Insert(Game.lstLog.Items.count - 1, s)
+        Game.lstLog.TopIndex = Game.lstLog.Items.count - 1
     End Sub
     Public Shared Sub push3rdLastLog(ByVal s As String)
-        Game.lstLog.Items.Insert(Game.lstLog.Items.Count - 2, s)
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.lstLog.Items.Insert(Game.lstLog.Items.count - 2, s)
+        Game.lstLog.TopIndex = Game.lstLog.Items.count - 1
     End Sub
     Public Shared Sub pushAndLog(ByVal msg As String)
         push(msg)

@@ -59,7 +59,7 @@
                     If p.count > 0 Then ownedPotions.Add(p)
                 Next
 
-                If ownedPotions.Count > 0 Then
+                If ownedPotions.count > 0 Then
                     Dim i = Int(Rnd() * ownedPotions.Count)
                     TextEvent.pushLog("You fall on your " & ownedPotions(i).getAName & "!")
                     TextEvent.pushCombat("You stagger backwards and trip, landing on your " & ownedPotions(i).getAName & " and splattering it all over yourself!")

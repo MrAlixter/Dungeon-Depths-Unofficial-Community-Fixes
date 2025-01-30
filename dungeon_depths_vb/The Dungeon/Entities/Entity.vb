@@ -100,6 +100,14 @@ Public MustInherit Class Entity
     Public Sub die()
         die(Nothing)
     End Sub
+    Public Sub inanimateTF(ByRef source As Entity, ByVal itemName As String, Optional ByVal reversible As Boolean = True)
+        Dim itm As Item = Game.player1.inv.item(itemName)
+
+        If itm.stores_inanimate_ent Then
+            itm.setInanimateEnt(New InanimateEntity(Me), Me)
+            itm.getInanimateEnt().writeToFile(itm.getId())
+        End If
+    End Sub
 
     '|COMBAT|
     Public MustOverride Sub attackCMD(ByRef target As Entity)

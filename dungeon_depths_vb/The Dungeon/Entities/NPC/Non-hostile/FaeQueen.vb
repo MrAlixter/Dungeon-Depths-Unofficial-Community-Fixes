@@ -508,31 +508,31 @@
                                "Your legs are pressed together, tighter, tighter, until the pressure releases suddenly and you take a moment to sigh with relief.  Glancing down, though, you find that your lower body has taken root and the dire state of your situation becomes clear." & DDUtils.RNRN &
                                "Leaves and petals sprout from your face as you begin to shrink, and without so much as a wimper you fade away into the fae's magic." & DDUtils.RNRN &
                                "The spell completes its work, and all that is left at the Queen's feet is an elegant " & Trim(Game.player1.getHairColor) & " rose.", AddressOf leaveP2)
-                Game.player1.inv.item(FaeRose.ITEM_NAME).toSavedItem(Game.player1)
+                Game.player1.inanimateTF(Me, FaeRose.ITEM_NAME, False)
             Case 1
                 TextEvent.push("The Fae Queen's aura becomes overwhelming as a verdant glow engulfs your surroundings.  You slump over, as the your strength is seemingly sapped by her spell." & DDUtils.RNRN &
                                "You try to prop yourself back up, but your arms quickly fall out from under you as they turn to a silky black fabric.  Glancing down, you find that the same is true of your legs, and the dire state of your situation becomes clear." & DDUtils.RNRN &
                                "The pattern of a bustier appears on your chest as it too becomes soft, silky cloth, and without so much as a wimper you fade away into the fae's magic." & DDUtils.RNRN &
                                "The spell completes its work, and all that is left at the Queen's feet is a skimpy set of lingerie.", AddressOf leaveP2)
-                Game.player1.inv.item(FaeLingerie.ITEM_NAME).toSavedItem(Game.player1)
+                Game.player1.inanimateTF(Me, FaeLingerie.ITEM_NAME, False)
             Case 2
                 TextEvent.push("The Fae Queen's aura becomes overwhelming as a verdant glow engulfs your surroundings.  You slump over, as the your strength is seemingly sapped by her spell." & DDUtils.RNRN &
                                "You try to prop yourself back up, but your arms quickly fall out from under you as they fade into nothingness.  Glancing down, you find that the same is true of your legs, and the dire state of your situation becomes clear." & DDUtils.RNRN &
                                "You can no longer sense anything around you, and without so much as a wimper you fade away into the fae's magic." & DDUtils.RNRN &
                                "The spell completes its work, and all that is left at the Queen's feet is a simple apple.", AddressOf leaveP2)
-                Game.player1.inv.item(FaePApple.ITEM_NAME).toSavedItem(Game.player1)
+                Game.player1.inanimateTF(Me, FaePApple.ITEM_NAME, False)
             Case 3
                 TextEvent.push("The Fae Queen's aura becomes overwhelming as a verdant glow engulfs your surroundings.  You slump over, as the your strength is seemingly sapped by her spell." & DDUtils.RNRN &
                                "You try to prop yourself back up, but your arms quickly fall out from under you as they fade into nothingness.  Glancing down, you find that the same is true of your legs, and the dire state of your situation becomes clear." & DDUtils.RNRN &
                                "You can no longer sense anything around you, and without so much as a wimper you fade away into the fae's magic." & DDUtils.RNRN &
                                "The spell completes its work, and all that is left at the Queen's feet is a shiny pair of earrings.", AddressOf leaveP2)
-                Game.player1.inv.item(FaeForgedRing.ITEM_NAME).toSavedItem(Game.player1)
+                Game.player1.inanimateTF(Me, FaeForgedRing.ITEM_NAME, False)
             Case Else
                 TextEvent.push("The Fae Queen's aura becomes overwhelming as a verdant glow engulfs your surroundings.  You slump over, as the your strength is seemingly sapped by her spell." & DDUtils.RNRN &
                                "You try to prop yourself back up, but your arms quickly fall out from under you as they fade into nothingness.  Glancing down, you find that your legs are the only parts of you that aren't vanishing, and the dire state of your situation becomes clear." &
                                "The pattern of a ribbon appears on each of your thighs as they turn into smooth fabric, and without so much as a wimper you fade away into the fae's magic." & DDUtils.RNRN &
                                "The spell completes its work, and all that is left at the Queen's feet is a comfy pair of stockings.", AddressOf leaveP2)
-                Game.player1.inv.item(FaeStockings.ITEM_NAME).toSavedItem(Game.player1)
+                Game.player1.inanimateTF(Me, FaeStockings.ITEM_NAME, False)
         End Select
     End Sub
     Private Sub leaveP2()

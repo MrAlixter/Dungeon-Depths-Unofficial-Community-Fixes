@@ -128,8 +128,8 @@ Public Class Dungeon
 
         If Not Game.player1.forcedPath Is Nothing AndAlso UBound(Game.player1.forcedPath) > 0 Then Game.player1.forcedPath = Nothing
 
-        For i = 0 To Game.shop_npc_list.Count - 1
-            If i < floors(numCurrFloor).npcPositions.Count Then
+        For i = 0 To Game.shop_npc_list.count - 1
+            If i < floors(numCurrFloor).npcPositions.count Then
                 Game.shop_npc_list(i).pos = floors(numCurrFloor).npcPositions(i)
             Else
                 Game.shop_npc_list(i).pos = New Point(-1, -1)
@@ -154,7 +154,7 @@ Public Class Dungeon
     Public Function currFloorCode() As String
         For Each c In floor_codes
         Next
-        If floor_codes.Count > numCurrFloor Then
+        If floor_codes.count > numCurrFloor Then
             Return floor_codes(numCurrFloor)
         Else
             Return ""
@@ -208,13 +208,13 @@ Public Class Dungeon
 
         floor_boss.Clear()
         For i = 0 To CInt(buffer(3 + floors.Keys.Count))
-            Dim kvp() = buffer(4 + floors.Keys.Count + i).Split("~")
+            Dim kvp() = buffer(4 + floors.Keys.count + i).Split("~")
             floor_boss.Add(CInt(kvp(0)), kvp(1))
         Next
 
         floor_codes.Clear()
-        For i = 0 To CInt(buffer(4 + floors.Keys.Count + floor_boss.Count))
-            Dim kvp() = buffer(5 + floors.Keys.Count + floor_boss.Count + i).Split("~")
+        For i = 0 To CInt(buffer(4 + floors.Keys.count + floor_boss.Count))
+            Dim kvp() = buffer(5 + floors.Keys.count + floor_boss.count + i).Split("~")
             floor_codes.Add(CInt(kvp(0)), kvp(1))
         Next
 

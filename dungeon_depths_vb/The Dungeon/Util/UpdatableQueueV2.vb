@@ -23,7 +23,7 @@
 
         Dim maxID As Integer = 0
 
-        For i = 1 To priorities.Count - 1
+        For i = 1 To priorities.count - 1
             If (priorities(maxID) < priorities(i)) Then maxID = i
         Next
 
@@ -47,6 +47,6 @@
     End Sub
 
     Public Function isEmpty() As Boolean
-        Return priorities Is Nothing Or priorities.Count < 1
+        Return priorities Is Nothing Or priorities.count < 1
     End Function
 End Class

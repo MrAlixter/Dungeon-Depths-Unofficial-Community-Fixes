@@ -64,7 +64,7 @@
 
     Private Sub contentsFilterUpdate()
         boxContents.Items.Clear()
-        For i As Integer = 0 To inventoryList.Count - 1
+        For i As Integer = 0 To inventoryList.count - 1
             If inventoryList(i).IndexOf(boxContentsFilter.Text, 0, StringComparison.CurrentCultureIgnoreCase) > -1 Then
                 boxContents.Items.Add(inventoryList(i).ToString())
             End If
@@ -82,9 +82,9 @@
     End Sub
 
     Private Sub btnSub_Click(sender As Object, e As EventArgs) Handles btnSub.Click
-        If boxContents.SelectedIndices.Count < 1 Or boxAmt.Value < 1 Then Exit Sub
+        If boxContents.SelectedIndices.count < 1 Or boxAmt.Value < 1 Then Exit Sub
         Dim selected As ListBox.SelectedIndexCollection = boxContents.SelectedIndices
-        Do Until selected.Count = 0
+        Do Until selected.count = 0
             Dim temp As Integer = selected(0)
             Dim name As String = inventoryList(temp)
             Dim itemInd As Integer = chest.contents.idOfKey(name)
@@ -101,8 +101,8 @@
     End Sub
 
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
-        If boxItems.SelectedIndices.Count <> 0 And boxAmt.Value > 0 Then
-            For i = 0 To boxItems.SelectedIndices.Count - 1
+        If boxItems.SelectedIndices.count <> 0 And boxAmt.Value > 0 Then
+            For i = 0 To boxItems.SelectedIndices.count - 1
                 Dim itemInd As Integer = chest.contents.idOfKey(boxItems.SelectedItems(i))
                 chest.contents.add(itemInd, CInt(boxAmt.Value))
             Next

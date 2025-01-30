@@ -21,7 +21,7 @@
 
         targets = getTargets(Game.currFloor)
 
-        If Game.currFloor.floorNumber = 13 Or targets.Count < 1 Then
+        If Game.currFloor.floorNumber = 13 Or targets.count < 1 Then
             TextEvent.pushAndLog("Your magic forms a network of vines that dart out around you..." & DDUtils.RNRN &
                                  "...but they don't find anything.")
             Exit Sub
@@ -30,8 +30,8 @@
         Game.currFloor.cleanPaths()
 
         TextEvent.push("Your magic forms a network of vines that dart out around you..." & DDUtils.RNRN &
-                       targets.Count & " locations found!", AddressOf askWhichTarget)
-        TextEvent.pushLog("Your magic forms a network of vines that dart out around you... " & targets.Count & " locations found!")
+                       targets.count & " locations found!", AddressOf askWhichTarget)
+        TextEvent.pushLog("Your magic forms a network of vines that dart out around you... " & targets.count & " locations found!")
     End Sub
 
     Private Sub askWhichTarget()

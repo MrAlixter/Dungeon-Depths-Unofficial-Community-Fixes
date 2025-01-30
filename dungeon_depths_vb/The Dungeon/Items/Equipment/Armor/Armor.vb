@@ -55,6 +55,7 @@
     Public compress_breast As Boolean = True
     Public hide_rearhair As Boolean = False
     Public adjust_sleeve_layer As Boolean = True
+    Public boobs_over_clothesbtm As Boolean = False
     Public show_underboob As Boolean = False
     Public hide_dick As Boolean = True
     Public swap_gen_clothesbtm As Boolean = False

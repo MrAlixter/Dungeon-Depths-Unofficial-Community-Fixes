@@ -85,7 +85,7 @@
         Return fNonDefOffset
     End Function
     Function Count() As Integer
-        Return fImages.Count + mImages.Count
+        Return fImages.count + mImages.count
     End Function
     Shared Function get0pt7DefaultImageOffsetM(ByVal key As pInd)
         If key = pInd.clothes Then Return 5

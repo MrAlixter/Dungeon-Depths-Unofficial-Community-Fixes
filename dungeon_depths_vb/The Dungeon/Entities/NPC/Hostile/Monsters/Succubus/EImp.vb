@@ -65,22 +65,48 @@
 
     Public Sub playerDeathP2(ByRef p As Player)
         'turn vial of slime into pink slime, cover the player in it
-        'turn any stick of gum into cinnimon stick of gum
         'turn cowbell/bimbell into ring of the cow
-        Dim out As String = """Eh... so what's this here?" & DDUtils.RNRN
-        If GumGun20mm.getSelectedGum(p).count > 0 Then
+        Dim out As String = """Eh... so what's this here?""" & DDUtils.RNRN
 
-            GumGun20mm.getSelectedGum(p).add(-1)
+        Dim selectedGum As Item = GumGun20mm.getSelectedGum(p)
+        If p.inv.getCountAt(VialOfSlime.ITEM_NAME) > 0 Then
+            out += DDUtils.capitalizeFirst(pronoun) & " holds up a " & VialOfSlime.ITEM_NAME & ", gently rotating the glass container.  As she watches the fluid within rotate, her smile widens into a sinister grin." & DDUtils.RNRN &
+                "The teal of the slime bubbles into a brilliant pink." & DDUtils.RNRN &
+                """Now that's the good stuff, yeah?  Don't be shy; this one's on me.""" & DDUtils.RNRN &
+                "-1 " & VialOfSlime.ITEM_NAME & DDUtils.RNRN &
+                "+1 " & VialOfPSlime.ITEM_NAME
 
-            p.ongoingTFs.add(New CinnamonBimboTF(2, 5, 0.25, True))
-            p.perks(perk.bimbotf) = 0
+            p.inv.item(VialOfSlime.ITEM_NAME).add(-1)
+            p.inv.item(VialOfPSlime.ITEM_NAME).add(1)
+
+            p.UIupdate()
+        ElseIf selectedGum.count > 0 Then
+            out += DDUtils.capitalizeFirst(pronoun) & " holds up a " & selectedGum.getAName() & ", squeezing it between " & p_pronoun & " fingers as " & p_pronoun & " smile widens." & DDUtils.RNRN &
+                   """You got a sweet tooth or somethin'?  How'd you like to get a lil' taste..."" " & pronoun & " says, as the gum begins to spark and sizzle, ""...of something spicy; straight from hell?""" & DDUtils.RNRN &
+                   DDUtils.capitalizeFirst(getNameWithTitle) & " brings it up to your lips, despite your feeble resistance.  ""Oh, don't worry... I'm sure you'll love it...""" & DDUtils.RNRN
+            selectedGum.add(-1)
+
+            If p.className.Contains("Bimbo") Then
+                out += "You pout, before rolling your eyes and eating the stick of gum.  The warm taste of cinnamon coats your tounge, but you- like, basically feel the same."
+            Else
+                out += "Your eyes glaze over as something compels you to eat the stick of gum.  The warm taste of cinnamon fills your mouth, accompanied by a strange, dizzy calm..."
+
+                p.ongoingTFs.add(New CinnamonBimboTF(2, 5, 0.25, True))
+                p.perks(perk.bimbotf) = 0
+            End If
+        ElseIf p.inv.getCountAt(VialOfPSlime.ITEM_NAME) > 0 Then
+
         Else
-            out += "Or should I say- why isn't there anything in here?  How the hell have you picked up nothing?!?!""" & DDUtils.RNRN &
-                   DDUtils.capitalizeFirst(getNameWithTitle) & " draws forth a silver flask, and places it into your belongings." & DDUtils.RNRN &
-                   """That oughta make you more fun.  Give it a shot when it call to ya, yeah?"""
+            out = """Ugh, not seeing any gum or slime... How's that even possible?  Are ya getting rid of them, or something?""" & DDUtils.RNRN &
+                   DDUtils.capitalizeFirst(getNameWithTitle) & " sighs, before drawing forth a silver flask and dropping it into your belongings." & DDUtils.RNRN &
+                   """Doesn't matter, I guess." & DDUtils.RNRN &
+                   "That draught's a little somethin' us imps brewed up for weirdos like you- just a sip or two oughta make you more fun."" " & pronoun & " says with a mischevious giggle." & DDUtils.RNRN &
+                   """Give it a shot when it calls to ya, yeah?""" & DDUtils.RNRN & DDUtils.RNRN &
+                   "+1 " & ImpsDraught.ITEM_NAME
 
             p.inv.add(ImpsDraught.ITEM_NAME, 1)
         End If
 
+        TextEvent.fpush(out)
     End Sub
 End Class

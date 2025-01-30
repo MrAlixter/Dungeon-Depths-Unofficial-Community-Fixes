@@ -87,7 +87,7 @@ Public Class Chest
             End If
 
             Dim rng As Integer = Int(Rnd() * tiers(itemTier).Count)
-            If rng > tiers(itemTier).Count - 1 Then rng = Math.Max(0, tiers(itemTier).Count - 1)
+            If rng > tiers(itemTier).count - 1 Then rng = Math.Max(0, tiers(itemTier).count - 1)
 
             Dim itemID As Integer = tiers(itemTier)(rng).id 'Int(Rnd() * tier.Length))
             If itemID = 43 Then
@@ -136,7 +136,7 @@ Public Class Chest
 
             If content.only_drop_one Then
                 If Game.player1.inv.getCountAt(i) > 0 Then contents.item(i).count = 0
-                If content.getCount > 1 Then contents.item(i).count = 1
+                If content.count > 1 Then contents.item(i).count = 1
             End If
 
             If contents.getCountAt(i) > 0 And Not i = 43 Then

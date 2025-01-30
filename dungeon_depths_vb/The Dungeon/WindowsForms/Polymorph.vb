@@ -24,7 +24,7 @@
         Dim RW As Double = (Me.Width - startingWidth) / startingWidth ' Ratio change of width
         Dim RH As Double = (Me.Height - startingHeight) / startingHeight ' Ratio change of height
         Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(8 * Me.Size.Width / 210))
-        For i = 0 To Me.Controls.Count - 1
+        For i = 0 To Me.Controls.count - 1
             Me.Controls(i).Font = newFont
             Me.Controls(i).Width += CDbl(Me.Controls(i).Width * RW)
             Me.Controls(i).Height += CDbl(Me.Controls(i).Height * RH)
@@ -35,13 +35,13 @@
         Dim p = Game.player1
         Select Case porm
             Case True
-                For i = 0 To p.selfPolyForms.Count - 1
+                For i = 0 To p.selfPolyForms.count - 1
                     cboxPolymorph.Items.Add(p.selfPolyForms.Item(i))
                 Next
                 If cboxPolymorph.Items.Contains(p.className) Then cboxPolymorph.Items.Remove(p.className)
                 If cboxPolymorph.Items.Contains(p.formName) Then cboxPolymorph.Items.Remove(p.formName)
             Case False
-                For i = 0 To p.enemPolyForms.Count - 1
+                For i = 0 To p.enemPolyForms.count - 1
                     cboxPolymorph.Items.Add(p.enemPolyForms.Item(i))
                 Next
         End Select

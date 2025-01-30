@@ -43,7 +43,7 @@
         Dim numMainEffects = 1
 
         Do While numMainEffects > 0
-            If mainEffects.Count > 0 Then
+            If mainEffects.count > 0 Then
                 Dim r = Int(Rnd() * mainEffects.Count)
                 effectList.Add(mainEffects(r))
                 mainEffects.RemoveAt(r)

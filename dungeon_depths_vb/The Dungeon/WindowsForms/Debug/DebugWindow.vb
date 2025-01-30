@@ -113,7 +113,7 @@ Public Class Debug_Window
                 groupBoxes.Add(control)
             End If
         Next
-        If groupBoxes.Count <> Game.player1.perks.Count Then
+        If groupBoxes.count <> Game.player1.perks.count Then
             tabPerks.Controls.Clear()
 
             Dim row = 0
@@ -122,7 +122,7 @@ Public Class Debug_Window
             For Each p In Game.player1.perks
                 addPerk(p, col, row)
                 row += 1
-                Dim control As Control = tabPerks.Controls.Item(tabPerks.Controls.Count - 1)
+                Dim control As Control = tabPerks.Controls.Item(tabPerks.Controls.count - 1)
                 If (control.Location.Y + control.Size.Height) > tabPerks.Size.Height Then
                     row = 0
                     col += 1
@@ -132,11 +132,11 @@ Public Class Debug_Window
                 test += 1
             Next
         Else
-            For i As Integer = 0 To groupBoxes.Count - 1
+            For i As Integer = 0 To groupBoxes.count - 1
                 Dim box As GroupBox = groupBoxes(i)
                 Dim num As NumericUpDown = Nothing
                 Dim lbl As Label = Nothing
-                For j As Integer = 0 To box.Controls.Count - 1
+                For j As Integer = 0 To box.Controls.count - 1
                     Dim c As Control = box.Controls(j)
                     If TypeOf (c) Is NumericUpDown Then
                         num = c
@@ -183,11 +183,11 @@ Public Class Debug_Window
         If tabPortraitsLoaded = False Then
             Dim y As Integer = (tabPortrait.TabPages(0).Height - h) / 2
             Dim bg As Image = Portrait.imgLib.atrs(pInd.bkg).getAt(0)
-            For i = 0 To tabPortrait.TabPages.Count - 1
+            For i = 0 To tabPortrait.TabPages.count - 1
                 Dim page As TabPage = tabPortrait.TabPages(i)
                 Dim x As Integer = w * PADDING
                 Dim att As List(Of Image) = Portrait.imgLib.atrs(i).getI(Game.player1.prt.sexBool)
-                For j As Integer = 0 To att.Count - 1
+                For j As Integer = 0 To att.count - 1
                     Dim img As New PictureBox
                     img.Name = i.ToString() & ":" & j.ToString()
                     page.Controls.Add(img)
@@ -205,8 +205,8 @@ Public Class Debug_Window
     End Sub
 
     Private Sub clearPortrait()
-        For i = 0 To tabPortrait.TabPages.Count - 1
-            For j = 0 To tabPortrait.TabPages(i).Controls.Count - 1
+        For i = 0 To tabPortrait.TabPages.count - 1
+            For j = 0 To tabPortrait.TabPages(i).Controls.count - 1
                 tabPortrait.TabPages(i).Controls(0).Dispose()
             Next
         Next
@@ -229,7 +229,7 @@ Public Class Debug_Window
     End Sub
 
     Private Sub unselectMapControlButtons()
-        For i = 0 To boxMapControls.Controls.Count - 1
+        For i = 0 To boxMapControls.Controls.count - 1
             If TypeOf (boxMapControls.Controls(i)) Is RadioButton Then
                 CType(boxMapControls.Controls(i), RadioButton).Checked = False
             End If
@@ -373,11 +373,11 @@ Public Class Debug_Window
         Dim p_inv = Game.player1.inv
         For i = 0 To p_inv.upperBound
             If p_inv.item(i).count > 0 Then
-                inventoryList.Add(p_inv.getKeyByID(i) & " x" & p_inv.item(i).count)
+                inventoryList.Add(p_inv.getKeyByID(i) & " x" & p_inv.item(i).Count)
             End If
         Next
         inventoryList.Sort()
-        For i = 0 To inventoryList.Count - 1
+        For i = 0 To inventoryList.count - 1
             boxInventory.Items.Add(inventoryList(i))
         Next
     End Sub
@@ -390,7 +390,7 @@ Public Class Debug_Window
             If p_inv.item(i).list_in_debug Then itemsList.Add(p_inv.getKeyByID(i))
         Next
         itemsList.Sort()
-        For i = 0 To itemsList.Count - 1
+        For i = 0 To itemsList.count - 1
             boxItems.Items.Add(itemsList(i))
         Next
     End Sub
@@ -559,7 +559,7 @@ Public Class Debug_Window
 
     Private Sub inventoryFilterUpdate()
         boxInventory.Items.Clear()
-        For i As Integer = 0 To inventoryList.Count - 1
+        For i As Integer = 0 To inventoryList.count - 1
             If inventoryList(i).IndexOf(boxInventoryFilter.Text, 0, StringComparison.CurrentCultureIgnoreCase) > -1 Then
                 boxInventory.Items.Add(inventoryList(i).ToString())
             End If
@@ -568,7 +568,7 @@ Public Class Debug_Window
 
     Private Sub itemFilterUpdate()
         boxItems.Items.Clear()
-        For i As Integer = 0 To itemsList.Count - 1
+        For i As Integer = 0 To itemsList.count - 1
             If itemsList(i).IndexOf(boxItemsFilter.Text, 0, StringComparison.CurrentCultureIgnoreCase) > -1 Then
                 boxItems.Items.Add(itemsList(i).ToString())
             End If
@@ -576,9 +576,9 @@ Public Class Debug_Window
     End Sub
 
     Private Sub btnRemove_Click(sender As Object, e As EventArgs) Handles btnRemove.Click
-        If boxInventory.SelectedIndices.Count < 1 Then Exit Sub
+        If boxInventory.SelectedIndices.count < 1 Then Exit Sub
         Dim selected As ListBox.SelectedIndexCollection = boxInventory.SelectedIndices
-        Do Until selected.Count = 0
+        Do Until selected.count = 0
             Dim name As String = boxInventory.Items(selected(0)).ToString()
             name = name.Substring(0, name.IndexOf(" x")).Trim()
 
@@ -592,25 +592,25 @@ Public Class Debug_Window
                 p_inv.item(itemInd).count -= number.Value
                 Dim temp As Integer = selected(0)
                 boxInventory.Items.RemoveAt(selected(0))
-                boxInventory.Items.Insert(temp, p_inv.getKeyByID(itemInd) & " x" & p_inv.item(itemInd).count)
+                boxInventory.Items.Insert(temp, p_inv.getKeyByID(itemInd) & " x" & p_inv.item(itemInd).Count)
             End If
         Loop
         inventoryFilterUpdate()
     End Sub
 
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
-        If boxInventory.SelectedIndices.Count > 0 Then
+        If boxInventory.SelectedIndices.count > 0 Then
             Dim selected As ListBox.SelectedIndexCollection = boxInventory.SelectedIndices
-            Do Until selected.Count = 0
+            Do Until selected.count = 0
                 Dim name As String = boxInventory.Items(selected(0)).ToString()
                 name = name.Substring(0, name.IndexOf(" x")).Trim()
                 Game.player1.inv.add(name, CInt(number.Value))
                 Dim temp As Integer = selected(0)
                 boxInventory.Items.RemoveAt(selected(0))
-                boxInventory.Items.Insert(temp, name & " x" & Game.player1.inv.item(name).count)
+                boxInventory.Items.Insert(temp, name & " x" & Game.player1.inv.item(name).Count)
             Loop
-        ElseIf boxItems.SelectedIndices.Count > 0 Then
-            Do Until boxItems.SelectedIndices.Count = 0
+        ElseIf boxItems.SelectedIndices.count > 0 Then
+            Do Until boxItems.SelectedIndices.count = 0
                 Dim name As String = boxItems.Items(boxItems.SelectedIndices(0))
                 Game.player1.inv.add(name, CInt(number.Value))
                 updateInventoryList()

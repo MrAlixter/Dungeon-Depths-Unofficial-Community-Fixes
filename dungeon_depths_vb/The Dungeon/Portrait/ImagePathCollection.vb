@@ -52,8 +52,8 @@
         '-rear hair
         fRearHair2 = New ImagePathDump("img/fRearHair2")
         mRearHair2 = New ImagePathDump("img/mRearHair2")
-        ndoF = fRearHair2.Count
-        ndoM = mRearHair2.Count
+        ndoF = fRearHair2.count
+        ndoM = mRearHair2.count
         atrs.Add(pInd.rearhair, New ImagePathAttribute(fRearHair2, mRearHair2, ndoF, ndoM))
 
         '-hairacc
@@ -63,16 +63,16 @@
         '-body
         fBody = New ImagePathDump("img/fBody")
         mBody = New ImagePathDump("img/mBody")
-        ndoF = fBody.Count
-        ndoM = mBody.Count
+        ndoF = fBody.count
+        ndoM = mBody.count
         atrs.Add(pInd.body, New ImagePathAttribute(fBody, mBody, ndoF, ndoM))
 
         '-genetalia
         genitalia = New ImagePathDump("img/Gen")
         Dim gM = New ImagePathDump(New List(Of String)({genitalia.getPathAt(1)}))
         Dim gF = New ImagePathDump(New List(Of String)({genitalia.getPathAt(4)}))
-        ndoF = gF.Count
-        ndoM = gM.Count
+        ndoF = gF.count
+        ndoM = gM.count
         atrs.Add(pInd.genitalia, New ImagePathAttribute(gF, gM, ndoF, ndoM))
 
         '-shoulders
@@ -83,8 +83,8 @@
         chest = New ImagePathDump("img/Chest")
         gM = New ImagePathDump(New List(Of String)({chest.getPathAt(0)}))
         gF = New ImagePathDump(New List(Of String)({chest.getPathAt(2)}))
-        ndoF = gF.Count
-        ndoM = gM.Count
+        ndoF = gF.count
+        ndoM = gM.count
         atrs.Add(pInd.chest, New ImagePathAttribute(gF, gM, ndoF, ndoM))
 
         '-bodyoverlay
@@ -94,22 +94,22 @@
         '-clothes
         fClothing = New ImagePathDump("img/fClothing")
         mClothing = New ImagePathDump("img/mClothing")
-        ndoF = fClothing.Count
-        ndoM = mClothing.Count
+        ndoF = fClothing.count
+        ndoM = mClothing.count
         atrs.Add(pInd.clothes, New ImagePathAttribute(fClothing, mClothing, ndoF, ndoM))
 
         '-clothesbtm
         fClothing2 = New ImagePathDump("img/fClothing2")
         mClothing2 = New ImagePathDump("img/mClothing2")
-        ndoF = fClothing2.Count
-        ndoM = mClothing2.Count
+        ndoF = fClothing2.count
+        ndoM = mClothing2.count
         atrs.Add(pInd.clothesbtm, New ImagePathAttribute(fClothing2, mClothing2, ndoF, ndoM))
 
         '-face
         fFace = New ImagePathDump("img/fFace")
         mFace = New ImagePathDump("img/mFace")
-        ndoF = fFace.Count
-        ndoM = mFace.Count
+        ndoF = fFace.count
+        ndoM = mFace.count
         atrs.Add(pInd.face, New ImagePathAttribute(fFace, mFace, ndoF, ndoM))
 
         '-blush
@@ -118,8 +118,8 @@
         '-mid hair
         fRearHair1 = New ImagePathDump("img/fRearHair1")
         mRearHair1 = New ImagePathDump("img/mRearHair1")
-        ndoF = fRearHair1.Count
-        ndoM = mRearHair1.Count
+        ndoF = fRearHair1.count
+        ndoM = mRearHair1.count
         atrs.Add(pInd.midhair, New ImagePathAttribute(fRearHair1, mRearHair1, ndoF, ndoM))
 
         '-horns
@@ -129,78 +129,78 @@
         '-ears
         fEars = New ImagePathDump("img/fEars")
         mEars = New ImagePathDump("img/mEars")
-        ndoF = fEars.Count
-        ndoM = mEars.Count
+        ndoF = fEars.count
+        ndoM = mEars.count
         atrs.Add(pInd.ears, New ImagePathAttribute(fEars, mEars, ndoF, ndoM))
 
         '-nose
         fNose = New ImagePathDump("img/fNose")
         mNose = New ImagePathDump("img/mNose")
-        ndoF = fNose.Count
-        ndoM = mNose.Count
+        ndoF = fNose.count
+        ndoM = mNose.count
         atrs.Add(pInd.nose, New ImagePathAttribute(fNose, mNose, ndoF, ndoM))
 
         '-mouth
         fMouth = New ImagePathDump("img/fMouth")
         mMouth = New ImagePathDump("img/mMouth")
-        ndoF = fMouth.Count
-        ndoM = mMouth.Count
+        ndoF = fMouth.count
+        ndoM = mMouth.count
         atrs.Add(pInd.mouth, New ImagePathAttribute(fMouth, mMouth, ndoF, ndoM))
 
         '-eyes
         fEyes = New ImagePathDump("img/fEyes")
         mEyes = New ImagePathDump("img/mEyes")
-        ndoF = fEyes.Count
-        ndoM = mEyes.Count
+        ndoF = fEyes.count
+        ndoM = mEyes.count
         atrs.Add(pInd.eyes, New ImagePathAttribute(fEyes, mEyes, ndoF, ndoM))
 
         '-eyebrows
         fEyebrows = New ImagePathDump("img/fEyebrows")
         mEyebrows = New ImagePathDump("img/mEyebrows")
-        ndoF = fEyebrows.Count
-        ndoM = mEyebrows.Count
+        ndoF = fEyebrows.count
+        ndoM = mEyebrows.count
         atrs.Add(pInd.eyebrows, New ImagePathAttribute(fEyebrows, mEyebrows, ndoF, ndoM))
 
         '-facial mark
         fFacialMark = New ImagePathDump("img/fFacialMark")
         mFacialMark = New ImagePathDump("img/mFacialMark")
-        ndoF = fFacialMark.Count
-        ndoM = mFacialMark.Count
+        ndoF = fFacialMark.count
+        ndoM = mFacialMark.count
         atrs.Add(pInd.facemark, New ImagePathAttribute(fFacialMark, mFacialMark, ndoF, ndoM))
 
         '-glasses
         fGlasses = New ImagePathDump("img/fGlasses")
         mGlasses = New ImagePathDump("img/mGlasses")
-        ndoF = fGlasses.Count
-        ndoM = mGlasses.Count
+        ndoF = fGlasses.count
+        ndoM = mGlasses.count
         atrs.Add(pInd.glasses, New ImagePathAttribute(fGlasses, mGlasses, ndoF, ndoM))
 
         '-cloak
         fCloak = New ImagePathDump("img/fCloakF")
         mCloak = New ImagePathDump("img/mCloakF")
-        ndoF = fCloak.Count
-        ndoM = mCloak.Count
+        ndoF = fCloak.count
+        ndoM = mCloak.count
         atrs.Add(pInd.cloak, New ImagePathAttribute(fCloak, mCloak, ndoF, ndoM))
 
         '-accessory
         fAcce = New ImagePathDump("img/fAcce")
         mAcce = New ImagePathDump("img/mAcce")
-        ndoF = fAcce.Count
-        ndoM = mAcce.Count
+        ndoF = fAcce.count
+        ndoM = mAcce.count
         atrs.Add(pInd.accessory, New ImagePathAttribute(fAcce, mAcce, ndoF, ndoM))
 
         '-front hair
         fFrontHair = New ImagePathDump("img/fFrontHair")
         mFrontHair = New ImagePathDump("img/mFrontHair")
-        ndoF = fFrontHair.Count
-        ndoM = mFrontHair.Count
+        ndoF = fFrontHair.count
+        ndoM = mFrontHair.count
         atrs.Add(pInd.fronthair, New ImagePathAttribute(fFrontHair, mFrontHair, ndoF, ndoM))
 
         '-hat
         fHat = New ImagePathDump("img/fHat")
         mHat = New ImagePathDump("img/mHat")
-        ndoF = fHat.Count
-        ndoM = mHat.Count
+        ndoF = fHat.count
+        ndoM = mHat.count
         atrs.Add(pInd.hat, New ImagePathAttribute(fHat, mHat, ndoF, ndoM))
     End Sub
     Sub createAllImageLib()
@@ -237,8 +237,8 @@
         '-rear hair
         fRearHair2 = New ImagePathDump("img/fRearHair2")
         mRearHair2 = New ImagePathDump("img/mRearHair2")
-        ndoF = fRearHair2.Count
-        ndoM = mRearHair2.Count
+        ndoF = fRearHair2.count
+        ndoM = mRearHair2.count
         fTfRearhair2 = New ImagePathDump("img/fTF/tfRearHair2")
         mTfRearhair2 = New ImagePathDump("img/mTF/tfRearHair2")
         fRearHair2.AddRange(fTfRearhair2)
@@ -252,8 +252,8 @@
         '-body
         fBody = New ImagePathDump("img/fBody")
         mBody = New ImagePathDump("img/mBody")
-        ndoF = fBody.Count
-        ndoM = mBody.Count
+        ndoF = fBody.count
+        ndoM = mBody.count
         fTFBody = New ImagePathDump("img/fTF/tfBody")
         mTFBody = New ImagePathDump("img/mTF/tfBody")
         fBody.AddRange(fTFBody)
@@ -279,8 +279,8 @@
         '-clothes
         fClothing = New ImagePathDump("img/fClothing")
         mClothing = New ImagePathDump("img/mClothing")
-        ndoF = fClothing.Count
-        ndoM = mClothing.Count
+        ndoF = fClothing.count
+        ndoM = mClothing.count
         fTFClothes = New ImagePathDump("img/fTF/tfClothes")
         mTFClothes = New ImagePathDump("img/mTF/tfClothes")
         fClothing.AddRange(fTFClothes)
@@ -290,8 +290,8 @@
         '-clothesbtm
         fClothing2 = New ImagePathDump("img/fClothing2")
         mClothing2 = New ImagePathDump("img/mClothing2")
-        ndoF = fClothing2.Count
-        ndoM = mClothing2.Count
+        ndoF = fClothing2.count
+        ndoM = mClothing2.count
         fTFClothes2 = New ImagePathDump("img/fTF/tfClothes2")
         mTFClothes2 = New ImagePathDump("img/mTF/tfClothes2")
         fClothing2.AddRange(fTFClothes2)
@@ -301,8 +301,8 @@
         '-face
         fFace = New ImagePathDump("img/fFace")
         mFace = New ImagePathDump("img/mFace")
-        ndoF = fFace.Count
-        ndoM = mFace.Count
+        ndoF = fFace.count
+        ndoM = mFace.count
         fTFface = New ImagePathDump("img/fTF/tfFace")
         mTFface = New ImagePathDump("img/mTF/tfFace")
         fFace.AddRange(fTFface)
@@ -315,8 +315,8 @@
         '-mid hair
         fRearHair1 = New ImagePathDump("img/fRearHair1")
         mRearHair1 = New ImagePathDump("img/mRearHair1")
-        ndoF = fRearHair1.Count
-        ndoM = mRearHair1.Count
+        ndoF = fRearHair1.count
+        ndoM = mRearHair1.count
         fTFRearhair1 = New ImagePathDump("img/fTF/tfRearHair1")
         mTFRearhair1 = New ImagePathDump("img/mTF/tfRearHair1")
         fRearHair1.AddRange(fTFRearhair1)
@@ -330,8 +330,8 @@
         '-ears
         fEars = New ImagePathDump("img/fEars")
         mEars = New ImagePathDump("img/mEars")
-        ndoF = fEars.Count
-        ndoM = mEars.Count
+        ndoF = fEars.count
+        ndoM = mEars.count
         fTFEars = New ImagePathDump("img/fTF/tfEars")
         mTFEars = New ImagePathDump("img/mTF/tfEars")
         fEars.AddRange(fTFEars)
@@ -341,8 +341,8 @@
         '-nose
         fNose = New ImagePathDump("img/fNose")
         mNose = New ImagePathDump("img/mNose")
-        ndoF = fNose.Count
-        ndoM = mNose.Count
+        ndoF = fNose.count
+        ndoM = mNose.count
         fTFNose = New ImagePathDump("img/fTF/tfNose")
         mTFNose = New ImagePathDump("img/mTF/tfNose")
         fNose.AddRange(fTFNose)
@@ -352,8 +352,8 @@
         '-mouth
         fMouth = New ImagePathDump("img/fMouth")
         mMouth = New ImagePathDump("img/mMouth")
-        ndoF = fMouth.Count
-        ndoM = mMouth.Count
+        ndoF = fMouth.count
+        ndoM = mMouth.count
         fTFMouth = New ImagePathDump("img/fTF/tfMouth")
         mTFMouth = New ImagePathDump("img/mTF/tfMouth")
         fMouth.AddRange(fTFMouth)
@@ -363,8 +363,8 @@
         '-eyes
         fEyes = New ImagePathDump("img/fEyes")
         mEyes = New ImagePathDump("img/mEyes")
-        ndoF = fEyes.Count
-        ndoM = mEyes.Count
+        ndoF = fEyes.count
+        ndoM = mEyes.count
         fTFEyes = New ImagePathDump("img/fTF/tfEyes")
         mTFEyes = New ImagePathDump("img/mTF/tfEyes")
         fEyes.AddRange(fTFEyes)
@@ -374,38 +374,38 @@
         '-eyebrows
         fEyebrows = New ImagePathDump("img/fEyebrows")
         mEyebrows = New ImagePathDump("img/mEyebrows")
-        ndoF = fEyebrows.Count
-        ndoM = mEyebrows.Count
+        ndoF = fEyebrows.count
+        ndoM = mEyebrows.count
         atrs.Add(pInd.eyebrows, New ImagePathAttribute(fEyebrows, mEyebrows, ndoF, ndoM))
 
         '-face mark
         fFacialMark = New ImagePathDump("img/fFacialMark")
         mFacialMark = New ImagePathDump("img/mFacialMark")
-        ndoF = fFacialMark.Count
-        ndoM = mFacialMark.Count
+        ndoF = fFacialMark.count
+        ndoM = mFacialMark.count
         atrs.Add(pInd.facemark, New ImagePathAttribute(fFacialMark, mFacialMark, ndoF, ndoM))
 
         '-glasses
         fGlasses = New ImagePathDump("img/fGlasses")
         fTFGlasses = New ImagePathDump("img/fTF/tfGlasses")
         mGlasses = New ImagePathDump("img/mGlasses")
-        ndoF = fGlasses.Count
-        ndoM = mGlasses.Count
+        ndoF = fGlasses.count
+        ndoM = mGlasses.count
         fGlasses.AddRange(fTFGlasses)
         atrs.Add(pInd.glasses, New ImagePathAttribute(fGlasses, mGlasses, ndoF, ndoM))
 
         '-cloak
         fCloak = New ImagePathDump("img/fCloakF")
         mCloak = New ImagePathDump("img/mCloakF")
-        ndoF = fCloak.Count
-        ndoM = mCloak.Count
+        ndoF = fCloak.count
+        ndoM = mCloak.count
         atrs.Add(pInd.cloak, New ImagePathAttribute(fCloak, mCloak, ndoF, ndoM))
 
         '-accessory
         fAcce = New ImagePathDump("img/fAcce")
         mAcce = New ImagePathDump("img/mAcce")
-        ndoF = fAcce.Count
-        ndoM = mAcce.Count
+        ndoF = fAcce.count
+        ndoM = mAcce.count
         fTFAcce = New ImagePathDump("img/fTF/tfAcce")
         mTFAcce = New ImagePathDump("img/mTF/tfAcce")
         fAcce.AddRange(fTFAcce)
@@ -415,8 +415,8 @@
         '-front hair
         fFrontHair = New ImagePathDump("img/fFrontHair")
         mFrontHair = New ImagePathDump("img/mFrontHair")
-        ndoF = fFrontHair.Count
-        ndoM = mFrontHair.Count
+        ndoF = fFrontHair.count
+        ndoM = mFrontHair.count
         fTfFrontHair = New ImagePathDump("img/fTF/tfFrontHair")
         mTfFrontHair = New ImagePathDump("img/mTF/tfFrontHair")
         fFrontHair.AddRange(fTfFrontHair)
@@ -428,7 +428,7 @@
         mHat = New ImagePathDump("img/mHat")
         fTFHat = New ImagePathDump("img/fTF/tfHat")
         ndoF = Int(fHat.Count)
-        ndoM = mHat.Count
+        ndoM = mHat.count
         fHat.AddRange(fTFHat)
         atrs.Add(pInd.hat, New ImagePathAttribute(fHat, mHat, ndoF, ndoM))
 

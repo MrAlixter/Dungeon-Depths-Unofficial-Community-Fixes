@@ -9,7 +9,7 @@
     Public Shared Function saveList(ByVal list As List(Of Object)) As String
         Dim out = ""
 
-        out += list.Count & "~"
+        out += list.count & "~"
 
         For Each itm In list
             out += itm.ToString & "~"
@@ -92,7 +92,7 @@
         Return a
     End Function
     Public Shared Function sortMaxToMin(ByVal l As List(Of Integer)) As List(Of Integer)
-        If l.Count < 2 Then
+        If l.count < 2 Then
             Return l
         Else
             Dim max As Integer = -999999999

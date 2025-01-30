@@ -7,6 +7,7 @@
     valentOverride
     hallowOverride
     holidaOverride
+    newyearOverride
 End Enum
 Public Class DDDateTime
     Shared activeOverrides As List(Of String)
@@ -39,13 +40,16 @@ Public Class DDDateTime
     Shared Function isHoli()
         Return (DateTime.Now.Month = 12 And plusMinus(25, DateTime.Now.Day, 5)) Or overrideActive(dateTimeOverride.holidaOverride)
     End Function
+    Shared Function isNewYear()
+        Return (DateTime.Now.Month = 1 And plusMinus(1, DateTime.Now.Day, 7)) Or overrideActive(dateTimeOverride.newyearOverride)
+    End Function
 
     Public Shared Function getTimeNow() As Double
         Return (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
     End Function
 
     Public Shared Function overrideActive(ByVal o As dateTimeOverride) As Boolean
-        If activeOverrides Is Nothing OrElse activeOverrides.Count = 0 Then
+        If activeOverrides Is Nothing OrElse activeOverrides.count = 0 Then
             Return False
         End If
 

@@ -212,15 +212,15 @@ Public Class mFloor
 
         '|CONNECT THE ROOMS|
         Dim allrooms As List(Of Room) = New List(Of Room)()
-        For j = 0 To rooms.Count - 1
-            For i = 0 To rooms(j).Count - 1
+        For j = 0 To rooms.count - 1
+            For i = 0 To rooms(j).count - 1
                 'get the room in question
                 Dim r = rooms(j)(i)
                 allrooms.Add(r)
 
 
                 Dim potentialNeighbors As List(Of Room) = getPotentialNeigbors(rooms, i, j)
-                If potentialNeighbors.Count = 0 Then Continue For
+                If potentialNeighbors.count = 0 Then Continue For
 
                 'set the number of exits on the room
                 Dim numExits = Int(Rnd() * potentialNeighbors.Count) + 1
@@ -233,8 +233,8 @@ Public Class mFloor
         Next
 
         '|VERIFY NO DISCONECTED CHUNKS|
-        For i = 0 To allrooms.Count - 1
-            For j = i + 1 To allrooms.Count - 1
+        For i = 0 To allrooms.count - 1
+            For j = i + 1 To allrooms.count - 1
                 If Not allrooms(i).connectedTo(allrooms(j)) Then connectRooms(allrooms(i), allrooms(j), True)
             Next
         Next
@@ -407,9 +407,9 @@ Public Class mFloor
         Dim results As List(Of Room) = New List(Of Room)
 
         If x > 0 Then results.Add(allRooms(y)(x - 1))
-        If x < allRooms(y).Count - 1 Then results.Add(allRooms(y)(x + 1))
-        If y > 0 AndAlso x < allRooms(y - 1).Count - 1 Then results.Add(allRooms(y - 1)(x))
-        If y < allRooms.Count - 1 AndAlso x < allRooms(y + 1).Count - 1 Then results.Add(allRooms(y + 1)(x))
+        If x < allRooms(y).count - 1 Then results.Add(allRooms(y)(x + 1))
+        If y > 0 AndAlso x < allRooms(y - 1).count - 1 Then results.Add(allRooms(y - 1)(x))
+        If y < allRooms.count - 1 AndAlso x < allRooms(y + 1).count - 1 Then results.Add(allRooms(y + 1)(x))
 
         Return results
     End Function
@@ -434,7 +434,7 @@ Public Class mFloor
                                   New Point(p.pos.X - 1, p.pos.Y + 1)}
         Dim pt As Point = possiblePoints(0)
         Dim i = 0
-        Do While (Not ptInBounds(pt) OrElse mBoard(pt.Y, pt.X).Tag < 1 Or mBoard(pt.Y, pt.X).Text <> "") And i < possiblePoints.Count - 1
+        Do While (Not ptInBounds(pt) OrElse mBoard(pt.Y, pt.X).Tag < 1 Or mBoard(pt.Y, pt.X).Text <> "") And i < possiblePoints.count - 1
             i += 1
             pt = possiblePoints(i)
         Loop
@@ -554,7 +554,7 @@ Public Class mFloor
                     If mainExit.X - 1 < mBoardWidth And mainExit.X - 1 > 0 And mainExit.Y - 1 < mBoardHeight And mainExit.Y - 1 > 0 AndAlso Not mBoard(mainExit.Y - 1, mainExit.X).Tag = DDConst.TILE_SEEN Then mBoard(mainExit.Y - 1, mainExit.X).Tag = DDConst.TILE_UNSEEN
             End Select
             If i > 0 Then
-                connectPoints(mainExit, exits(exits.Count - 1))
+                connectPoints(mainExit, exits(exits.count - 1))
             Else
                 exits.Add(mainExit)
             End If
@@ -571,7 +571,7 @@ Public Class mFloor
                 End Select
             Next
         Next
-        While exits.Count > 1
+        While exits.count > 1
             Dim r1 As Integer = Int(Rnd() * exits.Count)
             Dim r2 As Integer = Int(Rnd() * exits.Count)
             Dim r3 As Integer = Int(Rnd() * 3)
@@ -1139,15 +1139,15 @@ Public Class mFloor
         '|CONNECT THE ROOMS|
         Dim allrooms As List(Of Room) = New List(Of Room)()
         allrooms.Add(centerRoom)
-        For j = 0 To rooms.Count - 1
-            For i = 0 To rooms(j).Count - 1
+        For j = 0 To rooms.count - 1
+            For i = 0 To rooms(j).count - 1
                 'get the room in question
                 Dim r = rooms(j)(i)
                 allrooms.Add(r)
 
 
                 Dim potentialNeighbors As List(Of Room) = getPotentialNeigbors(rooms, i, j)
-                If potentialNeighbors.Count = 0 Then Continue For
+                If potentialNeighbors.count = 0 Then Continue For
 
                 'set the number of exits on the room
                 Dim numExits = Int(Rnd() * potentialNeighbors.Count) + 1
@@ -1160,8 +1160,8 @@ Public Class mFloor
         Next
 
         '|VERIFY NO DISCONECTED CHUNKS|
-        For i = 0 To allrooms.Count - 1
-            For j = i + 1 To allrooms.Count - 1
+        For i = 0 To allrooms.count - 1
+            For j = i + 1 To allrooms.count - 1
                 If Not allrooms(i).connectedTo(allrooms(j)) Then connectRooms(allrooms(i), allrooms(j), True)
             Next
         Next
@@ -1177,8 +1177,8 @@ Public Class mFloor
 
         Dim direction = -1
 
-        Dim allRooms_y_mid = allRooms.Count() / 2
-        Dim allRooms_x_mid = allRooms(y).Count() / 2
+        Dim allRooms_y_mid = allRooms.count() / 2
+        Dim allRooms_x_mid = allRooms(y).count() / 2
 
         If x < allRooms_x_mid And y < allRooms_y_mid Then direction = 1
         If x >= allRooms_x_mid And y < allRooms_y_mid Then direction = 2
@@ -1189,9 +1189,9 @@ Public Class mFloor
         Dim results As List(Of Room) = New List(Of Room)
 
         If x > 0 And (direction = 1 Or direction = 4) Then results.Add(allRooms(y)(x - 1))
-        If x < allRooms(y).Count - 1 And (direction = 2 Or direction = 3) Then results.Add(allRooms(y)(x + 1))
-        If y > 0 AndAlso x < allRooms(y - 1).Count - 1 And (direction = 1 Or direction = 2) Then results.Add(allRooms(y - 1)(x))
-        If y < allRooms.Count - 1 AndAlso x < allRooms(y + 1).Count - 1 And (direction = 3 Or direction = 4) Then results.Add(allRooms(y + 1)(x))
+        If x < allRooms(y).count - 1 And (direction = 2 Or direction = 3) Then results.Add(allRooms(y)(x + 1))
+        If y > 0 AndAlso x < allRooms(y - 1).count - 1 And (direction = 1 Or direction = 2) Then results.Add(allRooms(y - 1)(x))
+        If y < allRooms.count - 1 AndAlso x < allRooms(y + 1).count - 1 And (direction = 3 Or direction = 4) Then results.Add(allRooms(y + 1)(x))
 
         Return results
     End Function
@@ -1648,7 +1648,7 @@ Public Class mFloor
     Sub placeChest(ByVal code As String, Optional ByVal numChests As Integer = 0)
         'Fill Chest Tier List
         If DDConst.BASE_CHEST.getCachedLootTableBracket(floorNumber) <> LootTable.getBracket(floorNumber) Then
-            For i = cTier.tier1 To DDConst.BASE_CHEST.tiers.Count - 1
+            For i = cTier.tier1 To DDConst.BASE_CHEST.tiers.count - 1
                 DDConst.BASE_CHEST.tiers(i).Clear()
             Next
 
@@ -1713,7 +1713,7 @@ Public Class mFloor
         Next
     End Sub
     Sub placeNPCs(ByRef npc_list As List(Of ShopNPC), ByVal possibleNPCs As Integer())
-        If npc_list.Count < 1 Then Exit Sub
+        If npc_list.count < 1 Then Exit Sub
 
         npcPositions.Clear()
 
@@ -1724,7 +1724,7 @@ Public Class mFloor
         For i = 1 To numNpc
             Dim npcPoint = randPoint()
             Dim npcInd = Int(Rnd() * possibleNPCs.Length)
-            While placed.Contains(npcInd) And Not placed.Count >= npc_list.Count
+            While placed.Contains(npcInd) And Not placed.count >= npc_list.count
                 npcInd = Int(Rnd() * possibleNPCs.Length)
             End While
 
@@ -1741,7 +1741,7 @@ Public Class mFloor
         If Game.player1.cursed AndAlso Game.cbrok.pos.X = -1 And Not Game.cbrok.isDead Then addNPC(Game.cbrok, randPoint)
         If Not Game.currFloor Is Nothing AndAlso Game.currFloor.pinkMist AndAlso Game.shopkeeper.pos.X = -1 And Not Game.shopkeeper.isDead Then addNPC(Game.shopkeeper, randPoint)
 
-        For i = 0 To npc_list.Count - 1
+        For i = 0 To npc_list.count - 1
             npcPositions.Add(npc_list(i).pos)
         Next
     End Sub
@@ -1854,9 +1854,9 @@ Public Class mFloor
             Next
         Next
         dist(p1.Y, p1.X) = 0
-        While allPoints.Count > 0
+        While allPoints.count > 0
             Dim min = allPoints(0)
-            For i = 0 To allPoints.Count - 1
+            For i = 0 To allPoints.count - 1
                 If dist(allPoints(i).Y, allPoints(i).X) < dist(min.Y, min.X) Then min = allPoints(i)
             Next
             allPoints.Remove(min)
@@ -1883,7 +1883,7 @@ Public Class mFloor
                 End If
             Next
         End While
-        If path.Count > 1 Then path.RemoveAt(0)
+        If path.count > 1 Then path.RemoveAt(0)
         Return path.ToArray
     End Function
     Sub printBoard()
@@ -1955,35 +1955,35 @@ Public Class mFloor
 
         statueList.Clear()
         For i = 0 To CInt(buffer(8 + trapList.Count))
-            statueList.Add(New Statue(buffer(9 + trapList.Count + i)))
+            statueList.Add(New Statue(buffer(9 + trapList.count + i)))
         Next
 
         chestList.Clear()
-        For i = 0 To CInt(buffer(10 + trapList.Count + statueList.Count))
-            chestList.Add(New Chest().Create(buffer(11 + trapList.Count + statueList.Count + i)))
+        For i = 0 To CInt(buffer(10 + trapList.count + statueList.Count))
+            chestList.Add(New Chest().Create(buffer(11 + trapList.count + statueList.count + i)))
         Next
 
-        beatBoss = CBool(buffer(12 + trapList.Count + statueList.Count + chestList.Count))
+        beatBoss = CBool(buffer(12 + trapList.count + statueList.count + chestList.Count))
 
-        stairs = New Point(CInt(buffer(14 + trapList.Count + statueList.Count + chestList.Count)),
-                           CInt(buffer(15 + trapList.Count + statueList.Count + chestList.Count)))
+        stairs = New Point(CInt(buffer(14 + trapList.count + statueList.count + chestList.Count)),
+                           CInt(buffer(15 + trapList.count + statueList.count + chestList.Count)))
 
-        playerPosition = New Point(CInt(buffer(17 + trapList.Count + statueList.Count + chestList.Count)),
-                           CInt(buffer(18 + trapList.Count + statueList.Count + chestList.Count)))
+        playerPosition = New Point(CInt(buffer(17 + trapList.count + statueList.count + chestList.Count)),
+                           CInt(buffer(18 + trapList.count + statueList.count + chestList.Count)))
 
         npcPositions.Clear()
-        For i = 0 To CInt(buffer(20 + trapList.Count + statueList.Count + chestList.Count))
-            Dim xy = buffer(21 + trapList.Count + statueList.Count + chestList.Count + i).Split("~")
+        For i = 0 To CInt(buffer(20 + trapList.count + statueList.count + chestList.Count))
+            Dim xy = buffer(21 + trapList.count + statueList.count + chestList.count + i).Split("~")
             npcPositions.Add(New Point(xy(0), xy(1)))
         Next
 
         Dim sessionLines = 0
-        If buffer(21 + trapList.Count + statueList.Count + chestList.Count + npcPositions.Count).Equals("sessions") Then sessionLines = 2
+        If buffer(21 + trapList.count + statueList.count + chestList.count + npcPositions.Count).Equals("sessions") Then sessionLines = 2
 
         If sessionLines = 2 Then
             sessions.Clear()
-            For i = 0 To CInt(buffer(22 + trapList.Count + statueList.Count + chestList.Count + npcPositions.Count))
-                Dim idxybb = buffer(23 + trapList.Count + statueList.Count + chestList.Count + npcPositions.Count + i).Split("~")
+            For i = 0 To CInt(buffer(22 + trapList.count + statueList.count + chestList.count + npcPositions.Count))
+                Dim idxybb = buffer(23 + trapList.count + statueList.count + chestList.count + npcPositions.count + i).Split("~")
                 sessions.Add(CInt(idxybb(0)), New Session(idxybb(0), New Point(idxybb(1), idxybb(2)), idxybb(3)))
             Next
         End If
@@ -1992,7 +1992,7 @@ Public Class mFloor
         For y = 0 To mBoardHeight - 1
             For x = 0 To mBoardWidth - 1
                 Dim i = (y * mBoardWidth) + x
-                Dim tile = buffer(22 + sessionLines + trapList.Count + statueList.Count + chestList.Count + npcPositions.Count + sessions.Count + i).Split("`")
+                Dim tile = buffer(22 + sessionLines + trapList.count + statueList.count + chestList.count + npcPositions.count + sessions.count + i).Split("`")
                 mBoard(y, x).Tag = CInt(tile(0))
                 If tile.Length > 1 Then mBoard(y, x).Text = tile(1)
                 If mBoard(y, x).Tag > 0 Then coveredBoardSpace += 1
