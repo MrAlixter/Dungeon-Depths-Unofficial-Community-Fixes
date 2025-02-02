@@ -112,6 +112,7 @@
     meltype         '110
     slimeguard      '111
     prevweapon      '112
+    hypnotized      '113
 End Enum
 Public Enum stateInd
     goddState
