@@ -35,7 +35,7 @@
             new_p_name = InputBox("What do you want for a name?").Replace(SaveFile.SEGMENT_DELIMITER, "").Replace(SaveFile.VALUE_DELIMITER, "").Replace(SaveFile.VALUE_SPLIT_DELIMITER, "")
         End If
 
-        Return DDUtils.isEmpty(new_p_name)
+        Return Not DDUtils.isEmpty(new_p_name)
     End Function
     Protected Overrides Function getNoticedChanges(ByRef p As Player) As String
         If HypnosisEffect.hypnotize(p, 80, h_ind.strip) AndAlso HypnosisEffect.trigger(p, h_ind.strip) Then
