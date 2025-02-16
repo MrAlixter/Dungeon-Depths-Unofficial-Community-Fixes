@@ -113,6 +113,7 @@
     slimeguard      '111
     prevweapon      '112
     hypnotized      '113
+    mindless        '114
 End Enum
 Public Enum stateInd
     goddState
@@ -1639,6 +1640,28 @@ Public Class Player
         If perks(perk.canmeetcyn) > 0 And Not (formName.Equals("Succubus") Or formName.Equals("Demon") Or formName.Equals("Daemon")) Then
             perks(perk.canmeetcyn) = -1
         End If
+
+        '| - Mindless Handler - |
+        If perks(perk.mindless) > -1 Then
+            If Not className.Equals("Mindless") And Not className.Equals("Mindless Bimbo") Then
+                savePState()
+                changeClass("Mindless")
+                needsToUpdatePortrait = True
+            End If
+
+            perks(perk.mindless) -= 1
+
+            If perks(perk.mindless) < 1 Then
+                If pState.pClass.name.Contains("Mindless") Then
+                    changeClass("Classless")
+                Else
+                    changeClass(pState.pClass.name)
+                End If
+
+                perks(perk.mindless) = -1
+                needsToUpdatePortrait = True
+            End If
+        End If
     End Sub
     Protected Sub applyClassPerkEffects(ByRef needsToUpdatePortrait As Boolean)
         '| - Amazon - |
@@ -3098,6 +3121,8 @@ Public Class Player
         If perks(perk.vofmanynames) > -1 Then out += "Your true name is hidden!  " & perks(perk.vofmanynames) & " charges remain." & DDUtils.RNRN
         If perks(perk.cynnstonic) > -1 Then out += "You are under the " & CynnTonic.getEffectTier(Me) & " influence of Cynn's Tonic!  " & perks(perk.cynnstonic) & " charges remain." & DDUtils.RNRN
         If ongoingTFs.contains(tfind.arachne) Then out += "You are under the influence of Arachne venom." & DDUtils.RNRN
+        If perks(perk.hypnotized) > -1 Then out += "You are hypnotized " & HypnosisEffect.getHIndCommonName(perks(perk.hypnotized)) & "." & DDUtils.RNRN
+        If perks(perk.mindless) > -1 Then out += "You've been rendered mindless, and will remain so for " & perks(perk.mindless) & " turns." & DDUtils.RNRN
 
         '| -- Curse Indicators -- |
         If perks(perk.slutcurse) > -1 Then out += "Due to a curse, any clothes or armor you wear will become skimpy and revealing." & DDUtils.RNRN

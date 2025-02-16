@@ -2003,13 +2003,13 @@ Public Class Game
     Sub selectBaseClassHypno(ByVal index As Integer)
         Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
 
-        BasicClassChange.selectedClass = subString
+        BasicClassChange.selected_class = subString
         BasicClassChange.hypnotizeP()
     End Sub
     Sub selectAdvClassHypno(ByVal index As Integer)
         Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
 
-        AdvClassChange.selectedClass = subString
+        AdvClassChange.selected_class = subString
         AdvClassChange.hypnotizeP()
     End Sub
     Sub selectOther(ByVal index As Integer)

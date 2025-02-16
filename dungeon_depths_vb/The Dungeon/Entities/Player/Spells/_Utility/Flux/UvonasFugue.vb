@@ -22,7 +22,11 @@
         End If
     End Sub
     Public Overrides Sub backfire()
-        Polymorph.transform(MyBase.getCaster, "Mindless")
+        getCaster.changeClass("Mindless")
+        getCaster().perks(perk.mindless) = 10 + Int(Rnd() * 90)
+
+        TextEvent.fpushAndLog("You wipe your own mind!")
+        getCaster.drawPort()
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

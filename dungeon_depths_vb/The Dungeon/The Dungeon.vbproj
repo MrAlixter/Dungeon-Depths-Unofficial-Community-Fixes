@@ -160,6 +160,7 @@
     <Compile Include="Entities\NPC\Hostile\Polymorphed\PolymorphedNPC.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\FaeQueen.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\FVendorTar.vb" />
+    <Compile Include="Entities\Player\Hypnosis\HypnosisEffect.vb" />
     <Compile Include="Entities\Player\Classes\needPassages\Cleric.vb" />
     <Compile Include="Entities\Player\Classes\CynnOnahole2.vb" />
     <Compile Include="Entities\Player\Classes\CynnOnahole.vb" />
@@ -446,6 +447,7 @@
     <Compile Include="Items\Services\HypnoTeach\ForgetSpecial.vb" />
     <Compile Include="Items\Services\HypnoTeach\ForgetSpell.vb" />
     <Compile Include="Items\Services\HypnoTeach\BasicClassChange.vb" />
+    <Compile Include="Items\Services\HypnoTeach\HypnoService.vb" />
     <Compile Include="Items\Services\MagicalGirl\MGReset.vb" />
     <Compile Include="Items\Services\ShadyWizard\SWRestoration.vb" />
     <Compile Include="Items\Services\Weaponsmith\SellHellfireBlade.vb" />
@@ -542,7 +544,7 @@
     <Compile Include="Entities\Player\Specials\_Utility\Dodge.vb" />
     <Compile Include="Entities\Player\Specials\_Combat\Misc\FlashStrike.vb" />
     <Compile Include="Entities\Player\Specials\_Utility\AttackUp.vb" />
-    <Compile Include="Entities\Player\Specials\_Utility\FMantra.vb" />
+    <Compile Include="Entities\Player\Specials\_Utility\FocusUp.vb" />
     <Compile Include="Entities\Player\Specials\_Utility\Snare.vb" />
     <Compile Include="Entities\Player\Specials\_Utility\Lurk.vb" />
     <Compile Include="Entities\Player\Specials\_Utility\WillUp.vb" />

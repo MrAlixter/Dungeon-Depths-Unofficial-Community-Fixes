@@ -1,5 +1,5 @@
 ﻿Public Class BimboLesson
-    Inherits Item
+    Inherits HypnoService
 
     Public Const ITEM_NAME As String = "Bimbo_Lesson"
 
@@ -13,7 +13,7 @@
         usable = true
         rando_inv_allowed = False
         can_be_stolen = False
-        MyBase.onBuy = AddressOf teach
+        MyBase.onBuy = Sub() teach(h_ind.misc)
 
         '|Stats|
         count = 0
@@ -23,19 +23,30 @@
         setDesc("""*sigh* This lesson is part of an ill-advised negotiation tactic with a shady bastard of a wizard, and now I am contractually obligated to provide it to my customers, lest he release some 'trigger' words to the public.  Once you listen to it, his magic will take its course and anything that happens to you is out of my hands.  'Buyer beware', I suppose.""")
     End Sub
 
-    Sub teach()
-        count = 0
-        Game.hideNPCButtons()
+    '| - OUTCOMES - |
+    Protected Overrides Sub doTrigger(ByRef p As Player, ByVal i As h_ind)
+        'Don't do anything
+    End Sub
+    Protected Overrides Function doHypnosis(ByRef plr As Player, ByVal i As h_ind, Optional ByVal hypnoDesc As String = "") As Boolean
         If Game.hteach.form.Equals("Bimbo") Then
-            CType(Game.hteach, HypnoTeach).hypnotize("Ooh!  Like, you wanna be a bimbo too?  I can do that for you!  Here, lemme get my- uh, my other necklace.  Ooh, I'm gonna make you so cute..." & DDUtils.RNRN &
+            CType(Game.hteach, HypnoTeach).hypnotize("Ooh!  You wanna- like- be all hot and stuff too?  I can do that for you!  Here, lemme get my- uh, my other necklace.  Ooh, I'm gonna make you so cute..." & DDUtils.RNRN &
                                               "Like, ok... see my shiny gem?  Watch it for a bit... watch it glimmer... as it goes side to side... swinging... swinging..." & DDUtils.RNRN &
                                               "Sink deeper and deeper... deeper... and deeper... until you just..." & DDUtils.RNRN &
                                               "*giggle* *SNAP*" & DDUtils.RNRN &
-                                              "...drift away...", AddressOf display)
+                                              "...drift away...", plr, h_ind.misc, AddressOf display)
         Else
-             CType(Game.hteach, HypnoTeach).hypnotize("*sigh* Fine, whatever.  You're very sleepy.  Very sleeeepy.  Here, a pendant.  Yayyyyy.", AddressOf display)
+            CType(Game.hteach, HypnoTeach).hypnotize("*sigh* Fine, whatever.  You're very sleepy.  Very sleeeepy.  Here, a pendant.  Yayyyyy.", plr, h_ind.misc, AddressOf display)
         End If
-    End Sub
+
+        Return True
+    End Function
+
+    '| - MISC - |
+    Protected Overrides Function canHypnotize(ByRef p As Player) As Boolean
+        Return Not p.className.Equals("Bimbo")
+    End Function
+
+    '| - TRANSFORMATION - |
     Sub display()
         If Game.hteach.form.Equals("Bimbo") Then
             TextEvent.push("As soon as she snaps, your entire reality fades away." & DDUtils.RNRN &

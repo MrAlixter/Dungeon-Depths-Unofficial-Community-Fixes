@@ -461,7 +461,7 @@ Public MustInherit Class Transformation
         End If
     End Function
     Shared Function canBeTFed(ByRef p As Player) As Boolean
-        'MsgBox("p.ongoingTFs.count:" & vbTab & p.ongoingTFs.count & vbCrLf & "p.pClass.canBeTFed:" & vbTab & (p.pClass.canBeTFed) & vbCrLf & "p.pForm.canBeTFed:" & vbTab & (p.pForm.canBeTFed) & vbCrLf & "p.prt.oneLayerImgChe. :" & vbTab & (p.prt.oneLayerImgCheck(p.formName, p.className) Is Nothing) & vbCrLf & "Not p.perks(perk.polym. :" & vbTab & (Not p.perks(perk.polymorphed) > 0) & vbCrLf & "Not p.perks(perk.asta. :" & vbTab & (Not p.perks(perk.astatue) > 1 And Not p.isPetrified) & vbCrLf & "p.perks(perk.tfed. :" & vbTab & (p.perks(perk.tfedbyweapon) < 0 And p.perks(perk.tfcausingwand) < 0 And p.perks(perk.tfcausingsword) < 0) & vbCrLf & "Not p.perks(perk.pdef.:" & vbTab & (Not p.perks(perk.pdeflector) > 0) & vbCrLf & "Not Game.shouldRevertWarform:" & vbTab & (Not Game.shouldRevertWarform))
+        'MsgBox("p.ongoingTFs.count:" & vbTab & p.ongoingTFs.count & vbCrLf & "p.pClass.canBeTFed:" & vbTab & (p.pClass.canBeTFed) & vbCrLf & "p.pForm.canBeTFed:" & vbTab & (p.pForm.canBeTFed) & vbCrLf & "p.prt.oneLayerImgChe. :" & vbTab & (p.prt.oneLayerImgCheck(p.formName, p.className) Is Nothing) & vbCrLf & "Not p.perks(perk.polym. :" & vbTab & (Not p.perks(perk.polymorphed) > 0) & vbCrLf & "Not p.perks(perk.asta. :" & vbTab & (Not p.perks(perk.astatue) > 1 And Not p.isPetrified) & vbCrLf & "p.perks(perk.tfed. :" & vbTab & (p.perks(perk.tfedbyweapon) < 0 And p.perks(perk.tfcausingwand) < 0 And p.perks(perk.tfcausingsword) < 0) & vbCrLf & "Not p.perks(perk.pdef.:" & vbTab & (Not p.perks(perk.pdeflector) > 0) & vbCrLf & "Not Game.shouldRevertWarform:" & vbTab & (Not Game.shouldRevertWarform) & vbCrLf & "Not p.perks(perk.mindless) > 0:" & vbTab & (Not p.perks(perk.mindless) > 0))
 
         If p.ongoingTFs.count < 1 And
             p.pClass.canBeTFed And
@@ -472,7 +472,8 @@ Public MustInherit Class Transformation
             Not p.className.Equals("Magical Girl") And
             p.perks(perk.tfedbyweapon) < 0 And p.perks(perk.tfcausingwand) < 0 And p.perks(perk.tfcausingsword) < 0 And
             Not p.perks(perk.pdeflector) > 0 And
-            Not Game.shouldRevertWarform Then
+            Not Game.shouldRevertWarform And
+            Not p.perks(perk.mindless) > 0 Then
 
             Return True
         End If

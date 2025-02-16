@@ -94,11 +94,23 @@
     End Sub
 
     '| - HYPNOSIS - |
-    Public Sub hypnotize(ByVal s As String)
-        hypnotize(s, AddressOf back)
-    End Sub
-    Public Sub hypnotize(ByVal s As String, a As Action)
+    Public Function hypnotize(ByVal output As String, ByRef p As Player, ByVal i As h_ind) As Boolean
+        Return hypnotize(output, p, i, AddressOf back)
+    End Function
+    Public Function hypnotize(ByVal output As String, ByRef p As Player, ByVal i As h_ind, ByVal a As Action) As Boolean
         preHypnoID = img_index
+
+        If Not HypnosisEffect.hypnotize(Game.player1, Game.hteach.getWIL(), i) Then
+            output = DDUtils.capitalizeFirst(getNameWithTitle()) & " snaps " & p_pronoun & " fingers, and casts Mindmelt on you!" & DDUtils.RNRN & output
+            TextEvent.pushLog("To weaken your will, " & getNameWithTitle() & " snaps " & p_pronoun & " fingers and casts Mindmelt on you!")
+
+            p.changeClass("Mindless")
+            p.perks(perk.mindless) = 5 + Int(Rnd() * 8)
+
+            p.drawPort()
+
+            If Not HypnosisEffect.hypnotize(Game.player1, Game.hteach.getWIL(), i) Then Return False
+        End If
 
         If form.Equals("Arachne") Then
             img_index = LocalImgInd.alt5
@@ -108,11 +120,13 @@
             img_index = LocalImgInd.alt1
         End If
 
-        TextEvent.pushNPCDialog(s, a)
+        TextEvent.pushNPCDialog(output & DDUtils.PAKTC, a)
         Game.shopMenu.Close()
 
         Game.picNPC.BackgroundImage = local_img(img_index)
-    End Sub
+
+        Return True
+    End Function
     Public Sub back()
         img_index = preHypnoID
 

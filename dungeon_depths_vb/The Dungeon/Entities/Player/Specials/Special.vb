@@ -58,7 +58,7 @@
         specialList.Add("Attack Up", New AttackUp(Nothing, Nothing))
         specialList.Add("Lurk", New Lurk(Nothing, Nothing))
         specialList.Add("Snare", New Snare(Nothing, Nothing))
-        specialList.Add("Focus Up", New FMantra(Nothing, Nothing))
+        specialList.Add("Focus Up", New FocusUp(Nothing, Nothing))
         specialList.Add("Mirage Dance", New MirageDance(Nothing, Nothing))
         specialList.Add("Pluck", New Pluck(Nothing, Nothing))
         specialList.Add("Cleansing Light", New CLight(Nothing, Nothing))
