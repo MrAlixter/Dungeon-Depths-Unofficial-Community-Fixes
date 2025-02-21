@@ -163,10 +163,12 @@ Public Class HypnosisEffect
             Return False
         ElseIf p.getWIL < 20 And Not Game.combat_engaged Then
             TextEvent.fpushAndLog("You need 20 or more WIL to focus out of combat...")
+            Return False
         End If
 
         TextEvent.fpushAndLog("Focus Up!  -50 Lust.")
         p.addLust(-50)
+        p.UIupdate()
 
         Return True
     End Function
