@@ -763,6 +763,7 @@ Public Class Player
         classes.Add("Mindless Bimbo", New MindlessBimbo())
         classes.Add("Assassin", New Assassin())
         classes.Add("Mad Bird", New Cleric())
+        classes.Add("Bustier", New AlizaBustier())
     End Sub
     Private Shared Sub initForms()
         'Creates the form dictionary
@@ -2990,6 +2991,9 @@ Public Class Player
             Case "Bunny Girl​"
                 out += "Whatever you were before, you are now a small, blonde adult woman in a azure bunny suit.  The suit, clinging to your suple body includes not just a blue leotard, but also a pair of nylon stockings that highlight your toned legs, and end in a pair of platform heels.  Topping off your ensamble is a white headband with two bunny ears." & DDUtils.RNRN
                 Return out + outPutPerkText()
+            Case "Thong", "Thong​", "Bustier"
+                out += "Where once stood an adventurer, now lies inanimate fabric; your own goals replaced with an eternal duty to keep your wearer in blissful comfort." & DDUtils.RNRN
+                Return out + outPutPerkText()
         End Select
 
         'hair
@@ -3133,6 +3137,7 @@ Public Class Player
         If perks(perk.coblind) > -1 Then out += "Due to a curse, you can no longer see." & DDUtils.RNRN
         If perks(perk.succubuscurse) > -1 Then out += "Due to a curse, you will progressively turn into a bimbo as your lust increases." & DDUtils.RNRN
         If perks(perk.faecurse) > -1 Then out += "Due to a curse, you are marked as an enemy of the fae." & DDUtils.RNRN
+        If equippedAcce.getAName().Equals(AlizasMark.ITEM_NAME) Then out += "Your skin and hair have the texture of a silky soft fabric." & DDUtils.RNRN
 
         Return out
     End Function

@@ -187,6 +187,8 @@ Public MustInherit Class ShopNPC
         firstCTurn = True
         perks(npc_perk.firstturn) = 1
 
+        HypnosisEffect.trigger(p, h_ind.bimbokiss)
+
         '| -- Inventory Update -- |
         If Game.mDun.floor_boss.ContainsKey(Game.mDun.numCurrFloor) AndAlso Game.mDun.floor_boss(Game.mDun.numCurrFloor).Equals("Key") Then
             inv.setCount(53, 1)
@@ -228,7 +230,12 @@ Public MustInherit Class ShopNPC
                 dialog = normalDialog(p)
         End Select
 
-        If Not dialog.Equals("") Then TextEvent.pushNPCDialog(dialog)
+        If Game.combat_engaged Then
+            TextEvent.pushNPCDialog(toFight())
+        ElseIf Not dialog.Equals("") Then
+            TextEvent.pushNPCDialog(dialog)
+        End If
+
 
         '| -- Image Setting -- |
         If Not hasMetPlayer Then hasMetPlayer = True

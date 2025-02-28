@@ -112,23 +112,20 @@
     Public Overridable Sub charm(ByRef t As Entity)
         If Int(Rnd() * t.will) < 15 Then
             t.addLust(lustRaiseThres)
-            TextEvent.push("The " & getName() & " used Charm!")
-            TextEvent.pushLog("The " & getName() & " used Charm!")
+            TextEvent.fpushAndLog(DDUtils.capitalizeFirst(getNameWithTitle()) & " used Charm!")
         Else
-            TextEvent.push("The " & getName() & " used Charm... but it fails...")
-            TextEvent.pushLog("The " & getName() & " used Charm... but it fails...")
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle()) & " used Charm... but it fails...")
         End If
     End Sub
 
     Public Overridable Sub sapPlayer(ByRef p As Player)
         If name.Contains("Charming") Then
             If totalCharms(p) < 3 And Not Int(Rnd() * totalCharms(p) / 2) = 0 AndAlso playerHadCharmsReverted(p) Then
-                TextEvent.push("The " & getName() & " used Drain Charm!  1 charm removed!")
-                TextEvent.pushLog("The " & getName() & " used Drain Charm!  1 charm removed!")
+                TextEvent.fpushAndLog(DDUtils.capitalizeFirst(getNameWithTitle()) & " used Drain Charm!  1 charm removed!")
             End If
         Else
             drainedXP += p.deLevel(levelsToDrain)
-            TextEvent.pushAndLog("The " & getName() & " used Drain Soul!  1 level drained!")
+            TextEvent.fpushAndLog(DDUtils.capitalizeFirst(getNameWithTitle()) & " used Drain Soul!  1 level drained!")
             If Not explainedDrain Then TextEvent.pushAndLog("Defeat " & getNameWithTitle() & " to regain your lost XP!") : explainedDrain = True
         End If
     End Sub

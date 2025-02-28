@@ -125,6 +125,7 @@
     <Compile Include="Entities\NPC\Hostile\Monsters\LegacyFloor\OozeScion.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\LegacyFloor\InnumerableBugs.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\LegacyFloor\TargaxianCultist.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\Succubus\Aliza.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Witches\MarissasStudent.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Slime\LeporineOoze.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\TimeJudgeFight.vb" />
@@ -160,6 +161,7 @@
     <Compile Include="Entities\NPC\Hostile\Polymorphed\PolymorphedNPC.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\FaeQueen.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\FVendorTar.vb" />
+    <Compile Include="Entities\Player\Classes\AlizaBustier.vb" />
     <Compile Include="Entities\Player\Hypnosis\HypnosisEffect.vb" />
     <Compile Include="Entities\Player\Classes\needPassages\Cleric.vb" />
     <Compile Include="Entities\Player\Classes\CynnOnahole2.vb" />
@@ -301,6 +303,7 @@
     <Compile Include="Entities\Player\Transformations\FaePrincessTF.vb" />
     <Compile Include="Entities\Player\Transformations\BeeHoneyTF.vb" />
     <Compile Include="Items\Equipment\Accesories\CynnsBimboMark.vb" />
+    <Compile Include="Items\Equipment\Accesories\AlizasMark.vb" />
     <Compile Include="Items\Equipment\Accesories\PinkPantiesPLR.vb" />
     <Compile Include="Items\Equipment\Accesories\RingOfWarForm.vb" />
     <Compile Include="Items\Equipment\Accesories\ROfBirdRage.vb" />

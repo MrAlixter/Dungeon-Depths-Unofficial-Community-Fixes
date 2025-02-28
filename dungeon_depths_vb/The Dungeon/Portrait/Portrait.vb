@@ -625,6 +625,8 @@ Public Class Portrait
             Return ol_img_lib.getImg(27)
         ElseIf pClass.Equals("Onahole") Then
             Return ol_img_lib.getImg(28)
+        ElseIf pClass.Equals("Bustier") Then
+            Return ol_img_lib.getImg(32)
         End If
 
         '| - Forms - |

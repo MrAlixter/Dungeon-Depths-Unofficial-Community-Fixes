@@ -75,7 +75,7 @@
     End Sub
 
     '| - PLAYER TRANSFORMATIONS -|
-    Shared Sub transform(ByRef p As Player, ByVal form As String, Optional ByVal checkform As Boolean = True)
+    Public Shared Sub transform(ByRef p As Player, ByVal form As String, Optional ByVal checkform As Boolean = True)
         '| -- Pre-transformation Checks -- |
         If checkform AndAlso (form.Equals(p.className) Or form.Equals(p.formName) Or Not p.polymorphs.Keys.Contains(form)) Then
             Exit Sub
@@ -121,7 +121,7 @@
         p.UIupdate()
     End Sub
     'NPC transform method
-    Shared Sub transform(ByRef t As NPC, ByVal s As String)
+    Public Shared Sub transform(ByRef t As NPC, ByVal s As String)
         Dim original_name As String = CStr(DDUtils.capitalizeFirst(t.getNameWithTitle))
 
         If s = "Giant Frog" Then
@@ -165,7 +165,7 @@
         TextEvent.pushAndLog(original_name & " is turned into a " & s & "!")
     End Sub
     'npc transform method
-    Shared Sub transformN(ByRef t As ShopNPC, ByVal s As String)
+    Public Shared Sub transformN(ByRef t As ShopNPC, ByVal s As String)
         Polymorph.transform(t, s)
 
         If s = "Sheep" Then

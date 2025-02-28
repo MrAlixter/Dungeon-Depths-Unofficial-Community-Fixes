@@ -48,7 +48,14 @@
         p.gold += getRefundAmount(Game.hteach, value)
         p.UIupdate()
 
-        If pushText Then TextEvent.pushNPCDialog("""Alas, it does not appear that I will be able to help you at the moment.  You have my apologies, and a full refund.""" & DDUtils.PAKTC, AddressOf CType(Game.hteach, HypnoTeach).back)
+        If pushText Then
+            If Game.hteach.img_index = 10 Or Game.hteach.img_index = 18 Then
+                TextEvent.pushNPCDialog("""Aw, dang... IDK if I can- uh, like- do anything for ya right now...  Sorry I'm such a ditz, you can totally have your money back.""" & DDUtils.PAKTC, AddressOf CType(Game.hteach, HypnoTeach).back)
+            Else
+                TextEvent.pushNPCDialog("""Alas, it does not appear that I will be able to help you at the moment.  You have my apologies, and a full refund.""" & DDUtils.PAKTC, AddressOf CType(Game.hteach, HypnoTeach).back)
+            End If
+        End If
+
     End Sub
     Protected Overridable Sub wakeup(ByRef p As Player, Optional ByVal noticedChanges As String = "")
         TextEvent.fpush("*SNAP!*" & DDUtils.RNRN &

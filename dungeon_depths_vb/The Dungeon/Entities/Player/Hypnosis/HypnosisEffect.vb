@@ -14,6 +14,7 @@
     castspell
     attack
     focusup
+    bimbokiss
 End Enum
 
 Public Class HypnosisEffect
@@ -63,6 +64,8 @@ Public Class HypnosisEffect
                 Return attackTrigger(p)
             Case h_ind.focusup
                 Return focusUpTrigger(p)
+            Case h_ind.bimbokiss
+                Return bimboKissTrigger(p)
         End Select
 
         Return False
@@ -139,8 +142,8 @@ Public Class HypnosisEffect
         Return True
     End Function
     Protected Shared Function waitTrigger(ByRef p As Player) As Boolean
-        TextEvent.pushLog("You stare forward, blankly...")
-        Game.waitAction()
+        TextEvent.pushAndLog("You stare forward, blankly...")
+        Game.waitAction(Not Game.combat_engaged)
 
         Return True
     End Function
@@ -171,6 +174,17 @@ Public Class HypnosisEffect
         p.UIupdate()
 
         Return True
+    End Function
+    Protected Shared Function bimboKissTrigger(ByRef p As Player) As Boolean
+        If Not Game.active_shop_npc.img_index = 18 And Game.active_shop_npc.hasMetPlayer Then
+            TextEvent.pushAndLog("You fall into a mindless trance, and kiss " & Game.active_shop_npc.getNameWithTitle() & ".  They turn into a bimbo!")
+            Polymorph.transformN(Game.active_shop_npc, "Bimbo")
+
+            If Not p.passDieRoll(2) Then Game.shopNPCToCombat(Game.active_shop_npc)
+        End If
+
+        p.perks(perk.hypnotized) = h_ind.bimbokiss
+        Return False
     End Function
 
     '| - Misc - |

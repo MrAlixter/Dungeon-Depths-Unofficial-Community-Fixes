@@ -36,6 +36,7 @@
     innumerable_bugs
     targaxian_cultist
     ooze_scion
+    aliza
 End Enum
 
 Public Class Monster
@@ -66,6 +67,7 @@ Public Class Monster
         l.Add(New Tuple(Of mInd, String)(mInd.lepo_ooze, LeporineOoze.BASE_NAME))
         l.Add(New Tuple(Of mInd, String)(mInd.marissa_neop, MarissasStudent.BASE_NAME))
         l.Add(New Tuple(Of mInd, String)(mInd.ice_elemental, IceElemental.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.aliza, Aliza.BASE_NAME))
         Return l
     End Function
 

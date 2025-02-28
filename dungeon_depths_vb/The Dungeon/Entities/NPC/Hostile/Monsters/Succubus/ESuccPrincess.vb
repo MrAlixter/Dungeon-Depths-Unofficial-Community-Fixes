@@ -47,6 +47,11 @@
 
     '| - COMBAT - |
     Public Overrides Sub attackCMD(ByRef target As Entity)
+        If Aliza.shouldSpawnAliza(Game.player1) Then
+            Aliza.intro1()
+            Exit Sub
+        End If
+
         Dim d4 = Int(Rnd() * 4)
 
         If d4 = 0 Then
@@ -57,6 +62,7 @@
             ElseIf pref_mode = mode.dick Then
                 standAtAttention(target)
             ElseIf pref_mode = mode.angel Then
+                'TODO
                 kissOfAmaraphne(target)
             End If
         Else
@@ -170,14 +176,13 @@
         End If
 
         If target.getPlayer.dickSize < 0 Then
-            TextEvent.push("The " & getName() & " casts Stand at Attention!  You now have a penis...")
-            TextEvent.pushLog("The " & getName() & " casts Stand at Attention!")
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " casts Stand at Attention!  You now have a penis...")
 
             target.getPlayer.de()
             target.getPlayer.addLust(33)
 
         ElseIf target.getPlayer.dickSize < 3 Then
-            TextEvent.pushAndLog("The " & getName() & " casts Stand at Attention!  Your dick tingles warmly!")
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " casts Stand at Attention!  Your dick tingles warmly!")
 
             target.getPlayer.de()
             target.getPlayer.addLust(33)
@@ -189,6 +194,7 @@
     End Sub
 
     Private Sub kissOfAmaraphne(ByRef target As Entity)
+        'TODO
         If target.getPlayer Is Nothing Then
             MyBase.attackCMD(target)
             Exit Sub
@@ -209,8 +215,7 @@
         defense *= 1.2
         speed *= 1.2
 
-        TextEvent.push("The " & getName() & " used Drain Soul!  " & levelsToDrain & " levels drained!")
-        TextEvent.pushLog("The " & getName() & " used Drain Soul!  " & levelsToDrain & " levels drained!")
+        TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " used Drain Soul!  " & levelsToDrain & " levels drained!")
     End Sub
     Public Overrides Sub sapPlayer(ByRef p As Player)
         drainedXP += p.deLevel(levelsToDrain)
@@ -228,11 +233,9 @@
     Public Overrides Sub charm(ByRef t As Entity)
         If Int(Rnd() * t.will) < 15 Then
             t.addLust(lustRaiseThres)
-            TextEvent.push("The " & getName() & " used Charm!")
-            TextEvent.pushLog("The " & getName() & " used Charm!")
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " used Charm!")
         Else
-            TextEvent.push("The " & getName() & " used Charm...but it fails...")
-            TextEvent.pushLog("The " & getName() & " used Charm...but it fails...")
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " used Charm... but it fails...")
         End If
     End Sub
 
@@ -260,9 +263,9 @@
         despawn("p-death")
         Select Case pref_mode
             Case mode.cow
-                'cowbell tf
+                'milk fountain tf
             Case mode.dick
-                'dildo tf
+                'himbo tf
             Case mode.slut
                 '
             Case mode.lingerie

@@ -2624,7 +2624,7 @@ Public Class Game
                     Dim name As String = InputBox("Enter a Name:")
                     MsgBox("If " & name & " was a bimbo, they'd be " & Polymorph.bimboizeName(name))
             ElseIf last_keys_pressed = "sawd" Then
-                    player1.lust -= 10
+                player1.lust -= 10
                     player1.UIupdate()
             ElseIf last_keys_pressed = "wasd" Then
                     Dim ct = New ClothingTester()
@@ -2800,7 +2800,7 @@ Public Class Game
         TextEvent.pushLog("You wait for " & x_prompt - Math.Max(x, 0) & " turns.")
         If Not lblEvent.Visible And Not pnlEvent.Visible Then TextEvent.push("You wait for " & x_prompt - Math.Max(x, 0) & " turns...")
     End Sub
-    Function waitAction() As Boolean
+    Function waitAction(Optional ByVal progTurn As Boolean = True) As Boolean
         Dim m As NPC = getCombatTarget(player1)
         player1.setTarget(m)
 
@@ -2814,7 +2814,7 @@ Public Class Game
             Return True
         End If
 
-        progressTurn()
+        If progTurn Then progressTurn()
 
         Return False
     End Function
@@ -3766,8 +3766,8 @@ Public Class Game
         '|-Set up NPC-|
         npc_list.Clear()
         If Not npc_list.Contains(m) Then npc_list.Add(m)
-        m.encounter()
         picNPC.Visible = True
+        m.encounter()
 
         '|-Set up the Player-|
         player1.canMoveFlag = False

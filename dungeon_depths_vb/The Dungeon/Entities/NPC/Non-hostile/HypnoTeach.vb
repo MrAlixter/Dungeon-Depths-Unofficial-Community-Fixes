@@ -114,7 +114,7 @@
 
         If form.Equals("Arachne") Then
             img_index = LocalImgInd.alt5
-        ElseIf img_index = LocalImgInd.bimbo Then
+        ElseIf img_index = LocalImgInd.bimbo Or img_index = LocalImgInd.alt4 Then
             img_index = LocalImgInd.alt7
         Else
             img_index = LocalImgInd.alt1

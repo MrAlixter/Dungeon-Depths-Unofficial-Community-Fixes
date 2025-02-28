@@ -481,6 +481,7 @@
         internal_inventory.Add(PinkPantiesPLR.ITEM_NAME, New PinkPantiesPLR)         '453
         internal_inventory.Add(PotionOfPanties.ITEM_NAME, New PotionOfPanties)       '454
         internal_inventory.Add(GlitteryDress.ITEM_NAME, New GlitteryDress)           '455
+        internal_inventory.Add(AlizasMark.ITEM_NAME, New AlizasMark)                 '456
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -588,7 +589,7 @@
                 Me.item(356), Me.item(361), Me.item(374), Me.item(375),
                 Me.item(376), Me.item(389), Me.item(391), Me.item(402),
                 Me.item(411), Me.item(414), Me.item(439), Me.item(450),
-                Me.item(453)}
+                Me.item(453), Me.item(456)}
 
         services = {Me.item(87), Me.item(113), Me.item(114), Me.item(121),
                     Me.item(122), Me.item(124), Me.item(131), Me.item(245),
