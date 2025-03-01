@@ -7,8 +7,10 @@
         MyBase.setcost(13)
     End Sub
     Public Overrides Sub effect()
-        Dim originalArmor As String = getUser.equippedArmor.getAName()
-        Dim skimpyVar As String = getUser.inv.item(getUser.equippedArmor.getSlutVarInd).getAName()
+        Dim armor As Armor = getUser.equippedArmor
+
+        Dim originalArmor As String = armor.getAName()
+        Dim skimpyVar As String = If(Not armor.getSlutVarInd() = -1, getUser.inv.item(armor.getSlutVarInd).getAName(), "skimpy version of itself")
 
         Dim success As Boolean = EquipmentDialogBackend.clothingCurse(getUser, False)
 

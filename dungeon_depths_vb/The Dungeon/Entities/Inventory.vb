@@ -482,6 +482,7 @@
         internal_inventory.Add(PotionOfPanties.ITEM_NAME, New PotionOfPanties)       '454
         internal_inventory.Add(GlitteryDress.ITEM_NAME, New GlitteryDress)           '455
         internal_inventory.Add(AlizasMark.ITEM_NAME, New AlizasMark)                 '456
+        internal_inventory.Add(CatburglarSuit.ITEM_NAME, New CatburglarSuit)         '457
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -515,7 +516,7 @@
                  Me.item(394), Me.item(398), Me.item(404), Me.item(405),
                  Me.item(413), Me.item(418), Me.item(423), Me.item(425),
                  Me.item(429), Me.item(438), Me.item(443), Me.item(445),
-                 Me.item(446), Me.item(455)}
+                 Me.item(446), Me.item(455), Me.item(457)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
