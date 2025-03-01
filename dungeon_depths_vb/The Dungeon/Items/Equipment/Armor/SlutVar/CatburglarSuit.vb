@@ -12,7 +12,7 @@
         '|Item Flags|
         usable = False
         compress_breast = True
-        hide_rearhair = True
+        force_under_acce = True
         anti_slut_ind = 443
 
         '|Stats|

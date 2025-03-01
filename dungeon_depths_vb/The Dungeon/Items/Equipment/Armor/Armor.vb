@@ -60,6 +60,7 @@
     Public hide_dick As Boolean = True
     Public swap_gen_clothesbtm As Boolean = False
     Public bind_wearer As Boolean = False
+    Public force_under_acce As Boolean = False
 
     Overridable Function getSlutVarInd()
         Return slut_var_ind

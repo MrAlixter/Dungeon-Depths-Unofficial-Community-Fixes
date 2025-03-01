@@ -26,7 +26,7 @@
 
         '|Description|
         setDesc("A glowing violet tattoo that displays one's status as under the effect of demonic magic." & DDUtils.RNRN &
-                "If the wearer's lust is below a certain level, they will find it difficult to think." & DDUtils.RNRN &
+                "If the wearer's lust is 25 or below, they will find it difficult to think." & DDUtils.RNRN &
                 getStatInformation())
     End Sub
 

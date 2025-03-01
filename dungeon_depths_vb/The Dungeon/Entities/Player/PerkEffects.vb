@@ -561,7 +561,7 @@
             End If
 
         ElseIf p.getLust < 33 Then
-            If p.perks(perk.succubuscurse) < 1 Then
+            If p.perks(perk.succubuscurse) < 1 And Not p.className.Contains("Bimbo") Then
                 p.perks(perk.succubuscurse) = 1
                 DemonBimboTF.tfPlayer(1, p)
             ElseIf p.perks(perk.succubuscurse) > 1 Then
@@ -570,7 +570,7 @@
             End If
 
         ElseIf p.getLust < 66 Then
-            If p.perks(perk.succubuscurse) < 2 Then
+            If p.perks(perk.succubuscurse) < 2 And Not p.className.Contains("Bimbo") Then
                 p.formStates(stateInd.dembimState1).save(p)
                 p.perks(perk.succubuscurse) = 2
                 DemonBimboTF.tfPlayer(2, p)
@@ -588,11 +588,14 @@
         End If
     End Sub
     Shared Sub crypticCursemark(ByRef p As Player)
-        If p.getLust <= 25 And Not p.className.Equals("Mindless") Then
-            MindlessTF.step1alt(p, -1)
+        If p.getLust <= 25 And p.perks(perk.mindless) < 0 Then
+            p.perks(perk.mindless) = 2
             TextEvent.pushAndLog("Your mind fades away...")
             p.drawPort()
-        ElseIf p.getLust > 25 And p.className.Equals("Mindless") And Not p.pState.pClass.name.Equals("Mindless") Then
+        ElseIf p.getLust <= 25 Then
+            p.perks(perk.mindless) = 2
+        ElseIf p.getLust > 25 And p.className.Contains("Mindless") And Not p.pState.pClass.name.Contains("Mindless") Then
+            TextEvent.pushAndLog("Your mind returns.")
             p.revertToPState()
         End If
     End Sub

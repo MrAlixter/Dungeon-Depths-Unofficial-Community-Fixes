@@ -158,7 +158,7 @@ Public Class Portrait
         Dim armor = ent.getPlayer().equippedArmor
         Dim glasses = ent.getPlayer().equippedGlasses
 
-        If acce.under_t_clothes Then
+        If acce.under_t_clothes And Not armor.force_under_acce Then
             iArr(pInd.clothes) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.face), iArr(pInd.accessory), iArr(pInd.clothes)})
             iArr(pInd.face) = CharacterGenerator.picPort.Image
             iArr(pInd.accessory) = CharacterGenerator.picPort.Image
