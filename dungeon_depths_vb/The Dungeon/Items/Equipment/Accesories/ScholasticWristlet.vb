@@ -43,10 +43,10 @@
     Public Overrides Function getWBoost(ByRef p As Player) As Integer
         If p Is Nothing AndAlso Not Game.player1 Is Nothing Then p = Game.player1
 
-        If Not p Is Nothing Then
-            Dim p_will As Integer = CInt((p.will + p.wBuff) * p.pForm.w)
+        If Not p Is Nothing AndAlso p.pClass.w < 1.0 Then
+            Dim p_will As Double = CInt((p.will + p.wBuff) * p.pClass.w * p.pForm.w)
 
-            Return 7 + p_will / (1 / p.pClass.w)
+            Return 7 + ((p_will / p.pClass.w) - p_will)
         End If
 
 
