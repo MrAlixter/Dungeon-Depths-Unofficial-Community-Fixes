@@ -264,15 +264,32 @@
         Select Case pref_mode
             Case mode.cow
                 'milk fountain tf
+                p.petrify(Color.FromArgb(255, 165, 145, 145), 99999999)
+
+                p.prt.setIAInd(pInd.hat, 31, True, True)
+                p.prt.setIAInd(pInd.mouth, 33, True, True)
+
+                TextEvent.fpush("", AddressOf DeathEffects.hardDeath)
             Case mode.dick
                 'himbo tf
+                p.FtM()
+                p.breastSize = -2
+                p.buttSize = -2
+                p.changeClass("Bimbo")
+
+                TextEvent.fpush("""You know, I really expected more- mm... entertainment... from you...""" & DDUtils.RNRN &
+                                DDUtils.capitalizeFirst(getNameWithTitle) & " struts forward, delicately caressing your cheek as your legs falter underneath you.  Magic flows from her fingertips, and at " & p_pronoun & " touch, your body begins to change." & DDUtils.RNRN &
+                                "Your muscles bulge with newfound strength, as you grow taller." & DDUtils.RNRN &
+                                "You've been turned into a Himbo!")
             Case mode.slut
-                '
+                ' 
             Case mode.lingerie
                 'finalize inanimate tf
             Case Else
-
+                DeathEffects.hardDeath()
         End Select
+
+        p.drawPort()
     End Sub
 
     '| - MISC - |

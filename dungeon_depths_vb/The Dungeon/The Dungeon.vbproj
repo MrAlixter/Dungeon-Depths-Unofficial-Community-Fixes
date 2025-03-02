@@ -307,6 +307,7 @@
     <Compile Include="Items\Equipment\Accesories\PinkPantiesPLR.vb" />
     <Compile Include="Items\Equipment\Accesories\RingOfWarForm.vb" />
     <Compile Include="Items\Equipment\Accesories\ROfBirdRage.vb" />
+    <Compile Include="Items\Equipment\Accesories\ScholasticWristlet.vb" />
     <Compile Include="Items\Equipment\Accesories\TidemageTattoo.vb" />
     <Compile Include="Items\Equipment\Accesories\BerserkerCursemark.vb" />
     <Compile Include="Items\Equipment\Accesories\RingOfTheRabbit.vb" />

@@ -483,6 +483,7 @@
         internal_inventory.Add(GlitteryDress.ITEM_NAME, New GlitteryDress)           '455
         internal_inventory.Add(AlizasMark.ITEM_NAME, New AlizasMark)                 '456
         internal_inventory.Add(CatburglarSuit.ITEM_NAME, New CatburglarSuit)         '457
+        internal_inventory.Add(ScholasticWristlet.ITEM_NAME, New ScholasticWristlet) '458
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -590,7 +591,7 @@
                 Me.item(356), Me.item(361), Me.item(374), Me.item(375),
                 Me.item(376), Me.item(389), Me.item(391), Me.item(402),
                 Me.item(411), Me.item(414), Me.item(439), Me.item(450),
-                Me.item(453), Me.item(456)}
+                Me.item(453), Me.item(456), Me.item(458)}
 
         services = {Me.item(87), Me.item(113), Me.item(114), Me.item(121),
                     Me.item(122), Me.item(124), Me.item(131), Me.item(245),
