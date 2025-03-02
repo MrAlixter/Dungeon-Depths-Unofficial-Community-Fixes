@@ -14,6 +14,7 @@
 
     Dim pref_mode As mode = mode.none
     Dim tf_stage As Integer = 0
+    Dim firstAttack As Boolean = True
 
     Sub New()
         '|ID Info|
@@ -54,7 +55,7 @@
 
         Dim d4 = Int(Rnd() * 4)
 
-        If d4 = 0 Then
+        If d4 = 0 Or firstAttack Then
             If pref_mode = mode.slut Then
                 curseOfTheSlut(target)
             ElseIf pref_mode = mode.cow Then
@@ -65,6 +66,8 @@
                 'TODO
                 kissOfAmaraphne(target)
             End If
+
+            If firstAttack Then firstAttack = False
         Else
             MyBase.attackCMD(target)
         End If
@@ -261,15 +264,22 @@
     End Sub
     Public Overrides Sub playerDeath(ByRef p As Player)
         despawn("p-death")
+
         Select Case pref_mode
             Case mode.cow
                 'milk fountain tf
-                p.petrify(Color.FromArgb(255, 165, 145, 145), 99999999)
+                p.petrify(Color.FromArgb(255, 125, 105, 105), 99999999)
 
                 p.prt.setIAInd(pInd.hat, 31, True, True)
                 p.prt.setIAInd(pInd.mouth, 33, True, True)
-
-                TextEvent.fpush("", AddressOf DeathEffects.hardDeath)
+                p.setLust(0)
+                EquipmentDialogBackend.equipAcce(p, "Nothing", False)
+                EquipmentDialogBackend.equipArmor(p, "Naked", False)
+                TextEvent.fpush(DDUtils.capitalizeFirst(getNameWithTitle) & " pauses, looking your body over." & DDUtils.RNRN &
+                                """Mmm... All this resistance has left me parched... You're really more of a pain than you're worth.""" & DDUtils.RNRN &
+                                "She waves a hand, and your limbs begin to turn to basalt.  Lacking the strength to resist, there is nothing you can do as you slowly turn into a statue; striking a pathetic pose as you are locked into your shape for eternity.  As a finishing touch, a trickle of milk begins to flow from your parted lips." & DDUtils.RNRN &
+                                """Ah, much better!""" & DDUtils.RNRN &
+                                "GAME OVER!", AddressOf DeathEffects.hardDeath)
             Case mode.dick
                 'himbo tf
                 p.FtM()
@@ -281,12 +291,23 @@
                                 DDUtils.capitalizeFirst(getNameWithTitle) & " struts forward, delicately caressing your cheek as your legs falter underneath you.  Magic flows from her fingertips, and at " & p_pronoun & " touch, your body begins to change." & DDUtils.RNRN &
                                 "Your muscles bulge with newfound strength, as you grow taller." & DDUtils.RNRN &
                                 "You've been turned into a Himbo!")
-            Case mode.slut
-                ' 
             Case mode.lingerie
                 'finalize inanimate tf
             Case Else
-                DeathEffects.hardDeath()
+                Dim i As Integer = p.deLevel(2)
+
+                Dim levelsLost As String = "Fortunately, you didn't have enough XP to steal..."
+                If i > 0 And drainedXP > 0 Then
+                    levelsLost = "The succubus stole 2 more levels (" & i + drainedXP & " XP total)..."
+                ElseIf i > 0 Then
+                    levelsLost = "The succubus stole 2 levels (" & i & " XP)..."
+                End If
+
+                TextEvent.push(DDUtils.capitalizeFirst(getNameWithTitle) & " beckons with her hand, siphoning energy from your weakened body.  You collapse to the dungeon floor, blacking out as " & pronoun & " drains your essence." & DDUtils.RNRN &
+                               """Good night, weakling...""" & DDUtils.RNRN &
+                               levelsLost)
+                TextEvent.pushLog("You black out.  " & levelsLost)
+                p.addLust(-p.lust)
         End Select
 
         p.drawPort()

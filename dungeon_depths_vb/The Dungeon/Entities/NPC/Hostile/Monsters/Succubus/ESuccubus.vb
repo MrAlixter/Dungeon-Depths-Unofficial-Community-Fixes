@@ -149,11 +149,19 @@
     Public Overrides Sub playerDeath(ByRef p As Player)
         despawn("p-death")
 
-        TextEvent.push("You black out..." & DDUtils.RNRN &
-                        "-1 level!")
-        TextEvent.pushLog("You black out...")
+        Dim i As Integer = p.deLevel(1)
 
-        p.deLevel(1)
+        Dim levelsLost As String = "Fortunately, you didn't have enough XP to steal..."
+        If i > 0 And drainedXP > 0 Then
+            levelsLost = "The succubus stole 1 more level (" & i + drainedXP & " XP total)..."
+        ElseIf i > 0 Then
+            levelsLost = "The succubus stole 1 level (" & i & " XP)..."
+        End If
+
+        TextEvent.push(DDUtils.capitalizeFirst(getNameWithTitle) & " beckons with her hand, siphoning energy from your weakened body.  You collapse to the dungeon floor, blacking out as " & pronoun & " drains your essence." & DDUtils.RNRN &
+                       """Good night, weakling...""" & DDUtils.RNRN &
+                       levelsLost)
+        TextEvent.pushLog("You black out.  " & levelsLost)
         p.addLust(-p.lust)
     End Sub
 End Class

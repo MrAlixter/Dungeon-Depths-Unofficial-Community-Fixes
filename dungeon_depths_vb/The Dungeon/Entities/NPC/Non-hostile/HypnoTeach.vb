@@ -86,7 +86,7 @@
     Public Overrides Sub inventoryUpdate()
         If Game.mDun.numCurrFloor > 5 Then inv.setCount(113, 1) Else inv.setCount(113, 0)
         If Game.mDun.numCurrFloor < 5 And Game.player1.getWIL > 15 Then inv.setCount(122, 1) Else inv.setCount(122, 0)
-        If Game.player1.className.Contains("Bimbo") Then inv.setCount(ScholasticWristlet.ITEM_NAME, 1) Else inv.setCount(ScholasticWristlet.ITEM_NAME, 0)
+        If Game.player1.className.Contains("Bimbo") Then inv.setCount(ScholasticScrunchie.ITEM_NAME, 1) Else inv.setCount(ScholasticScrunchie.ITEM_NAME, 0)
     End Sub
 
     '| - COMBAT - |

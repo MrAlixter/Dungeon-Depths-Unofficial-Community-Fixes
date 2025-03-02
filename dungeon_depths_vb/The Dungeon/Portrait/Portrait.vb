@@ -349,7 +349,7 @@ Public Class Portrait
         If Not p.pForm.getOverlayU(p).Item1 = 0 Then iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False) : Exit Sub
 
         If p.className.Equals("Warrior") Or p.className.Equals("Barbarian") Or p.className.Equals("Paladin") Or p.className.Equals("Amazon") Or p.className.Contains("Valkyrie") Or p.className.Equals("Pirate") Or
-         p.formName.Equals("Tigress") Or p.formName.Equals("Orc") Then
+         p.formName.Equals("Tigress") Or p.formName.Equals("Orc") Or p.buttSize = -2 Then
             Select Case p.breastSize
                 Case -1, -2
                     iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(1, True, False)

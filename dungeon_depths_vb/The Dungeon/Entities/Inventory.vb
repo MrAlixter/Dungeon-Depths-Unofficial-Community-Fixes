@@ -483,7 +483,8 @@
         internal_inventory.Add(GlitteryDress.ITEM_NAME, New GlitteryDress)           '455
         internal_inventory.Add(AlizasMark.ITEM_NAME, New AlizasMark)                 '456
         internal_inventory.Add(CatburglarSuit.ITEM_NAME, New CatburglarSuit)         '457
-        internal_inventory.Add(ScholasticWristlet.ITEM_NAME, New ScholasticWristlet) '458
+        internal_inventory.Add(ScholasticScrunchie.ITEM_NAME, New ScholasticScrunchie) '458
+        internal_inventory.Add(AlizaComb.ITEM_NAME, New AlizaComb)                   '459
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -564,7 +565,7 @@
                    Me.item(375), Me.item(379), Me.item(380), Me.item(387),
                    Me.item(388), Me.item(390), Me.item(395), Me.item(410),
                    Me.item(416), Me.item(422), Me.item(432), Me.item(436),
-                   Me.item(440), Me.item(449), Me.item(451)}
+                   Me.item(440), Me.item(449), Me.item(451), Me.item(459)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32),
                 Me.item(33), Me.item(34), Me.item(35), Me.item(44),

@@ -2932,9 +2932,9 @@ Public Class Player
         Dim out As String = ""
         'general statement
         If pClass.name.Equals("Classless") Then
-            out = "You are " & name & ", a " & sex & " " & pClass.name & " " & pForm.name & DDUtils.RNRN
+            out = "You are " & name & ", a " & sex & If(isPetrified, " statue of a ", " ") & pClass.name & " " & pForm.name & DDUtils.RNRN
         Else
-            out = "You are " & name & ", a " & sex & " " & pForm.name & " " & pClass.name & DDUtils.RNRN
+            out = "You are " & name & ", a " & sex & If(isPetrified, " statue of a ", " ") & pForm.name & " " & pClass.name & DDUtils.RNRN
         End If
         description = Replace(out, vbCrLf, "")
 

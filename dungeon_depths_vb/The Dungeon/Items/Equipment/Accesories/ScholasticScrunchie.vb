@@ -1,7 +1,7 @@
-﻿Public Class ScholasticWristlet
+﻿Public Class ScholasticScrunchie
     Inherits Accessory
 
-    Public Const ITEM_NAME As String = "Scholastic_Wristlet"
+    Public Const ITEM_NAME As String = "Scholastic_Scrunchie"
 
     Private Shared img_ind_bsizeneg1 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(31, False, True)
     Private Shared img_ind_bsize0 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(61, True, True)

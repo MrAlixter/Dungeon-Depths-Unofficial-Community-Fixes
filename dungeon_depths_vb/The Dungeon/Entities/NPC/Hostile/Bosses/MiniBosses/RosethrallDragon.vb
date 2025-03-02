@@ -91,6 +91,8 @@
         MyBase.die(cause)
 
         Game.currFloor.cleanupPinkMist()
+        TextEvent.fpush("As the dragon falls in a heap, you turn back to the treasure " & pronoun & " was guarding." & DDUtils.RNRN &
+                        "")
         TextEvent.pushLog("You pick up the cracked orb, and the strange mist subsides!")
         Game.last_tile = Nothing
     End Sub

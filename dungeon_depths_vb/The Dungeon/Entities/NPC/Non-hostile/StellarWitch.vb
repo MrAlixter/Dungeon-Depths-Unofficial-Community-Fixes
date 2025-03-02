@@ -1,4 +1,4 @@
-﻿Public Class ShadyWizard
+﻿Public Class StellarWitch
     Inherits ShopNPC
 
     Public Shared ReadOnly SECRET_INV_CLASSES() As String = {"Bimbo", "Magical Slut", "Maid", "Bunny Girl", "Bimbo++"}
@@ -11,15 +11,19 @@
     Sub New()
         MyBase.New()
 
+        init()
+    End Sub
+
+    Sub init()
         '|ID Info|
-        name = "Shady Wizard"
+        name = "Stellar Witch"
         sName = name
         npc_index = ShopNPCInd.shadywizard
 
         '|NPC Flags|
-        pronoun = "he"
-        p_pronoun = "his"
-        r_pronoun = "him"
+        pronoun = "she"
+        p_pronoun = "her"
+        r_pronoun = "her"
         isShop = True
 
         '|Inventory|
@@ -41,32 +45,33 @@
         sMaxHealth = maxHealth
         sMaxMana = maxMana
         sAttack = attack
-        sdefense = defense
+        sDefense = defense
         sWill = will
         sSpeed = speed
 
         '|Images|
         local_img = New Dictionary(Of ShopNPC.LocalImgInd, Image)()
 
-        local_img.Add(LocalImgInd.normal, ShopNPC.gbl_img.atrs(0).getAt(6))
+        local_img.Add(LocalImgInd.normal, ShopNPC.gbl_img.atrs(0).getAt(171))
         local_img.Add(LocalImgInd.frog, ShopNPC.gbl_img.atrs(0).getAt(4))
-        local_img.Add(LocalImgInd.bunny, ShopNPC.gbl_img.atrs(0).getAt(7))
-        local_img.Add(LocalImgInd.princess, ShopNPC.gbl_img.atrs(0).getAt(8))
+        local_img.Add(LocalImgInd.bunny, ShopNPC.gbl_img.atrs(0).getAt(173))
+        local_img.Add(LocalImgInd.princess, ShopNPC.gbl_img.atrs(0).getAt(174))
         local_img.Add(LocalImgInd.sheep, ShopNPC.gbl_img.atrs(0).getAt(5))
-        local_img.Add(LocalImgInd.doll, ShopNPC.gbl_img.atrs(0).getAt(9))
-        local_img.Add(LocalImgInd.arachne, ShopNPC.gbl_img.atrs(0).getAt(68))
-        local_img.Add(LocalImgInd.catgirl, ShopNPC.gbl_img.atrs(0).getAt(90))
+        local_img.Add(LocalImgInd.doll, ShopNPC.gbl_img.atrs(0).getAt(178))
+        local_img.Add(LocalImgInd.arachne, ShopNPC.gbl_img.atrs(0).getAt(175))
+        local_img.Add(LocalImgInd.catgirl, ShopNPC.gbl_img.atrs(0).getAt(176))
         local_img.Add(LocalImgInd.trilobite, ShopNPC.gbl_img.atrs(0).getAt(96))
         local_img.Add(LocalImgInd.beegirl, ShopNPC.gbl_img.atrs(0).getAt(148))
-        local_img.Add(LocalImgInd.bimbo, ShopNPC.gbl_img.atrs(0).getAt(154))
-        local_img.Add(LocalImgInd.alt1, ShopNPC.gbl_img.atrs(0).getAt(10))
+        local_img.Add(LocalImgInd.bimbo, ShopNPC.gbl_img.atrs(0).getAt(177))
+        local_img.Add(LocalImgInd.alt1, ShopNPC.gbl_img.atrs(0).getAt(172))
+        local_img.Add(LocalImgInd.alt2, ShopNPC.gbl_img.atrs(0).getAt(179))
     End Sub
 
     Public Overrides Sub encounter()
-        If Game.mDun.getWorldFlag(wFlag.shadywitchswapped) > 0 Then
-            Dim swit = New StellarWitch()
-            Game.active_shop_npc = swit
-            swit.encounter()
+        'If the food vendor has the sword, use the alternate food vendor character
+        If Game.mDun.getWorldFlag(wFlag.shadywitchswapped) < 0 Then
+            Game.active_shop_npc = Game.swiz
+            Game.swiz.encounter()
             Exit Sub
         End If
 
@@ -254,7 +259,7 @@
         Return "*giggle*  See ya around..."
     End Function
 
-      '| - MISC - |
+    '| - MISC - |
     Public Overrides Sub buildShopArea(ByRef floor As mFloor)
         MyBase.buildShopArea(floor)
 

@@ -19,7 +19,8 @@
         will = 666
 
         '|Inventory|
-        setInventory({25, 74, 168, 194, 182, 205, 214, 218, 226, 227, 410})
+        inv.setCount(LingerieCatalog.ITEM_NAME, 1)
+        inv.setCount(AlizaComb.ITEM_NAME, 1)
 
         '|Misc|
         setupMonsterOnSpawn()
@@ -165,7 +166,7 @@
                                 "+1666 Gold" & vbCrLf & "+1 " & GlitteryDress.ITEM_NAME & vbCrLf & "+1 " & ScarletComb.ITEM_NAME & vbCrLf & "+1 " & KestrelKnife.ITEM_NAME & DDUtils.PAKTC)
                 p.gold += 1666
                 p.inv.add(GlitteryDress.ITEM_NAME, 1)
-                p.inv.add(ScarletComb.ITEM_NAME, 1)
+                p.inv.add(AlizaComb.ITEM_NAME, 1)
                 p.inv.add(KestrelKnife.ITEM_NAME, 1)
 
                 p.UIupdate()

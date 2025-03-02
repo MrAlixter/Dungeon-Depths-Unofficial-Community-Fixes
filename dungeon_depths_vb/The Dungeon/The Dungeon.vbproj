@@ -125,7 +125,7 @@
     <Compile Include="Entities\NPC\Hostile\Monsters\LegacyFloor\OozeScion.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\LegacyFloor\InnumerableBugs.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\LegacyFloor\TargaxianCultist.vb" />
-    <Compile Include="Entities\NPC\Hostile\Monsters\Succubus\Aliza.vb" />
+    <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\Aliza.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Witches\MarissasStudent.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Slime\LeporineOoze.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\TimeJudgeFight.vb" />
@@ -161,6 +161,7 @@
     <Compile Include="Entities\NPC\Hostile\Polymorphed\PolymorphedNPC.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\FaeQueen.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\FVendorTar.vb" />
+    <Compile Include="Entities\NPC\Non-Hostile\StellarWitch.vb" />
     <Compile Include="Entities\Player\Classes\AlizaBustier.vb" />
     <Compile Include="Entities\Player\Hypnosis\HypnosisEffect.vb" />
     <Compile Include="Entities\Player\Classes\needPassages\Cleric.vb" />
@@ -307,7 +308,7 @@
     <Compile Include="Items\Equipment\Accesories\PinkPantiesPLR.vb" />
     <Compile Include="Items\Equipment\Accesories\RingOfWarForm.vb" />
     <Compile Include="Items\Equipment\Accesories\ROfBirdRage.vb" />
-    <Compile Include="Items\Equipment\Accesories\ScholasticWristlet.vb" />
+    <Compile Include="Items\Equipment\Accesories\ScholasticScrunchie.vb" />
     <Compile Include="Items\Equipment\Accesories\TidemageTattoo.vb" />
     <Compile Include="Items\Equipment\Accesories\BerserkerCursemark.vb" />
     <Compile Include="Items\Equipment\Accesories\RingOfTheRabbit.vb" />
@@ -477,6 +478,7 @@
     <Compile Include="Items\Usable\Potions\PotionOfPanties.vb" />
     <Compile Include="Items\Usable\Potions\ImpsDraught.vb" />
     <Compile Include="Items\Usable\Potions\PolymExtPotion.vb" />
+    <Compile Include="Items\Usable\AlizaComb.vb" />
     <Compile Include="Items\Usable\ScarletComb.vb" />
     <Compile Include="Items\Usable\JunkChime.vb" />
     <Compile Include="Items\Usable\Potions\SlightRestoPotion.vb" />
