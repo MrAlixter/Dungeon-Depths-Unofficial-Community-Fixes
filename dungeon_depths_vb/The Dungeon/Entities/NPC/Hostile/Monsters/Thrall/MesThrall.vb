@@ -15,7 +15,7 @@
         will = 5
 
         '|Inventory|
-        setInventory({0, 1, 13})
+        setInventory({0, 13})
 
         '|Dialog Variables|
 

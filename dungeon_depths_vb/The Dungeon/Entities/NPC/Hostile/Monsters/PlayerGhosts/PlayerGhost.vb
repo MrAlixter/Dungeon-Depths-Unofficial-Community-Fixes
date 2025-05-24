@@ -90,13 +90,13 @@
     End Sub
     Function redefineClassName(ByVal s As String) As String
         Select Case s
-            Case "Warrior", "Barbarian", "Time Cop"
+            Case "Warrior", "Barbarian", "Time Cop", "Mecha-Warrior"
                 Return "Wraith"
             Case "Mage", "Warlock", "Necromancer"
                 Return "Specter"
-            Case "Rogue", "Battlemaiden", "Pirate"
+            Case "Rogue", "Battlemaiden", "Pirate", "Assassin"
                 Return "Shade"
-            Case "Paladin", "Unconscious", "Mindless", "Classless"
+            Case "Paladin", "Unconscious", "Mindless", "Classless", "Mindless Bimbo"
                 Return "Poltergeist"
             Case "Magical Girl", "Magical Slut"
                 Return "Specteral Girl"
@@ -113,6 +113,11 @@
 
     '| - ATTACKS - |
     Public Overrides Sub attackCMD(ByRef target As Entity)
+        If Int(Rnd() * 3) = 0 Then
+            classSpecificAttack(target)
+            Exit Sub
+        End If
+
         If attack > will Then
             MyBase.attackCMD(target)
         ElseIf will > attack Then
@@ -150,6 +155,24 @@
                     If ebound > 12 Then ebound = 12
                     If crit < ebound Then miss(target) Else hit(dmg, target)
                 End If
+        End Select
+    End Sub
+    Public Sub classSpecificAttack(ByRef target As Entity)
+        Select Case redefineClassName(class_name)
+            Case "Wraith", "Specter"
+                'Eerie Hand
+            Case "Shade"
+                'Shadow Step
+            Case "Poltergeist"
+                'Throw Item
+            Case "Specteral Girl"
+                'Curse of Duty
+            Case "Siren"
+                'Charming Song
+            Case "Thrall"
+                'Mindless Trance
+            Case Else
+                'Possession Ray
         End Select
     End Sub
 

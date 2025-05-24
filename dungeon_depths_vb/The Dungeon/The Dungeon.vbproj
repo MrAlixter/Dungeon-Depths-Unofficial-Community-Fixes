@@ -126,6 +126,7 @@
     <Compile Include="Entities\NPC\Hostile\Monsters\LegacyFloor\InnumerableBugs.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\LegacyFloor\TargaxianCultist.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\Aliza.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\Witches\HexedSpelldabbler.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Witches\MarissasStudent.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Slime\LeporineOoze.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\TimeJudgeFight.vb" />
@@ -145,6 +146,7 @@
     <Compile Include="Entities\NPC\Hostile\Polymorphed\needs images\PDove.vb" />
     <Compile Include="Entities\NPC\Hostile\Polymorphed\needs images\PGoblin.vb" />
     <Compile Include="Entities\NPC\Hostile\Polymorphed\needs images\PHellhound.vb" />
+    <Compile Include="Entities\NPC\Hostile\Polymorphed\needs images\PGooGirl.vb" />
     <Compile Include="Entities\NPC\Hostile\Polymorphed\PBunny.vb" />
     <Compile Include="Entities\NPC\Hostile\Polymorphed\PPrincess.vb" />
     <Compile Include="Entities\NPC\Hostile\Polymorphed\PCatGirl.vb" />
@@ -450,6 +452,7 @@
     <Compile Include="Items\Misc\ArmorFragments.vb" />
     <Compile Include="Items\Misc\ExtraLife.vb" />
     <Compile Include="Items\Misc\CrackedPinkOrb.vb" />
+    <Compile Include="Items\Misc\ShoppersCoin.vb" />
     <Compile Include="Items\Misc\LumpOfIron.vb" />
     <Compile Include="Items\Services\HypnoTeach\AdvClassChange.vb" />
     <Compile Include="Items\Services\HypnoTeach\ForgetSpecial.vb" />
@@ -462,6 +465,7 @@
     <Compile Include="Items\Services\Shopkeeper\CollarRemoval.vb" />
     <Compile Include="Items\Services\Weaponsmith\UpgradeValkyrieSword.vb" />
     <Compile Include="Items\Services\Weaponsmith\UpgradeArmor.vb" />
+    <Compile Include="Items\Usable\CrossedStarTag.vb" />
     <Compile Include="Items\Usable\Food\BadRations.vb" />
     <Compile Include="Items\Usable\GumGrenade.vb" />
     <Compile Include="Items\Usable\CynthiasRemote.vb" />
