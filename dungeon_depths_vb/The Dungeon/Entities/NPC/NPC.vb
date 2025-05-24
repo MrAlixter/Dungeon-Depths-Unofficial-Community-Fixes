@@ -338,10 +338,15 @@ Public Class NPC
     End Sub
 
     Public Overridable Sub revert()
+        If Game.player1.currTarget.GetType.IsSubclassOf(GetType(PolymorphedNPC)) Then
+            Game.player1.currTarget.revert()
+            Exit Sub
+        End If
+
         name = sName
         maxHealth = sMaxHealth
         attack = sAttack
-        defense = sdefense
+        defense = sDefense
         speed = sSpeed
         img_index = 0
         form = ""

@@ -485,6 +485,7 @@
         internal_inventory.Add(CatburglarSuit.ITEM_NAME, New CatburglarSuit)         '457
         internal_inventory.Add(ScholasticScrunchie.ITEM_NAME, New ScholasticScrunchie) '458
         internal_inventory.Add(AlizaComb.ITEM_NAME, New AlizaComb)                   '459
+        internal_inventory.Add(CrossedStarTag.ITEM_NAME, New CrossedStarTag)         '460
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -614,7 +615,7 @@
 
         misc = {Me.item(43), Me.item(53), Me.item(224), Me.item(229),
                 Me.item(242), Me.item(243), Me.item(261), Me.item(264),
-                Me.item(287), Me.item(352), Me.item(417)}
+                Me.item(287), Me.item(352), Me.item(417), Me.item(460)}
 
         glasses = {New noGlasses(),
                    Me.item(161), Me.item(299), Me.item(308), Me.item(309),

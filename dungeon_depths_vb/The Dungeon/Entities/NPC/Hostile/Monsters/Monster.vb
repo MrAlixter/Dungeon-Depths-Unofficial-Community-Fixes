@@ -37,6 +37,7 @@
     targaxian_cultist
     ooze_scion
     aliza
+    hexed_spelldabbler
 End Enum
 
 Public Class Monster
@@ -68,6 +69,7 @@ Public Class Monster
         l.Add(New Tuple(Of mInd, String)(mInd.marissa_neop, MarissasStudent.BASE_NAME))
         l.Add(New Tuple(Of mInd, String)(mInd.ice_elemental, IceElemental.BASE_NAME))
         l.Add(New Tuple(Of mInd, String)(mInd.aliza, Aliza.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.hexed_spelldabbler, HexedSpelldabbler.BASE_NAME))
         Return l
     End Function
 
@@ -198,19 +200,21 @@ Public Class Monster
                 Return New TargaxianCultist
             Case mInd.ooze_scion
                 Return New OozeScion
+            Case mInd.hexed_spelldabbler
+                Return New HexedSpelldabbler
         End Select
 
         Return New Monster()
     End Function
     Shared Function floorMonsterTier(ByVal floorInd As Integer) As Integer()
         '| -- Random Enemies -- |
-        Dim tier = {mInd.mesm_thrall, mInd.slime, mInd.spider, mInd.ice_elemental}
+        Dim tier = {mInd.mesm_thrall, mInd.slime, mInd.spider, mInd.ice_elemental, mInd.hexed_spelldabbler}
 
         Select Case floorInd
             Case 1
-                tier = {mInd.mesm_thrall, mInd.slime, mInd.spider, mInd.ice_elemental}
+                tier = {mInd.mesm_thrall, mInd.slime, mInd.spider, mInd.ice_elemental, mInd.hexed_spelldabbler}
             Case 2
-                tier = {mInd.mesm_thrall, mInd.slime, mInd.enth_sorc, mInd.spider, mInd.ice_elemental}
+                tier = {mInd.mesm_thrall, mInd.slime, mInd.enth_sorc, mInd.spider, mInd.ice_elemental, mInd.hexed_spelldabbler}
             Case 3
                 tier = {mInd.mesm_thrall, mInd.slime, mInd.enth_sorc, mInd.spider, mInd.arach_hunt, mInd.ice_elemental}
             Case 4
@@ -254,7 +258,7 @@ Public Class Monster
             DDUtils.append(tier, mInd.less_gorgon)
         End If
 
-        If IO.File.Exists("gho.sts") And Not mFloor.nonRandomFloors.Contains(floorInd) And Int(Rnd() * 2) = 0 Then
+        If IO.File.Exists("gho.sts") And Not mFloor.nonRandomFloors.Contains(floorInd) And floorInd > 1 And Int(Rnd() * 2) = 0 Then
             DDUtils.append(tier, mInd.player_ghost)
         End If
 

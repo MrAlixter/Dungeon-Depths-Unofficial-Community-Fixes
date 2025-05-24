@@ -13,7 +13,7 @@
 
         'stats
         health = 1.0
-        maxHealth = 100
+        maxHealth = 60
         attack = 20
         mana = 20
         defense = 10
@@ -23,7 +23,7 @@
         'portrait
         sex_bool = True
         eye_ind = New Tuple(Of Integer, Boolean, Boolean)(56, True, True)
-        haircolor = BimboTF.bimboyellow2
+        haircolor = DDUtils.cShift(BimboTF.bimboyellow2, Color.OrangeRed, 15)
 
         'inventory
 

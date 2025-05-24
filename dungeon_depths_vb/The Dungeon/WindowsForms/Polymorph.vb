@@ -75,7 +75,8 @@
     End Sub
 
     '| - PLAYER TRANSFORMATIONS -|
-    Public Shared Sub transform(ByRef p As Player, ByVal form As String, Optional ByVal checkform As Boolean = True)
+    Public Shared Sub transform(ByRef p As Player, ByVal form As String, Optional ByVal checkform As Boolean = True, Optional ByVal printRevertText As Boolean = True)
+
         '| -- Pre-transformation Checks -- |
         If checkform AndAlso (form.Equals(p.className) Or form.Equals(p.formName) Or Not p.polymorphs.Keys.Contains(form)) Then
             Exit Sub
@@ -112,7 +113,7 @@
         'End If
 
         '| -- Cleanup -- |
-        If Not revertText = "" & DDUtils.RNRN Then TextEvent.fpush(revertText & active_polymorph.getTFText())
+        If printRevertText And Not revertText = "" & DDUtils.RNRN Then TextEvent.fpush(revertText & active_polymorph.getTFText())
 
         p.specialRoute()
         p.magicRoute()
@@ -158,6 +159,8 @@
             PolymorphedNPC.polymorph(t, Game.player1, 6, "Goblin")
         ElseIf s = "Hellhound" Then
             PolymorphedNPC.polymorph(t, Game.player1, 6, "Hellhound")
+        ElseIf s = "Goo Girl" Then
+            PolymorphedNPC.polymorph(t, Game.player1, 999, "Goo Girl")
         Else
             Exit Sub
         End If

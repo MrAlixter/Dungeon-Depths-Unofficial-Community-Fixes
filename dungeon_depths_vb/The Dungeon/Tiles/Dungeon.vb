@@ -16,7 +16,8 @@
     berserkercmark
     wsgumgun
     wsgumgrenade
-    shadywitchswapped
+    stellarwitchswapped
+    swcoin
 End Enum
 
 Public Class Dungeon

@@ -63,7 +63,7 @@
     End Sub
 
     Public Overrides Sub encounter()
-        If Game.mDun.getWorldFlag(wFlag.shadywitchswapped) > 0 Then
+        If Game.mDun.getWorldFlag(wFlag.stellarwitchswapped) > 0 Then
             Dim swit = New StellarWitch()
             Game.active_shop_npc = swit
             swit.encounter()
