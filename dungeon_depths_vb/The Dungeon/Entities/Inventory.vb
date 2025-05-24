@@ -485,6 +485,7 @@
         internal_inventory.Add(CatburglarSuit.ITEM_NAME, New CatburglarSuit)         '457
         internal_inventory.Add(ScholasticScrunchie.ITEM_NAME, New ScholasticScrunchie) '458
         internal_inventory.Add(AlizaComb.ITEM_NAME, New AlizaComb)                   '459
+        internal_inventory.Add(GhastlyVeil.ITEM_NAME, New GhastlyVeil)               '460
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -621,7 +622,7 @@
                    Me.item(310), Me.item(311), Me.item(312), Me.item(313),
                    Me.item(314), Me.item(315), Me.item(316), Me.item(317),
                    Me.item(318), Me.item(319), Me.item(329), Me.item(396),
-                   Me.item(397), Me.item(447)}
+                   Me.item(397), Me.item(447), Me.item(460)}
 
         invIDorder = New List(Of Integer)
 

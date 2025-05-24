@@ -764,6 +764,7 @@ Public Class Player
         classes.Add("Assassin", New Assassin())
         classes.Add("Mad Bird", New Cleric())
         classes.Add("Bustier", New AlizaBustier())
+        classes.Add("Magical Girl​​", New MagicGirlTransformGhost())
     End Sub
     Private Shared Sub initForms()
         'Creates the form dictionary

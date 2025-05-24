@@ -16,6 +16,23 @@
         next_step = getNextStep(cs)
     End Sub
 
+    Overrides Sub step1()
+        Dim p As Player = Game.player1
+
+        HumanTF.change(p)
+
+        If p.sex = "Male" Then
+            p.MtF()
+        End If
+
+        p.changeClass("Magical Girl​​")
+
+        step1dialog(p)
+
+        p.specialRoute()
+        p.magicRoute()
+    End Sub
+
     Public Overloads Shared Function getTaughtSpells() As String()
         Return {"Heartbreak Supernova"}
     End Function

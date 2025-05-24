@@ -627,6 +627,8 @@ Public Class Portrait
             Return ol_img_lib.getImg(28)
         ElseIf pClass.Equals("Bustier") Then
             Return ol_img_lib.getImg(32)
+        ElseIf pClass.Equals("Magical Girl​​") Then
+            Return ol_img_lib.getImg(33)
         End If
 
         '| - Forms - |

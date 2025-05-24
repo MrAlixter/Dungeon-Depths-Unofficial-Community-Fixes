@@ -163,6 +163,7 @@
     <Compile Include="Entities\NPC\Non-Hostile\FVendorTar.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\StellarWitch.vb" />
     <Compile Include="Entities\Player\Classes\AlizaBustier.vb" />
+    <Compile Include="Entities\Player\Classes\MagicGirlTransformGhost.vb" />
     <Compile Include="Entities\Player\Hypnosis\HypnosisEffect.vb" />
     <Compile Include="Entities\Player\Classes\needPassages\Cleric.vb" />
     <Compile Include="Entities\Player\Classes\CynnOnahole2.vb" />
@@ -382,6 +383,7 @@
     <Compile Include="Items\Equipment\Armor\SlutVar\CatburglarSuit.vb" />
     <Compile Include="Items\Equipment\Glasses\AllSeeingShadesOrig.vb" />
     <Compile Include="Items\Equipment\Glasses\BimbovisionGoggles.vb" />
+    <Compile Include="Items\Equipment\Glasses\GhastlyVeil.vb" />
     <Compile Include="Items\Equipment\Glasses\CircularGlasses.vb" />
     <Compile Include="Items\Equipment\Glasses\CyberVisorG.vb" />
     <Compile Include="Items\Equipment\Glasses\TargetingSystem.vb" />

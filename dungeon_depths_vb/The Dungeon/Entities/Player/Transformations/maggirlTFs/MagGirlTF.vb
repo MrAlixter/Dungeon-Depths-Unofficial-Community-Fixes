@@ -41,7 +41,7 @@ Public Class MagGirlTF
         TextEvent.pushLog("You activate your magical girl transformation!")
         p.textColor = Game.lblEvent.ForeColor
     End Sub
-    Sub step1()
+    Overridable Sub step1()
         Dim p As Player = Game.player1
 
         HumanTF.change(p)
