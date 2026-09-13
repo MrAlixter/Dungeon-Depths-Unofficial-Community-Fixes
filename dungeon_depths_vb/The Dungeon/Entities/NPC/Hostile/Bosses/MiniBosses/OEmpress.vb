@@ -75,7 +75,7 @@
                                                              "You explain your situation to her, but she simply chuckles before twisting closer." & DDUtils.RNRN &
                                                              """You know, I was placed on this floor as, like, a buffer.  Lady Medusa isn't interested in weaklings, and you aren't going anywhere important if you can't even keep track of your own body...""" & DDUtils.RNRN &
                                                              "Noticing a shift in her previously bubbly personality, you leap back as her tentacles flare out around you." & DDUtils.RNRN &
-                                                             """Let's see if you've learned anyhing since last time..."" she says with a somewhat menacing grin, ""...though I'm sure neither of us would mind a repeat, either...""", AddressOf Game.ChallengeBoss)
+                                                             """Let's see if you've learned anyhing since last time..."" she says with a somewhat menacing grin, ""...though I'm sure neither of us would mind a repeat, either...""", AddressOf My.Forms.Game.challengeBoss)
         MyBase.preFightDialog()
     End Sub
 End Class
