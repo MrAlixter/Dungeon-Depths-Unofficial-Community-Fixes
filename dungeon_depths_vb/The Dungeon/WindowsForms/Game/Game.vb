@@ -2886,22 +2886,33 @@ Public Class Game
         If Not combat_engaged And Not shop_npc_engaged Then player1.canMoveFlag = True
 
         Dim tmpInd As Integer = lstInventory.TopIndex
-        Dim tind = lstInventory.SelectedIndex
-        selectedItem.use(player1)
+
+        ' Сохраняем ссылку, потому что обновление интерфейса временно
+        ' сбросит поле selectedItem.
+        Dim itemBeingUsed As Item = selectedItem
+        Dim usedItemId As Integer = CInt(itemBeingUsed.getId())
+
+        itemBeingUsed.use(player1)
 
         player1.inv.invNeedsUDate = True
         player1.UIupdate()
 
-        lstInventory.TopIndex = tmpInd
+        If lstInventory.Items.Count > 0 Then
+            lstInventory.TopIndex = Math.Min(Math.Max(tmpInd, 0), lstInventory.Items.Count - 1)
+        End If
 
-        If selectedItem.count < 1 Then
-            lstInventory.SelectedItem = Nothing
+        Dim updatedIndex As Integer = player1.inv.invIDorder.IndexOf(usedItemId)
+        Dim remainingItem As Item = player1.inv.item(usedItemId)
+
+        If remainingItem Is Nothing OrElse remainingItem.count < 1 OrElse
+           updatedIndex < 0 OrElse updatedIndex >= lstInventory.Items.Count Then
+            lstInventory.SelectedIndex = -1
             selectedItem = Nothing
             btnUse.Enabled = False
             btnDrop.Enabled = False
             btnLook.Enabled = False
         Else
-            lstInventory.SelectedIndex = tind
+            lstInventory.SelectedIndex = updatedIndex
         End If
 
         progressTurn(False)
@@ -3651,36 +3662,40 @@ Public Class Game
     '|INVENTORY DISPLAY|
     Private Sub lstInventory_DrawItem(sender As Object, e As DrawItemEventArgs) Handles lstInventory.DrawItem
         e.DrawBackground()
-        Dim textBrush As Brush = New SolidBrush(lstInventory.ForeColor)
-        Dim drawFont As Font = e.Font
+        Dim list As ListBox = DirectCast(sender, ListBox)
+        If e.Index < 0 OrElse e.Index >= list.Items.Count Then Exit Sub
 
-        If e.Index < 0 Then Exit Sub
+        Dim text As String = list.Items(e.Index).ToString()
+        Dim isSelected As Boolean = (e.State And DrawItemState.Selected) = DrawItemState.Selected
+        Dim isHeading As Boolean = text.StartsWith("-")
+        Dim textColor As Color = list.ForeColor
 
-        Dim text = DirectCast(sender, ListBox).Items(e.Index).ToString()
-
-        If (e.State And DrawItemState.Selected) = DrawItemState.Selected Then
-            e.Graphics.FillRectangle(New SolidBrush(lstInventory.BackColor), e.Bounds)
-            If Not text.StartsWith("-") Then textBrush = Brushes.Gold
+        If isSelected Then
+            Using background As New SolidBrush(list.BackColor)
+                e.Graphics.FillRectangle(background, e.Bounds)
+            End Using
+            If Not isHeading Then textColor = Color.Gold
+        ElseIf Not isHeading Then
+            ' Dark colors must not produce negative RGB components.
+            textColor = Color.FromArgb(list.ForeColor.A,
+                                       Math.Max(0, CInt(list.ForeColor.R) - 80),
+                                       Math.Max(0, CInt(list.ForeColor.G) - 80),
+                                       Math.Max(0, CInt(list.ForeColor.B) - 80))
         End If
 
-
-        If text.StartsWith("-") Then
-            drawFont = DDUtils.scaledFont(drawFont, drawFont.Size, True)
-        ElseIf Not (e.State And DrawItemState.Selected) = DrawItemState.Selected Then
-            Dim i = 80
-            textBrush = New SolidBrush(Color.FromArgb(lstInventory.ForeColor.A,
-                                                      lstInventory.ForeColor.R - i,
-                                                      lstInventory.ForeColor.B - i,
-                                                      lstInventory.ForeColor.G - i))
-        End If
-
-        e.Graphics.DrawString(text,
-                              drawFont,
-                              textBrush,
-                              e.Bounds,
-                              StringFormat.GenericDefault)
+        Using textBrush As New SolidBrush(textColor)
+            If isHeading Then
+                Using headingFont As Font = DDUtils.scaledFont(e.Font, e.Font.Size, True)
+                    e.Graphics.DrawString(text, headingFont, textBrush, e.Bounds, StringFormat.GenericDefault)
+                End Using
+            Else
+                ' The event owns e.Font and e.Graphics; do not dispose them.
+                e.Graphics.DrawString(text, e.Font, textBrush, e.Bounds, StringFormat.GenericDefault)
+            End If
+        End Using
     End Sub
     Private Sub lstInventory_MeasureItem(sender As Object, e As MeasureItemEventArgs) Handles lstInventory.MeasureItem
+        If e.Index < 0 OrElse e.Index >= DirectCast(sender, ListBox).Items.Count Then Exit Sub
         Dim text = DirectCast(sender, ListBox).Items(e.Index).ToString()
 
         If Not (text.Equals("")) Then
@@ -3690,30 +3705,30 @@ Public Class Game
         End If
     End Sub
     Private Sub lstInventory_SelectedValueChanged(sender As Object, e As EventArgs) Handles lstInventory.SelectedValueChanged
-        ' No item is selected, or a category heading was selected.
+        selectedItem = Nothing
+        btnUse.Enabled = False
+        btnDrop.Enabled = False
+        btnLook.Enabled = False
+
+        ' The displayed rows and their ID map may be rebuilding.
+        Dim row As Integer = lstInventory.SelectedIndex
+        If player1 Is Nothing OrElse player1.inv Is Nothing Then Exit Sub
         If lstInventory.SelectedItem Is Nothing OrElse
-       lstInventory.SelectedItem.ToString().Length = 0 OrElse
-       lstInventory.SelectedItem.ToString().EndsWith(":") Then
+           row < 0 OrElse row >= lstInventory.Items.Count OrElse
+           player1.inv.invIDorder Is Nothing OrElse
+           row >= player1.inv.invIDorder.Count Then Exit Sub
 
-            selectedItem = Nothing
-            btnUse.Enabled = False
-            btnDrop.Enabled = False
-            btnLook.Enabled = False
-            Exit Sub
-        End If
+        Dim label As String = lstInventory.SelectedItem.ToString()
+        If label.Length = 0 OrElse label.EndsWith(":") Then Exit Sub
+        Dim itemId As Integer = player1.inv.invIDorder(row)
+        If itemId < 0 Then Exit Sub
 
-        selectedItem = player1.inv.item(
-        player1.inv.invIDorder(lstInventory.SelectedIndex)
-    )
-
-        If selectedItem IsNot Nothing Then
-            btnUse.Enabled = selectedItem.getUsable()
+        Dim candidate As Item = player1.inv.item(itemId)
+        If candidate IsNot Nothing AndAlso candidate.count > 0 Then
+            selectedItem = candidate
+            btnUse.Enabled = candidate.getUsable()
             btnDrop.Enabled = True
             btnLook.Enabled = True
-        Else
-            btnUse.Enabled = False
-            btnDrop.Enabled = False
-            btnLook.Enabled = False
         End If
     End Sub
     'inventory filter methods
@@ -3884,9 +3899,9 @@ Public Class Game
 
     '| - UI BUTTONS - |
     Private Sub btnDrop_Click(sender As Object, e As EventArgs) Handles btnDrop.Click
-        If selectedItem Is Nothing Then Exit Sub
-
         doLblEventOnClose()
+        ' Closing an event can rebuild the inventory and clear the selection.
+        If selectedItem Is Nothing Then Exit Sub
         selectedItem.discard()
         player1.inv.invNeedsUDate = True
         player1.UIupdate()
@@ -3898,9 +3913,8 @@ Public Class Game
         btnLook.Enabled = False
     End Sub
     Private Sub btnLook_Click(sender As Object, e As EventArgs) Handles btnLook.Click
-        If selectedItem Is Nothing Then Exit Sub
-
         doLblEventOnClose()
+        If selectedItem Is Nothing Then Exit Sub
         selectedItem.examine()
         lstInventory.SelectedIndex = -1
         selectedItem = Nothing
@@ -4143,7 +4157,10 @@ Public Class Game
                     Dim pic As Image = Nothing
                     If System.IO.File.Exists("saves/s" & i.ToString() & ".ave.png") Then
                         Using fs As New FileStream("saves/s" & i.ToString() & ".ave.png", FileMode.Open, FileAccess.Read)
-                            pic = Image.FromStream(fs)
+                            Using loaded As Image = Image.FromStream(fs)
+                                ' The preview must own its pixels after the stream closes.
+                                pic = New Bitmap(loaded)
+                            End Using
                         End Using
                     Else
                         pic = ShopNPC.gbl_img.atrs(0).getAt(103)
@@ -4167,27 +4184,29 @@ Public Class Game
         End If
     End Sub
     Private Function getSavePicture(ByVal pic As Image)
-        Dim g = Graphics.FromImage(pic)
-        g.SmoothingMode = Drawing2D.SmoothingMode.None
-        g.InterpolationMode = Drawing2D.InterpolationMode.NearestNeighbor
+        Using g As Graphics = Graphics.FromImage(pic)
+            g.SmoothingMode = Drawing2D.SmoothingMode.None
+            g.InterpolationMode = Drawing2D.InterpolationMode.NearestNeighbor
 
-        Dim f = New System.Drawing.Font(lblNameTitle.Font.FontFamily, Convert.ToSingle(lblNameTitle.Font.SizeInPoints), FontStyle.Bold, lblNameTitle.Font.Unit, lblNameTitle.Font.GdiCharSet)
+            Using f As New System.Drawing.Font(lblNameTitle.Font.FontFamily, Convert.ToSingle(lblNameTitle.Font.SizeInPoints), FontStyle.Bold, lblNameTitle.Font.Unit, lblNameTitle.Font.GdiCharSet)
 
-        Dim n = centerSaveName(player1.name)
+                Dim n = centerSaveName(player1.name)
 
-        g.DrawString(n, f, Brushes.Black, New Point(1, 190))
-        g.DrawString(n, f, Brushes.Black, New Point(3, 190))
-        g.DrawString(n, f, Brushes.Black, New Point(5, 190))
+                g.DrawString(n, f, Brushes.Black, New Point(1, 190))
+                g.DrawString(n, f, Brushes.Black, New Point(3, 190))
+                g.DrawString(n, f, Brushes.Black, New Point(5, 190))
 
-        g.DrawString(n, f, Brushes.Black, New Point(1, 188))
-        g.DrawString(n, f, Brushes.Black, New Point(3, 188))
-        g.DrawString(n, f, Brushes.Black, New Point(5, 188))
+                g.DrawString(n, f, Brushes.Black, New Point(1, 188))
+                g.DrawString(n, f, Brushes.Black, New Point(3, 188))
+                g.DrawString(n, f, Brushes.Black, New Point(5, 188))
 
-        g.DrawString(n, f, Brushes.Black, New Point(1, 192))
-        g.DrawString(n, f, Brushes.Black, New Point(3, 192))
-        g.DrawString(n, f, Brushes.Black, New Point(5, 192))
+                g.DrawString(n, f, Brushes.Black, New Point(1, 192))
+                g.DrawString(n, f, Brushes.Black, New Point(3, 192))
+                g.DrawString(n, f, Brushes.Black, New Point(5, 192))
 
-        g.DrawString(n, f, Brushes.White, New Point(3, 190))
+                g.DrawString(n, f, Brushes.White, New Point(3, 190))
+            End Using
+        End Using
 
         Return pic
     End Function

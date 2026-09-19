@@ -1552,26 +1552,30 @@ Public Class mFloor
 
     '|-Legacy Floor-|
     Sub genLegacyFloor()
+        ' Legacy floor bypasses placeChest, so initialize its loot tables
+        ' before generating chest contents (including after loading a save).
+        prepareChestLoot()
+
         Dim floorLayout As String() = {"_____________________________",
-                                       "_############################",
-                                       "____####____________#@#_____#",
-                                       "____#^##____________###_____#",
-                                       "____####____________________#",
-                                       "#############################",
-                                       "#___________###^####_________",
-                                       "#___________###########______",
-                                       "#_____________###__#####______",
-                                       "#####################$#######",
-                                       "______#####___###__#####____#",
-                                       "______#####___###__#####____#",
-                                       "______##^##___###___________#",
-                                       "#############################",
-                                       "#_____#####___###____________",
-                                       "#_____________#########______",
-                                       "#_____________#########______",
-                                       "##################%##########",
-                                       "______________######^##_____#",
-                                       "______________#########______"}
+                                           "_############################",
+                                           "____####____________#@#_____#",
+                                           "____#^##____________###_____#",
+                                           "____####____________________#",
+                                           "#############################",
+                                           "#___________###^####_________",
+                                           "#___________###########______",
+                                           "#_____________###__#####______",
+                                           "#####################$#######",
+                                           "______#####___###__#####____#",
+                                           "______#####___###__#####____#",
+                                           "______##^##___###___________#",
+                                           "#############################",
+                                           "#_____#####___###____________",
+                                           "#_____________#########______",
+                                           "#_____________#########______",
+                                           "##################%##########",
+                                           "______________######^##_____#",
+                                           "______________#########______"}
 
         If mBoardHeight < 20 Then mBoardHeight = 20
         If mBoardWidth < 30 Then mBoardWidth = 30
@@ -1645,10 +1649,12 @@ Public Class mFloor
                 Return randPoint()
         End Select
     End Function
-    Sub placeChest(ByVal code As String, Optional ByVal numChests As Integer = 0)
+
+    ' Refresh the shared chest loot lists when the floor's loot bracket changes.
+    Private Sub prepareChestLoot()
         'Fill Chest Tier List
         If DDConst.BASE_CHEST.getCachedLootTableBracket(floorNumber) <> LootTable.getBracket(floorNumber) Then
-            For i = cTier.tier1 To DDConst.BASE_CHEST.tiers.count - 1
+            For i = cTier.tier1 To DDConst.BASE_CHEST.tiers.Count - 1
                 DDConst.BASE_CHEST.tiers(i).Clear()
             Next
 
@@ -1661,39 +1667,42 @@ Public Class mFloor
 
             DDConst.BASE_CHEST.getCachedLootTableBracket(floorNumber, True)
         End If
+    End Sub
 
+    Sub placeChest(ByVal code As String, Optional ByVal numChests As Integer = 0)
+        prepareChestLoot()
         Randomize(code.GetHashCode)
-        'Dim numChests As Integer = CInt(Int(Rnd() * 8) + 3) * Int((mBoardWidth / 30) + (mBoardHeight / 30) / 2)
-        If numChests = 0 Then numChests = CInt((Int(Rnd() * Game.chestFreqRange) + Game.chestFreqMin) * (Math.Sqrt(coveredBoardSpace) / Game.chestSizeDependence))
+            'Dim numChests As Integer = CInt(Int(Rnd() * 8) + 3) * Int((mBoardWidth / 30) + (mBoardHeight / 30) / 2)
+            If numChests = 0 Then numChests = CInt((Int(Rnd() * Game.chestFreqRange) + Game.chestFreqMin) * (Math.Sqrt(coveredBoardSpace) / Game.chestSizeDependence))
 
-        If floorNumber = 3 Then
-            numChests *= 1.5
-            placeKeyChest()
-        End If
+            If floorNumber = 3 Then
+                numChests *= 1.5
+                placeKeyChest()
+            End If
 
 
-        If floorNumber >= 3 And Int(Rnd() * 20) = 0 Then
-            Dim p = randPoint()
-            addChest(New LoadedChest(p, 5), p)
-        End If
-
-        If Not Game.player1 Is Nothing AndAlso Game.player1.quests(qInd.dfaUpgrade).getActive Then
-            For i = 0 To Int(Rnd() * 3) + 1
+            If floorNumber >= 3 And Int(Rnd() * 20) = 0 Then
                 Dim p = randPoint()
-                addChest(New LoadedChest(p, 6), p)
+                addChest(New LoadedChest(p, 5), p)
+            End If
+
+            If Not Game.player1 Is Nothing AndAlso Game.player1.quests(qInd.dfaUpgrade).getActive Then
+                For i = 0 To Int(Rnd() * 3) + 1
+                    Dim p = randPoint()
+                    addChest(New LoadedChest(p, 6), p)
+                Next
+            End If
+
+            For i = 1 To numChests
+                Dim chestPoint = randPoint()
+                Dim chest As Chest = DDConst.BASE_CHEST.Create(chestPoint, code)
+                addChest(chest, chestPoint)
             Next
-        End If
-
-        For i = 1 To numChests
-            Dim chestPoint = randPoint()
-            Dim chest As Chest = DDConst.BASE_CHEST.Create(chestPoint, code)
-            addChest(chest, chestPoint)
-        Next
 
 
-        For Each c In chestList
-            mBoard(c.pos.Y, c.pos.X).Text = ""
-        Next
+            For Each c In chestList
+                mBoard(c.pos.Y, c.pos.X).Text = ""
+            Next
     End Sub
     Sub addChest(ByVal c As Chest, ByVal p As Point)
         chestList.Add(c)

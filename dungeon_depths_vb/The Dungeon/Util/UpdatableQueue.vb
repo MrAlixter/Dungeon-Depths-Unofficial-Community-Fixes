@@ -1,81 +1,61 @@
-﻿Public Class UpdatableQueue
-    Private indexes As Dictionary(Of Integer, Integer)
-    Private updatables As List(Of Updatable)
+Imports System
+Imports System.Collections.Generic
+Imports System.Linq
 
-    Private count As Integer
-    Sub New()
-        indexes = New Dictionary(Of Integer, Integer)
-        updatables = New List(Of Updatable)
+Public Class UpdatableQueue
+    Private ReadOnly indexes As New Dictionary(Of Integer, Integer)
+    Private ReadOnly updatables As New List(Of Updatable)
 
-        count = 0
-    End Sub
+    ' A fresh token invalidates a turn even if clear() is followed by add().
+    Private generation As Object = New Object()
+    Private processing As Boolean
 
     Public Sub add(ByRef u As Updatable, ByVal t As Integer)
+        If u Is Nothing Then Throw New ArgumentNullException("u")
         If updatables.Contains(u) Then Exit Sub
 
-        indexes.Add(count, t)
+        indexes.Add(updatables.Count, t)
         updatables.Add(u)
-
-        count += 1
     End Sub
 
     Public Sub replace(ByRef u As Updatable, ByRef new_u As Updatable)
-        If Not updatables.Contains(u) Then Exit Sub
+        If new_u Is Nothing Then Throw New ArgumentNullException("new_u")
+        Dim pos As Integer = updatables.IndexOf(u)
+        If pos < 0 Then Exit Sub
 
-        Dim pos = updatables.IndexOf(u)
+        ' Keep the old priority and turn position, but use the new object.
         updatables(pos) = new_u
     End Sub
 
     Public Sub ping()
-        If isEmpty() Then Exit Sub
+        ' A callback must not recursively execute this same turn.
+        If processing OrElse isEmpty() Then Exit Sub
 
-        'Dim startTime As Double = DDDateTime.getTimeNow()
-        Dim sortedKeys = sortMaxToMin(indexes)
-
-        For i = 0 To sortedKeys.count - 1
-            If updatables.count < 1 Then Exit For
-            updatables(sortedKeys(i)).update()
-        Next
-        'Dim endTime As Double = DDDateTime.getTimeNow()
-        'Console.WriteLine(" - UPDATE TIME (" & updatables.count & "): " + (endTime - startTime).ToString())
-        clear()
+        Dim startGeneration As Object = generation
+        Dim sortedKeys = indexes.OrderByDescending(Function(entry) entry.Value).
+                                 ThenBy(Function(entry) entry.Key).
+                                 Select(Function(entry) entry.Key).ToList()
+        processing = True
+        Try
+            For Each queueIndex As Integer In sortedKeys
+                If Not Object.ReferenceEquals(generation, startGeneration) Then Exit For
+                updatables(queueIndex).update()
+            Next
+        Finally
+            ' Do not erase a new queue created by a callback during this turn.
+            ' Exceptions still propagate, but the old turn cannot be replayed.
+            If Object.ReferenceEquals(generation, startGeneration) Then clear()
+            processing = False
+        End Try
     End Sub
 
     Public Sub clear()
+        generation = New Object()
         indexes.Clear()
         updatables.Clear()
-
-        count = 0
     End Sub
 
     Public Function isEmpty() As Boolean
-        Return indexes Is Nothing Or indexes.count < 1
-    End Function
-
-
-    Private Function append(ByVal a As Integer, ByVal b As List(Of Integer)) As List(Of Integer)
-        b.Insert(0, a)
-
-        Return b
-    End Function
-    Private Function sortMaxToMin(ByVal l As Dictionary(Of Integer, Integer)) As List(Of Integer)
-
-        If l.count < 2 Then
-            Return l.Keys.ToList
-        Else
-            Dim max As Integer = -999999999
-            Dim indMax As Integer = 0
-
-            For i = 0 To l.count - 1
-                If l(l.Keys(i)) > max Then
-                    max = l(l.Keys(i))
-                    indMax = l.Keys(i)
-                End If
-            Next
-
-            l.Remove(indMax)
-
-            Return append(indMax, sortMaxToMin(l))
-        End If
+        Return updatables.Count = 0
     End Function
 End Class

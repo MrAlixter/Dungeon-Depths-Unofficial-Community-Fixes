@@ -1,0 +1,131 @@
+From 20f786b696ee3a294a3764327f60fe6ef8693f2a Mon Sep 17 00:00:00 2001
+From: MrAlixter <lavender_raff@proton.me>
+Date: Sun, 13 Sep 2026 23:48:37 +0100
+Subject: [PATCH 2/2] Fix save preview initialization and inventory selection
+
+- Use fixed image slots for save previews.
+- Remove exception-driven list initialization.
+- Handle empty inventory selection without throwing.
+- Verify saving, loading, and item inspection.
+---
+ .../The Dungeon/WindowsForms/Game/Game.vb     | 67 ++++++++-----------
+ 1 file changed, 28 insertions(+), 39 deletions(-)
+
+diff --git a/dungeon_depths_vb/The Dungeon/WindowsForms/Game/Game.vb b/dungeon_depths_vb/The Dungeon/WindowsForms/Game/Game.vb
+index 2a5d04fc..bc64d850 100644
+--- a/dungeon_depths_vb/The Dungeon/WindowsForms/Game/Game.vb	
++++ b/dungeon_depths_vb/The Dungeon/WindowsForms/Game/Game.vb	
+@@ -100,7 +100,7 @@ Public Class Game
+ 
+     Dim eClock As Integer = eClockResetVal * 3
+     Public solFlag As Boolean = True
+-    Private savePics As New List(Of Image)(11)
++    Private savePics(10) As Image
+     Dim imagesWorkerArg = Nothing
+     Dim savePicsReady As Boolean = False
+     Dim boardReady As Boolean = False
+@@ -3690,21 +3690,31 @@ Public Class Game
+         End If
+     End Sub
+     Private Sub lstInventory_SelectedValueChanged(sender As Object, e As EventArgs) Handles lstInventory.SelectedValueChanged
+-        'lstInventory_SelectedValueChanged handles the selecting of items from the inventory listbox
+-        Try
+-            If lstInventory.SelectedItem.ToString.Length = 0 OrElse lstInventory.SelectedItem.ToString.EndsWith(":") Then Throw New NullReferenceException
+-            selectedItem = player1.inv.item(player1.inv.invIDorder(lstInventory.SelectedIndex))
+-            If Not selectedItem Is Nothing Then
+-                'MsgBox(aInd & ", " & subString)
+-                If selectedItem.getUsable() Then btnUse.Enabled = True Else btnUse.Enabled = False
+-                btnDrop.Enabled = True
+-                btnLook.Enabled = True
+-            End If
+-        Catch ex As NullReferenceException
++        ' No item is selected, or a category heading was selected.
++        If lstInventory.SelectedItem Is Nothing OrElse
++       lstInventory.SelectedItem.ToString().Length = 0 OrElse
++       lstInventory.SelectedItem.ToString().EndsWith(":") Then
++
++            selectedItem = Nothing
+             btnUse.Enabled = False
+             btnDrop.Enabled = False
+             btnLook.Enabled = False
+-        End Try
++            Exit Sub
++        End If
++
++        selectedItem = player1.inv.item(
++        player1.inv.invIDorder(lstInventory.SelectedIndex)
++    )
++
++        If selectedItem IsNot Nothing Then
++            btnUse.Enabled = selectedItem.getUsable()
++            btnDrop.Enabled = True
++            btnLook.Enabled = True
++        Else
++            btnUse.Enabled = False
++            btnDrop.Enabled = False
++            btnLook.Enabled = False
++        End If
+     End Sub
+     'inventory filter methods
+     Private Sub btnFilter_Click(sender As Object, e As EventArgs) Handles btnFilter.Click
+@@ -4124,15 +4134,10 @@ Public Class Game
+ 
+     '| - GENERAL USE/UTILITY - |
+     Private Sub prefetchImages()
++
+         If imagesWorkerArg Is Nothing Then
+             savePicsReady = False
+ 
+-            Try
+-                savePics(0) = Nothing
+-            Catch ex As Exception
+-                savePics.Add(Nothing)
+-            End Try
+-
+             For i = 1 To 10
+                 If System.IO.File.Exists("saves/s" & i.ToString() & ".ave") Or System.IO.File.Exists("saves/s" & i.ToString() & ".avex") Then
+                     Dim pic As Image = Nothing
+@@ -4143,17 +4148,9 @@ Public Class Game
+                     Else
+                         pic = ShopNPC.gbl_img.atrs(0).getAt(103)
+                     End If
+-                    Try
+-                        savePics(i) = pic
+-                    Catch ex As Exception
+-                        savePics.Add(pic)
+-                    End Try
++                    savePics(i) = pic
+                 Else
+-                    Try
+-                        savePics(i) = Nothing
+-                    Catch ex As Exception
+-                        savePics.Add(Nothing)
+-                    End Try
++                    savePics(i) = Nothing
+                 End If
+             Next
+             savePicsReady = True
+@@ -4161,18 +4158,10 @@ Public Class Game
+             If System.IO.File.Exists("saves/s" & imagesWorkerArg.ToString() & ".ave") Or System.IO.File.Exists("saves/s" & imagesWorkerArg.ToString() & ".avex") Then
+                 'Dim pic As Image = getImgFromFile("s" & imagesWorkerArg.ToString() & ".ave")
+                 Dim pic As Image = getSavePicture(picPortrait.BackgroundImage.Clone())
+-                Try
+-                    savePics(imagesWorkerArg) = pic
+-                Catch ex As Exception
+-                    savePics.Add(pic)
+-                End Try
++                savePics(imagesWorkerArg) = pic
+                 pic.Save("saves/s" & imagesWorkerArg.ToString() & ".ave.png")
+             Else
+-                Try
+-                    savePics(imagesWorkerArg) = Nothing
+-                Catch ex As Exception
+-                    savePics.Add(Nothing)
+-                End Try
++                savePics(imagesWorkerArg) = Nothing
+             End If
+             imagesWorkerArg = Nothing
+         End If
+-- 
+2.55.0.windows.5
+

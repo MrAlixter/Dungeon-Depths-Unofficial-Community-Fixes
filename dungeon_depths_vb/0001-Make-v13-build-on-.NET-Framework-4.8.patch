@@ -1,0 +1,92 @@
+From d762eaaa54ffe132cd4ddc0eb580cc79fd021403 Mon Sep 17 00:00:00 2001
+From: MrAlixter <lavender_raff@proton.me>
+Date: Sun, 13 Sep 2026 22:48:02 +0100
+Subject: [PATCH 1/2] Make v13 build on .NET Framework 4.8
+
+- Retarget the legacy VB.NET project from .NET Framework 4.0 to 4.8.
+- Fix two instance method callbacks rejected by the modern compiler.
+- Verify that the game builds, launches, generates a dungeon, and runs normally.
+---
+ dungeon_depths_vb/The Dungeon/App.config                     | 2 +-
+ .../Entities/NPC/Hostile/Bosses/MiniBosses/OEmpress.vb       | 2 +-
+ dungeon_depths_vb/The Dungeon/Items/Usable/GrapplingHook.vb  | 2 +-
+ dungeon_depths_vb/The Dungeon/The Dungeon.vbproj             | 5 ++++-
+ 4 files changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/dungeon_depths_vb/The Dungeon/App.config b/dungeon_depths_vb/The Dungeon/App.config
+index 6fa7d43c..5c2ee7a3 100644
+--- a/dungeon_depths_vb/The Dungeon/App.config	
++++ b/dungeon_depths_vb/The Dungeon/App.config	
+@@ -2,5 +2,5 @@
+ <configuration>
+     <startup>
+         
+-    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/></startup>
++    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.8"/></startup>
+ </configuration>
+diff --git a/dungeon_depths_vb/The Dungeon/Entities/NPC/Hostile/Bosses/MiniBosses/OEmpress.vb b/dungeon_depths_vb/The Dungeon/Entities/NPC/Hostile/Bosses/MiniBosses/OEmpress.vb
+index 19dbde12..39dc31b1 100644
+--- a/dungeon_depths_vb/The Dungeon/Entities/NPC/Hostile/Bosses/MiniBosses/OEmpress.vb	
++++ b/dungeon_depths_vb/The Dungeon/Entities/NPC/Hostile/Bosses/MiniBosses/OEmpress.vb	
+@@ -75,7 +75,7 @@
+                                                              "You explain your situation to her, but she simply chuckles before twisting closer." & DDUtils.RNRN &
+                                                              """You know, I was placed on this floor as, like, a buffer.  Lady Medusa isn't interested in weaklings, and you aren't going anywhere important if you can't even keep track of your own body...""" & DDUtils.RNRN &
+                                                              "Noticing a shift in her previously bubbly personality, you leap back as her tentacles flare out around you." & DDUtils.RNRN &
+-                                                             """Let's see if you've learned anyhing since last time..."" she says with a somewhat menacing grin, ""...though I'm sure neither of us would mind a repeat, either...""", AddressOf Game.ChallengeBoss)
++                                                             """Let's see if you've learned anyhing since last time..."" she says with a somewhat menacing grin, ""...though I'm sure neither of us would mind a repeat, either...""", AddressOf My.Forms.Game.challengeBoss)
+         MyBase.preFightDialog()
+     End Sub
+ End Class
+diff --git a/dungeon_depths_vb/The Dungeon/Items/Usable/GrapplingHook.vb b/dungeon_depths_vb/The Dungeon/Items/Usable/GrapplingHook.vb
+index c60411fe..62e3c809 100644
+--- a/dungeon_depths_vb/The Dungeon/Items/Usable/GrapplingHook.vb	
++++ b/dungeon_depths_vb/The Dungeon/Items/Usable/GrapplingHook.vb	
+@@ -27,7 +27,7 @@
+             If Not p.pos.Equals(Game.currFloor.stairs) Or Game.currFloor.floorNumber = 1 Then Throw New Exception
+             Game.mDun.floorUp()
+             Game.mDun.setFloor(Game.currFloor)
+-            TextEvent.push("You toss the grappling hook up into the stairwell, keeping tension until you here a satisfying *thunk*.  After a quick test of the line, you climb up to the floor above.", AddressOf Game.initializeBoard)
++            TextEvent.push("You toss the grappling hook up into the stairwell, keeping tension until you here a satisfying *thunk*.  After a quick test of the line, you climb up to the floor above.", AddressOf My.Forms.Game.initializeBoard)
+         Catch e As Exception
+             TextEvent.push("You toss the grappling hook up, and it bounces off the roof.  If only you were below an opening to another floor...")
+         End Try
+diff --git a/dungeon_depths_vb/The Dungeon/The Dungeon.vbproj b/dungeon_depths_vb/The Dungeon/The Dungeon.vbproj
+index 2052f90a..0cbcf2c5 100644
+--- a/dungeon_depths_vb/The Dungeon/The Dungeon.vbproj	
++++ b/dungeon_depths_vb/The Dungeon/The Dungeon.vbproj	
+@@ -11,7 +11,7 @@
+     <AssemblyName>Dungeon_Depths</AssemblyName>
+     <FileAlignment>512</FileAlignment>
+     <MyType>WindowsForms</MyType>
+-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
++    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+     <IsWebBootstrapper>false</IsWebBootstrapper>
+     <TargetFrameworkProfile />
+     <PublishUrl>F:\d_d\</PublishUrl>
+@@ -40,6 +40,7 @@
+     <DocumentationFile>Dungeon_Depths.xml</DocumentationFile>
+     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+     <WarningLevel>1</WarningLevel>
++    <Prefer32Bit>false</Prefer32Bit>
+   </PropertyGroup>
+   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+     <PlatformTarget>AnyCPU</PlatformTarget>
+@@ -51,6 +52,7 @@
+     <DocumentationFile>Dungeon_Depths.xml</DocumentationFile>
+     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+     <WarningLevel>1</WarningLevel>
++    <Prefer32Bit>false</Prefer32Bit>
+   </PropertyGroup>
+   <PropertyGroup>
+     <OptionExplicit>Off</OptionExplicit>
+@@ -1221,6 +1223,7 @@
+     <Compile Include="My Project\Application.Designer.vb">
+       <AutoGen>True</AutoGen>
+       <DependentUpon>Application.myapp</DependentUpon>
++      <DesignTime>True</DesignTime>
+     </Compile>
+     <Compile Include="My Project\Resources.Designer.vb">
+       <AutoGen>True</AutoGen>
+-- 
+2.55.0.windows.5
+

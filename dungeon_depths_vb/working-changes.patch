@@ -1,0 +1,40 @@
+diff --git a/dungeon_depths_vb/The Dungeon/WindowsForms/Game/Game.vb b/dungeon_depths_vb/The Dungeon/WindowsForms/Game/Game.vb
+index bc64d850..acdd3d23 100644
+--- a/dungeon_depths_vb/The Dungeon/WindowsForms/Game/Game.vb	
++++ b/dungeon_depths_vb/The Dungeon/WindowsForms/Game/Game.vb	
+@@ -2886,22 +2886,30 @@ Public Class Game
+         If Not combat_engaged And Not shop_npc_engaged Then player1.canMoveFlag = True
+ 
+         Dim tmpInd As Integer = lstInventory.TopIndex
+-        Dim tind = lstInventory.SelectedIndex
+-        selectedItem.use(player1)
++
++        ' Сохраняем ссылку, потому что обновление интерфейса временно
++        ' сбросит поле selectedItem.
++        Dim itemBeingUsed As Item = selectedItem
++        Dim usedItemId As Integer = CInt(itemBeingUsed.getId())
++
++        itemBeingUsed.use(player1)
+ 
+         player1.inv.invNeedsUDate = True
+         player1.UIupdate()
+ 
+         lstInventory.TopIndex = tmpInd
+ 
+-        If selectedItem.count < 1 Then
+-            lstInventory.SelectedItem = Nothing
++        Dim updatedIndex As Integer =
++    player1.inv.invIDorder.IndexOf(usedItemId)
++
++        If itemBeingUsed.count < 1 OrElse updatedIndex < 0 Then
++            lstInventory.SelectedIndex = -1
+             selectedItem = Nothing
+             btnUse.Enabled = False
+             btnDrop.Enabled = False
+             btnLook.Enabled = False
+         Else
+-            lstInventory.SelectedIndex = tind
++            lstInventory.SelectedIndex = updatedIndex
+         End If
+ 
+         progressTurn(False)
