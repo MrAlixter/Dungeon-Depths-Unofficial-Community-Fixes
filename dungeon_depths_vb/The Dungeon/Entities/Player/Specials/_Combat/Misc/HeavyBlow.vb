@@ -10,10 +10,15 @@
         Dim p = MyBase.getUser
         Dim m = MyBase.getTarget
 
-        Dim spdBuff = m.getSPD - p.getSPD
+        Dim targetSpeed As Integer = m.getSPD
+        Dim spdBuff = targetSpeed - p.getSPD
         If spdBuff < 0 Then spdBuff = 0
 
-        Dim dmg As Integer = p.getATK + (p.getATK * (spdBuff / m.getSPD))
+        Dim dmg As Integer = p.getATK
+
+        If targetSpeed <> 0 Then
+            dmg = p.getATK + (p.getATK * (spdBuff / targetSpeed))
+        End If
         dmg = Entity.calcDamage(dmg, m.defense)
 
         specHit(getName, dmg, getUser, getTarget)
