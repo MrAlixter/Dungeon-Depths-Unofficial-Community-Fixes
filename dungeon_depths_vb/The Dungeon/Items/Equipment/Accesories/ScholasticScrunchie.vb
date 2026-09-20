@@ -44,9 +44,37 @@
         If p Is Nothing AndAlso Not Game.player1 Is Nothing Then p = Game.player1
 
         If Not p Is Nothing AndAlso p.pClass.w < 1.0 Then
-            Dim p_will As Double = CInt((p.will + p.wBuff) * p.pClass.w * p.pForm.w)
+            Try
+                ' Mindless classes have a zero WIL multiplier. Undoing it by division
+                ' produces 0 / 0 (NaN), which cannot be converted to Integer.
+                ' Restore the pre-class WIL contribution, including the form and buff,
+                ' plus this accessory's normal +7 bonus. Widen before adding integers.
+                If p.pClass.w = 0.0 Then
+                    Return CInt(7.0 + (CDbl(p.will) + CDbl(p.wBuff)) * p.pForm.w)
+                End If
 
-            Return 7 + ((p_will / p.pClass.w) - p_will)
+                ' Preserve the original intermediate rounding for nonzero multipliers.
+                Dim p_will As Double = CInt((p.will + p.wBuff) * p.pClass.w * p.pForm.w)
+                Return CInt(7 + ((p_will / p.pClass.w) - p_will))
+            Catch ex As OverflowException
+                ' Record other overflow cases instead of silently hiding a stat error.
+                ' Logging must not replace the original exception if the disk is unavailable.
+                Try
+                    Dim folder = System.IO.Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                        "DungeonDepths", "Logs")
+                    System.IO.Directory.CreateDirectory(folder)
+                    Dim details = String.Format(System.Globalization.CultureInfo.InvariantCulture,
+                        "{0:o} ScholasticScrunchie.getWBoost: will={1}, wBuff={2}, classW={3}, formW={4}{5}{6}{5}",
+                        DateTime.UtcNow, p.will, p.wBuff, p.pClass.w, p.pForm.w,
+                        Environment.NewLine, ex.ToString())
+                    System.IO.File.AppendAllText(System.IO.Path.Combine(folder,
+                        "scholastic-scrunchie.log"), details)
+                Catch logError As System.IO.IOException
+                Catch logError As UnauthorizedAccessException
+                End Try
+                Throw
+            End Try
         End If
 
 
