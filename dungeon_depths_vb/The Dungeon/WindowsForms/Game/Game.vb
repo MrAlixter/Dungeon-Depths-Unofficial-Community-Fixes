@@ -27,6 +27,108 @@ Public Enum cmds
 End Enum
 
 Public Class Game
+
+    ' Local usability update: F5 saves to the last successfully used numbered slot.
+    ' This does not change the save format/version or consume a game turn.
+    Private quickSaveSlot As Integer = 0
+    Private quickSaveBusy As Boolean = False
+    Private quickSaveNotice As Label
+    Private quickSaveTimer As System.Windows.Forms.Timer
+
+    Private Sub RememberQuickSaveSlot(ByVal filename As String)
+        quickSaveSlot = 0
+        Dim stem = IO.Path.GetFileNameWithoutExtension(filename)
+        Dim slot As Integer
+        If stem.StartsWith("s", StringComparison.OrdinalIgnoreCase) AndAlso
+            Integer.TryParse(stem.Substring(1), slot) AndAlso slot >= 1 AndAlso slot <= 10 Then
+            quickSaveSlot = slot
+        End If
+    End Sub
+
+    Private Sub ShowQuickSaveNotice(ByVal message As String, ByVal success As Boolean)
+        If quickSaveNotice Is Nothing Then
+            quickSaveNotice = New Label With {
+                .AutoSize = True,
+                .Font = New Font("Segoe UI", 16.0F, FontStyle.Bold),
+                .ForeColor = Color.White,
+                .Padding = New Padding(14, 9, 14, 9)}
+            Me.Controls.Add(quickSaveNotice)
+            If components Is Nothing Then components = New System.ComponentModel.Container()
+            quickSaveTimer = New System.Windows.Forms.Timer(components) With {.Interval = 4500}
+            AddHandler quickSaveTimer.Tick, Sub(sender As Object, e As EventArgs)
+                                               quickSaveTimer.Stop()
+                                               quickSaveNotice.Visible = False
+                                           End Sub
+        End If
+        quickSaveTimer.Stop()
+        quickSaveNotice.Text = message
+        quickSaveNotice.BackColor = If(success, Color.DarkGreen, Color.DarkRed)
+        quickSaveNotice.Location = New Point(Math.Max(8, (ClientSize.Width - quickSaveNotice.Width) \ 2), 36)
+        quickSaveNotice.Visible = True
+        quickSaveNotice.BringToFront()
+        quickSaveTimer.Start()
+    End Sub
+
+    Private Sub QuickSave()
+        If quickSaveBusy Then Return
+        ' Keep the normal save restrictions, and exclude startup/loading/selection screens.
+        If player1 Is Nothing OrElse mDun Is Nothing OrElse picStart.Visible OrElse
+            picLoadBar.Visible OrElse pnlSaveLoad.Visible OrElse selecting OrElse
+            lblEvent.Visible OrElse pnlEvent.Visible OrElse combat_engaged OrElse
+            shop_npc_engaged OrElse Me.MdiChildren.Length > 0 Then
+            ShowQuickSaveNotice("Сейчас сохранять нельзя", False)
+            Return
+        End If
+        If mDun.numCurrFloor = 4 AndAlso mDun.floor_boss(4) = "Ooze Empress" AndAlso
+            Not player1.formStates(stateInd.preBSStartState).initFlag Then
+            ShowQuickSaveNotice("Сейчас сохранять нельзя", False)
+            Return
+        End If
+        If quickSaveSlot = 0 Then
+            SaveToolStripMenuItem_Click(Me, EventArgs.Empty)
+            ShowQuickSaveNotice("Выбери слот один раз — дальше нажимай F5", True)
+            Return
+        End If
+
+        quickSaveBusy = True
+        Dim temporary As String = Nothing
+        Try
+            IO.Directory.CreateDirectory("saves")
+            Dim stem = IO.Path.Combine("saves", "s" & quickSaveSlot.ToString())
+            ' The loader prefers .ave when both extensions exist. Update that file if present.
+            Dim target = If(IO.File.Exists(stem & ".ave"), stem & ".ave", stem & ".avex")
+            temporary = target & "." & Guid.NewGuid().ToString("N") & ".tmp"
+            SaveFile.save(temporary)
+            ' Publish only a fully written save, retaining the previous contents as .bak.
+            If IO.File.Exists(target) Then
+                IO.File.Replace(temporary, target, target & ".bak")
+            Else
+                IO.File.Move(temporary, target)
+            End If
+        Catch ex As Exception
+            ShowQuickSaveNotice("Ошибка: сохранение не записано", False)
+            TextEvent.pushLog("Quick save failed: " & ex.Message)
+            Return
+        Finally
+            quickSaveBusy = False
+            If temporary IsNot Nothing Then
+                Try
+                    If IO.File.Exists(temporary) Then IO.File.Delete(temporary)
+                Catch ex As IO.IOException
+                    ' A locked temporary file must not hide the original save error.
+                Catch ex As UnauthorizedAccessException
+                End Try
+            End If
+        End Try
+
+        ShowQuickSaveNotice("Сохранено — слот " & quickSaveSlot.ToString() & " (F5)", True)
+        TextEvent.pushLog("Quick save completed: slot " & quickSaveSlot.ToString())
+        ' Preview refresh is optional and must never turn a successful save into an error.
+        If imagesWorker IsNot Nothing AndAlso Not imagesWorker.IsBusy Then
+            imagesWorkerArg = quickSaveSlot
+            imagesWorker.RunWorkerAsync()
+        End If
+    End Sub
     '| -- Board Backend -- |
     Public mDun As Dungeon
     Public currFloor As mFloor
@@ -224,6 +326,7 @@ Public Class Game
         w.Close()
     End Sub
     Sub newGame()
+        quickSaveSlot = 0
         If combat_engaged Or shop_npc_engaged Then Exit Sub
 
         '| -- Pre-new-game Clean Up -- |
@@ -1794,6 +1897,11 @@ Public Class Game
     Protected Overrides Function ProcessCmdKey(ByRef msg As System.Windows.Forms.Message, ByVal keyData As System.Windows.Forms.Keys) As Boolean
         'processCmdKey is a leftover from an earlier version, and may not be needed anymore
         Const WM_KEYDOWN As Integer = &H100
+        If msg.Msg = WM_KEYDOWN AndAlso keyData = Keys.F5 Then
+            ' Ignore key auto-repeat; saving does not enter the turn-processing path.
+            If (msg.LParam.ToInt64() And &H40000000L) = 0 Then QuickSave()
+            Return True
+        End If
         If msg.Msg = WM_KEYDOWN Then
             If HandleKeyPress(keyData) Then Return True
         End If
@@ -3119,6 +3227,8 @@ Public Class Game
         'writer.Close()
 
         SaveFile.save(a)
+        RememberQuickSaveSlot(a)
+        ShowQuickSaveNotice("Сохранено — слот " & quickSaveSlot.ToString(), True)
         TextEvent.push("Game successfully saved!")
         player1.solFlag = False
         player1.drawPort()
@@ -3126,6 +3236,7 @@ Public Class Game
 
     End Sub
     Sub loadSave(ByVal a As String)
+        quickSaveSlot = 0
         Dim reader As IO.StreamReader
         reader = IO.File.OpenText(a)
 
@@ -3266,6 +3377,7 @@ Public Class Game
 
 
         drawBoard()
+        RememberQuickSaveSlot(a)
     End Sub
     'save/load drivers
     Private Sub btnSaveTile_Click(sender As Object, e As MouseEventArgs) Handles btnS1.Click, btnS2.Click, btnS3.Click, btnS4.Click, btnS5.Click, btnS6.Click, btnS7.Click, btnS8.Click, btnS9.Click, btnS10.Click
