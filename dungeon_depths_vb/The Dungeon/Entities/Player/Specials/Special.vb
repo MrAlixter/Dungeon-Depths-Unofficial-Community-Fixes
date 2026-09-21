@@ -100,34 +100,40 @@
         target = t
     End Sub
     Sub perform()
+        Try
 
-        If getCost() = -1 And user.skillsUsedThisCombat.Contains(name) Then
-            TextEvent.push("You've already used '" & name & "' this combat!")
-            TextEvent.pushLog("You've already used '" & name & "' this combat!")
-            Exit Sub
-        ElseIf getCost() = -1 Then
-            user.skillsUsedThisCombat.Add(name)
-        End If
-        If (user.stamina - getCost()) < 0 Then
-            TextEvent.push("You don't have enough stamina to use this special! (" & name & " costs " & getCost() & " stamina)")
-            TextEvent.pushLog("You don't have enough stamina to use this special!")
-            Exit Sub
-        End If
-        If Not Game.combat_engaged And Not Game.shop_npc_engaged And Not useableOutOfCombat Then
-            TextEvent.push("You don't have a target for that special!")
-            TextEvent.pushLog("You don't have a target for that special!")
-            Exit Sub
-        End If
-        Randomize()
-        If getCost() = -1 Then
-            Game.cboxSpec.Items.Remove(name)
-        Else
-            user.stamina -= getCost()
-        End If
+            If getCost() = -1 And user.skillsUsedThisCombat.Contains(name) Then
+                TextEvent.push("You've already used '" & name & "' this combat!")
+                TextEvent.pushLog("You've already used '" & name & "' this combat!")
+                Exit Sub
+            ElseIf getCost() = -1 Then
+                user.skillsUsedThisCombat.Add(name)
+            End If
+            If (user.stamina - getCost()) < 0 Then
+                TextEvent.push("You don't have enough stamina to use this special! (" & name & " costs " & getCost() & " stamina)")
+                TextEvent.pushLog("You don't have enough stamina to use this special!")
+                Exit Sub
+            End If
+            If Not Game.combat_engaged And Not Game.shop_npc_engaged And Not useableOutOfCombat Then
+                TextEvent.push("You don't have a target for that special!")
+                TextEvent.pushLog("You don't have a target for that special!")
+                Exit Sub
+            End If
+            Randomize()
+            If getCost() = -1 Then
+                Game.cboxSpec.Items.Remove(name)
+            Else
+                user.stamina -= getCost()
+            End If
 
-        TextEvent.push("You perform " & name & "!")
-        TextEvent.pushLog("You perform " & name & "!")
-        effect()
+            TextEvent.push("You perform " & name & "!")
+            TextEvent.pushLog("You perform " & name & "!")
+            GameDiagnostics.Remember("Special: " & name, GameDiagnostics.Context(user, Game.currFloor, target))
+            effect()
+        Catch diagnosticError As Exception
+            GameDiagnostics.Record(diagnosticError, "perform", GameDiagnostics.Context(user, Game.currFloor, target))
+            Throw
+        End Try
     End Sub
     Overridable Sub effect()
         TextEvent.push("No effects.")

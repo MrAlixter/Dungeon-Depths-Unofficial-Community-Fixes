@@ -763,6 +763,7 @@
     <Compile Include="Entities\Player\Specials\_Utility\MMam.vb" />
     <Compile Include="Entities\Player\Specials\_Utility\RDesc.vb" />
     <Compile Include="Entities\Player\Specials\_Utility\RitOfMana.vb" />
+    <Compile Include="Util\GameDiagnostics.vb" />
     <Compile Include="Entities\Player\Specials\Special.vb" />
     <Compile Include="Entities\Player\Specials\_Utility\SpotFusion.vb" />
     <Compile Include="Entities\Player\Specials\_Utility\USed.vb" />

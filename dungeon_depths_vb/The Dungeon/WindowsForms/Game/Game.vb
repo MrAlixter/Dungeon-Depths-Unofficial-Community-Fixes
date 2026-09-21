@@ -76,17 +76,17 @@ Public Class Game
             picLoadBar.Visible OrElse pnlSaveLoad.Visible OrElse selecting OrElse
             lblEvent.Visible OrElse pnlEvent.Visible OrElse combat_engaged OrElse
             shop_npc_engaged OrElse Me.MdiChildren.Length > 0 Then
-            ShowQuickSaveNotice("Сейчас сохранять нельзя", False)
+            ShowQuickSaveNotice("You cannot save right now", False)
             Return
         End If
         If mDun.numCurrFloor = 4 AndAlso mDun.floor_boss(4) = "Ooze Empress" AndAlso
             Not player1.formStates(stateInd.preBSStartState).initFlag Then
-            ShowQuickSaveNotice("Сейчас сохранять нельзя", False)
+            ShowQuickSaveNotice("You cannot save right now", False)
             Return
         End If
         If quickSaveSlot = 0 Then
             SaveToolStripMenuItem_Click(Me, EventArgs.Empty)
-            ShowQuickSaveNotice("Выбери слот один раз — дальше нажимай F5", True)
+            ShowQuickSaveNotice("Select a slot once — then just press F5", True)
             Return
         End If
 
@@ -1895,34 +1895,45 @@ Public Class Game
         Return False
     End Function
     Protected Overrides Function ProcessCmdKey(ByRef msg As System.Windows.Forms.Message, ByVal keyData As System.Windows.Forms.Keys) As Boolean
-        'processCmdKey is a leftover from an earlier version, and may not be needed anymore
-        Const WM_KEYDOWN As Integer = &H100
-        If msg.Msg = WM_KEYDOWN AndAlso keyData = Keys.F5 Then
-            ' Ignore key auto-repeat; saving does not enter the turn-processing path.
-            If (msg.LParam.ToInt64() And &H40000000L) = 0 Then QuickSave()
-            Return True
-        End If
-        If msg.Msg = WM_KEYDOWN Then
-            If HandleKeyPress(keyData) Then Return True
-        End If
-        Return MyBase.ProcessCmdKey(msg, keyData)
+        Try
+            'processCmdKey is a leftover from an earlier version, and may not be needed anymore
+            Const WM_KEYDOWN As Integer = &H100
+            If msg.Msg = WM_KEYDOWN AndAlso keyData = Keys.F5 Then
+                ' Ignore key auto-repeat; saving does not enter the turn-processing path.
+                If (msg.LParam.ToInt64() And &H40000000L) = 0 Then QuickSave()
+                Return True
+            End If
+            If msg.Msg = WM_KEYDOWN Then
+                If HandleKeyPress(keyData) Then Return True
+            End If
+            Return MyBase.ProcessCmdKey(msg, keyData)
+        Catch diagnosticError As Exception
+            GameDiagnostics.Record(diagnosticError, "ProcessCmdKey", GameDiagnostics.Context(player1, currFloor, If(player1 Is Nothing, Nothing, player1.currTarget)))
+            Throw
+        End Try
     End Function
     Sub doLblEventOnClose()
-        If Not TextEvent.lblEventOnClose Is Nothing Then
-            If pnlEvent.Visible Then
-                If Not TextEvent.eventDialogBox.hasHitEnd And TextEvent.eventDialogBox.getPageInd < TextEvent.eventDialogBox.getPageCt - 2 Then
-                    TextEvent.eventDialogBox.nextpageL()
-                    Exit Sub
+        Try
+            If Not TextEvent.lblEventOnClose Is Nothing Then
+                If pnlEvent.Visible Then
+                    If Not TextEvent.eventDialogBox.hasHitEnd And TextEvent.eventDialogBox.getPageInd < TextEvent.eventDialogBox.getPageCt - 2 Then
+                        TextEvent.eventDialogBox.nextpageL()
+                        Exit Sub
+                    End If
                 End If
-            End If
-            Dim lastOnClose = TextEvent.lblEventOnClose.Method.Name
-            TextEvent.lblEventOnClose()
-            If TextEvent.lblEventOnClose.Method.Name.Equals(lastOnClose) Then
-                TextEvent.lblEventOnClose = Nothing
-            End If
+                Dim lastOnClose = TextEvent.lblEventOnClose.Method.Name
+                GameDiagnostics.Remember("Deferred callback: " & lastOnClose, GameDiagnostics.Context(player1, currFloor, If(player1 Is Nothing, Nothing, player1.currTarget)))
+                TextEvent.lblEventOnClose()
+                If TextEvent.lblEventOnClose.Method.Name.Equals(lastOnClose) Then
+                    TextEvent.lblEventOnClose = Nothing
+                End If
 
-            If Not combat_engaged Or shop_npc_engaged Then player1.canMoveFlag = True
-        End If
+                If Not combat_engaged Or shop_npc_engaged Then player1.canMoveFlag = True
+            End If
+        Catch diagnosticError As Exception
+            GameDiagnostics.Record(diagnosticError, "doLblEventOnClose", GameDiagnostics.Context(player1, currFloor, If(player1 Is Nothing, Nothing, player1.currTarget)))
+            Throw
+        End Try
     End Sub
     '| -- Selection Drivers -- |
     Sub selection(ByVal Keydata As Keys)
@@ -1989,13 +2000,21 @@ Public Class Game
         End If
     End Sub
     Sub selectItem(ByVal index As Integer)
-        If combat_engaged Then lblCombatEvents.Text = ""
+        Try
+            If combat_engaged Then lblCombatEvents.Text = ""
 
-        Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
-        selectedItem = player1.inv.item(lstSelec.Items(index).ToString.Split(" (")(2))
-        If Not selectedItem Is Nothing AndAlso selectedItem.getUsable Then selectedItem.use(player1)
+            Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
+            selectedItem = player1.inv.item(lstSelec.Items(index).ToString.Split(" (")(2))
+            If Not selectedItem Is Nothing AndAlso selectedItem.getUsable Then
+                GameDiagnostics.Remember("Use selected item: " & GameDiagnostics.Snapshot(selectedItem), GameDiagnostics.Context(player1, currFloor, If(player1 Is Nothing, Nothing, player1.currTarget)))
+                selectedItem.use(player1)
+            End If
 
-        progressTurn(False)
+            progressTurn(False)
+        Catch diagnosticError As Exception
+            GameDiagnostics.Record(diagnosticError, "selectItem", GameDiagnostics.Context(player1, currFloor, If(player1 Is Nothing, Nothing, player1.currTarget)))
+            Throw
+        End Try
     End Sub
     Sub selectMagic(ByVal index As Integer)
         Dim subString As String = lstSelec.Items(index).ToString.Split("-")(1)
@@ -2974,58 +2993,64 @@ Public Class Game
         toPNLSelec("Useable")
     End Sub
     Private Sub btnUse_Click(sender As Object, e As EventArgs) Handles btnUse.Click
-        closeLblEvent()
-        doLblEventOnClose()
+        Try
+            closeLblEvent()
+            doLblEventOnClose()
 
-        If selectedItem Is Nothing Then Exit Sub
+            If selectedItem Is Nothing Then Exit Sub
 
-        If combat_engaged Then lblCombatEvents.Text = ""
+            If combat_engaged Then lblCombatEvents.Text = ""
 
-        If player1.perks(perk.astatue) > -1 And Not selectedItem.getAName.Equals(SthenoSalve.ITEM_NAME) Then
-            TextEvent.push("You can't move to use any items now..." & If(player1.inv.getCountAt(SthenoSalve.ITEM_NAME) > 0, DDUtils.RNRN & "...well, other than " & SthenoSalve.ITEM_NAME.Replace("_", " ") & "...", ""))
-            TextEvent.pushLog("You can't use items now!")
-            Exit Sub
-        ElseIf player1.equippedAcce.getAName.Equals(CursedBridle.ITEM_NAME) And Not selectedItem.getAName.Equals(AntiCurseTag.ITEM_NAME) Then
-            TextEvent.push("The fae curse prevents you from using items now..." & If(player1.inv.getCountAt(AntiCurseTag.ITEM_NAME) > 0, DDUtils.RNRN & "...hmm, but your " & AntiCurseTag.ITEM_NAME.Replace("_", " ") & " might just let you unequip her bridle...", ""))
-            TextEvent.pushLog("You can't use items now!")
-            Exit Sub
-        End If
+            If player1.perks(perk.astatue) > -1 And Not selectedItem.getAName.Equals(SthenoSalve.ITEM_NAME) Then
+                TextEvent.push("You can't move to use any items now..." & If(player1.inv.getCountAt(SthenoSalve.ITEM_NAME) > 0, DDUtils.RNRN & "...well, other than " & SthenoSalve.ITEM_NAME.Replace("_", " ") & "...", ""))
+                TextEvent.pushLog("You can't use items now!")
+                Exit Sub
+            ElseIf player1.equippedAcce.getAName.Equals(CursedBridle.ITEM_NAME) And Not selectedItem.getAName.Equals(AntiCurseTag.ITEM_NAME) Then
+                TextEvent.push("The fae curse prevents you from using items now..." & If(player1.inv.getCountAt(AntiCurseTag.ITEM_NAME) > 0, DDUtils.RNRN & "...hmm, but your " & AntiCurseTag.ITEM_NAME.Replace("_", " ") & " might just let you unequip her bridle...", ""))
+                TextEvent.pushLog("You can't use items now!")
+                Exit Sub
+            End If
 
-        If Not combat_engaged And Not shop_npc_engaged Then player1.canMoveFlag = True
+            If Not combat_engaged And Not shop_npc_engaged Then player1.canMoveFlag = True
 
-        Dim tmpInd As Integer = lstInventory.TopIndex
+            Dim tmpInd As Integer = lstInventory.TopIndex
 
-        ' Сохраняем ссылку, потому что обновление интерфейса временно
-        ' сбросит поле selectedItem.
-        Dim itemBeingUsed As Item = selectedItem
-        Dim usedItemId As Integer = CInt(itemBeingUsed.getId())
+            ' Сохраняем ссылку, потому что обновление интерфейса временно
+            ' сбросит поле selectedItem.
+            Dim itemBeingUsed As Item = selectedItem
+            Dim usedItemId As Integer = CInt(itemBeingUsed.getId())
 
-        itemBeingUsed.use(player1)
+            GameDiagnostics.Remember("Use item: " & GameDiagnostics.Snapshot(itemBeingUsed), GameDiagnostics.Context(player1, currFloor, If(player1 Is Nothing, Nothing, player1.currTarget)))
+            itemBeingUsed.use(player1)
 
-        player1.inv.invNeedsUDate = True
-        player1.UIupdate()
+            player1.inv.invNeedsUDate = True
+            player1.UIupdate()
 
-        If lstInventory.Items.Count > 0 Then
-            lstInventory.TopIndex = Math.Min(Math.Max(tmpInd, 0), lstInventory.Items.Count - 1)
-        End If
+            If lstInventory.Items.Count > 0 Then
+                lstInventory.TopIndex = Math.Min(Math.Max(tmpInd, 0), lstInventory.Items.Count - 1)
+            End If
 
-        Dim updatedIndex As Integer = player1.inv.invIDorder.IndexOf(usedItemId)
-        Dim remainingItem As Item = player1.inv.item(usedItemId)
+            Dim updatedIndex As Integer = player1.inv.invIDorder.IndexOf(usedItemId)
+            Dim remainingItem As Item = player1.inv.item(usedItemId)
 
-        If remainingItem Is Nothing OrElse remainingItem.count < 1 OrElse
-           updatedIndex < 0 OrElse updatedIndex >= lstInventory.Items.Count Then
-            lstInventory.SelectedIndex = -1
-            selectedItem = Nothing
-            btnUse.Enabled = False
-            btnDrop.Enabled = False
-            btnLook.Enabled = False
-        Else
-            lstInventory.SelectedIndex = updatedIndex
-        End If
+            If remainingItem Is Nothing OrElse remainingItem.count < 1 OrElse
+               updatedIndex < 0 OrElse updatedIndex >= lstInventory.Items.Count Then
+                lstInventory.SelectedIndex = -1
+                selectedItem = Nothing
+                btnUse.Enabled = False
+                btnDrop.Enabled = False
+                btnLook.Enabled = False
+            Else
+                lstInventory.SelectedIndex = updatedIndex
+            End If
 
-        progressTurn(False)
+            progressTurn(False)
 
-        lblPHealth.Text = DDUtils.statBar(player1.getIntHealth, player1.getMaxHealth, lblPHealth)
+            lblPHealth.Text = DDUtils.statBar(player1.getIntHealth, player1.getMaxHealth, lblPHealth)
+        Catch diagnosticError As Exception
+            GameDiagnostics.Record(diagnosticError, "btnUse_Click", GameDiagnostics.Context(player1, currFloor, If(player1 Is Nothing, Nothing, player1.currTarget)))
+            Throw
+        End Try
     End Sub
     '| -- Shop -- |
     Sub toShopKey()
