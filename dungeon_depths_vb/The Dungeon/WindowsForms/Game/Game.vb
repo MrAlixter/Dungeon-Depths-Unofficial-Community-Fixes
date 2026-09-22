@@ -106,7 +106,7 @@ Public Class Game
                 IO.File.Move(temporary, target)
             End If
         Catch ex As Exception
-            ShowQuickSaveNotice("Ошибка: сохранение не записано", False)
+            ShowQuickSaveNotice("Save failed: the game was not saved", False)
             TextEvent.pushLog("Quick save failed: " & ex.Message)
             Return
         Finally
@@ -121,7 +121,7 @@ Public Class Game
             End If
         End Try
 
-        ShowQuickSaveNotice("Сохранено — слот " & quickSaveSlot.ToString() & " (F5)", True)
+        ShowQuickSaveNotice("Saved to slot " & quickSaveSlot.ToString() & " (F5)", True)
         TextEvent.pushLog("Quick save completed: slot " & quickSaveSlot.ToString())
         ' Preview refresh is optional and must never turn a successful save into an error.
         If imagesWorker IsNot Nothing AndAlso Not imagesWorker.IsBusy Then
@@ -3253,7 +3253,7 @@ Public Class Game
 
         SaveFile.save(a)
         RememberQuickSaveSlot(a)
-        ShowQuickSaveNotice("Сохранено — слот " & quickSaveSlot.ToString(), True)
+        ShowQuickSaveNotice("Saved to slot " & quickSaveSlot.ToString(), True)
         TextEvent.push("Game successfully saved!")
         player1.solFlag = False
         player1.drawPort()
