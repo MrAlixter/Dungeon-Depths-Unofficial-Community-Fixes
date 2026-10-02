@@ -36,7 +36,7 @@
         specialList.Add("Inferno Aura", New InfernoAura(Nothing, Nothing))
         specialList.Add("Megaton Punch", New MegatonPunch(Nothing, Nothing))
         specialList.Add("Gigaton Punch", New GigatonPunch(Nothing, Nothing))
-        specialList.Add("Dodge", New Shapeshift(Nothing, Nothing))
+        specialList.Add("Dodge", New Dodge(Nothing, Nothing))
         specialList.Add("Tits Up", New Shapeshift(Nothing, Nothing, "bup"))
         specialList.Add("Tits Down", New Shapeshift(Nothing, Nothing, "bdn"))
         specialList.Add("Dick Up", New Shapeshift(Nothing, Nothing, "dup"))
