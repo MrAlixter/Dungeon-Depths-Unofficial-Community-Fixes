@@ -439,7 +439,7 @@
     End Sub
     Shared Sub willUp(ByRef p As Player)
         If p.perks(perk.willup) > 0 Then
-            p.wBuff = p.wBuff + ((p.getWIL - p.wBuff) * 0.3)
+            ' The bonus is applied when cast; upkeep only advances its duration.
             p.perks(perk.willup) -= 1
         Else
             p.wBuff = 0
