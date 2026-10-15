@@ -719,6 +719,8 @@
 
         For i As Integer = 1 To parse(0) + 1
             Dim subParse As String() = parse(i).Split("~")
+            ' Legacy inventories use item names rather than the current numeric IDs.
+            If subParse(0) = TheifsLongcoat.LEGACY_ITEM_NAME Then subParse(0) = TheifsLongcoat.ITEM_NAME
             If internal_inventory.Keys.Contains(subParse(0)) Then
                 add(subParse(0), CInt(subParse(1)))
                 item(i - 1).durability = CInt(subParse(2))

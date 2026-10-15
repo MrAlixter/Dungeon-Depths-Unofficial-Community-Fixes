@@ -27,7 +27,7 @@ This is an **unofficial community project**, not an official release or an annou
 - **F5 quick save** with visible success/failure notifications.
 - Local diagnostic logging for selected item and special-ability failures.
 - Dodge now invokes the correct ability instead of Shapeshift.
-- Correct spelling of Thief's Longcoat.
+- Correct spelling of Thief's Longcoat, with compatibility for saves using the old name.
 - Mesmerized now counts down and expires.
 - Save-loading fixes for the floor-4 Ooze Empress temporary inventory and Junk Chime data.
 - Junk Chime correctly pays for spare copies of equipped items.
@@ -67,7 +67,7 @@ Windows checks included loading a copied save, inspecting and using items, ordin
 
 Focused tests passed for Scholastic Scrunchie (9 calculation cases), Heavy Blow (7 source-level cases), and the diagnostic logger (7 checks). These cover specific behavior, not every gameplay combination, and were run during development rather than as a complete suite against every later revision.
 
-For Community Fixes #2, the Debug build and 62 focused local checks passed: Mesmerized (8), optional save inventories (9), Helix Slash (11), Junk Chime sales and damage handling (22), and Will Up (12). These are isolated checks, not a complete gameplay test. The local validation scripts are not included in the public repository or game package.
+For Community Fixes #2, the Debug build and 68 focused local checks passed: Mesmerized (8), optional save inventories (9), Helix Slash (11), Junk Chime sales and damage handling (22), Will Up (12), and Longcoat save compatibility (6). These are isolated checks, not a complete gameplay test. The local validation scripts are not included in the public repository or game package.
 
 Known limitations include:
 

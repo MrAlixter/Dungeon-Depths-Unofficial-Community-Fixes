@@ -2,6 +2,7 @@
     Inherits Armor
 
     Public Const ITEM_NAME As String = "Thief's_Longcoat"
+    Public Const LEGACY_ITEM_NAME As String = "Theif's_Longcoat"
 
     Dim cloakneg1 As Tuple(Of Integer, Boolean, Boolean) = Nothing
     Dim cloak1 As Tuple(Of Integer, Boolean, Boolean) = Nothing

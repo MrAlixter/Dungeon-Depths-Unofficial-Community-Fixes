@@ -5,7 +5,7 @@ An updated unofficial community build of Dungeon Depths v13.0, focused on save l
 ## Changes
 
 - **Dodge:** selecting the ability now uses Dodge instead of opening Shapeshift.
-- **Thief's Longcoat:** corrected the item's name from "Theif's Longcoat".
+- **Thief's Longcoat:** corrected the item's name from "Theif's Longcoat" and kept support for the old saved name so the coat stays equipped when loading existing saves. Legacy inventories also recognize the old name.
 - **Mesmerized:** the remaining duration now counts down, allowing the status to expire during combat and exploration.
 - **Save loading:** fixed a case where a save on floor 4 with Ooze Empress and initialized Junk Chime data could be reported as corrupt. The loader now advances past the temporary inventory before reading the chime data.
 - **Junk Chime save data:** loading a save without chime data now clears the previous session's chime state, including when loading older saves.
@@ -24,7 +24,7 @@ Back up existing saves and use copies when trying the update. These fixes do not
 
 ## Validation and reporting
 
-The Debug build and 62 focused local checks passed for Mesmerized, optional save inventories, Helix Slash, Junk Chime sales, damage handling, and Will Up. These checks cover specific behavior; a full gameplay and historical-save compatibility test has not been completed. Local validation scripts and personal saves are not included in this release.
+The Debug build and 68 focused local checks passed for Mesmerized, optional save inventories, Helix Slash, Junk Chime sales, damage handling, Will Up, and Longcoat save compatibility. These checks cover specific behavior; a full gameplay and historical-save compatibility test has not been completed. Local validation scripts and personal saves are not included in this release.
 
 Please report problems through GitHub Issues with the release tag `v13.0-community.2`, what happened, and reproduction steps if available. For crashes, a relevant excerpt from `%LOCALAPPDATA%\DungeonDepths\Logs\errors.log` may help; logging does not cover every possible failure.
 

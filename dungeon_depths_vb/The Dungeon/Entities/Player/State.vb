@@ -217,6 +217,8 @@
         stamina = CInt(readArray(15))
         gold = CInt(readArray(16))
 
+        ' Keep the coat equipped when reading states saved under its old spelling.
+        If readArray(17) = TheifsLongcoat.LEGACY_ITEM_NAME Then readArray(17) = TheifsLongcoat.ITEM_NAME
         For Each k In EquipmentDialogBackend.armor_list.Keys
             If readArray(17).Equals(k) Then
                 equippedArmor = EquipmentDialogBackend.armor_list(k)

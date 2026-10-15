@@ -1143,6 +1143,8 @@
         ste.initFlag = CBool(subseg(20))
         ste.invNeedsUDate = CBool(subseg(21))
         ste.isPetrified = CBool(subseg(22))
+        ' Older saves persist the original misspelling as the equipped armor name.
+        If subseg(23) = TheifsLongcoat.LEGACY_ITEM_NAME Then subseg(23) = TheifsLongcoat.ITEM_NAME
         If EquipmentDialogBackend.armor_list.ContainsKey(subseg(23)) Then ste.equippedArmor = EquipmentDialogBackend.armor_list(subseg(23))
         If EquipmentDialogBackend.weapon_list.ContainsKey(subseg(24)) Then ste.equippedWeapon = EquipmentDialogBackend.weapon_list(subseg(24))
         If EquipmentDialogBackend.accessory_list.ContainsKey(subseg(25)) Then ste.equippedAcce = EquipmentDialogBackend.accessory_list(subseg(25))
