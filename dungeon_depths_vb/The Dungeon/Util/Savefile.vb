@@ -849,12 +849,17 @@
 
         If (Game.mDun.numCurrFloor = 4 And Game.mDun.floor_boss(4) = "Ooze Empress") Then
             Game.floor_4_starting_inv = loadTempInvSegment(save(start_pos))
+            ' TINV occupies one segment; the optional chime inventory starts after it.
+            start_pos += 1
         End If
 
         If UBound(subseg) >= 25 AndAlso CBool(subseg(25)) Then
             Dim chime_inv_tuple = loadInventoryLoop(save, start_pos)
             JunkChime.inv = chime_inv_tuple.Item1
             start_pos += chime_inv_tuple.Item2
+        Else
+            ' Shared data survives between loads, including saves predating the chime flag.
+            JunkChime.inv = Nothing
         End If
 
         p.currState.load(p, True)
