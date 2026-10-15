@@ -59,7 +59,8 @@
             For i = 0 To p.inv.count - 1
                 If p.inv.item(i).getName().Contains(p.equippedArmor.getName()) Or p.inv.item(i).getName().Contains(p.equippedWeapon.getName()) Or p.inv.item(i).getName().Contains(p.equippedAcce.getName()) Or p.inv.item(i).getName().Contains(p.equippedGlasses.getName()) Then
                     If p.inv.item(i).count > 1 And inv.item(i).count > 0 Then
-                        profit += (p.inv.item(i).count - 1 * p.inv.item(i).getValue() * 0.45) / 2
+                        ' Keep the worn copy and apply the existing sale rate to the spares.
+                        profit += ((p.inv.item(i).count - 1) * p.inv.item(i).getValue() * 0.45) / 2
                         p.inv.setCount(i, 1)
                         ct += 1
                     End If
