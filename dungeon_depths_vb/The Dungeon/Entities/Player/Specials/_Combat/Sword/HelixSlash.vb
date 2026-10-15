@@ -13,9 +13,10 @@
         Dim dmg As Integer = p.getATK * 2.0
         dmg = Entity.calcDamage(dmg, getTarget.defense)
 
-        Dim rcv As Integer = (dmg / 4) / p.getMaxHealth
+        ' Health is stored as a fraction of maximum HP; keep fractional healing.
+        Dim rcv As Double = (dmg / 4.0) / p.getMaxHealth
 
-        p.health += rcv
+        p.health = Math.Min(1.0, p.health + rcv)
 
         Dim t_took_dmg = m.takeDMG(dmg, p)
 
