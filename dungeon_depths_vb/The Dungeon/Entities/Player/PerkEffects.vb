@@ -645,6 +645,9 @@
         flag = spidersilkEffect(dmg, p) Or flag
         flag = faeStaySafe(p) Or flag
 
+        ' A cancelled hit must not trigger reflection damage or lethal-hit rescue.
+        If flag Then Return True
+
         If p.perks(perk.rotlg) > 0 And dmg >= p.getIntHealth Then
             Dim a = New AmaraphneAngelTF()
             a.update()
