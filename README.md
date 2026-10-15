@@ -26,12 +26,20 @@ This is an **unofficial community project**, not an official release or an annou
 - A fix for Heavy Blow calculations against enemies with zero speed.
 - **F5 quick save** with visible success/failure notifications.
 - Local diagnostic logging for selected item and special-ability failures.
+- Dodge now invokes the correct ability instead of Shapeshift.
+- Correct spelling of Thief's Longcoat.
+- Mesmerized now counts down and expires.
+- Save-loading fixes for the floor-4 Ooze Empress temporary inventory and Junk Chime data.
+- Junk Chime correctly pays for spare copies of equipped items.
+- Helix Slash preserves fractional healing and respects maximum HP.
+- Successful dodges are no longer overridden by damage-reflection effects.
+- Will Up no longer adds its bonus again on every turn.
 
 F5 uses the last successfully loaded or saved numbered slot. If no slot has been selected, it opens the usual slot-selection flow. Existing saving restrictions still apply, including during combat.
 
 ## Playing and testing
 
-A downloadable Windows test build is being prepared. When a build is published, it will be listed under this repository's **Releases** and marked **Pre-release** while testing continues.
+Download **[Dungeon Depths v13.0 — Unofficial Community Fixes #2](https://github.com/MrAlixter/Dungeon-Depths-Unofficial-Community-Fixes/releases/tag/v13.0-community.2)** from **Releases**. Choose the attached `Dungeon-Depths-Community-Test-2.zip` game package. See [RELEASE_NOTES.md](RELEASE_NOTES.md) for the changes and testing scope.
 
 For a packaged build:
 
@@ -58,6 +66,8 @@ The initial fixes were built and smoke-tested on Windows using Visual Studio 202
 Windows checks included loading a copied save, inspecting and using items, ordinary combat, quick saving, and restarting/reloading the game.
 
 Focused tests passed for Scholastic Scrunchie (9 calculation cases), Heavy Blow (7 source-level cases), and the diagnostic logger (7 checks). These cover specific behavior, not every gameplay combination, and were run during development rather than as a complete suite against every later revision.
+
+For Community Fixes #2, the Debug build and 62 focused local checks passed: Mesmerized (8), optional save inventories (9), Helix Slash (11), Junk Chime sales and damage handling (22), and Will Up (12). These are isolated checks, not a complete gameplay test. The local validation scripts are not included in the public repository or game package.
 
 Known limitations include:
 
