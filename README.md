@@ -37,9 +37,9 @@ This is an **unofficial community project**, not an official release or an annou
 
 F5 uses the last successfully loaded or saved numbered slot. If no slot has been selected, it opens the usual slot-selection flow. Existing saving restrictions still apply, including during combat.
 
-## Playing and testing
+## Playing
 
-Download **[Dungeon Depths v13.0 — Unofficial Community Fixes #2](https://github.com/MrAlixter/Dungeon-Depths-Unofficial-Community-Fixes/releases/tag/v13.0-community.2)** from **Releases**. Choose the attached `Dungeon-Depths-Community-Test-2.zip` game package. See [RELEASE_NOTES.md](RELEASE_NOTES.md) for the changes and testing scope.
+Download **[Dungeon Depths v13.0 — Unofficial Community Fixes #2](https://github.com/MrAlixter/Dungeon-Depths-Unofficial-Community-Fixes/releases/tag/v13.0-community.2)** from **Releases**. Choose the attached `Dungeon-Depths-Community-Test-2.zip` game package. See [RELEASE_NOTES.md](RELEASE_NOTES.md) for the changes and installation instructions.
 
 For a packaged build:
 
@@ -61,13 +61,7 @@ For a checkout containing the patched game source:
 
 The initial fixes were built and smoke-tested on Windows using Visual Studio 2026. Release/installer configurations have not been validated. The game's internal version remains `13.0`; use the community release tag to identify a particular test build.
 
-## Testing and known issues
-
-Windows checks included loading a copied save, inspecting and using items, ordinary combat, quick saving, and restarting/reloading the game.
-
-Focused tests passed for Scholastic Scrunchie (9 calculation cases), Heavy Blow (7 source-level cases), and the diagnostic logger (7 checks). These cover specific behavior, not every gameplay combination, and were run during development rather than as a complete suite against every later revision.
-
-For Community Fixes #2, the Debug build and 68 focused local checks passed: Mesmerized (8), optional save inventories (9), Helix Slash (11), Junk Chime sales and damage handling (22), Will Up (12), and Longcoat save compatibility (6). These are isolated checks, not a complete gameplay test. The local validation scripts are not included in the public repository or game package.
+## Known issues
 
 Known limitations include:
 
@@ -93,6 +87,6 @@ It is still useful to report a crash even if you cannot reproduce it. Please dis
 
 Small, focused fixes and clear bug reports are welcome. For a pull request, explain the problem, what changed, how you tested it, and what name you would like to be credited under. Please keep unrelated changes separate.
 
-AI assistance was used for code changes, test scripts, and documentation. Windows builds and gameplay checks were performed by the community maintainer. These changes still benefit from human review and wider testing.
+AI assistance was used for code changes and documentation. Windows builds and gameplay checks were performed by the community maintainer.
 
 Credit for the original game belongs to VowelHeavyUsername and its original contributors. Existing credits and notices should be preserved. This README does not add a new license or grant permission to redistribute the original code or assets; upstream terms and any separate asset permissions still apply.

@@ -22,10 +22,8 @@ Download `Dungeon-Depths-Community-Test-2.zip` from the release assets, extract 
 
 Back up existing saves and use copies when trying the update. These fixes do not change the save format. Automatically generated GitHub source archives are not ready-to-play game packages.
 
-## Validation and reporting
-
-The Debug build and 68 focused local checks passed for Mesmerized, optional save inventories, Helix Slash, Junk Chime sales, damage handling, Will Up, and Longcoat save compatibility. These checks cover specific behavior; a full gameplay and historical-save compatibility test has not been completed. Local validation scripts and personal saves are not included in this release.
+## Reporting bugs
 
 Please report problems through GitHub Issues with the release tag `v13.0-community.2`, what happened, and reproduction steps if available. For crashes, a relevant excerpt from `%LOCALAPPDATA%\DungeonDepths\Logs\errors.log` may help; logging does not cover every possible failure.
 
-Dungeon Depths was created by **VowelHeavyUsername**. This is an unofficial community update maintained by **MrAlixter**, not an official release from the original developer. AI assistance was used for code and documentation; see the README for credits and testing context.
+Dungeon Depths was created by **VowelHeavyUsername**. This is an unofficial community update maintained by **MrAlixter**, not an official release from the original developer. AI assistance was used for code and documentation; see the README for credits.
