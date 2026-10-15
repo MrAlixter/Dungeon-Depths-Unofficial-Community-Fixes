@@ -1589,6 +1589,12 @@ Public Class Player
             perks(perk.lightsource) -= 1
         End If
 
+        '| - Mesmerized Duration - |
+        ' perkUpdate runs once per game turn, so the trance expires in and out of combat.
+        If perks(perk.mesmerized) > -1 Then
+            PerkEffects.mesmerized(Me)
+        End If
+
         '| - Polymorph Effects - |
         If perks(perk.polymorphed) > -1 And Not ongoingTFs.containsPolymorph() Then
             If perks(perk.polymorphed) = 0 Then revertToPState()
